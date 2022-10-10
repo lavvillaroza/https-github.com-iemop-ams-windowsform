@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Route Name="LAM Route" MustCrypt="false" Crypt="false">
+    <Group Name="Ad" MustCrypt="true" Crypt="false">
+      <String Name="Server">192.168.1.70</String>
+      <String Name="Port">389</String>
+      <String Name="BaseDn">ou=users,dc=mms,dc=wesmlocal</String>
+    </Group>    
+    <Group Name="Db" MustCrypt="true" Crypt="false">
+      <String Name="Datasource">192.168.1.80:1521/sdev01</String>
+      <String Name="UserId">bdes</String>
+      <String Name="Password">sedb</String>
+    </Group>    
+  </Route>
+</Configuration>
