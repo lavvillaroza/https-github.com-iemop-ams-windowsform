@@ -1496,9 +1496,7 @@ Public Class frmPaymentNew
         Try
             Dim msgAns As New MsgBoxResult
             msgAns = MsgBox("Do you really want to save the Payment Allocations?", CType(MsgBoxStyle.YesNo + MsgBoxStyle.Question, MsgBoxStyle), "System Message")
-
             If msgAns = MsgBoxResult.Yes Then
-
                 mainTLPanel.Enabled = False
                 Dim getTimeStart As New DateTime
                 Dim getTimeEnd As New DateTime
@@ -1509,7 +1507,6 @@ Public Class frmPaymentNew
                 Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
                 Await Task.Run(Sub() PaymntHelper.SavePaymentProcess(progressIndicator, cts.Token))
-
                 getTimeEnd = WBillHelper.GetSystemDateTime
                 _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PaymentAllocationWindow.ToString, "", "Saving allocation date " & PaymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
 
