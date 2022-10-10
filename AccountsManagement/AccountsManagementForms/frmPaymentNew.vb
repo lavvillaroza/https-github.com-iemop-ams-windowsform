@@ -1498,6 +1498,7 @@ Public Class frmPaymentNew
             msgAns = MsgBox("Do you really want to save the Payment Allocations?", CType(MsgBoxStyle.YesNo + MsgBoxStyle.Question, MsgBoxStyle), "System Message")
 
             If msgAns = MsgBoxResult.Yes Then
+
                 mainTLPanel.Enabled = False
                 Dim getTimeStart As New DateTime
                 Dim getTimeEnd As New DateTime
