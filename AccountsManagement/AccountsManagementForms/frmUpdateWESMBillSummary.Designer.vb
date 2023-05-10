@@ -44,10 +44,10 @@ Partial Class frmUpdateWESMBillSummary
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(9, 26)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(79, 14)
+        Me.Label1.Size = New System.Drawing.Size(78, 14)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "ParticipantID:"
         '
@@ -55,11 +55,11 @@ Partial Class frmUpdateWESMBillSummary
         '
         Me.ParticipantID_CB.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.ParticipantID_CB.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.ParticipantID_CB.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ParticipantID_CB.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ParticipantID_CB.FormattingEnabled = True
         Me.ParticipantID_CB.Location = New System.Drawing.Point(94, 23)
         Me.ParticipantID_CB.Name = "ParticipantID_CB"
-        Me.ParticipantID_CB.Size = New System.Drawing.Size(121, 20)
+        Me.ParticipantID_CB.Size = New System.Drawing.Size(121, 22)
         Me.ParticipantID_CB.TabIndex = 1
         '
         'dgv_UWBSummaryList
@@ -85,20 +85,20 @@ Partial Class frmUpdateWESMBillSummary
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(242, 26)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(75, 14)
+        Me.Label2.Size = New System.Drawing.Size(76, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "ChargeType:"
         '
         'VATonEnergy_RB
         '
         Me.VATonEnergy_RB.AutoSize = True
-        Me.VATonEnergy_RB.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.VATonEnergy_RB.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.VATonEnergy_RB.Location = New System.Drawing.Point(387, 24)
         Me.VATonEnergy_RB.Name = "VATonEnergy_RB"
-        Me.VATonEnergy_RB.Size = New System.Drawing.Size(91, 16)
+        Me.VATonEnergy_RB.Size = New System.Drawing.Size(90, 18)
         Me.VATonEnergy_RB.TabIndex = 1
         Me.VATonEnergy_RB.TabStop = True
         Me.VATonEnergy_RB.Text = "VATonEnergy"
@@ -107,10 +107,10 @@ Partial Class frmUpdateWESMBillSummary
         'Energy_RB
         '
         Me.Energy_RB.AutoSize = True
-        Me.Energy_RB.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Energy_RB.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Energy_RB.Location = New System.Drawing.Point(323, 24)
         Me.Energy_RB.Name = "Energy_RB"
-        Me.Energy_RB.Size = New System.Drawing.Size(58, 16)
+        Me.Energy_RB.Size = New System.Drawing.Size(59, 18)
         Me.Energy_RB.TabIndex = 0
         Me.Energy_RB.TabStop = True
         Me.Energy_RB.Text = "Energy"
@@ -120,7 +120,7 @@ Partial Class frmUpdateWESMBillSummary
         '
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.dgv_UWBSummaryList)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(8, 76)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(1000, 348)
@@ -130,10 +130,10 @@ Partial Class frmUpdateWESMBillSummary
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(10, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(82, 14)
+        Me.Label4.Size = New System.Drawing.Size(84, 14)
         Me.Label4.TabIndex = 11
         Me.Label4.Text = "List of Invoice"
         '
@@ -144,7 +144,7 @@ Partial Class frmUpdateWESMBillSummary
         Me.btn_Cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Cancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Cancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Cancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Cancel.ForeColor = System.Drawing.Color.Black
         Me.btn_Cancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Cancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -162,7 +162,7 @@ Partial Class frmUpdateWESMBillSummary
         Me.SearchOption_GroupBox.Controls.Add(Me.Label1)
         Me.SearchOption_GroupBox.Controls.Add(Me.Energy_RB)
         Me.SearchOption_GroupBox.Controls.Add(Me.VATonEnergy_RB)
-        Me.SearchOption_GroupBox.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SearchOption_GroupBox.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SearchOption_GroupBox.Location = New System.Drawing.Point(8, 12)
         Me.SearchOption_GroupBox.Name = "SearchOption_GroupBox"
         Me.SearchOption_GroupBox.Size = New System.Drawing.Size(720, 59)
@@ -172,7 +172,7 @@ Partial Class frmUpdateWESMBillSummary
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Label3)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(734, 12)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(274, 59)
@@ -183,17 +183,17 @@ Partial Class frmUpdateWESMBillSummary
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Red
         Me.Label3.Location = New System.Drawing.Point(28, 26)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(214, 12)
+        Me.Label3.Size = New System.Drawing.Size(214, 14)
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Double click to update the selected invoice."
         '
         'frmUpdateWESMBillSummary
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1020, 494)
@@ -201,12 +201,12 @@ Partial Class frmUpdateWESMBillSummary
         Me.Controls.Add(Me.btn_Cancel)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.SearchOption_GroupBox)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmUpdateWESMBillSummary"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "WESM Bill Summary Adjustment Per Participant"
+        Me.Text = "WESM Bill Summary Adjustment"
         CType(Me.dgv_UWBSummaryList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

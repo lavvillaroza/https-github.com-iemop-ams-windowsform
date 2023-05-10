@@ -125,10 +125,12 @@
     <Compile Include="BIRRuling.vb" />
     <Compile Include="BIRRulingDetails.vb" />
     <Compile Include="BIRRulingParticipant.vb" />
+    <Compile Include="BRCollectionReportPurchasesDetails.vb" />
+    <Compile Include="BRCollectionReportBuyerParticipant.vb" />
     <Compile Include="CashSummary.vb" />
     <Compile Include="BRCollectionReport.vb" />
-    <Compile Include="BRCollectionReportParticipant.vb" />
-    <Compile Include="BRCollectionReportDetails.vb" />
+    <Compile Include="BRCollectionReportSellerParticipant.vb" />
+    <Compile Include="BRCollectionReportSalesDetails.vb" />
     <Compile Include="ImportWTAFromCRSS.vb" />
     <Compile Include="EWTTaggedAllocated.vb" />
     <Compile Include="PaymentTag.vb" />
@@ -280,6 +282,8 @@
     <Compile Include="WESMBPChangeHistory.vb" />
     <Compile Include="WESMInvoice.vb" />
     <Compile Include="WESMLogsTransaction.vb" />
+    <Compile Include="WHVATCertificateDetails.vb" />
+    <Compile Include="WHVATCertificateSTL.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

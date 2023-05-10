@@ -15,6 +15,7 @@ Public Class frmPaymentNewView
     Private BFactory As BusinessFactory
     Private PaymntHelper As New PaymentHelper
     Private PaymentAllocationDateList As New List(Of AllocationDate)
+    Private StopWatch As New Diagnostics.Stopwatch
 
     Private Sub frmPaymentNewView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
@@ -73,31 +74,15 @@ Public Class frmPaymentNewView
             Dim _ARAlloc As New List(Of DataTable)
             Dim _PaymentProformaEntries As New PaymentProformaEntries
 
-            Me.ts_Progressbar.Visible = True
-            Me.ts_Progressbar.Style = ProgressBarStyle.Marquee
             Me.ts_StatusDesc.Text = "Please wait while fetching payment history."
+            Me.Timer1.Start()
+            Me.StopWatch.Start()
 
-            'ProgressThread.Show("Please wait while preparing payment view.")
             Me.PaymntHelper = New PaymentHelper 'PaymentHelper.GetInstance()
             Me.PaymntHelper.InitializeObjectView(BFactory, WBillHelper, PayAllocationDate)
 
             Await Task.Run(Sub() PaymntHelper.GetCollections())
 
-            ''Energy View
-            'dgv_EnergyAR.DataSource = PaymntHelper.EnergyCollectionListDT
-            'Me.DataGridViewFormatForEnergy(dgv_EnergyAR)
-            'Me.CalculateTotalARonEnergy(PaymntHelper.EnergyListCollection)
-
-            ''VAT View
-            'dgv_VATAR.DataSource = PaymntHelper.VATonEnergyCollectionListDT
-            'Me.DataGridViewFormatForVAT(dgv_VATAR)
-            'Me.CalculateTotalARonVAT(PaymntHelper.VATonEnergyCollectionList)
-
-            ''MF View
-            'dgv_MFAR.DataSource = PaymntHelper.MFwithVATCollectionListDT
-            'Me.DataGridViewFormatForMF(dgv_MFAR)
-            'Me.CalculateTotalARonMF(PaymntHelper.MFwithVATCollectionList)
-            Me.ts_Progressbar.Visible = False            
             Me.ts_StatusDesc.Text = "Please select 'View Payment' to fetch payment history."
             Await Task.Delay(1000)
 
@@ -414,10 +399,9 @@ Public Class frmPaymentNewView
         Try
             'ProgressThread.Show("Please wait while preparing payment view.")
             Me.GB_Allocation.Enabled = False
-            Me.ts_Progressbar.Visible = True
-            Me.ts_Progressbar.Style = ProgressBarStyle.Marquee
             Me.ts_StatusDesc.Text = "Please wait while preparing payment history."
             Await Task.Delay(1000)
+
             'Allocation       
             Await Task.Run(Sub() PaymntHelper.GetPayments())
 
@@ -475,15 +459,14 @@ Public Class frmPaymentNewView
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
 
-            Me.ts_Progressbar.Visible = False
-            Me.ts_StatusDesc.Text = "Ready for viewing"
-            Me.ts_LabelName.Text = Me.dgv_PaymentTransToPR.RowCount.ToString("N0") & " records"
-
         Catch ex As Exception
-            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
-            ProgressThread.Close()
+            Me.Timer1.Stop()
+            Me.StopWatch.Stop()
+            Me.StopWatch.Reset()
+            Me.ts_StatusDesc.Text = "Ready for viewing"
+            Me.ts_LabelName.Text = Me.dgv_PaymentTransToPR.RowCount.ToString("N0") & " records"
         End Try
     End Sub
 #End Region
@@ -1003,10 +986,8 @@ Public Class frmPaymentNewView
             End With
 
             Me.GB_Allocation.Enabled = False
-            Me.ts_Progressbar.Visible = True
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_Progressbar.Style = ProgressBarStyle.Marquee
             Me.ts_StatusDesc.Text = "Please wait while preparing CAP Summary Report."
             Await Task.Delay(1000)
 
@@ -1021,7 +1002,6 @@ Public Class frmPaymentNewView
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
-            Me.ts_Progressbar.Visible = False
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
             Me.ts_StatusDesc.Text = "Ready for viewing."
@@ -1398,5 +1378,8 @@ Public Class frmPaymentNewView
         ProgressThread.Close()
     End Sub
 
-
+    Private Sub Timer1_Tick_1(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
+        Me.ts_LabelName.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
+    End Sub
 End Class

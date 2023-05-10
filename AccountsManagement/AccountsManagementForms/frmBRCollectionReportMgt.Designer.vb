@@ -25,7 +25,8 @@ Partial Class frmBRCollectionReportMgt
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.btnView = New System.Windows.Forms.Button()
+        Me.btnViewByBuyer = New System.Windows.Forms.Button()
+        Me.btnViewBySeller = New System.Windows.Forms.Button()
         Me.btnAdd = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -47,7 +48,8 @@ Partial Class frmBRCollectionReportMgt
         '
         'GroupBox8
         '
-        Me.GroupBox8.Controls.Add(Me.btnView)
+        Me.GroupBox8.Controls.Add(Me.btnViewByBuyer)
+        Me.GroupBox8.Controls.Add(Me.btnViewBySeller)
         Me.GroupBox8.Controls.Add(Me.btnAdd)
         Me.GroupBox8.Location = New System.Drawing.Point(3, 324)
         Me.GroupBox8.Name = "GroupBox8"
@@ -55,24 +57,43 @@ Partial Class frmBRCollectionReportMgt
         Me.GroupBox8.TabIndex = 31
         Me.GroupBox8.TabStop = False
         '
-        'btnView
+        'btnViewByBuyer
         '
-        Me.btnView.BackColor = System.Drawing.Color.White
-        Me.btnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnView.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnView.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnView.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnView.ForeColor = System.Drawing.Color.Black
-        Me.btnView.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
-        Me.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnView.Location = New System.Drawing.Point(708, 14)
-        Me.btnView.Name = "btnView"
-        Me.btnView.Size = New System.Drawing.Size(90, 39)
-        Me.btnView.TabIndex = 8
-        Me.btnView.Text = "  &View"
-        Me.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnView.UseVisualStyleBackColor = False
+        Me.btnViewByBuyer.BackColor = System.Drawing.Color.White
+        Me.btnViewByBuyer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btnViewByBuyer.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnViewByBuyer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnViewByBuyer.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnViewByBuyer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnViewByBuyer.ForeColor = System.Drawing.Color.Black
+        Me.btnViewByBuyer.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
+        Me.btnViewByBuyer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnViewByBuyer.Location = New System.Drawing.Point(708, 14)
+        Me.btnViewByBuyer.Name = "btnViewByBuyer"
+        Me.btnViewByBuyer.Size = New System.Drawing.Size(90, 39)
+        Me.btnViewByBuyer.TabIndex = 9
+        Me.btnViewByBuyer.Text = "View by &Buyer"
+        Me.btnViewByBuyer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnViewByBuyer.UseVisualStyleBackColor = False
+        '
+        'btnViewBySeller
+        '
+        Me.btnViewBySeller.BackColor = System.Drawing.Color.White
+        Me.btnViewBySeller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btnViewBySeller.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnViewBySeller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnViewBySeller.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnViewBySeller.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnViewBySeller.ForeColor = System.Drawing.Color.Black
+        Me.btnViewBySeller.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
+        Me.btnViewBySeller.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnViewBySeller.Location = New System.Drawing.Point(612, 14)
+        Me.btnViewBySeller.Name = "btnViewBySeller"
+        Me.btnViewBySeller.Size = New System.Drawing.Size(90, 39)
+        Me.btnViewBySeller.TabIndex = 8
+        Me.btnViewBySeller.Text = "View by &Seller"
+        Me.btnViewBySeller.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnViewBySeller.UseVisualStyleBackColor = False
         '
         'btnAdd
         '
@@ -85,7 +106,7 @@ Partial Class frmBRCollectionReportMgt
         Me.btnAdd.ForeColor = System.Drawing.Color.Black
         Me.btnAdd.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAdd.Location = New System.Drawing.Point(612, 14)
+        Me.btnAdd.Location = New System.Drawing.Point(516, 14)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(90, 39)
         Me.btnAdd.TabIndex = 1
@@ -116,6 +137,7 @@ Partial Class frmBRCollectionReportMgt
         'DGVBRCollectionReport
         '
         Me.DGVBRCollectionReport.AllowUserToAddRows = False
+        Me.DGVBRCollectionReport.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.DGVBRCollectionReport.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGVBRCollectionReport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -225,7 +247,7 @@ Partial Class frmBRCollectionReportMgt
     End Sub
 
     Friend WithEvents GroupBox8 As GroupBox
-    Friend WithEvents btnView As Button
+    Friend WithEvents btnViewBySeller As Button
     Friend WithEvents btnAdd As Button
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents Label3 As Label
@@ -238,4 +260,5 @@ Partial Class frmBRCollectionReportMgt
     Friend WithEvents colGeneratedBy As DataGridViewTextBoxColumn
     Friend WithEvents colGeneratedDate As DataGridViewTextBoxColumn
     Friend WithEvents MainPanel As Panel
+    Friend WithEvents btnViewByBuyer As Button
 End Class

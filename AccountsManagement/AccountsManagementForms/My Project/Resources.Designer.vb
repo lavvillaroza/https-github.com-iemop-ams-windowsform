@@ -663,16 +663,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property IEMOP_logo_logotype_2_white() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("IEMOP_logo&logotype-2_white", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property img_loader() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("img_loader", resourceCulture)

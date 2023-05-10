@@ -285,19 +285,19 @@ Public Class PaymentSaveHelper : Implements IDisposable
         Dim report As New DataReport
         Dim ListofSQL As New List(Of String)
         Try
-            ListofSQL = Me.CreateSQLStatement
+            ListofSQL = Me.CreateOptimizeSQLStatement
             report = Me.objDAL.ExecuteSaveQuery2(ListofSQL, progress, ct)
 
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
 
-            ListofSQL = CreateSQLStatementNewForSeq(dicListofSeq)
-            report = Me.objDAL.ExecuteSaveQuery2(ListofSQL, progress, ct)
+            'ListofSQL = CreateSQLStatementNewForSeq(dicListofSeq)
+            'report = Me.objDAL.ExecuteSaveQuery2(ListofSQL, progress, ct)
 
-            If report.ErrorMessage.Length <> 0 Then
-                Throw New ApplicationException(report.ErrorMessage)
-            End If
+            'If report.ErrorMessage.Length <> 0 Then
+            '    Throw New ApplicationException(report.ErrorMessage)
+            'End If
         Catch ex As Exception
             ListofSQL = Nothing
             Throw New ApplicationException(ex.Message)
@@ -320,7 +320,6 @@ Public Class PaymentSaveHelper : Implements IDisposable
     Private Function CreateOptimizeSQLStatement() As List(Of String)
         Dim listSQL As New List(Of String)
         Dim SQL As String
-        Dim sqlConcat As String = ""
         Dim SysDateTime As Date = objWBillHelper.GetSystemDateTime()
         Dim UpdatedBy As String = AMModule.UserName
         Dim PaymentNo As Long
@@ -329,22 +328,8 @@ Public Class PaymentSaveHelper : Implements IDisposable
         Dim dicDMCM As New Dictionary(Of Long, Long)
         Dim dicJVNo As New Dictionary(Of String, Long)
         Dim dicJVBatchNo As New Dictionary(Of String, Long)
-        Dim ListofSequenceUsed As New List(Of String)
 
-        ListofSequenceUsed.Add("SEQ_AM_PAY_NO")
-        ListofSequenceUsed.Add("SEQ_AM_BATCH_CODE")
-        ListofSequenceUsed.Add("SEQ_AM_JV_NO")
-        ListofSequenceUsed.Add("SEQ_AM_DMCM_NO")
-        ListofSequenceUsed.Add("SEQ_AM_FTF_REF_NO")
-        ListofSequenceUsed.Add("SEQ_AM_DEF_PYMNT_NO")
-        ListofSequenceUsed.Add("SEQ_AM_PAY_SHARE_NO")
-        ListofSequenceUsed.Add("SEQ_AM_RFP_NO")
-        ListofSequenceUsed.Add("SEQ_AM_OR_NO")
-
-        dicListofSeq = New Dictionary(Of String, Long)
-        dicListofSeq = objWBillHelper.GetMaxSequenceID(ListofSequenceUsed)
-        PaymentNo = dicListofSeq("SEQ_AM_PAY_NO")
-        dicListofSeq("SEQ_AM_PAY_NO") += 1
+        PaymentNo = objWBillHelper.GetSequenceID("SEQ_AM_PAY_NO")
         Me.PaymentNumber = PaymentNo
 
         'Updating AM_COLLECTION
@@ -356,8 +341,8 @@ Public Class PaymentSaveHelper : Implements IDisposable
         Dim ListofJVNumber As New List(Of Long)
         For Each item In Me.JournalVoucherList
 
-            Dim BatchCode As Long = dicListofSeq.Item("SEQ_AM_BATCH_CODE")
-            Dim JVNumber As Long = dicListofSeq.Item("SEQ_AM_JV_NO")
+            Dim BatchCode As Long = objWBillHelper.GetSequenceID("SEQ_AM_BATCH_CODE")
+            Dim JVNumber As Long = objWBillHelper.GetSequenceID("SEQ_AM_JV_NO")
             Dim ItemPostedType As EnumPostedType = CType([Enum].Parse(GetType(EnumPostedType), CStr(item.PostedType)), EnumPostedType)
 
             If Not dicJVNo.ContainsKey(CStr(item.PostedType)) Then
@@ -370,31 +355,16 @@ Public Class PaymentSaveHelper : Implements IDisposable
             ListofJVNumber.Add(JVNumber)
             With item
                 If ItemPostedType = EnumPostedType.PEFT Then
-                    sqlConcat = ""
-                    Dim cntChecks As Integer = RFPList.RFPDetails.Where(Function(x) x.PaymentType = EnumParticipantPaymentType.Check And x.RFPDetailsType = EnumRFPDetailsType.Payment).Count
-                    Dim ctrChecks As Integer = 0
-                    SQL = "INSERT INTO AM_CHECKS (TRANSACTION_DATE, ID_NUMBER, AMOUNT, CHECK_NUMBER, CHECK_TYPE, CV_NUMBER, UPDATED_BY, STATUS, REMARKS, BATCH_CODE)"
-                    sqlConcat = SQL
                     For Each Checkitem In RFPList.RFPDetails.Where(Function(x) x.PaymentType = EnumParticipantPaymentType.Check And x.RFPDetailsType = EnumRFPDetailsType.Payment)
-                        ctrChecks += 1
-                        If ctrChecks <> cntChecks Then
-                            With Checkitem
-                                SQL = "SELECT TO_DATE('" & .AllocationDate & "','MM/DD/YYYY'),'" &
-                                                .Participant & "'," & .Amount & ", '', '', '', '" &
-                                                AMModule.UserName & "'," & "1, '" & .Particulars & "', '" &
-                                                ItemPostedType.ToString & "-" & BatchCode & "' FROM DUAL UNION ALL "
-                            End With
-                        Else
-                            With Checkitem
-                                SQL = "SELECT TO_DATE('" & .AllocationDate & "','MM/DD/YYYY'),'" &
-                                                .Participant & "'," & .Amount & ", '', '', '', '" &
-                                                AMModule.UserName & "'," & "1, '" & .Particulars & "', '" &
-                                                ItemPostedType.ToString & "-" & BatchCode & "' FROM DUAL "
-                            End With
-                        End If
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
+                        With Checkitem
+                            SQL = "INSERT INTO AM_CHECKS (TRANSACTION_DATE, ID_NUMBER, AMOUNT, CHECK_NUMBER, CHECK_TYPE, CV_NUMBER, UPDATED_BY, STATUS, REMARKS, BATCH_CODE) " &
+                                  "SELECT TO_DATE('" & .AllocationDate & "','MM/DD/YYYY'),'" &
+                                            .Participant & "'," & .Amount & ", '', '', '', '" &
+                                            AMModule.UserName & "'," & "1, '" & .Particulars & "', '" &
+                                            ItemPostedType.ToString & "-" & BatchCode & "' FROM DUAL"
+                            listSQL.Add(SQL)
+                        End With
                     Next
-                    listSQL.Add(sqlConcat)
                 End If
 
                 'WESMBillGPPosted
@@ -419,15 +389,13 @@ Public Class PaymentSaveHelper : Implements IDisposable
                                 & ", '" & item.UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
                     listSQL.Add(SQL)
                 Next
-                dicListofSeq("SEQ_AM_BATCH_CODE") += 1
-                dicListofSeq("SEQ_AM_JV_NO") += 1
             End With
         Next
 
         'Insert AM_DMCM query database        
         For Each item In PaymentDMCMList
             'Generate DMCM NO            
-            Dim DMCMNo As Long = dicListofSeq.Item("SEQ_AM_DMCM_NO")
+            Dim DMCMNo As Long = objWBillHelper.GetSequenceID("SEQ_AM_DMCM_NO")
             Dim JournalVoucherNo As Long = dicJVNo(EnumPostedType.PA.ToString())
 
             If Not dicDMCM.ContainsKey(item.DMCMNumber) Then
@@ -444,26 +412,12 @@ Public Class PaymentSaveHelper : Implements IDisposable
             listSQL.Add(SQL)
 
             'Insert AM_DMCM_DETAILS query database
-            If item.DMCMDetails.Count <> 0 Then
-                sqlConcat = ""
-                Dim cntDMCMDtls As Integer = item.DMCMDetails.Count
-                Dim ctrDMCMDtls As Integer = 0
-                SQL = "INSERT INTO AM_DMCM_DETAILS (AM_DMCM_NO, ACCT_CODE, DEBIT, CREDIT, UPDATED_BY, UPDATED_DATE, INV_DM_CM, SUMMARY_TYPE, ID_NUMBER, IS_COMPUTE) "
-                sqlConcat = SQL
-                For Each itemDMCM In item.DMCMDetails
-                    ctrDMCMDtls += 1
-                    If cntDMCMDtls <> ctrDMCMDtls Then
-                        SQL = "SELECT '" & DMCMNo & "', '" & itemDMCM.AccountCode & "', '" & itemDMCM.Debit & "', '" & itemDMCM.Credit & "', '" & itemDMCM.UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " &
-                            "'" & itemDMCM.InvDMCMNo & "', '" & itemDMCM.SummaryType & "', '" & itemDMCM.IDNumber.IDNumber & "', '" & itemDMCM.IsComputed & "' FROM DUAL UNION ALL "
-                    Else
-                        SQL = "SELECT '" & DMCMNo & "', '" & itemDMCM.AccountCode & "', '" & itemDMCM.Debit & "', '" & itemDMCM.Credit & "', '" & itemDMCM.UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " &
-                            "'" & itemDMCM.InvDMCMNo & "', '" & itemDMCM.SummaryType & "', '" & itemDMCM.IDNumber.IDNumber & "', '" & itemDMCM.IsComputed & "' FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                Next
-                listSQL.Add(sqlConcat)
-            End If
-            dicListofSeq("SEQ_AM_DMCM_NO") += 1
+            For Each itemDMCM In item.DMCMDetails
+                SQL = "INSERT INTO AM_DMCM_DETAILS (AM_DMCM_NO, ACCT_CODE, DEBIT, CREDIT, UPDATED_BY, UPDATED_DATE, INV_DM_CM, SUMMARY_TYPE, ID_NUMBER, IS_COMPUTE) " &
+                        "SELECT '" & DMCMNo & "', '" & itemDMCM.AccountCode & "', '" & itemDMCM.Debit & "', '" & itemDMCM.Credit & "', '" & itemDMCM.UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " &
+                        "'" & itemDMCM.InvDMCMNo & "', '" & itemDMCM.SummaryType & "', '" & itemDMCM.IDNumber.IDNumber & "', '" & itemDMCM.IsComputed & "' FROM DUAL"
+                listSQL.Add(SQL)
+            Next
         Next
 
         'Insert into AM_PAYMENT_NEW query database        
@@ -478,202 +432,72 @@ Public Class PaymentSaveHelper : Implements IDisposable
             listSQL.Add(SQL)
         Next
 
-        'Insert into AM_PAYMENT_NEW_AP query database        
-        If Me.AMPaymentNewAP.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntPaymentNewAP As Integer = Me.AMPaymentNewAP.Count
-            Dim ctrPaymentNewAP As Integer = 0
-            SQL = "INSERT INTO AM_PAYMENT_NEW_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, " &
-                   "ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-            sqlConcat = SQL
-            For Each item In Me._AMPaymentNewAP
-                ctrPaymentNewAP += 1
-                Dim newGroup As Boolean = False
+        'Insert into AM_PAYMENT_NEW_AP query database
+        For Each item In Me._AMPaymentNewAP
+            If Not item.GeneratedDMCM = 0 Then
+                Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, " &
+                   "ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, ENERGY_WITHHOLD, ID_NUMBER) " &
+                   "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
+                   "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
+                   "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & _DMCMNumber & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
+            Else
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, " &
+                   "ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, ENERGY_WITHHOLD, ID_NUMBER) " &
+                   "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
+                   "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
+                   "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & 0 & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
+            End If
+        Next
 
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrPaymentNewAP Mod 50) <> 0 And ctrPaymentNewAP <> cntPaymentNewAP Then
-                    newGroup = False
-                ElseIf (ctrPaymentNewAP Mod 50) <> 0 And ctrPaymentNewAP = cntPaymentNewAP Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
+        'Insert into AM_PAYMENT_NEW_OFFSETTING_AP query database
+        For Each item In Me._AMPaymentNewOffsettingAP
+            If Not item.GeneratedDMCM = 0 Then
+                Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, " &
+                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
+                        "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
+                        "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
+                        "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
+            Else
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY," &
+                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
+                        "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
+                        "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
+                        "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
+            End If
+        Next
 
-                If newGroup Then
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
-                           "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
-                           "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & _DMCMNumber & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
-                           "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
-                           "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & 0 & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
-                           "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
-                           "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & _DMCMNumber & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), " &
-                           "TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.PaymentType & "', " & item.PaymentCategory & ", TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), " &
-                           "'" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss')," & 0 & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
+        'Insert into AM_PAYMENT_NEW_OFFSETTING_AR query database
+        For Each item In Me._AMPaymentNewOffsettingAR
+            If Not item.GeneratedDMCM = 0 Then
+                Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
+                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
+                      "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
+                        "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
+                        "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
 
-                If (ctrPaymentNewAP Mod 50) = 0 And ctrPaymentNewAP <> cntPaymentNewAP Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, " &
-                       "ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-                    sqlConcat = SQL
-                End If
-            Next
-        End If
-
-
-        'Insert into AM_PAYMENT_NEW_OFFSETTING_AP query database        
-        If Me.AMPaymentNewOffsettingAP.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntPaymentNewOAP As Integer = Me.AMPaymentNewOffsettingAP.Count
-            Dim ctrPaymentNewOAP As Integer = 0
-            SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, " &
-            "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) "
-            sqlConcat = SQL
-            For Each item In Me._AMPaymentNewOffsettingAP
-                ctrPaymentNewOAP += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrPaymentNewOAP Mod 50) <> 0 And ctrPaymentNewOAP <> cntPaymentNewOAP Then
-                    newGroup = False
-                ElseIf (ctrPaymentNewOAP Mod 50) <> 0 And ctrPaymentNewOAP = cntPaymentNewOAP Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-
-                If newGroup Then
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount &
-                                "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount &
-                                "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount &
-                                "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount &
-                                "', '" & item.PaymentType & "', " & item.PaymentCategory & ", " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
-
-                If (ctrPaymentNewOAP Mod 50) = 0 And ctrPaymentNewOAP <> cntPaymentNewOAP Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AP (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, PAYMENT_TYPE, PAYMENT_CATEGORY, " &
-                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) "
-                    sqlConcat = SQL
-                End If
-            Next
-        End If
-
-        'Insert into AM_PAYMENT_NEW_OFFSETTING_AR query database                
-        If Me.AMPaymentNewOffsettingAR.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntPaymentNewOAR As Integer = Me.AMPaymentNewOffsettingAR.Count
-            Dim ctrPaymentNewOAR As Integer = 0
-            SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) "
-            sqlConcat = SQL
-            For Each item In Me._AMPaymentNewOffsettingAR
-                ctrPaymentNewOAR += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrPaymentNewOAR Mod 50) <> 0 And ctrPaymentNewOAR <> cntPaymentNewOAR Then
-                    newGroup = False
-                ElseIf (ctrPaymentNewOAR Mod 50) <> 0 And ctrPaymentNewOAR = cntPaymentNewOAR Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-
-                If newGroup Then
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                                "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
-                              "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                                "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
-                              "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    If Not item.GeneratedDMCM = 0 Then
-                        Dim _DMCMNumber As Long = dicDMCM(item.GeneratedDMCM)
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                                "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
-                              "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & _DMCMNumber & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    Else
-                        'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                        SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                                "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
-                              "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
-                                "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
-                                "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL "
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
-
-                If (ctrPaymentNewOAR Mod 50) = 0 And ctrPaymentNewOAR <> cntPaymentNewOAR Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
-                            "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) "
-                    sqlConcat = ""
-                End If
-            Next
-        End If
+            Else
+                'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+                SQL = "INSERT INTO AM_PAYMENT_NEW_OFFSETTING_AR (PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, DUE_DATE, NEW_DUEDATE, ALLOCATION_AMOUNT, COLLECTION_TYPE, COLLECTION_CATEGORY, " &
+                        "ALLOCATION_DATE, WESMBILL_SUMMARY_NO, UPDATED_BY, UPDATED_DATE, AM_DMCM_NO, OFFSET_SEQ, ENERGY_WITHHOLD, ID_NUMBER) " &
+                      "SELECT '" & PaymentNo & "', '" & item.BillingPeriod & "', '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', " &
+                        "TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), TO_DATE('" & item.NewDueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & item.CollectionType & "', '" & item.CollectionCategory & "', " &
+                        "TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.WESMBillSummaryNo & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & 0 & ", " & item.OffsettingSequence & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+                listSQL.Add(SQL)
+            End If
+        Next
 
         'WESMBillSummary        
         For Each item In Me.UpdatedWESMBillSummaryList
@@ -685,6 +509,7 @@ Public Class PaymentSaveHelper : Implements IDisposable
                                                   "WHERE WESMBILL_SUMMARY_NO = '" & item.WESMBillSummaryNo & "'"
             listSQL.Add(SQL)
         Next
+
 
         'WESMBillSummaryHistory            
         Dim ForWESMBillSummaryHistoryAP = (From x In Me.AMPaymentNewAP Select x).Union _
@@ -698,185 +523,69 @@ Public Class PaymentSaveHelper : Implements IDisposable
                                                 Group By WESMBillSummaryNo = x.WESMBillSummaryNo, DueDate = x.NewDueDate,
                                                 CollectionType = x.CollectionType Into AllocationAmount = Sum(x.AllocationAmount)).ToList()
 
-        If SumOfForWESMBillSummaryHistoryAP.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryHistoryAP As Integer = SumOfForWESMBillSummaryHistoryAP.Count
-            Dim ctrWESMBillSummaryHistoryAP As Integer = 0
-            SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, PAYMENT_TYPE, PAYMENT_NO) "
-            sqlConcat = SQL
-            For Each item In SumOfForWESMBillSummaryHistoryAP
-                ctrWESMBillSummaryHistoryAP += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrWESMBillSummaryHistoryAP Mod 50) <> 0 And ctrWESMBillSummaryHistoryAP <> cntWESMBillSummaryHistoryAP Then
-                    newGroup = False
-                ElseIf (ctrWESMBillSummaryHistoryAP Mod 50) <> 0 And ctrWESMBillSummaryHistoryAP = cntWESMBillSummaryHistoryAP Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-                If newGroup Then
-                    SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.PaymentType & "', '" & PaymentNo & "' FROM DUAL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.PaymentType & "', '" & PaymentNo & "' FROM DUAL UNION ALL "
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
+        For Each item In SumOfForWESMBillSummaryHistoryAP
+            SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, PAYMENT_TYPE, PAYMENT_NO) " &
+                    "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.PaymentType & "', '" & PaymentNo & "' FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
-                If (ctrWESMBillSummaryHistoryAP Mod 50) = 0 And ctrWESMBillSummaryHistoryAP <> cntWESMBillSummaryHistoryAP Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, PAYMENT_TYPE, PAYMENT_NO) "
-                    sqlConcat = SQL
-                End If
-            Next
-        End If
-
-        If SumOfForWESMBillSummaryHistoryAR.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryHistoryAR As Integer = SumOfForWESMBillSummaryHistoryAR.Count
-            Dim ctrWESMBillSummaryHistoryAR As Integer = 0
-            SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,COLLECTION_TYPE, PAYMENT_NO) "
-            sqlConcat = SQL
-            For Each item In SumOfForWESMBillSummaryHistoryAR
-                ctrWESMBillSummaryHistoryAR += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrWESMBillSummaryHistoryAR Mod 50) <> 0 And ctrWESMBillSummaryHistoryAR <> cntWESMBillSummaryHistoryAR Then
-                    newGroup = False
-                ElseIf (ctrWESMBillSummaryHistoryAR Mod 50) <> 0 And ctrWESMBillSummaryHistoryAR = cntWESMBillSummaryHistoryAR Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-                If newGroup Then
-                    SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.CollectionType & "', '" & PaymentNo & "' FROM DUAL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.CollectionType & "', '" & PaymentNo & "' FROM DUAL UNION ALL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
-                If (ctrWESMBillSummaryHistoryAR Mod 50) = 0 And ctrWESMBillSummaryHistoryAR <> cntWESMBillSummaryHistoryAR Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, PAYMENT_TYPE, PAYMENT_NO) "
-                    sqlConcat = SQL
-                End If
-            Next
-        End If
+        For Each item In SumOfForWESMBillSummaryHistoryAR
+            SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,COLLECTION_TYPE, PAYMENT_NO) " &
+                  "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & item.AllocationAmount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & item.CollectionType & "', '" & PaymentNo & "' FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
         Dim GetDMCMForWESMBillSummaryWHTaxAdj = (From x In Me.PaymentDMCMList
                                                  Where x.TransType = EnumDMCMTransactionType.WHTAXAdjustmentSetupClearingAROnEnergyAddBack _
                                                  Or x.TransType = EnumDMCMTransactionType.WHTAXAdjustmentSetupClearingAPOnEnergyAddBack Select x).ToList()
 
-        If UpdatedWESMBillSummaryWHTAXAdjList.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryWHTAXAdjList As Integer = UpdatedWESMBillSummaryWHTAXAdjList.Count
-            Dim ctrWESMBillSummaryWHTAXAdjList As Integer = 0
-
-            SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,COLLECTION_TYPE, PAYMENT_NO) "
-            sqlConcat = SQL
-            For Each item In UpdatedWESMBillSummaryWHTAXAdjList
-                Dim getDMCM = (From x In GetDMCMForWESMBillSummaryWHTaxAdj Where x.Particulars.Contains(item.INVDMCMNo) Select x).FirstOrDefault
-                If Not getDMCM Is Nothing Then
-                    ctrWESMBillSummaryWHTAXAdjList += 1
-                    Dim newGroup As Boolean = False
-                    'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                    If (ctrWESMBillSummaryWHTAXAdjList Mod 50) <> 0 And ctrWESMBillSummaryWHTAXAdjList <> cntWESMBillSummaryWHTAXAdjList Then
-                        newGroup = False
-                    ElseIf (ctrWESMBillSummaryWHTAXAdjList Mod 50) <> 0 And ctrWESMBillSummaryWHTAXAdjList = cntWESMBillSummaryWHTAXAdjList Then
-                        newGroup = True
-                    Else
-                        newGroup = True
-                    End If
-                    If newGroup Then
-                        If item.BalanceType = EnumBalanceType.AR Then
-                            SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumCollectionType.EnergyAREndingBalanceAdjustment & "', '" & PaymentNo & "' FROM DUAL "
-                        Else
-                            SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue * -1 & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumPaymentNewType.EnergyAPEndingBalanceAdjustment & "', '" & PaymentNo & "' FROM DUAL "
-                        End If
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                        listSQL.Add(sqlConcat)
-                        sqlConcat = ""
-                    Else
-                        If item.BalanceType = EnumBalanceType.AR Then
-                            SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumCollectionType.EnergyAREndingBalanceAdjustment & "', '" & PaymentNo & "' FROM DUAL UNION ALL"
-                        Else
-                            SQL = "SELECT '" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue * -1 & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumPaymentNewType.EnergyAPEndingBalanceAdjustment & "', '" & PaymentNo & "' FROM DUAL UNION ALL "
-                        End If
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    End If
-
-                    If (ctrWESMBillSummaryWHTAXAdjList Mod 50) = 0 And ctrWESMBillSummaryWHTAXAdjList <> cntWESMBillSummaryWHTAXAdjList Then
-                        sqlConcat = ""
-                        SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,COLLECTION_TYPE, PAYMENT_NO) "
-                        sqlConcat = SQL
-                    End If
+        For Each item In UpdatedWESMBillSummaryWHTAXAdjList
+            Dim getDMCM = (From x In GetDMCMForWESMBillSummaryWHTaxAdj Where x.Particulars.Contains(item.INVDMCMNo) Select x).FirstOrDefault
+            If Not getDMCM Is Nothing Then
+                If item.BalanceType = EnumBalanceType.AR Then
+                    SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,COLLECTION_TYPE, PAYMENT_NO) " &
+                        "VALUES ('" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumCollectionType.EnergyAREndingBalanceAdjustment & "', '" & PaymentNo & "')"
+                    listSQL.Add(SQL)
+                Else
+                    SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE,PAYMENT_TYPE, PAYMENT_NO) " &
+                        "VALUES ('" & item.WESMBillSummaryNo & "', TO_DATE('" & item.DueDate & "','MM/DD/YYYY'), '" & getDMCM.TotalAmountDue * -1 & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumPaymentNewType.EnergyAPEndingBalanceAdjustment & "', '" & PaymentNo & "')"
+                    listSQL.Add(SQL)
                 End If
-            Next
-            sqlConcat = ""
-        End If
+            End If
+        Next
 
         'AM_FTF_MAIN        
         Dim ReplenishmentRefNo As Long = 0
         For Each item In Me.PaymentFTF
+
             Dim JVBatchCode As String = ""
-            Dim ReferenceNo As Long = dicListofSeq.Item("SEQ_AM_FTF_REF_NO")
+            Dim ReferenceNo As Long = objWBillHelper.GetSequenceID("SEQ_AM_FTF_REF_NO")
+
             item.RefNo = ReferenceNo
             JVBatchCode = EnumPostedType.PEFT.ToString & "-" & CStr(dicJVBatchNo(EnumPostedType.PEFT.ToString))
             ReplenishmentRefNo = ReferenceNo
 
-            SQL = "INSERT INTO AM_FTF_MAIN (ALLOCATION_DATE, BATCH_CODE, REF_NO, DR_DATE, CR_DATE, TOTAL_AMOUNT, TRANS_TYPE, STATUS, IS_POSTED, REQUESTING_APPROVAL, APPROVED_BY, UPDATED_BY, UPDATED_DATE) " &
+            SQL = "INSERT INTO AM_FTF_MAIN (ALLOCATION_DATE, BATCH_CODE, REF_NO, DR_DATE, CR_DATE, TOTAL_AMOUNT, " &
+                                                        "TRANS_TYPE, STATUS, IS_POSTED, REQUESTING_APPROVAL, APPROVED_BY, UPDATED_BY, UPDATED_DATE) " &
                   "SELECT TO_DATE('" & item.AllocationDate.ToShortDateString & "','MM/DD/YYYY'), '" & JVBatchCode & "', '" & ReferenceNo & "', " &
                                 "TO_DATE('" & item.DRDate.ToString("MM/dd/yyyy") & "','MM/DD/YYYY'), TO_DATE('" & item.CRDate.ToString("MM/dd/yyyy") & "','MM/DD/YYYY'), '" & item.TotalAmount & "', " &
                                 "'" & item.TransType & "', '" & item.Status & "', '" & item.IsPosted & "', '" & item.RequestingApproval & "', '" & item.ApprovedBy & "', " &
                                 "'" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
             listSQL.Add(SQL)
 
-            If item.ListOfFTFDetails.Count <> 0 Then
-                sqlConcat = ""
-                Dim cntPaymentFTFDtls As Integer = item.ListOfFTFDetails.Count
-                Dim ctrPaymentFTFDtls As Integer = 0
-                SQL = "INSERT INTO AM_FTF_DETAILS (REF_NO, ACCT_CODE, BANK_ACCNT_NO, ISSUING_BANK, RECEIVING_BANK, DEBIT, CREDIT, PARTICULARS, UPDATED_BY, UPDATED_DATE) "
-                sqlConcat = SQL
-                For Each ItemFTF In item.ListOfFTFDetails
-                    ctrPaymentFTFDtls += 1
-                    If ctrPaymentFTFDtls <> cntPaymentFTFDtls Then
-                        SQL = "SELECT '" & ReferenceNo & "', '" & ItemFTF.AccountCode & "', '" & ItemFTF.BankAccountNo & "', '" & ItemFTF.IssuingBank & "', '" & ItemFTF.ReceivingBank & "', " &
-                                 "'" & ItemFTF.Debit & "', '" & ItemFTF.Credit & "', '" & ItemFTF.Particulars & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL UNION ALL"
-                    Else
-                        SQL = "SELECT '" & ReferenceNo & "', '" & ItemFTF.AccountCode & "', '" & ItemFTF.BankAccountNo & "', '" & ItemFTF.IssuingBank & "', '" & ItemFTF.ReceivingBank & "', " &
-                                 "'" & ItemFTF.Debit & "', '" & ItemFTF.Credit & "', '" & ItemFTF.Particulars & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                Next
-                listSQL.Add(sqlConcat)
-                sqlConcat = ""
-            End If
+            For Each ItemFTF In item.ListOfFTFDetails
+                SQL = "INSERT INTO AM_FTF_DETAILS (REF_NO, ACCT_CODE, BANK_ACCNT_NO, ISSUING_BANK, RECEIVING_BANK, DEBIT, CREDIT, PARTICULARS, UPDATED_BY, UPDATED_DATE) " &
+                      "SELECT '" & ReferenceNo & "', '" & ItemFTF.AccountCode & "', '" & ItemFTF.BankAccountNo & "', '" & ItemFTF.IssuingBank & "', '" & ItemFTF.ReceivingBank & "', " &
+                             "'" & ItemFTF.Debit & "', '" & ItemFTF.Credit & "', '" & ItemFTF.Particulars & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
+                listSQL.Add(SQL)
+            Next
 
-            If item.ListOfFTFParticipants.Count <> 0 Then
-                sqlConcat = ""
-                Dim cntPaymentFTFPart As Integer = item.ListOfFTFParticipants.Count
-                Dim ctrPaymentFTFPart As Integer = 0
-                SQL = "INSERT INTO AM_FTF_PARTICIPANT (REF_NO, ID_NUMBER, AMOUNT, UPDATED_BY, UPDATED_DATE) "
-                sqlConcat = SQL
-                For Each ItemParticipants In item.ListOfFTFParticipants
-                    ctrPaymentFTFPart += 1
-                    If ctrPaymentFTFPart <> cntPaymentFTFPart Then
-                        SQL = "SELECT '" & ReferenceNo & "', '" & ItemParticipants.IDNumber.IDNumber & "', " &
-                                  "'" & ItemParticipants.Amount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL UNION ALL"
-                    Else
-                        SQL = "SELECT '" & ReferenceNo & "', '" & ItemParticipants.IDNumber.IDNumber & "', " &
-                                  "'" & ItemParticipants.Amount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
-                    End If
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                Next
-                listSQL.Add(sqlConcat)
-                sqlConcat = ""
-            End If
-            dicListofSeq("SEQ_AM_FTF_REF_NO") += 1
+            For Each ItemParticipants In item.ListOfFTFParticipants
+                SQL = "INSERT INTO AM_FTF_PARTICIPANT (REF_NO, ID_NUMBER, AMOUNT, UPDATED_BY, UPDATED_DATE) " &
+                      "SELECT '" & ReferenceNo & "', '" & ItemParticipants.IDNumber.IDNumber & "', " &
+                              "'" & ItemParticipants.Amount & "', '" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
+                listSQL.Add(SQL)
+            Next
         Next
 
         'AM_FTF_MAIN COLLECTION
@@ -888,128 +597,57 @@ Public Class PaymentSaveHelper : Implements IDisposable
             End If
         Next
 
-        If Me.NewPaymentDeferred.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntNewPaymentDeferred As Integer = Me.NewPaymentDeferred.Count
-            Dim ctrNewPaymentDeferred As Integer = 0
-            SQL = "INSERT INTO AM_DEFERRED_PAYMENT_MAIN (ALLOCATION_DATE, DEFERRED_PAYMENT_NO, ID_NUMBER, OUTSTANDING_DEFERRED_PAYMENT, " &
-                                                                                "PAYMENT_NO, DEFERRED_AMOUNT, DEFERRED_TYPE, CHARGE_TYPE, AM_DMCM_NO, REMARKS, ORIG_DATE) "
-            sqlConcat = SQL
-            'AM_DEFERRED_PAYMENT_MAIN
-            For Each item In Me.NewPaymentDeferred
-                Dim DeferredPaymentNo As Long = dicListofSeq.Item("SEQ_AM_DEF_PYMNT_NO")
-                ctrNewPaymentDeferred += 1
-                If ctrNewPaymentDeferred <> cntNewPaymentDeferred Then
-                    If Not item.DMCMNumber = 0 Then
-                        Dim DmcmNoX As Long = dicDMCM(item.DMCMNumber)
-                        SQL = "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
-                                     "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
-                                     "'" & item.ChargeType.ToString & "', '" & DmcmNoX & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL UNION ALL"
+        'AM_DEFERRED_PAYMENT_MAIN
+        For Each item In Me.NewPaymentDeferred
+            Dim DeferredPaymentNo As Long = objWBillHelper.GetSequenceID("SEQ_AM_DEF_PYMNT_NO")
+            If Not item.DMCMNumber = 0 Then
+                Dim DmcmNoX As Long = dicDMCM(item.DMCMNumber)
+                SQL = "INSERT INTO AM_DEFERRED_PAYMENT_MAIN (ALLOCATION_DATE, DEFERRED_PAYMENT_NO, ID_NUMBER, OUTSTANDING_DEFERRED_PAYMENT, " &
+                                                                            "PAYMENT_NO, DEFERRED_AMOUNT, DEFERRED_TYPE, CHARGE_TYPE, AM_DMCM_NO, REMARKS, ORIG_DATE) " &
+                      "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
+                             "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
+                             "'" & item.ChargeType.ToString & "', '" & DmcmNoX & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL"
+                listSQL.Add(SQL)
+            Else
+                SQL = "INSERT INTO AM_DEFERRED_PAYMENT_MAIN (ALLOCATION_DATE, DEFERRED_PAYMENT_NO, ID_NUMBER, OUTSTANDING_DEFERRED_PAYMENT, " &
+                                                                          "PAYMENT_NO, DEFERRED_AMOUNT, DEFERRED_TYPE, CHARGE_TYPE, AM_DMCM_NO, REMARKS, ORIG_DATE) " &
+                      "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
+                      "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
+                      "'" & item.ChargeType.ToString & "', '" & 0 & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL"
+                listSQL.Add(SQL)
+            End If
+        Next
 
-                    Else
-                        SQL = "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
-                              "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
-                              "'" & item.ChargeType.ToString & "', '" & 0 & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL UNION ALL"
-                    End If
-                Else
-                    If Not item.DMCMNumber = 0 Then
-                        Dim DmcmNoX As Long = dicDMCM(item.DMCMNumber)
-                        SQL = "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
-                                     "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
-                                     "'" & item.ChargeType.ToString & "', '" & DmcmNoX & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL"
-
-                    Else
-                        SQL = "SELECT TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & DeferredPaymentNo & "', '" & item.IDNumber & "', " &
-                              "'" & item.OutstandingBalanceDeferredPayment & "', '" & PaymentNo & "', '" & item.DeferredAmount & "', '" & item.DeferredType & "', " &
-                              "'" & item.ChargeType.ToString & "', '" & 0 & "', '" & item.Remarks & "',TO_DATE('" & item.OriginalDate.ToShortDateString & "','mm/dd/yyyy') FROM DUAL"
-                    End If
-                End If
-                sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                dicListofSeq("SEQ_AM_DEF_PYMNT_NO") += 1
-            Next
-            listSQL.Add(sqlConcat)
-            sqlConcat = ""
-        End If
-
-        'EFT        
-        If PaymentEFT.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntPaymentEFT As Integer = PaymentEFT.Count
-            Dim ctrPaymentEFT As Integer = 0
+        'EFT
+        For Each item In PaymentEFT
             SQL = "INSERT INTO AM_PAYMENT_NEW_EFT (PAYMENT_NO, ALLOCATION_DATE, ID_NUMBER, PAYMENT_TYPE, CHECK_NO, EXCESS_COLLECTION, DEFERRED_ENERGY, " &
-                                                                    "DEFERRED_VAT, ENERGY, VAT, MF, RETURN_AMOUNT, TRANSFER_TO_PRUDENTIAL, INTEREST_NSS, INTEREST_STL, UPDATED_BY, UPDATED_DATE, TRANSFER_TO_FINPEN, OFFSET_DEFERRED_ENERGY, OFFSET_DEFERRED_VAT) "
-            sqlConcat = SQL
-            For Each item In PaymentEFT
-                ctrPaymentEFT += 1
-                If ctrPaymentEFT <> cntPaymentEFT Then
-                    SQL = "SELECT " & PaymentNo & " ,TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.Participant.IDNumber & "', '" & item.PaymentType & "', " &
-                            "'" & item.CheckNumber & "', '" & item.ExcessCollection & "', '" & item.DeferredEnergy & "', '" & item.DeferredVAT & "', '" & item.Energy & "', '" & item.VAT & "', " &
-                            "'" & item.MarketFees & "', '" & item.ReturnAmount & "', '" & item.TransferPrudential & "', '" & item.NSSInterest & "', '" & item.STLInterest & "', " &
-                            "'" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & item.TransferFinPen.ToString & ", " & item.OffsetOnDeferredEnergy.ToString & ", " & item.OffsetOnDeferredVAT.ToString & " FROM DUAL UNION ALL"
-                Else
-                    SQL = "SELECT " & PaymentNo & " ,TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.Participant.IDNumber & "', '" & item.PaymentType & "', " &
-                            "'" & item.CheckNumber & "', '" & item.ExcessCollection & "', '" & item.DeferredEnergy & "', '" & item.DeferredVAT & "', '" & item.Energy & "', '" & item.VAT & "', " &
-                            "'" & item.MarketFees & "', '" & item.ReturnAmount & "', '" & item.TransferPrudential & "', '" & item.NSSInterest & "', '" & item.STLInterest & "', " &
-                            "'" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & item.TransferFinPen.ToString & ", " & item.OffsetOnDeferredEnergy.ToString & ", " & item.OffsetOnDeferredVAT.ToString & " FROM DUAL"
-                End If
-                sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-            Next
-            listSQL.Add(sqlConcat)
-            sqlConcat = ""
-        End If
+                                                                "DEFERRED_VAT, ENERGY, VAT, MF, RETURN_AMOUNT, TRANSFER_TO_PRUDENTIAL, INTEREST_NSS, INTEREST_STL, UPDATED_BY, UPDATED_DATE, TRANSFER_TO_FINPEN, OFFSET_DEFERRED_ENERGY, OFFSET_DEFERRED_VAT) " &
+                  "SELECT " & PaymentNo & " ,TO_DATE('" & item.AllocationDate & "','MM/DD/YYYY'), '" & item.Participant.IDNumber & "', '" & item.PaymentType & "', " &
+                        "'" & item.CheckNumber & "', '" & item.ExcessCollection & "', '" & item.DeferredEnergy & "', '" & item.DeferredVAT & "', '" & item.Energy & "', '" & item.VAT & "', " &
+                        "'" & item.MarketFees & "', '" & item.ReturnAmount & "', '" & item.TransferPrudential & "', '" & item.NSSInterest & "', '" & item.STLInterest & "', " &
+                        "'" & UpdatedBy & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), " & item.TransferFinPen.ToString & ", " & item.OffsetOnDeferredEnergy.ToString & ", " & item.OffsetOnDeferredVAT.ToString & " FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
         'AM_PAYMENT_SHARE
         For Each item In AMPaymentShare
-            PaymentShareNo = dicListofSeq.Item("SEQ_AM_PAY_SHARE_NO")
+            PaymentShareNo = objWBillHelper.GetSequenceID("SEQ_AM_PAY_SHARE_NO")
             SQL = "INSERT INTO AM_PAYMENT_NEW_SHARE (PAYMENT_SHARE_NO, WESMBILLSUMMARY_NO, BILLING_PERIOD, ID_NUMBER, INV_NUMBER, AMOUNT_SHARE, AMOUNT_OFFSET, " &
                                                                   "AMOUNT_BALANCE, CHARGE_TYPE, OFFSETTING_SEQ_NO, PAYMENT_NO, PAYMENT_TYPE) " &
                   "SELECT '" & PaymentShareNo & "','" & item.WESMBillSummaryNo & "', '" & item.BillingPeriod & "', '" & item.IDNumber & "', '" & item.InvoiceNumber & "', " &
                   "'" & item.AmountShare & "', '" & 0 & "', '" & item.AmountBalance & "', '" & item.ChargeType.ToString & "', '" & item.OffsettingSequence & "', '" & PaymentNo & "', '" & item.PaymentType & "' FROM DUAL"
             listSQL.Add(SQL)
-
-            If item.AmountOffset.Count <> 0 Then
-                sqlConcat = ""
-                Dim cntAmountOffset As Integer = item.AmountOffset.Count
-                Dim ctrAmountOffset As Integer = 0
-                SQL = "INSERT INTO AM_PAYMENT_NEW_SHARE_DETAILS (PAYMENT_SHARE_NO, WESMBILL_SUMMARY_NO, BILLING_PERIOD, ID_NUMBER, INV_NUMBER, AMOUNT_OFFSET, CHARGE_TYPE, OFFSETTING_SEQ_NO) "
-                sqlConcat = SQL
-                For Each itemPaymentShare In item.AmountOffset
-                    ctrAmountOffset += 1
-                    Dim newGroup As Boolean = False
-                    'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                    If (ctrAmountOffset Mod 50) <> 0 And ctrAmountOffset <> cntAmountOffset Then
-                        newGroup = False
-                    ElseIf (ctrAmountOffset Mod 50) <> 0 And ctrAmountOffset = cntAmountOffset Then
-                        newGroup = True
-                    Else
-                        newGroup = True
-                    End If
-                    If newGroup Then
-                        SQL = "SELECT '" & PaymentShareNo & "', '" & itemPaymentShare.ForWESMBillSummaryNo & "', '" & itemPaymentShare.BillingPeriod & "', '" & itemPaymentShare.IDNumber & "', '" & itemPaymentShare.InvoiceNumber & "', " &
-                                 "'" & itemPaymentShare.OffsetAmount & "', '" & itemPaymentShare.ChargeType.ToString & "', '" & itemPaymentShare.BatchGroupSequence & "' FROM DUAL"
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                        listSQL.Add(sqlConcat)
-                        sqlConcat = ""
-                    Else
-                        SQL = "SELECT '" & PaymentShareNo & "', '" & itemPaymentShare.ForWESMBillSummaryNo & "', '" & itemPaymentShare.BillingPeriod & "', '" & itemPaymentShare.IDNumber & "', '" & itemPaymentShare.InvoiceNumber & "', " &
-                                 "'" & itemPaymentShare.OffsetAmount & "', '" & itemPaymentShare.ChargeType.ToString & "', '" & itemPaymentShare.BatchGroupSequence & "' FROM DUAL UNION ALL"
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    End If
-
-
-                    If (ctrAmountOffset Mod 50) = 0 And ctrAmountOffset <> cntAmountOffset Then
-                        sqlConcat = ""
-                        SQL = "INSERT INTO AM_PAYMENT_NEW_SHARE_DETAILS (PAYMENT_SHARE_NO, WESMBILL_SUMMARY_NO, BILLING_PERIOD, ID_NUMBER, INV_NUMBER, AMOUNT_OFFSET, CHARGE_TYPE, OFFSETTING_SEQ_NO) "
-                        sqlConcat = SQL
-                    End If
-                Next
-            End If
-            dicListofSeq("SEQ_AM_PAY_SHARE_NO") += 1
+            For Each itemPaymentShare In item.AmountOffset
+                SQL = "INSERT INTO AM_PAYMENT_NEW_SHARE_DETAILS (PAYMENT_SHARE_NO, WESMBILL_SUMMARY_NO, BILLING_PERIOD, ID_NUMBER, INV_NUMBER, AMOUNT_OFFSET, CHARGE_TYPE, OFFSETTING_SEQ_NO) " &
+                      "SELECT '" & PaymentShareNo & "', '" & itemPaymentShare.ForWESMBillSummaryNo & "', '" & itemPaymentShare.BillingPeriod & "', '" & itemPaymentShare.IDNumber & "', '" & itemPaymentShare.InvoiceNumber & "', " &
+                             "'" & itemPaymentShare.OffsetAmount & "', '" & itemPaymentShare.ChargeType.ToString & "', '" & itemPaymentShare.BatchGroupSequence & "' FROM DUAL"
+                listSQL.Add(SQL)
+            Next
         Next
 
         'AM_RFP
         With RFPList
-            Dim RFPRefNo As Long = dicListofSeq.Item("SEQ_AM_RFP_NO")
+            Dim RFPRefNo As Long = objWBillHelper.GetSequenceID("SEQ_AM_RFP_NO")
             SQL = "INSERT INTO AM_RFP (ALLOCATION_DATE, REFERENCE_NO, PAYMENT_DATE, RFP_TO, RFP_FROM, RFP_PURPOSE, PREPARED_BY, REVIEWED_BY, APPROVED_BY, " _
                                     & "UPDATED_DATE, UPDATED_BY, NSS_APPLIED, PR_REPLENISHMENT, MF_APPLIED, TRANSFER_PEMC, HELD_COLLECTION, PAYMENT_NO) " _
                 & "SELECT TO_DATE('" & .AllocationDate & "','MM/DD/YYYY'), " & RFPRefNo & ", TO_DATE('" & .PaymentDate & "','MM/DD/YYYY'), '" _
@@ -1019,84 +657,21 @@ Public Class PaymentSaveHelper : Implements IDisposable
 
             listSQL.Add(SQL)
 
-            If RFPList.RFPDetails.Count <> 0 Then
-                sqlConcat = ""
-                Dim cntRFPDetails As Integer = RFPList.RFPDetails.Count
-                Dim ctrRFPDetails As Integer = 0
-                SQL = "INSERT INTO AM_RFP_DETAILS (REFERENCE_NO, ID_NUMBER, BANK_BRANCH, ACCOUNT_NO, RFP_PAYMENT_TYPE, AMOUNT, DATE_OF_DEPOSIT, PARTICULARS, ALLOCATION_DATE, RFP_DETAILS_TYPE) "
-                sqlConcat = SQL
-                For Each item In RFPList.RFPDetails
-                    ctrRFPDetails += 1
-                    Dim newGroup As Boolean = False
-                    'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                    If (ctrRFPDetails Mod 50) <> 0 And ctrRFPDetails <> cntRFPDetails Then
-                        newGroup = False
-                    ElseIf (ctrRFPDetails Mod 50) <> 0 And ctrRFPDetails = cntRFPDetails Then
-                        newGroup = True
-                    Else
-                        newGroup = True
-                    End If
-                    If newGroup Then
-                        SQL = "SELECT " & RFPRefNo & ", '" & item.Participant & "', '" & item.BankBranch & "', '" & item.AccountNo & "', '" & item.PaymentType & "', '" & item.Amount & "', " _
-                                    & "TO_DATE('" & item.DateOfDeposit & "', 'MM/DD/YYYY'), '" & item.Particulars & "', TO_DATE('" & item.AllocationDate & "', 'MM/DD/YYYY'), " & item.RFPDetailsType & " FROM DUAL"
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                        listSQL.Add(sqlConcat)
-                        sqlConcat = ""
-                    Else
-                        SQL = "SELECT " & RFPRefNo & ", '" & item.Participant & "', '" & item.BankBranch & "', '" & item.AccountNo & "', '" & item.PaymentType & "', '" & item.Amount & "', " _
-                                                            & "TO_DATE('" & item.DateOfDeposit & "', 'MM/DD/YYYY'), '" & item.Particulars & "', TO_DATE('" & item.AllocationDate & "', 'MM/DD/YYYY'), " & item.RFPDetailsType & " FROM DUAL UNION ALL"
-                        sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    End If
-
-                    If (ctrRFPDetails Mod 50) = 0 And ctrRFPDetails <> cntRFPDetails Then
-                        sqlConcat = ""
-                        SQL = "INSERT INTO AM_RFP_DETAILS (REFERENCE_NO, ID_NUMBER, BANK_BRANCH, ACCOUNT_NO, RFP_PAYMENT_TYPE, AMOUNT, DATE_OF_DEPOSIT, PARTICULARS, ALLOCATION_DATE, RFP_DETAILS_TYPE) "
-                        sqlConcat = SQL
-                    End If
-                Next
-            End If
-            dicListofSeq("SEQ_AM_RFP_NO") += 1
+            For Each item In RFPList.RFPDetails
+                SQL = "INSERT INTO AM_RFP_DETAILS (REFERENCE_NO, ID_NUMBER, BANK_BRANCH, ACCOUNT_NO, RFP_PAYMENT_TYPE, AMOUNT, DATE_OF_DEPOSIT, PARTICULARS, ALLOCATION_DATE, RFP_DETAILS_TYPE) " _
+                    & "SELECT " & RFPRefNo & ", '" & item.Participant & "', '" & item.BankBranch & "', '" & item.AccountNo & "', '" & item.PaymentType & "', '" & item.Amount & "', " _
+                                & "TO_DATE('" & item.DateOfDeposit & "', 'MM/DD/YYYY'), '" & item.Particulars & "', TO_DATE('" & item.AllocationDate & "', 'MM/DD/YYYY'), " & item.RFPDetailsType & " FROM DUAL"
+                listSQL.Add(SQL)
+            Next
         End With
 
-        'AM_PAYMENT_NEW_WBSHISTORY_BAL       
-        If Me.WESMBillSummaryBalance.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryBalance As Integer = Me.WESMBillSummaryBalance.Count
-            Dim ctrWESMBillSummaryBalance As Integer = 0
-
-            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_BALANCE (PAYMENT_NO, BILLING_PERIOD, ORIG_DUE_DATE, BILLING_PERIOD_REMARKS, TOTAL_BILL, ID_NUMBER, AMOUNT_BALANCE, CHARGE_TYPE, BALANCE_TYPE, WESMBILL_BATCH_NO) "
-            sqlConcat = SQL
-            For Each item In Me.WESMBillSummaryBalance
-                ctrWESMBillSummaryBalance += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrWESMBillSummaryBalance Mod 50) <> 0 And ctrWESMBillSummaryBalance <> cntWESMBillSummaryBalance Then
-                    newGroup = False
-                ElseIf (ctrWESMBillSummaryBalance Mod 50) <> 0 And ctrWESMBillSummaryBalance = cntWESMBillSummaryBalance Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-                If newGroup Then
-                    SQL = "SELECT " & PaymentNo & ", " & item.BillingPeriod & ", TO_DATE('" & item.OriginalDueDate & "', 'MM/DD/YYYY'), '" & item.BillingPeriodRemarks & "', '" & item.TotalBillAmount & "', '" & item.IDNumber.IDNumber _
-                                & "', " & item.AmountBalance & ", '" & item.ChargeType.ToString & "', '" & item.BalanceType.ToString & "', " & item.WESMBillBatchNo & " FROM DUAL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                    sqlConcat = ""
-                Else
-                    SQL = "SELECT " & PaymentNo & ", " & item.BillingPeriod & ", TO_DATE('" & item.OriginalDueDate & "', 'MM/DD/YYYY'), '" & item.BillingPeriodRemarks & "', '" & item.TotalBillAmount & "', '" & item.IDNumber.IDNumber _
-                                & "', " & item.AmountBalance & ", '" & item.ChargeType.ToString & "', '" & item.BalanceType.ToString & "', " & item.WESMBillBatchNo & " FROM DUAL UNION ALL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
-
-                If (ctrWESMBillSummaryBalance Mod 50) = 0 And ctrWESMBillSummaryBalance <> cntWESMBillSummaryBalance Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_BALANCE (PAYMENT_NO, BILLING_PERIOD, ORIG_DUE_DATE, BILLING_PERIOD_REMARKS, TOTAL_BILL, ID_NUMBER, AMOUNT_BALANCE, CHARGE_TYPE, BALANCE_TYPE, WESMBILL_BATCH_NO) "
-                    sqlConcat = SQL
-                End If
-            Next
-            sqlConcat = ""
-        End If
+        'AM_PAYMENT_NEW_WBSHISTORY_BAL
+        For Each item In Me.WESMBillSummaryBalance
+            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_BALANCE (PAYMENT_NO, BILLING_PERIOD, ORIG_DUE_DATE, BILLING_PERIOD_REMARKS, TOTAL_BILL, ID_NUMBER, AMOUNT_BALANCE, CHARGE_TYPE, BALANCE_TYPE, WESMBILL_BATCH_NO) " _
+                & "SELECT " & PaymentNo & ", " & item.BillingPeriod & ", TO_DATE('" & item.OriginalDueDate & "', 'MM/DD/YYYY'), '" & item.BillingPeriodRemarks & "', '" & item.TotalBillAmount & "', '" & item.IDNumber.IDNumber _
+                            & "', " & item.AmountBalance & ", '" & item.ChargeType.ToString & "', '" & item.BalanceType.ToString & "', " & item.WESMBillBatchNo & " FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
         'AM_PRUDENTIAL_HISTORY
         For Each item In Me.PrudentialHistoryList
@@ -1119,7 +694,7 @@ Public Class PaymentSaveHelper : Implements IDisposable
         'AM_OFFICIAL_RECEIPT_MAIN
         For Each item In Me.ORList
 
-            Dim ORNo As Long = dicListofSeq.Item("SEQ_AM_OR_NO")
+            Dim ORNo As Long = objWBillHelper.GetSequenceID("SEQ_AM_OR_NO")
             Dim BatchCode As String = EnumPostedType.PA.ToString & "-" & dicJVBatchNo(EnumPostedType.PA.ToString).ToString
 
             If item.TransactionType = EnumORTransactionType.FinPenAmount Then
@@ -1149,7 +724,6 @@ Public Class PaymentSaveHelper : Implements IDisposable
                                 summary.CollectionType & ", '" & AMModule.UserName & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss') FROM DUAL"
                 listSQL.Add(SQL)
             Next
-            dicListofSeq("SEQ_AM_OR_NO") += 1
         Next
 
         'AM_PAYMENT_NEW_TRANSFER_TO_PR
@@ -1171,85 +745,46 @@ Public Class PaymentSaveHelper : Implements IDisposable
             listSQL.Add(SQL)
         Next
 
-        'No Transaction in WESM Bills AR        
-        If Me.WESMBillSummaryNoTransAR.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryNoTransAR As Integer = Me.WESMBillSummaryNoTransAR.Count
-            Dim ctrWESMBillSummaryNoTransAR As Integer = 0
-            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-            sqlConcat = SQL
-            For Each item In Me.WESMBillSummaryNoTransAR
-                ctrWESMBillSummaryNoTransAR += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrWESMBillSummaryNoTransAR Mod 50) <> 0 And ctrWESMBillSummaryNoTransAR <> cntWESMBillSummaryNoTransAR Then
-                    newGroup = False
-                ElseIf (ctrWESMBillSummaryNoTransAR Mod 50) <> 0 And ctrWESMBillSummaryNoTransAR = cntWESMBillSummaryNoTransAR Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-                If newGroup Then
-                    'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                    SQL = "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
-                                 & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                Else
-                    'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                    SQL = "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
-                                 & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
+        For Each item In Me.WESMBillSummaryNoTransAR
+            'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) " _
+                & "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
+                         & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
-                If (ctrWESMBillSummaryNoTransAR Mod 50) = 0 And ctrWESMBillSummaryNoTransAR <> cntWESMBillSummaryNoTransAR Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-                    sqlConcat = SQL
-                End If
-            Next
-            sqlConcat = ""
-        End If
+        For Each item In Me.WESMBillSummaryNoTransAP
+            'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
+            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) " _
+                & "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
+                         & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
-        'No Transaction in WESM Bills AP        
-        If Me.WESMBillSummaryNoTransAP.Count <> 0 Then
-            sqlConcat = ""
-            Dim cntWESMBillSummaryNoTransAP As Integer = Me.WESMBillSummaryNoTransAP.Count
-            Dim ctrWESMBillSummaryNoTransAP As Integer = 0
+        For Each item In Me.WESMTransDetailsSummaryList
+            If item.Status.Equals(EnumWESMTransDetailsSummaryStatus.ADDED.ToString) Then
+                SQL = "INSERT INTO AM_WESM_TRANS_DETAILS_SUMMARY(BUYER_TRANS_NO,BUYER_BILLING_ID,SELLER_TRANS_NO,SELLER_BILLING_ID,DUE_DATE,NEW_DUE_DATE,ORIG_AMOUNT_ENERGY,OBIN_ENERGY," & vbNewLine _
+                                            & "ORIG_AMOUNT_VAT,OBIN_VAT,ORIG_AMOUNT_EWT,OBIN_EWT,UPDATED_DATE,UPDATED_BY)" & vbNewLine _
+                      & "SELECT '" & item.BuyerTransNo & "', '" & item.BuyerBillingID & "', '" & item.SellerTransNo & "', '" & item.SellerBillingID & "', TO_DATE('" & item.DueDate.ToShortDateString & "','MM/DD/yyyy')," & vbNewLine _
+                      & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','MM/DD/yyyy')," & item.OrigBalanceInEnergy & "," & item.OutstandingBalanceInEnergy & "," & item.OrigBalanceInVAT & vbNewLine _
+                      & "," & item.OutstandingBalanceInVAT & "," & item.OrigBalanceInEWT & "," & item.OutstandingBalanceInEWT & ",SYSDATE,'" & AMModule.UserName & "' FROM DUAL"
+                listSQL.Add(SQL)
+            ElseIf item.Status.Equals(EnumWESMTransDetailsSummaryStatus.UPDATED.ToString) Then
+                SQL = "UPDATE AM_WESM_TRANS_DETAILS_SUMMARY SET OBIN_ENERGY = " & item.OutstandingBalanceInEnergy & ",OBIN_VAT = " & item.OutstandingBalanceInVAT & vbNewLine _
+                    & " WHERE BUYER_TRANS_NO = '" & item.BuyerTransNo & "' AND SELLER_TRANS_NO = '" & item.SellerTransNo & "'"
+                listSQL.Add(SQL)
+            End If
+        Next
 
-            SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-            sqlConcat = SQL
-            For Each item In Me.WESMBillSummaryNoTransAP
-                ctrWESMBillSummaryNoTransAP += 1
-                Dim newGroup As Boolean = False
-                'Group by 100 to avoid the sql scripts to consume the maximimum records for multiple rows insert in db 09292021.
-                If (ctrWESMBillSummaryNoTransAP Mod 50) <> 0 And ctrWESMBillSummaryNoTransAP <> cntWESMBillSummaryNoTransAP Then
-                    newGroup = False
-                ElseIf (ctrWESMBillSummaryNoTransAP Mod 50) <> 0 And ctrWESMBillSummaryNoTransAP = cntWESMBillSummaryNoTransAP Then
-                    newGroup = True
-                Else
-                    newGroup = True
-                End If
-                If newGroup Then
-                    'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                    SQL = "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
-                                 & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                    listSQL.Add(sqlConcat)
-                Else
-                    'add ENERGY_WITHHOLD and ID_NUMBER for CAP SUMMARY HIstorical Purposes added by lance as of 06/05/2020
-                    SQL = "SELECT " & Me.PaymentNumber & ", " & item.BillingPeriod & ", '" & item.EndingBalance & "', '" & item.NewEndingBalance & "', '0', TO_DATE('" & item.DueDate.ToShortDateString & "','mm/dd/yyyy'), " _
-                                 & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','mm/dd/yyyy'), " & item.WESMBillSummaryNo & ", " & item.EnergyWithHold & ", '" & item.IDNumber & "' FROM DUAL UNION ALL"
-                    sqlConcat = String.Concat(sqlConcat, vbNewLine, SQL)
-                End If
-                If (ctrWESMBillSummaryNoTransAP Mod 50) = 0 And ctrWESMBillSummaryNoTransAP <> ctrWESMBillSummaryNoTransAP Then
-                    sqlConcat = ""
-                    SQL = "INSERT INTO AM_PAYMENT_NEW_WBS_NOTRANS ( PAYMENT_NO, BILLING_PERIOD, ENDING_BALANCE, NEW_ENDING_BALANCE, ALLOCATION_AMOUNT, DUE_DATE, NEW_DUEDATE, WESMBILL_SUMMARY_NO, ENERGY_WITHHOLD, ID_NUMBER) "
-                    sqlConcat = SQL
-                End If
-            Next
-            sqlConcat = ""
-        End If
+        For Each item In Me.WESMTransDetailsSummaryHistoryList
+            SQL = "INSERT INTO AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY(BUYER_TRANS_NO,BUYER_BILLING_ID,SELLER_TRANS_NO,SELLER_BILLING_ID,DUE_DATE,ALLOCATION_DATE,REMITTANCE_DATE,ALLOCATED_IN_ENERGY,ALLOCATED_IN_DEFINT,ALLOCATED_IN_VAT," & vbNewLine _
+                                            & "PROCESSED_DATE,PROCESED_BY)" & vbNewLine _
+                      & "SELECT '" & item.BuyerTransNo & "', '" & item.BuyerBillingID & "', '" & item.SellerTransNo & "', '" & item.SellerBillingID & "', TO_DATE('" & item.DueDate.ToShortDateString & "','MM/DD/yyyy')" & vbNewLine _
+                      & ",TO_DATE('" & Me.AllocationDate.CollAllocationDate.ToShortDateString & "','MM/DD/yyyy')" & ",TO_DATE('" & Me.AllocationDate.RemittanceDate.ToShortDateString & "','MM/DD/yyyy')," & vbNewLine _
+                      & item.AllocatedInEnergy & "," & item.AllocatedInDefInt & "," & item.AllocatedInVAT & vbNewLine _
+                      & ",SYSDATE,'" & AMModule.UserName & "' FROM DUAL"
+            listSQL.Add(SQL)
+        Next
 
         If Me.AllocationDate.CollAllocationDate.Month = Me.AllocationDate.RemittanceDate.Month Then
             'Delete AM_STL_NOTICE_NEW
@@ -1279,7 +814,12 @@ Public Class PaymentSaveHelper : Implements IDisposable
                   " FROM AM_WESM_BILL_SUMMARY WHERE ENDING_BALANCE <> 0 OR TO_CHAR(NEW_DUEDATE,'MM/YYYY') = TO_CHAR(TO_DATE('" & FormatDateTime(Me.AllocationDate.CollAllocationDate, DateFormat.ShortDate) & "','MM/DD/YYYY'),'MM/YYYY'))"
 
             listSQL.Add(SQL)
+
         End If
+
+        dicDMCM = Nothing
+        dicJVNo = Nothing
+        dicJVBatchNo = Nothing
 
         Return listSQL
 

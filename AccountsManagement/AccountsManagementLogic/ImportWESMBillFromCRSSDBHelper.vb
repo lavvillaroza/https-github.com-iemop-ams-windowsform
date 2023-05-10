@@ -109,11 +109,13 @@ Public Class ImportWESMBillFromCRSSDBHelper
         Dim SQL As String
 
         Try
+
             If AMModule.RegionType = "LV" Then
                 SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_wesm_bill_inv WHERE REGION_GROUP = 'LUZON_VISAYAS' Order by due_date desc"
-
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_wesm_bill_inv WHERE REGION_GROUP = 'MINDANAO' Order by due_date desc"
+            Else
+                SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_wesm_bill_inv Order by due_date desc"
             End If
 
             report = Me.NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -163,9 +165,12 @@ Public Class ImportWESMBillFromCRSSDBHelper
                 SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
                & "WHERE DUE_DATE = TO_DATE('" & DueDate & "', 'MM/DD/YYYY') AND REGION_GROUP = 'LUZON_VISAYAS'"
 
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
                & "WHERE DUE_DATE = TO_DATE('" & DueDate & "', 'MM/DD/YYYY') AND REGION_GROUP = 'MINDANAO'"
+            Else
+                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
+               & "WHERE DUE_DATE = TO_DATE('" & DueDate & "', 'MM/DD/YYYY')"
             End If
 
            
@@ -305,25 +310,28 @@ Public Class ImportWESMBillFromCRSSDBHelper
         Dim SQL As String
 
         Try
-            If AMModule.RegionType = "LV" Then
-                'SQL = "SELECT sum(total) as TOTAL_AR " & vbNewLine _
-                '    & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
-                '    & "       FROM settlement.vw_txn_wesm_bill_inv_agg " & vbNewLine _
-                '    & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'LUZON_VISAYAS' AND file_type = '" & file_type & "' AND amount < 0 " & vbNewLine _
-                '    & "GROUP BY id_number, reg_id) where total < 0"
 
+            If AMModule.RegionType = "LV" Then
                 SQL = "SELECT sum(total) as TOTAL_AR " & vbNewLine _
                     & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
                     & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
                     & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'LUZON_VISAYAS' AND file_type = '" & file_type & "' AND amount < 0 " & vbNewLine _
                     & "GROUP BY id_number, reg_id)"
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT sum(total) as TOTAL_AR " & vbNewLine _
                     & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
-                    & "       FROM settlement.vw_txn_wesm_bill_inv_agg " & vbNewLine _
-                    & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'MINDANAO'  AND file_type = '" & file_type & "'  AND amount > 0 " & vbNewLine _
+                    & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
+                    & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'MINDANAO'  AND file_type = '" & file_type & "'  AND amount < 0 " & vbNewLine _
                     & "GROUP BY id_number, reg_id) where total < 0"
+            Else
+                SQL = "SELECT sum(total) as TOTAL_AR " & vbNewLine _
+                & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
+                & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
+                & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND file_type = '" & file_type & "' AND amount < 0 " & vbNewLine _
+                & "GROUP BY id_number, reg_id)"
             End If
+
+
 
             report = Me.NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -363,24 +371,26 @@ Public Class ImportWESMBillFromCRSSDBHelper
         Dim SQL As String
 
         Try
-            If AMModule.RegionType = "LV" Then
-                'SQL = "SELECT sum(total) as TOTAL_AP " & vbNewLine _
-                '    & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
-                '    & "       FROM settlement.vw_txn_wesm_bill_inv_agg " & vbNewLine _
-                '    & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'LUZON_VISAYAS'  AND file_type = '" & file_type & "' AND amount > 0" & vbNewLine _
-                '    & "GROUP BY id_number, reg_id) where total > 0"
 
+            If AMModule.RegionType = "LV" Then
                 SQL = "SELECT sum(total) as TOTAL_AP " & vbNewLine _
                    & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
                    & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
                    & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'LUZON_VISAYAS'  AND file_type = '" & file_type & "' AND amount > 0" & vbNewLine _
                    & "GROUP BY id_number, reg_id)"
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT sum(total) as TOTAL_AP " & vbNewLine _
                     & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
-                    & "       FROM settlement.vw_txn_wesm_bill_inv_agg " & vbNewLine _
+                    & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
                     & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND region_group = 'MINDANAO'  AND file_type = '" & file_type & "' AND amount > 0" & vbNewLine _
                     & "GROUP BY id_number, reg_id) where total > 0"
+            Else
+                SQL = "SELECT sum(total) as TOTAL_AP " & vbNewLine _
+                   & "FROM ( SELECT id_number, reg_id, sum(amount) as total " & vbNewLine _
+                   & "       FROM settlement.vw_txn_wesm_bill_inv " & vbNewLine _
+                   & "       WHERE billing_period = '" & billing_period & "' AND stl_run = '" & stl_run & "' AND file_type = '" & file_type & "' AND amount > 0" & vbNewLine _
+                   & "GROUP BY id_number, reg_id)"
+
             End If
 
             report = Me.NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -525,11 +535,13 @@ Public Class ImportWESMBillFromCRSSDBHelper
         Dim SQL As String
 
         Try
+
             If AMModule.RegionType = "LV" Then
-                'SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv_agg WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy') AND REGION_GROUP = 'LUZON_VISAYAS'"
-                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy') AND REGION_GROUP = 'LUZON_VISAYAS'"
+                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy') AND REGION_GROUP = 'LUZON_VISAYAS' AND file_type = 1"
+            ElseIf AMModule.RegionType = "M" Then
+                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy')  AND REGION_GROUP = 'MINDANAO' AND file_type = 1"
             Else
-                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv_agg WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy')  AND REGION_GROUP = 'MINDANAO'"
+                SQL = "SELECT * FROM settlement.vw_txn_wesm_bill_inv WHERE DUE_DATE = TO_DATE('" & duedate & "', 'mm/dd/yyyy') AND file_type = 1"
             End If
 
             report = Me.NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -584,8 +596,6 @@ Public Class ImportWESMBillFromCRSSDBHelper
     End Function
 
 #End Region
-
-
     Public Sub InitializeData()
         Me._newWESMBillDueDateList = Me._WBillHelper.GetNewWESMInvoicesDueDate()
     End Sub
@@ -742,7 +752,6 @@ Public Class ImportWESMBillFromCRSSDBHelper
                 oListOfErrors.Add("Charge ID: " & item.ChargeID.ToString & " is not in ChargeID Table.")
             End If
 
-            'disabled due to  crss testing for uploading 05/20/2019
             Dim ParentID = item.IDNumber
             Dim CheckParticipant = (From x In getAllParticipants Where x.IDNumber = ParentID)
             If CheckParticipant.Count = 0 Then
@@ -794,14 +803,14 @@ Public Class ImportWESMBillFromCRSSDBHelper
 
         newImpWBFCRSS.ListOfError = oListOfErrors
 
-        Dim tmpWESMBillList = (From x In iniWESMBillList Group x By _
-                      x.IDNumber, x.RegistrationID, x.ChargeType _
-                      Into _
-                      Amount = Sum(x.Amount) _
-                      Select New With {.BillingPeriod = obillingperiod, .IDNumber = IDNumber, _
-                                       .RegistrationID = RegistrationID, _
-                                       .Amount = Amount, .ChargeType = ChargeType, _
-                                       .SettlementRun = osettlementrun}).ToList
+        Dim tmpWESMBillList = (From x In iniWESMBillList Group x By
+                              x.IDNumber, x.RegistrationID, x.ChargeType
+                              Into
+                              Amount = Sum(x.Amount)
+                               Select New With {.BillingPeriod = obillingperiod, .IDNumber = IDNumber,
+                                               .RegistrationID = RegistrationID,
+                                               .Amount = Amount, .ChargeType = ChargeType,
+                                               .SettlementRun = osettlementrun}).ToList
 
         For Each item In tmpWESMBillList
             Dim selectedItem = item

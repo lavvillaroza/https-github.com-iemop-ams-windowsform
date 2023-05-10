@@ -170,12 +170,12 @@ Public Class APAllocationProcessNew
     Public Sub ComputeMFAPAllocationList(ByVal AllocationDate As Date,
                                         ByRef WESMBillSummaryList As List(Of WESMBillSummary),
                                         ByVal progress As IProgress(Of ProgressClass))
-        Dim WESMBillSummaryListOnMFMFV = (From x In WESMBillSummaryList
-                                          Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
-                                          And x.EndingBalance > 0 And x.DueDate <= AllocationDate Select x).ToList()
+        'Dim WESMBillSummaryListOnMFMFV = (From x In WESMBillSummaryList
+        '                                  Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
+        '                                  And x.EndingBalance > 0 And x.DueDate <= AllocationDate Select x).ToList()
 
-        Me._APAllocationDate = AllocationDate
-        Me.APMFAllocationProc(WESMBillSummaryListOnMFMFV, progress)
+        'Me._APAllocationDate = AllocationDate
+        'Me.APMFAllocationProc(WESMBillSummaryListOnMFMFV, progress)
     End Sub
 #End Region
 
@@ -234,30 +234,37 @@ Public Class APAllocationProcessNew
         For Each item In getListOfWESMTransNoList.OrderBy(Function(x) x).ToList
             cnt += 1
             newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Fetching the WESM Transactions Allocation for Accounts Receivables " & cnt & "/" & getListOfWESMTransNoList.Count & "."
+            newProgress.ProgressMsg = "Fetching the WESM Transactions Summary for Accounts Receivables " & cnt & "/" & getListOfWESMTransNoList.Count & "."
             progress.Report(newProgress)
 
-            Dim oWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = Me.WBillHelper.GetListWESMTransCoverSummaryPerTransNo(item)
-            For Each oItem In oWESMTransCoverSummaryList
-                Me._WESMTransCoverSummaryList.Add(oItem)
-                Dim oWESMTransSummaryList As List(Of WESMTransDetailsSummary) = Me.WBillHelper.GetListWESMTransDetailsSummary(item)
-                For Each iItem In oWESMTransSummaryList
-                    Me._WESMTransDetailsSummaryList.Add(iItem)
-                Next
+            'disabled by LAVV to improve performance 04/04/2023
+            'Dim oWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = Me.WBillHelper.GetListWESMTransCoverSummaryPerTransNo(item)
+            'For Each oItem In oWESMTransCoverSummaryList
+            '    Me._WESMTransCoverSummaryList.Add(oItem)
+            '    Dim oWESMTransSummaryList As List(Of WESMTransDetailsSummary) = Me.WBillHelper.GetListWESMTransDetailsSummary(item)
+            '    For Each iItem In oWESMTransSummaryList
+            '        Me._WESMTransDetailsSummaryList.Add(iItem)
+            '    Next
+            'Next
+
+            Dim oWESMTransSummaryList As List(Of WESMTransDetailsSummary) = Me.WBillHelper.GetListWESMTransDetailsSummary(item)
+            For Each iItem In oWESMTransSummaryList
+                Me._WESMTransDetailsSummaryList.Add(iItem)
             Next
+
         Next
         cnt = 0
         'To get the WESM Transaction Cover Summary including Details for the computation of Details Net Ratio
-        For Each item In getWBSForBRuling
-            cnt += 1
-            newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Fetching the WESM Transactions Allocation for Accounts Payables " & cnt & "/" & getWBSForBRuling.Count & "."
-            progress.Report(newProgress)
-            Dim oWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = Me.WBillHelper.GetListWESMTransCoverSummaryPerDueDate(item.ToShortDateString)
-            For Each oItem In oWESMTransCoverSummaryList
-                Me._WESMTransCoverSummaryList.Add(oItem)
-            Next
-        Next
+        'For Each item In getWBSForBRuling
+        '    cnt += 1
+        '    newProgress = New ProgressClass
+        '    newProgress.ProgressMsg = "Fetching the WESM Transactions Allocation for Accounts Payables " & cnt & "/" & getWBSForBRuling.Count & "."
+        '    progress.Report(newProgress)
+        '    Dim oWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = Me.WBillHelper.GetListWESMTransCoverSummaryPerDueDate(item.ToShortDateString)
+        '    For Each oItem In oWESMTransCoverSummaryList
+        '        Me._WESMTransCoverSummaryList.Add(oItem)
+        '    Next
+        'Next
 
         Me._WESMTransCoverSummaryList.TrimExcess()
         Me._WESMTransDetailsSummaryList.TrimExcess()
@@ -265,7 +272,7 @@ Public Class APAllocationProcessNew
 
         Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, listARCollectionEnergy, progress)
         Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, listARCollectionVAT, progress)
-        Me.APMFAllocationProc(WESMBillSummaryListOnMFMF, progress)
+        Me.APMFAllocationProc(WESMBillSummaryListOnMFMF, listARCollectionMF, progress)
     End Sub
 #End Region
 
@@ -288,17 +295,30 @@ Public Class APAllocationProcessNew
 
 #Region "Method Step 1 for AP Allocation on MF"
     Private Sub APMFAllocationProc(ByRef WESMBillSummaryListOnMFMFV As List(Of WESMBillSummary),
+                                   ByVal listARCollection As List(Of ARCollection),
                                    ByVal progress As IProgress(Of ProgressClass))
 
         Dim GetWESMBillSUmmaryListOnMFMFVAP As List(Of WESMBillSummary) = (From x In WESMBillSummaryListOnMFMFV
                                                                            Where x.EndingBalance > 0
                                                                            Select x).ToList
-        If GetWESMBillSUmmaryListOnMFMFVAP.Count > 0 Then
+
+        Dim getTotalCollectedInARAmountDefInt As Decimal = listARCollection.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.DefaultInterestOnMF).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
+
+        Dim getTotalCollectedInARAmountMF As Decimal = listARCollection.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.MarketFees).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
+
+        Dim getTotalEndingBalance As Decimal = GetWESMBillSUmmaryListOnMFMFVAP.Select(Function(x) x.EndingBalance).Sum()
+
+        If Math.Abs(getTotalCollectedInARAmountMF + getTotalCollectedInARAmountDefInt) >= Math.Abs(getTotalEndingBalance) And GetWESMBillSUmmaryListOnMFMFVAP.Count > 0 Then
             newProgress = New ProgressClass
             newProgress.ProgressMsg = "Processing Market Fees AP offsetting paid by IEMOP..."
             progress.Report(newProgress)
             Me.APPaidByPEMCAccProcess(GetWESMBillSUmmaryListOnMFMFVAP)
         End If
+
     End Sub
 
     Private Sub APPaidByPEMCAccProcess(ByRef WESMBillSummaryListOnMFMFV As List(Of WESMBillSummary))
@@ -740,55 +760,41 @@ Public Class APAllocationProcessNew
 
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
 
-        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") _
+                                                                                      And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").OrderBy(Function(x) x.InvoiceNumber).ThenBy(Function(x) x.CollectionType).ToList
         Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
 
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
             Dim getWTDSummary As List(Of WESMTransDetailsSummary) = Me.WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
-            Dim getWTACSummaryItemAR As WESMBillAllocCoverSummary = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAR.InvoiceNumber).FirstOrDefault
+
             For Each itemAP In listWESMBillSummaryPerWBatch
                 Dim CashShareOnEnergy As Decimal = 0D
-                Dim getWTACSummaryItemAP As WESMBillAllocCoverSummary = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAP.INVDMCMNo).FirstOrDefault
-                If getWTDSummary.Count > 0 And Not getWTACSummaryItemAR Is Nothing And itemAR.CollectionType = EnumCollectionType.Energy Then
-                    If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum()) Then
-                        CashShareOnEnergy = Math.Abs(getWTDSummary.
-                                                     Where(Function(x) x.BuyerTransNo = getWTACSummaryItemAR.TransactionNo _
-                                                     And x.SellerTransNo = getWTACSummaryItemAP.TransactionNo).
-                                                     Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault)
+                If getWTDSummary.Count > 0 Then
+                    If itemAR.CollectionType = EnumCollectionType.Energy Then
+                        If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum()) Then
+                            CashShareOnEnergy = Math.Abs(getWTDSummary.
+                                                         Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                         And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                         Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault)
 
-                    Else
-                        CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = getWTACSummaryItemAR.TransactionNo _
-                                                                                        And x.SellerTransNo = getWTACSummaryItemAP.TransactionNo).
-                                                                                        Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault),
-                                                                 Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum),
-                                                                 Math.Abs(itemAR.AllocationAmount))
+                        Else
+                            CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                                            And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                                                            Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault),
+                                                                     Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum),
+                                                                     Math.Abs(itemAR.AllocationAmount))
+                        End If
+                    ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
+                        CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                                           And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                                                           Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault),
+                                                                    Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum),
+                                                                    Math.Abs(itemAR.AllocationAmount))
+
                     End If
                 Else
-                    If Not getWTACSummaryItemAR Is Nothing And Not getWTACSummaryItemAP Is Nothing Then
-                        If itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
-                            CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                         Select(Function(y) y.NetPurchase).FirstOrDefault()),
-                                                                         Math.Abs(getWTACSummaryItemAR.NetPurchase), Math.Abs(itemAR.AllocationAmount))
-
-                        ElseIf itemAR.CollectionType = EnumCollectionType.Energy Then
-                            If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTACSummaryItemAR.NetPurchase) Then
-                                CashShareOnEnergy = Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                             Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                             Select(Function(y) y.NetPurchase).FirstOrDefault())
-                            ElseIf Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTACSummaryItemAR.GrossPurchase) Then
-                                CashShareOnEnergy = Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                             Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                             Select(Function(y) y.GrossPurchase).FirstOrDefault())
-                            Else
-                                CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                         Select(Function(y) y.NetPurchase).FirstOrDefault()),
-                                                                         Math.Abs(getWTACSummaryItemAR.NetPurchase), Math.Abs(itemAR.AllocationAmount))
-                            End If
-                        End If
-                    End If
+                    Throw New Exception("No available WTA Summary Details for InvoiceNo: " & itemAR.InvoiceNumber & vbNewLine & "Please contact the administrator.")
                 End If
 
                 Dim CreatedItem_Energy As New APAllocation
@@ -812,125 +818,65 @@ Public Class APAllocationProcessNew
             End If
 
             For Each itemAP In APAllocationListPerBP
-                Dim getWTACSummaryItemAP = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAP.InvoiceNumber).FirstOrDefault
-                If Not getWTACSummaryItemAP Is Nothing Then
-                    Dim getWTDSummaryItem As WESMTransDetailsSummary = Me._WESMTransDetailsSummaryList.
-                                                                      Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber And x.SellerTransNo = itemAP.InvoiceNumber).FirstOrDefault
-                    Dim getWTDSummaryHistoryItem As WESMTransDetailsSummaryHistory = Me._WESMTransDetailsSummaryHistoryList.
+                Dim getWTDSummaryItem As WESMTransDetailsSummary = Me._WESMTransDetailsSummaryList.
+                                                                     Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber And x.SellerTransNo = itemAP.InvoiceNumber).FirstOrDefault
+                Dim getWTDSummaryHistoryItem As WESMTransDetailsSummaryHistory = Me._WESMTransDetailsSummaryHistoryList.
                                                                                       Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
                                                                                             And x.SellerTransNo = itemAP.InvoiceNumber _
                                                                                             And x.AllocationDate = itemAP.AllocationDate).
                                                                                       Select(Function(y) y).FirstOrDefault
-                    If getWTDSummaryItem Is Nothing Then
-                        Using WTDSummaryItem As New WESMTransDetailsSummary
-                            With WTDSummaryItem
-                                .BuyerTransNo = getWTACSummaryItemAR.TransactionNo
-                                .BuyerBillingID = getWTACSummaryItemAR.BillingID
-                                .SellerTransNo = getWTACSummaryItemAP.TransactionNo
-                                .SellerBillingID = getWTACSummaryItemAP.BillingID
-                                .DueDate = getWTACSummaryItemAR.DueDate
-                                .NewDueDate = itemAR.AllocationDate
-                                .OrigBalanceInEnergy = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                         Select(Function(y) y.NetPurchase).FirstOrDefault
-                                .OrigBalanceInVAT = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                         Select(Function(y) y.VatOnPurchases).FirstOrDefault
-                                .OrigBalanceInEWT = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                         Select(Function(y) y.EWT).FirstOrDefault * -1
-                                .OutstandingBalanceInEnergy = .OrigBalanceInEnergy
-                                .OutstandingBalanceInVAT = .OrigBalanceInVAT
-                                .OutstandingBalanceInEWT = .OrigBalanceInEWT
-                                If itemAR.CollectionType = EnumCollectionType.Energy Then
-                                    If (.OutstandingBalanceInEnergy + itemAP.AllocationAmount) > 0 Then
-                                        .OutstandingBalanceInEnergy = 0
-                                    Else
-                                        .OutstandingBalanceInEnergy = .OutstandingBalanceInEnergy + itemAP.AllocationAmount
-                                    End If
-                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                        With WTDSummaryHistory
-                                            .BuyerTransNo = WTDSummaryItem.BuyerTransNo
-                                            .BuyerBillingID = WTDSummaryItem.BuyerBillingID
-                                            .SellerTransNo = WTDSummaryItem.SellerTransNo
-                                            .SellerBillingID = WTDSummaryItem.SellerBillingID
-                                            .DueDate = WTDSummaryItem.DueDate
-                                            .AllocationDate = itemAP.AllocationDate
-                                            .AllocatedInEnergy = itemAP.AllocationAmount
-                                            Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                        End With
-                                    End Using
-                                ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
-                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                        With WTDSummaryHistory
-                                            .BuyerTransNo = WTDSummaryItem.BuyerTransNo
-                                            .BuyerBillingID = WTDSummaryItem.BuyerBillingID
-                                            .SellerTransNo = WTDSummaryItem.SellerTransNo
-                                            .SellerBillingID = WTDSummaryItem.SellerBillingID
-                                            .DueDate = WTDSummaryItem.DueDate
-                                            .AllocationDate = itemAP.AllocationDate
-                                            .AllocatedInDefInt = itemAP.AllocationAmount
-                                            Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                        End With
-                                    End Using
-                                End If
-                                .Status = EnumWESMTransDetailsSummaryStatus.ADDED.ToString
-                            End With
-                            Me._WESMTransDetailsSummaryList.Add(WTDSummaryItem)
-                        End Using
-                    Else
-                        With getWTDSummaryItem
-                            If itemAR.CollectionType = EnumCollectionType.Energy Then
-                                If (.OutstandingBalanceInEnergy + itemAP.AllocationAmount) > 0 Then
-                                    .OutstandingBalanceInEnergy = 0
-                                Else
-                                    .OutstandingBalanceInEnergy = .OutstandingBalanceInEnergy + itemAP.AllocationAmount
-                                End If
-                                If getWTDSummaryHistoryItem Is Nothing Then
-                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                        With WTDSummaryHistory
-                                            .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
-                                            .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
-                                            .SellerTransNo = getWTDSummaryItem.SellerTransNo
-                                            .SellerBillingID = getWTDSummaryItem.SellerBillingID
-                                            .DueDate = getWTDSummaryItem.DueDate
-                                            .AllocationDate = itemAP.AllocationDate
-                                            .AllocatedInEnergy = itemAP.AllocationAmount
-                                        End With
-                                        Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                    End Using
-                                Else
-                                    With getWTDSummaryHistoryItem
-                                        .AllocatedInEnergy += itemAP.AllocationAmount
-                                    End With
-                                End If
-                            ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
-                                If getWTDSummaryHistoryItem Is Nothing Then
-                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                        With WTDSummaryHistory
-                                            .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
-                                            .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
-                                            .SellerTransNo = getWTDSummaryItem.SellerTransNo
-                                            .SellerBillingID = getWTDSummaryItem.SellerBillingID
-                                            .DueDate = getWTDSummaryItem.DueDate
-                                            .AllocationDate = itemAP.AllocationDate
-                                            .AllocatedInDefInt = itemAP.AllocationAmount
-                                        End With
-                                        Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                    End Using
-                                Else
-                                    With getWTDSummaryHistoryItem
-                                        .AllocatedInDefInt += itemAP.AllocationAmount
-                                    End With
-                                End If
+                If Not getWTDSummaryItem Is Nothing Then
+                    With getWTDSummaryItem
+                        If itemAR.CollectionType = EnumCollectionType.Energy Then
+                            If (.OutstandingBalanceInEnergy + itemAP.AllocationAmount) > 0 Then
+                                .OutstandingBalanceInEnergy = 0
+                            Else
+                                .OutstandingBalanceInEnergy = .OutstandingBalanceInEnergy + itemAP.AllocationAmount
                             End If
-                            If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
-                                .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
+                            If getWTDSummaryHistoryItem Is Nothing Then
+                                Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                    With WTDSummaryHistory
+                                        .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                        .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                        .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                        .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                        .DueDate = getWTDSummaryItem.DueDate
+                                        .AllocationDate = itemAP.AllocationDate
+                                        .AllocatedInEnergy = itemAP.AllocationAmount
+                                    End With
+                                    Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
+                                End Using
+                            Else
+                                With getWTDSummaryHistoryItem
+                                    .AllocatedInEnergy += itemAP.AllocationAmount
+                                End With
                             End If
-                        End With
-                    End If
+                        ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
+                            If getWTDSummaryHistoryItem Is Nothing Then
+                                Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                    With WTDSummaryHistory
+                                        .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                        .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                        .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                        .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                        .DueDate = getWTDSummaryItem.DueDate
+                                        .AllocationDate = itemAP.AllocationDate
+                                        .AllocatedInDefInt = itemAP.AllocationAmount
+                                    End With
+                                    Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
+                                End Using
+                            Else
+                                With getWTDSummaryHistoryItem
+                                    .AllocatedInDefInt += itemAP.AllocationAmount
+                                End With
+                            End If
+                        End If
+                        If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
+                            .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
+                        End If
+                    End With
+                    APAllocationListPerBPFinal.Add(itemAP)
                 End If
-                APAllocationListPerBPFinal.Add(itemAP)
             Next
         Next
 
@@ -1036,38 +982,24 @@ Public Class APAllocationProcessNew
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
             Dim getWTDSummary = Me.WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
-            Dim getWTACSummaryItemAR = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAR.InvoiceNumber).FirstOrDefault
-
             For Each itemAP In cListWESMBillSummaryPerWBatch
                 Dim CashShareOnVAT As Decimal = 0D
-                Dim getWTACSummaryItemAP = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAP.INVDMCMNo).FirstOrDefault
-                If getWTDSummary.Count > 0 And Not getWTACSummaryItemAR Is Nothing Then
+                If getWTDSummary.Count > 0 Then
                     If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum()) Then
                         CashShareOnVAT = Math.Abs(getWTDSummary.
-                                                     Where(Function(x) x.BuyerTransNo = getWTACSummaryItemAR.TransactionNo _
-                                                     And x.SellerTransNo = getWTACSummaryItemAP.TransactionNo).
+                                                     Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                     And x.SellerTransNo = itemAP.INVDMCMNo).
                                                      Select(Function(y) y.OutstandingBalanceInVAT).FirstOrDefault)
 
                     Else
-                        CashShareOnVAT = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = getWTACSummaryItemAR.TransactionNo _
-                                                                                        And x.SellerTransNo = getWTACSummaryItemAP.TransactionNo).
+                        CashShareOnVAT = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                                        And x.SellerTransNo = itemAP.INVDMCMNo).
                                                                                         Select(Function(y) y.OutstandingBalanceInVAT).FirstOrDefault),
                                                                  Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum),
                                                                  Math.Abs(itemAR.AllocationAmount))
                     End If
                 Else
-                    If Not getWTACSummaryItemAR Is Nothing And Not getWTACSummaryItemAP Is Nothing Then
-                        If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTACSummaryItemAR.VatOnPurchases) Then
-                            CashShareOnVAT = Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                         Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                         Select(Function(y) y.VatOnPurchases).FirstOrDefault())
-                        Else
-                            CashShareOnVAT = Me.ComputeAllocation(Math.Abs(getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                     Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                     Select(Function(y) y.VatOnPurchases).FirstOrDefault()),
-                                                                     Math.Abs(getWTACSummaryItemAR.VatOnPurchases), Math.Abs(itemAR.AllocationAmount))
-                        End If
-                    End If
+                    Throw New Exception("No available WTA Summary Details for InvoiceNo: " & itemAR.InvoiceNumber & vbNewLine & "Please contact the administrator.")
                 End If
 
                 Dim CreatedItem_Energy As New APAllocation
@@ -1085,85 +1017,45 @@ Public Class APAllocationProcessNew
             End If
 
             For Each itemAP In APAllocationListPerBP
-                Dim getWTACSummaryItemAP = Me.WESMTransCoverSummaryList.Where(Function(x) x.TransactionNo = itemAP.InvoiceNumber).FirstOrDefault
-                If Not getWTACSummaryItemAP Is Nothing Then
-                    Dim getWTDSummaryItem As WESMTransDetailsSummary = Me.WESMTransDetailsSummaryList.
+                Dim getWTDSummaryItem As WESMTransDetailsSummary = Me.WESMTransDetailsSummaryList.
                                                                    Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber And x.SellerTransNo = itemAP.InvoiceNumber).FirstOrDefault
 
-                    Dim getWTDSummaryHistoryItem As WESMTransDetailsSummaryHistory = Me._WESMTransDetailsSummaryHistoryList.
+                Dim getWTDSummaryHistoryItem As WESMTransDetailsSummaryHistory = Me._WESMTransDetailsSummaryHistoryList.
                                                                                       Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
                                                                                             And x.SellerTransNo = itemAP.InvoiceNumber _
                                                                                             And x.AllocationDate = itemAP.AllocationDate).
                                                                                       Select(Function(y) y).FirstOrDefault
-                    If getWTDSummaryItem Is Nothing Then
-                        Using WTDSummaryItem As New WESMTransDetailsSummary
-                            With WTDSummaryItem
-                                .BuyerTransNo = getWTACSummaryItemAR.TransactionNo
-                                .BuyerBillingID = getWTACSummaryItemAR.BillingID
-                                .SellerTransNo = getWTACSummaryItemAP.TransactionNo
-                                .SellerBillingID = getWTACSummaryItemAP.BillingID
-                                .DueDate = getWTACSummaryItemAR.DueDate
-                                .NewDueDate = itemAR.AllocationDate
-                                .OrigBalanceInEnergy = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                 Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                 Select(Function(y) y.NetPurchase).FirstOrDefault
-                                .OrigBalanceInVAT = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                 Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                 Select(Function(y) y.VatOnPurchases).FirstOrDefault
-                                .OrigBalanceInEWT = getWTACSummaryItemAR.ListWBAllocDisDetails.
-                                                                 Where(Function(x) x.BillingID = getWTACSummaryItemAP.BillingID).
-                                                                 Select(Function(y) y.EWT).FirstOrDefault * -1
-                                .OutstandingBalanceInEnergy = .OrigBalanceInEnergy
-                                .OutstandingBalanceInVAT = .OrigBalanceInVAT + itemAP.AllocationAmount
-                                .OutstandingBalanceInEWT = .OrigBalanceInEWT
-                                .Status = EnumWESMTransDetailsSummaryStatus.ADDED.ToString
-                                Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                    With WTDSummaryHistory
-                                        .BuyerTransNo = WTDSummaryItem.BuyerTransNo
-                                        .BuyerBillingID = WTDSummaryItem.BuyerBillingID
-                                        .SellerTransNo = WTDSummaryItem.SellerTransNo
-                                        .SellerBillingID = WTDSummaryItem.SellerBillingID
-                                        .DueDate = WTDSummaryItem.DueDate
-                                        .AllocationDate = itemAP.AllocationDate
-                                        .AllocatedInVAT = itemAP.AllocationAmount
-                                        Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                    End With
-                                End Using
-                            End With
-                            Me._WESMTransDetailsSummaryList.Add(WTDSummaryItem)
-                        End Using
-                    Else
-                        With getWTDSummaryItem
-                            If (.OutstandingBalanceInVAT + itemAP.AllocationAmount) > 0 Then
-                                .OutstandingBalanceInVAT = 0
-                            Else
-                                .OutstandingBalanceInVAT = .OutstandingBalanceInVAT + itemAP.AllocationAmount
-                            End If
-                            If getWTDSummaryHistoryItem Is Nothing Then
-                                Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                                    With WTDSummaryHistory
-                                        .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
-                                        .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
-                                        .SellerTransNo = getWTDSummaryItem.SellerTransNo
-                                        .SellerBillingID = getWTDSummaryItem.SellerBillingID
-                                        .DueDate = getWTDSummaryItem.DueDate
-                                        .AllocationDate = itemAP.AllocationDate
-                                        .AllocatedInVAT = itemAP.AllocationAmount
-                                        Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
-                                    End With
-                                End Using
-                            Else
-                                With getWTDSummaryHistoryItem
-                                    .AllocatedInVAT += itemAP.AllocationAmount
+                If Not getWTDSummaryItem Is Nothing Then
+                    With getWTDSummaryItem
+                        If (.OutstandingBalanceInVAT + itemAP.AllocationAmount) > 0 Then
+                            .OutstandingBalanceInVAT = 0
+                        Else
+                            .OutstandingBalanceInVAT = .OutstandingBalanceInVAT + itemAP.AllocationAmount
+                        End If
+                        If getWTDSummaryHistoryItem Is Nothing Then
+                            Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                With WTDSummaryHistory
+                                    .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                    .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                    .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                    .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                    .DueDate = getWTDSummaryItem.DueDate
+                                    .AllocationDate = itemAP.AllocationDate
+                                    .AllocatedInVAT = itemAP.AllocationAmount
+                                    Me._WESMTransDetailsSummaryHistoryList.Add(WTDSummaryHistory)
                                 End With
-                            End If
-                            If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
-                                .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
-                            End If
-                        End With
-                    End If
+                            End Using
+                        Else
+                            With getWTDSummaryHistoryItem
+                                .AllocatedInVAT += itemAP.AllocationAmount
+                            End With
+                        End If
+                        If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
+                            .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
+                        End If
+                    End With
+                    APAllocationListPerBPFinal.Add(itemAP)
                 End If
-                APAllocationListPerBPFinal.Add(itemAP)
             Next
         Next
 

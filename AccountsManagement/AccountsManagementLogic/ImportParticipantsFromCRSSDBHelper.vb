@@ -66,9 +66,10 @@ Public Class ImportParticipantsFromCRSSDBHelper
         Try
             If AMModule.RegionType = "LV" Then
                 SQL = "SELECT * FROM settlement.cfg_billing_id WHERE region IN ('LUZON', 'VISAYAS')"
-
+            ElseIf AMModule.RegionType = "M" Then
+                SQL = "SELECT * FROM settlement.cfg_billing_id WHERE region = 'MINDANAO' ORDER BY billing_id"
             Else
-                SQL = "SELECT * FROM settlement.cfg_billing_id WHERE region = 'MINDANAO'"
+                SQL = "SELECT * FROM settlement.cfg_billing_id WHERE region IN ('LUZON', 'VISAYAS', 'LUZON_VISAYAS','MINDANAO') ORDER BY billing_id"
             End If
 
             report = Me.NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -90,8 +91,8 @@ Public Class ImportParticipantsFromCRSSDBHelper
             While dr.Read()
                 With dr
                     Dim itemParticipant As New CRSSParticipants
-                    itemParticipant.IDNumber = .Item("billing_id")
-                    itemParticipant.FullName = .Item("trading_participant")
+                    itemParticipant.IDNumber = .Item("billing_id").ToString.ToUpper
+                    itemParticipant.FullName = .Item("trading_participant").ToString.ToUpper
                     itemParticipant.BillingAddress = .Item("tp_address")
                     itemParticipant.Renewable = .Item("renewable")
                     itemParticipant.ZeroRated = .Item("zero_rated")
@@ -128,8 +129,8 @@ Public Class ImportParticipantsFromCRSSDBHelper
     End Sub
 
     Private Sub GetExistCRSSParticipants()
-        Dim getBillingIDInAMSParticipants As List(Of String) = (From x In _AMSParticipants Select x.IDNumber).ToList
-        Dim getExistParticipants As List(Of CRSSParticipants) = (From x In _CRSSParticipants Where getBillingIDInAMSParticipants.Contains(x.IDNumber) Select x).ToList
+        Dim getBillingIDInAMSParticipants As List(Of String) = (From x In _AMSParticipants Select x.IDNumber.ToUpper).ToList
+        Dim getExistParticipants As List(Of CRSSParticipants) = (From x In _CRSSParticipants Where getBillingIDInAMSParticipants.Contains(x.IDNumber.ToUpper) Select x).ToList
         Me._ExistCRSSParticipants = getExistParticipants
     End Sub
 

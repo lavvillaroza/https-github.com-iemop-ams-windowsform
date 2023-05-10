@@ -447,19 +447,19 @@ Public Class frmCollectionMgt
                             .Cells("colDailyBatchCode").Value = item.DailyBatchCode
                         End With
                     Else
-                        Dim selectParticipantID = (From x In Me.Participants _
-                                                   Where x.IDNumber = selectedCollection.IDNumber _
+                        Dim selectParticipantID = (From x In Me.Participants
+                                                   Where x.IDNumber = selectedCollection.IDNumber
                                                    Select x.ParticipantID).FirstOrDefault()
 
                         With itemCol
-                            frmCollection.DGridViewCollection.Rows.Insert(0, .CollectionNumber, .ORNo, .DMCMNumber, BFactory.GenerateBIRDocumentNumber(.DMCMNumber, BIRDocumentsType.DMCM), _
-                                                                          FormatDateTime(.CollectionDate, DateFormat.ShortDate), _
-                                                                          .IDNumber, selectParticipantID, .CollectedAmount, _
-                                                                          .CollectedPrudential, _
-                                                                          .CollectedHeld, _
-                                                                          .AmountForAllocation, _
-                                                                          .CollectionCategory, .AllocationType, .Status, False, .IsPosted, _
-                                                                          If(.AllocationDate <> New Date(), .AllocationDate.ToString("MM/dd/yyyy"), ""), _
+                            frmCollection.DGridViewCollection.Rows.Insert(0, .CollectionNumber, .ORNo, .DMCMNumber, BFactory.GenerateBIRDocumentNumber(.DMCMNumber, BIRDocumentsType.DMCM),
+                                                                          FormatDateTime(.CollectionDate, DateFormat.ShortDate),
+                                                                          .IDNumber, selectParticipantID, .CollectedAmount,
+                                                                          .CollectedPrudential,
+                                                                          .CollectedHeld,
+                                                                          .AmountForAllocation,
+                                                                          .CollectionCategory, .AllocationType, .Status, False, .IsPosted,
+                                                                          If(.AllocationDate <> New Date(), .AllocationDate.ToString("MM/dd/yyyy"), ""),
                                                                           .DailyBatchCode)
                         End With
                     End If
@@ -468,12 +468,9 @@ Public Class frmCollectionMgt
                         frmCollection._ListOfCollections.Add(itemCol)
                         frmCollection._ListOfCollections.TrimExcess()
                     End If
-
                     'Updated By Lance 08/18/2014
                     _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.CollEntryAllocationWindow.ToString, "Successfully allocated collection", "Collection no. " & itemCol.CollectionNumber.ToString(), "", CType(EnumColorCode.Red, ColorCode), EnumLogType.SuccessfullyAllocated.ToString, AMModule.UserName)
-
                 Next
-
                 Me.Close()
             End If
 
@@ -877,7 +874,7 @@ Public Class frmCollectionMgt
     Private Sub rbManual_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbManual.CheckedChanged
         If Me.rbManual.Checked Then
             Dim valSize As New System.Drawing.Size
-            valSize.Width = 1300
+            valSize.Width = 1250
             valSize.Height = 624
             Me.Size = valSize
 
@@ -1747,9 +1744,14 @@ Public Class frmCollectionMgt
                     If .x.ChargeType = EnumChargeType.MF Then
                         WBSummaryNo = .x.WESMBillSummaryNo
                         MFValue = Math.Abs(.x.EndingBalance)
-                        DefaultMF = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
+                        If .x.NoDefInt = True Then
+                            DefaultMF = 0
+                        Else
+                            DefaultMF = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
                                                                                CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
                                                                                Math.Abs(.x.EndingBalance), interestRate), 2)
+                        End If
+
                         If .MarketFeesWHTax <> 0 Then
                             WithholdMF = Math.Round(.x.EndingBalance * .MarketFeesWHTax, 2)
                             DefaultWithholdMF = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
@@ -3262,6 +3264,9 @@ Public Class frmCollectionMgt
         'Update the collection
         WBillHelper.SaveCollection(item)
     End Sub
+
+
+
 
 #End Region
 

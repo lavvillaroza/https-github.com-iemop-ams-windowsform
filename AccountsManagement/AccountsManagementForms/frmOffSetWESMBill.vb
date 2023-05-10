@@ -324,8 +324,14 @@ Public Class frmOffSetWESMBill
                 For Each item In listWTACSummary.Where(Function(x) x.NetPurchase <> 0).ToList
                     For Each dtlItem In item.ListWBAllocDisDetails
                         Dim getWTACSummaryItemAP = listWTACSummary.Where(Function(x) x.BillingID = dtlItem.BillingID And x.NetSellerBuyerTag.ToUpper Like "*SELLER").FirstOrDefault
+
+                        If getWTACSummaryItemAP Is Nothing Then
+                            Throw New Exception("No WESM Transaction Covery Summary found for BillingID:" & dtlItem.BillingID)
+                        End If
+
                         Using wtdSummary As New WESMTransDetailsSummary
                             With wtdSummary
+
                                 .BuyerTransNo = item.TransactionNo
                                 .BuyerBillingID = item.BillingID
                                 .SellerTransNo = getWTACSummaryItemAP.TransactionNo

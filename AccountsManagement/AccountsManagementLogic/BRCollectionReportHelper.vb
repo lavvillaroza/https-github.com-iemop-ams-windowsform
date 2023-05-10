@@ -8,6 +8,9 @@ Imports System.Threading
 Public Class BRCollectionReportHelper
     Dim _CollectionReportNo As Integer = 0
     Dim newProgress As ProgressClass
+
+
+
     Public Sub New()
         'Get the current instance of the dal
         Me._WBillHelper = WESMBillHelper.GetInstance
@@ -846,6 +849,71 @@ Public Class BRCollectionReportHelper
         Me._BIRRulingCR = GetBIRRulingCR(_BIRRNo)
     End Sub
 
+    Public Sub SetBIRRulingDataForBuyers()
+        Dim dicBuyerDetails As New Dictionary(Of String, List(Of BRCollectionReportPurchasesDetails))
+        For Each item In Me.BIRRulingCR.SellerDetails
+            For Each oitem In item.BRCollReportDetails
+                If Not dicBuyerDetails.ContainsKey(oitem.BuyerParticipant.IDNumber) Then
+                    Dim newBRCRDetailsList As New List(Of BRCollectionReportPurchasesDetails)
+                    Dim newBRCRDetail As New BRCollectionReportPurchasesDetails
+                    With newBRCRDetail
+                        .BillingPeriod = oitem.BillingPeriod
+                        .STLRun = oitem.STLRun
+                        .Particulars = oitem.Particulars
+                        .CollectionDate = oitem.CollectionDate
+                        .SellerParticipant = item.Participant
+                        .InvoiceNo = oitem.BuyerInvoiceNo
+                        .SellerInvoiceNo = oitem.InvoiceNo
+                        .VatablePurchases = oitem.VatableSales * -1
+                        .ZeroRatedPurchases = oitem.ZeroRatedSales * -1
+                        .ZeroRatedEcoZonePurchases = oitem.ZeroRatedEcoZoneSales * -1
+                        .VatOnPurchases = oitem.VatOnSales * -1
+                        .WithholdingTax = oitem.WithholdingTax * -1
+                    End With
+                    newBRCRDetailsList.Add(newBRCRDetail)
+                    dicBuyerDetails.Add(oitem.BuyerParticipant.IDNumber, newBRCRDetailsList)
+                Else
+                    Dim newBRCRDetail As New BRCollectionReportPurchasesDetails
+                    With newBRCRDetail
+                        .BillingPeriod = oitem.BillingPeriod
+                        .STLRun = oitem.STLRun
+                        .Particulars = oitem.Particulars
+                        .CollectionDate = oitem.CollectionDate
+                        .SellerParticipant = item.Participant
+                        .InvoiceNo = oitem.BuyerInvoiceNo
+                        .SellerInvoiceNo = oitem.InvoiceNo
+                        .VatablePurchases = oitem.VatableSales * -1
+                        .ZeroRatedPurchases = oitem.ZeroRatedSales * -1
+                        .ZeroRatedEcoZonePurchases = oitem.ZeroRatedEcoZoneSales * -1
+                        .VatOnPurchases = oitem.VatOnSales * -1
+                        .WithholdingTax = oitem.WithholdingTax * -1
+                    End With
+                    dicBuyerDetails.Item(oitem.BuyerParticipant.IDNumber).Add(newBRCRDetail)
+                End If
+            Next
+        Next
+        Dim buyerCRNo As Long = 0
+        Dim listOfBRCRPartiBuyer As New List(Of BRCollectionReportBuyerParticipant)
+        Dim keys As List(Of String) = dicBuyerDetails.Keys.ToList
+        keys.Sort()
+
+        For Each iKey As String In keys
+            buyerCRNo += 1
+            Dim newBRCRParticipantBuyer As New BRCollectionReportBuyerParticipant
+            With newBRCRParticipantBuyer
+                .BRCollReportNumber = buyerCRNo
+                .Participant = AMParticipantsList.Where(Function(x) x.IDNumber = iKey).First
+                .BRCollReportDetails = dicBuyerDetails.Item(iKey)
+            End With
+            listOfBRCRPartiBuyer.Add(newBRCRParticipantBuyer)
+        Next
+        listOfBRCRPartiBuyer.TrimExcess()
+
+        Me.BIRRulingCR.BuyerDetails = listOfBRCRPartiBuyer
+
+        listOfBRCRPartiBuyer = New List(Of BRCollectionReportBuyerParticipant)
+    End Sub
+
     Public Function GetBIRRulingCR(ByVal _BIRRNo As Long) As BRCollectionReport
         Dim ret As New BRCollectionReport
         Dim report As New DataReport
@@ -892,8 +960,8 @@ Public Class BRCollectionReportHelper
         Return result
     End Function
 
-    Public Function GetBRCollReportParticipants(ByVal _BIRRNo As Long) As List(Of BRCollectionReportParticipant)
-        Dim ret As New List(Of BRCollectionReportParticipant)
+    Public Function GetBRCollReportParticipants(ByVal _BIRRNo As Long) As List(Of BRCollectionReportSellerParticipant)
+        Dim ret As New List(Of BRCollectionReportSellerParticipant)
         Dim report As New DataReport
         Try
             Dim SQL As String = "SELECT A.*, B.* FROM AM_BRCOLLECTION_REPORT_TP A " & vbNewLine _
@@ -911,12 +979,12 @@ Public Class BRCollectionReportHelper
         Return ret
     End Function
 
-    Private Function GetBRCollReportParticipants(ByVal dr As IDataReader) As List(Of BRCollectionReportParticipant)
-        Dim result As New List(Of BRCollectionReportParticipant)
+    Private Function GetBRCollReportParticipants(ByVal dr As IDataReader) As List(Of BRCollectionReportSellerParticipant)
+        Dim result As New List(Of BRCollectionReportSellerParticipant)
 
         Try
             While dr.Read()
-                Dim item As New BRCollectionReportParticipant
+                Dim item As New BRCollectionReportSellerParticipant
 
                 With dr
                     item.BRCollReportNumber = CLng(.Item("AM_BIRR_CRNO"))
@@ -942,8 +1010,8 @@ Public Class BRCollectionReportHelper
         Return result
     End Function
 
-    Public Function GetBRCollReportDetails(ByVal _BRCRNo As Integer) As List(Of BRCollectionReportDetails)
-        Dim ret As New List(Of BRCollectionReportDetails)
+    Public Function GetBRCollReportDetails(ByVal _BRCRNo As Integer) As List(Of BRCollectionReportSalesDetails)
+        Dim ret As New List(Of BRCollectionReportSalesDetails)
         Dim report As New DataReport
         Try
             Dim SQL As String = "SELECT A.*, B.FULL_NAME FROM AM_BRCOLLECTION_REPORT_DETAILS A " & vbNewLine _
@@ -961,12 +1029,12 @@ Public Class BRCollectionReportHelper
         Return ret
     End Function
 
-    Private Function GetBRCollReportDetails(ByVal dr As IDataReader) As List(Of BRCollectionReportDetails)
-        Dim result As New List(Of BRCollectionReportDetails)
+    Private Function GetBRCollReportDetails(ByVal dr As IDataReader) As List(Of BRCollectionReportSalesDetails)
+        Dim result As New List(Of BRCollectionReportSalesDetails)
 
         Try
             While dr.Read()
-                Dim item As New BRCollectionReportDetails
+                Dim item As New BRCollectionReportSalesDetails
                 With dr
                     item.CRBatchNo = CInt(.Item("AM_BIRR_CRNO"))
                     item.BillingPeriod = CInt(.Item("BILLING_PERIOD"))
@@ -1118,7 +1186,7 @@ Public Class BRCollectionReportHelper
         'progress.Report(newProgress)
         'Me._WHTAXCertificateTrans = GetListOfWTCertStl(dateFrom, dateTo)
 
-        Dim listOfBIRRulingParticipant As List(Of BRCollectionReportParticipant) = New List(Of BRCollectionReportParticipant)
+        Dim listOfBIRRulingParticipant As List(Of BRCollectionReportSellerParticipant) = New List(Of BRCollectionReportSellerParticipant)
         listOfBIRRulingParticipant = ProcessBRCollectionReportParticipants(progress)
         Dim newBRCollectionReport As New BRCollectionReport
         With newBRCollectionReport
@@ -1137,9 +1205,9 @@ Public Class BRCollectionReportHelper
         'End Try
     End Sub
 
-    Private Function ProcessBRCollectionReportParticipantsOld(ByVal progress As IProgress(Of ProgressClass)) As List(Of BRCollectionReportParticipant)
-        Dim ret As New List(Of BRCollectionReportParticipant)
-        Dim finalListOfBIRRulingDetails As New List(Of BRCollectionReportDetails)
+    Private Function ProcessBRCollectionReportParticipantsOld(ByVal progress As IProgress(Of ProgressClass)) As List(Of BRCollectionReportSellerParticipant)
+        Dim ret As New List(Of BRCollectionReportSellerParticipant)
+        Dim finalListOfBIRRulingDetails As New List(Of BRCollectionReportSalesDetails)
         Dim dicCRNumber As New Dictionary(Of String, Integer)
         Dim listOfDate As List(Of Date) = (From x In Me.ARCollectionList Select x.AllocationDate Distinct Order By AllocationDate).ToList()
         Dim listWESMTTranAllocCoverSummary As New List(Of WESMBillAllocCoverSummary)
@@ -1179,7 +1247,7 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInEnergy As List(Of String) = getAPALlocationInEnergy.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
 
                 If buyerWTACoverSummary.ZeroRatedTag.Equals("Y") Then 'Non Vatable Buyer
                     For Each invAP In getInvNoInAPAllocationInEnergy
@@ -1194,7 +1262,7 @@ Public Class BRCollectionReportHelper
                                                                                                       And x.STLRun = sellerWTACoverSummary.STLRun And x.GrossSale > 0).
                                                                                                 Select(Function(x) x).ToList
 
-                        Dim newBRDetails As New BRCollectionReportDetails
+                        Dim newBRDetails As New BRCollectionReportSalesDetails
                         Dim allocAmountShare As Decimal = 0D
                         Dim _SMR As Decimal = 0D
 
@@ -1301,7 +1369,7 @@ Public Class BRCollectionReportHelper
                                                                                                       And x.STLRun = sellerWTACoverSummary.STLRun And x.GrossSale > 0).
                                                                                                 Select(Function(x) x).ToList
 
-                        Dim newBRDetails As New BRCollectionReportDetails
+                        Dim newBRDetails As New BRCollectionReportSalesDetails
                         Dim allocAmountShare As Decimal = 0D
                         Dim _SMR As Decimal = 0D
 
@@ -1407,7 +1475,7 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInEnergyDI As List(Of String) = getAPALlocationInEnergyDI.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
 
                 If buyerWTACoverSummary.ZeroRatedTag.Equals("Y") Then 'Non Vatable Buyer
                     For Each invAP In getInvNoInAPAllocationInEnergyDI
@@ -1421,7 +1489,7 @@ Public Class BRCollectionReportHelper
                                                                                                       And x.STLRun = sellerWTACoverSummary.STLRun And x.GrossSale > 0).
                                                                                                 Select(Function(x) x).ToList
 
-                        Dim newBRDetails As New BRCollectionReportDetails
+                        Dim newBRDetails As New BRCollectionReportSalesDetails
                         Dim allocAmountShare As Decimal = 0D
                         Dim _SMR As Decimal = 0D
 
@@ -1528,7 +1596,7 @@ Public Class BRCollectionReportHelper
                                                                                                       And x.STLRun = sellerWTACoverSummary.STLRun And x.GrossSale > 0).
                                                                                                 Select(Function(x) x).ToList
 
-                        Dim newBRDetails As New BRCollectionReportDetails
+                        Dim newBRDetails As New BRCollectionReportSalesDetails
                         Dim allocAmountShare As Decimal = 0D
                         Dim _SMR As Decimal = 0D
 
@@ -1632,7 +1700,7 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInVAT As List(Of String) = getAPALlocationInVAT.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
 
                 For Each invAP In getInvNoInAPAllocationInVAT
                     Dim _InvAP As APAllocation = (From x In getAPALlocationInVAT Where x.InvoiceNumber = invAP Select x).First
@@ -1645,7 +1713,7 @@ Public Class BRCollectionReportHelper
                                                                                                 Where(Function(x) x.BillingPeriod = sellerWTACoverSummary.BillingPeriod _
                                                                                                       And x.STLRun = sellerWTACoverSummary.STLRun And x.GrossSale > 0).
                                                                                                 Select(Function(x) x).ToList
-                    Dim newBRDetails As New BRCollectionReportDetails
+                    Dim newBRDetails As New BRCollectionReportSalesDetails
                     Dim allocAmountShare As Decimal = 0D
                     Dim _SMR As Decimal = CDec(sellerWTACoverSummary.VatOnSales) / CDec(totalSellersWTACoverSummary.Select(Function(x) x.VatOnSales).Sum())
 
@@ -1777,7 +1845,7 @@ Public Class BRCollectionReportHelper
         Next
 
         For Each item In dicCRNumber.Keys
-            Dim newBIRP As New BRCollectionReportParticipant
+            Dim newBIRP As New BRCollectionReportSellerParticipant
             Dim getParticipantInfo As AMParticipants = (From x In Me.AMParticipantsList Where x.IDNumber = item Select x).FirstOrDefault
             With newBIRP
                 .BRCollReportNumber = dicCRNumber.Item(getParticipantInfo.IDNumber)
@@ -1791,9 +1859,9 @@ Public Class BRCollectionReportHelper
         Return ret
     End Function
 
-    Private Function ProcessBRCollectionReportParticipants(ByVal progress As IProgress(Of ProgressClass)) As List(Of BRCollectionReportParticipant)
-        Dim ret As New List(Of BRCollectionReportParticipant)
-        Dim finalListOfBIRRulingDetails As New List(Of BRCollectionReportDetails)
+    Private Function ProcessBRCollectionReportParticipants(ByVal progress As IProgress(Of ProgressClass)) As List(Of BRCollectionReportSellerParticipant)
+        Dim ret As New List(Of BRCollectionReportSellerParticipant)
+        Dim finalListOfBIRRulingDetails As New List(Of BRCollectionReportSalesDetails)
         Dim dicCRNumber As New Dictionary(Of String, Integer)
         Dim listOfDate As List(Of Date) = (From x In Me.ARCollectionList Select x.AllocationDate Distinct Order By AllocationDate).ToList()
         Dim listWESMTransDetailsSummaryHistory As New List(Of WESMTransDetailsSummaryHistory)
@@ -1845,14 +1913,14 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInEnergy As List(Of String) = getAPALlocationInEnergy.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
                 For Each invAP In getInvNoInAPAllocationInEnergy
                     Dim _InvAP As APAllocation = (From x In getAPALlocationInEnergy Where x.InvoiceNumber = invAP Select x).First
                     Dim sellerWTACoverSummary As WESMBillAllocCoverSummary = listWESMTranAllocCoverSummary.Where(Function(x) x.TransactionNo = invAP).Select(Function(x) x).First
                     Dim sellerParticpantInfo As AMParticipants = (From x In Me.AMParticipantsList Where x.IDNumber = _InvAP.IDNumber).First
                     Dim sellerWTDSummaryHistory As List(Of WESMTransDetailsSummaryHistory) = buyerWTDSummaryHistory.Where(Function(x) x.SellerTransNo = invAP).ToList
 
-                    Dim newBRDetails As New BRCollectionReportDetails
+                    Dim newBRDetails As New BRCollectionReportSalesDetails
                     Dim allocAmountShare As Decimal = 0D
                     Dim allocAmountShareEWT As Decimal = 0D
 
@@ -1923,14 +1991,14 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInEnergyDI As List(Of String) = getAPALlocationInEnergyDI.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
                 For Each invAP In getInvNoInAPAllocationInEnergyDI
                     Dim _InvAP As APAllocation = (From x In getAPALlocationInEnergyDI Where x.InvoiceNumber = invAP Select x).First
                     Dim sellerWTACoverSummary As WESMBillAllocCoverSummary = listWESMTranAllocCoverSummary.Where(Function(x) x.TransactionNo = invAP).Select(Function(x) x).First
                     Dim sellerParticpantInfo As AMParticipants = (From x In Me.AMParticipantsList Where x.IDNumber = _InvAP.IDNumber).First
                     Dim sellerWTDSummaryHistory As List(Of WESMTransDetailsSummaryHistory) = buyerWTDSummaryHistory.Where(Function(x) x.SellerTransNo = invAP).ToList
 
-                    Dim newBRDetails As New BRCollectionReportDetails
+                    Dim newBRDetails As New BRCollectionReportSalesDetails
                     Dim allocAmountShare As Decimal = 0D
 
                     Dim getWTAllocDisDetails As WESMBillAllocDisaggDetails = sellerWTACoverSummary.ListWBAllocDisDetails.
@@ -2000,7 +2068,7 @@ Public Class BRCollectionReportHelper
                 Dim getInvNoInAPAllocationInVAT As List(Of String) = getAPALlocationInVAT.Where(Function(x) x.WESMBillBatchNo = invARItem.WESMBillBatchNo).Select(Function(y) y.InvoiceNumber).Distinct.ToList()
                 Dim allocationAmount As Decimal = invARList.Select(Function(x) x.AllocationAmount).Sum
 
-                Dim newListOfBRDetails As New List(Of BRCollectionReportDetails)
+                Dim newListOfBRDetails As New List(Of BRCollectionReportSalesDetails)
 
                 For Each invAP In getInvNoInAPAllocationInVAT
                     Dim _InvAP As APAllocation = (From x In getAPALlocationInVAT Where x.InvoiceNumber = invAP Select x).First
@@ -2009,7 +2077,7 @@ Public Class BRCollectionReportHelper
                     'Dim sellerWTDSummaryHistory As WESMTransDetailsSummaryHistory = buyerWTDSummaryHistory.Where(Function(x) x.SellerTransNo = invAP).FirstOrDefault
                     Dim sellerWTDSummaryHistory As List(Of WESMTransDetailsSummaryHistory) = buyerWTDSummaryHistory.Where(Function(x) x.SellerTransNo = invAP).ToList
 
-                    Dim newBRDetails As New BRCollectionReportDetails
+                    Dim newBRDetails As New BRCollectionReportSalesDetails
                     Dim allocAmountShare As Decimal = 0D
                     Dim getWTAllocDisDetails As WESMBillAllocDisaggDetails = sellerWTACoverSummary.ListWBAllocDisDetails.
                                                                              Where(Function(x) x.BillingID = buyerWTACoverSummary.BillingID).FirstOrDefault
@@ -2046,7 +2114,7 @@ Public Class BRCollectionReportHelper
         Next
 
         For Each item In dicCRNumber.Keys
-            Dim newBIRP As New BRCollectionReportParticipant
+            Dim newBIRP As New BRCollectionReportSellerParticipant
             Dim getParticipantInfo As AMParticipants = (From x In Me.AMParticipantsList Where x.IDNumber = item Select x).FirstOrDefault
             With newBIRP
                 .BRCollReportNumber = dicCRNumber.Item(getParticipantInfo.IDNumber)
@@ -2069,13 +2137,189 @@ Public Class BRCollectionReportHelper
     End Sub
 #End Region
 
-    Public Function GenerateCollectionReportDatatableDaily(ByVal dt As DataTable, ByVal listOfSelectedParticipants As List(Of String)) As DataTable
+    Public Function GenerateCollectionReportDatatableDaily(ByVal dt As DataTable, ByVal listOfSelectedParticipants As List(Of String), ByVal isSeller As Boolean) As DataTable
+        'Get the signatories for WESM Invoice
+        Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
+        If isSeller = True Then
+            For Each item In listOfSelectedParticipants
+                Dim selectedParticipants As BRCollectionReportSellerParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
+                For Each detail In selectedParticipants.BRCollReportDetails.OrderBy(Function(x) x.CollectionDate).ThenBy(Function(y) y.Particulars).ThenBy(Function(z) z.InvoiceNo)
+                    Dim row = dt.NewRow()
+                    row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                    row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                    row("CR_NUMBER") = "CR-N" & selectedParticipants.BRCollReportNumber.ToString("D7")
+                    row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                    row("FULL_NAME") = selectedParticipants.Participant.FullName
+                    row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                    row("COLLECTION_DATE") = detail.CollectionDate
+                    row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                    row("PARTICULARS") = detail.Particulars.ToString
+                    row("RECEIVED_FROM") = detail.BuyerParticipant.FullName.ToString & " (" & detail.BuyerParticipant.IDNumber.ToString & ")"
+                    row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                    row("VATABLE_SALES") = detail.VatableSales.ToString
+                    row("ZERO_RATED_SALES") = detail.ZeroRatedSales.ToString
+                    row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZoneSales.ToString
+                    row("VAT_ON_SALES") = detail.VatOnSales.ToString
+                    row("WHTAX") = detail.WithholdingTax.ToString
+                    row("TOTAL") = detail.Total
+                    row("SIGNATORIES_1") = AMModule.FullName
+                    row("SIG1_POSITION") = AMModule.Position
+                    row("SINATORIES_2") = Signatory.Signatory_1
+                    row("SIG2_POSITION") = Signatory.Position_1
+                    row("SIGNATORIES_3") = Signatory.Signatory_2
+                    row("SIG3_POSITION") = Signatory.Position_2
+                    dt.Rows.Add(row)
+                Next
+            Next
+        Else
+            For Each item In listOfSelectedParticipants
+                Dim selectedParticipants As BRCollectionReportBuyerParticipant = (From x In Me.BIRRulingCR.BuyerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
+                For Each detail In selectedParticipants.BRCollReportDetails.OrderBy(Function(x) x.CollectionDate).ThenBy(Function(y) y.Particulars).ThenBy(Function(z) z.InvoiceNo)
+                    Dim row = dt.NewRow()
+                    row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                    row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                    row("CR_NUMBER") = "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & selectedParticipants.BRCollReportNumber.ToString("D4")
+                    row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                    row("FULL_NAME") = selectedParticipants.Participant.FullName
+                    row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                    row("COLLECTION_DATE") = detail.CollectionDate
+                    row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                    row("PARTICULARS") = detail.Particulars.ToString
+                    row("RECEIVED_FROM") = detail.SellerParticipant.FullName.ToString & " (" & detail.SellerParticipant.IDNumber.ToString & ")"
+                    row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                    row("VATABLE_SALES") = detail.VatablePurchases.ToString
+                    row("ZERO_RATED_SALES") = detail.ZeroRatedPurchases.ToString
+                    row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZonePurchases.ToString
+                    row("VAT_ON_SALES") = detail.VatOnPurchases.ToString
+                    row("WHTAX") = detail.WithholdingTax.ToString
+                    row("TOTAL") = detail.Total
+                    row("SIGNATORIES_1") = AMModule.FullName
+                    row("SIG1_POSITION") = AMModule.Position
+                    row("SINATORIES_2") = Signatory.Signatory_1
+                    row("SIG2_POSITION") = Signatory.Position_1
+                    row("SIGNATORIES_3") = Signatory.Signatory_2
+                    row("SIG3_POSITION") = Signatory.Position_2
+                    dt.Rows.Add(row)
+                Next
+            Next
+        End If
+
+        Return dt
+    End Function
+
+    Public Function GenerateCollectionReportDatatableMonthly(ByVal dt As DataTable, ByVal listOfSelectedParticipants As List(Of String), ByVal isSeller As Boolean) As DataTable
         'Get the signatories for WESM Invoice
         Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
 
-        For Each item In listOfSelectedParticipants
-            Dim selectedParticipants As BRCollectionReportParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
-            For Each detail In selectedParticipants.BRCollReportDetails.OrderBy(Function(x) x.CollectionDate).ThenBy(Function(y) y.Particulars).ThenBy(Function(z) z.InvoiceNo)
+        If isSeller = True Then
+            For Each item In listOfSelectedParticipants
+                Dim selectedParticipants As BRCollectionReportSellerParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
+
+                Dim groupByBRCollReportDetails As List(Of BRCollectionReportSalesDetails) = selectedParticipants.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportSalesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .BuyerParticipant = t.Key.BuyerParticipant,
+                                                                                               .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatableSales = t.Sum(Function(x) x.VatableSales),
+                                                                                               .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
+                                                                                               .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
+                                                                                               .VatOnSales = t.Sum(Function(x) x.VatOnSales),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+
+                For Each detail In groupByBRCollReportDetails
+                    Dim row = dt.NewRow()
+                    row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                    row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                    row("CR_NUMBER") = "CR-N" & selectedParticipants.BRCollReportNumber.ToString("D7")
+                    row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                    row("FULL_NAME") = selectedParticipants.Participant.FullName
+                    row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                    'row("COLLECTION_DATE") = detail.CollectionDate
+                    row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                    row("PARTICULARS") = detail.Particulars.ToString
+                    row("RECEIVED_FROM") = detail.BuyerParticipant.FullName.ToString & " (" & detail.BuyerParticipant.IDNumber.ToString & ")"
+                    row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                    row("VATABLE_SALES") = detail.VatableSales.ToString
+                    row("ZERO_RATED_SALES") = detail.ZeroRatedSales.ToString
+                    row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZoneSales.ToString
+                    row("VAT_ON_SALES") = detail.VatOnSales.ToString
+                    row("WHTAX") = detail.WithholdingTax.ToString
+                    row("TOTAL") = detail.Total
+                    row("SIGNATORIES_1") = AMModule.FullName
+                    row("SIG1_POSITION") = AMModule.Position
+                    row("SINATORIES_2") = Signatory.Signatory_1
+                    row("SIG2_POSITION") = Signatory.Position_1
+                    row("SIGNATORIES_3") = Signatory.Signatory_2
+                    row("SIG3_POSITION") = Signatory.Position_2
+                    dt.Rows.Add(row)
+                Next
+            Next
+        Else
+            For Each item In listOfSelectedParticipants
+                Dim selectedParticipants As BRCollectionReportBuyerParticipant = (From x In Me.BIRRulingCR.BuyerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
+
+                Dim groupByBRCollReportDetails As List(Of BRCollectionReportPurchasesDetails) = selectedParticipants.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.SellerParticipant, Key cr.InvoiceNo, Key cr.SellerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportPurchasesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .SellerParticipant = t.Key.SellerParticipant,
+                                                                                               .SellerInvoiceNo = t.Key.SellerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatablePurchases = t.Sum(Function(x) x.VatablePurchases),
+                                                                                               .ZeroRatedPurchases = t.Sum(Function(x) x.ZeroRatedPurchases),
+                                                                                               .ZeroRatedEcoZonePurchases = t.Sum(Function(x) x.ZeroRatedEcoZonePurchases),
+                                                                                               .VatOnPurchases = t.Sum(Function(x) x.VatOnPurchases),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+
+                For Each detail In groupByBRCollReportDetails
+                    Dim row = dt.NewRow()
+                    row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                    row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                    row("CR_NUMBER") = "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & selectedParticipants.BRCollReportNumber.ToString("D4")
+                    row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                    row("FULL_NAME") = selectedParticipants.Participant.FullName
+                    row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                    'row("COLLECTION_DATE") = detail.CollectionDate
+                    row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                    row("PARTICULARS") = detail.Particulars.ToString
+                    row("RECEIVED_FROM") = detail.SellerParticipant.FullName.ToString & " (" & detail.SellerParticipant.IDNumber.ToString & ")"
+                    row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                    row("VATABLE_SALES") = detail.VatablePurchases.ToString
+                    row("ZERO_RATED_SALES") = detail.ZeroRatedPurchases.ToString
+                    row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZonePurchases.ToString
+                    row("VAT_ON_SALES") = detail.VatOnPurchases.ToString
+                    row("WHTAX") = detail.WithholdingTax.ToString
+                    row("TOTAL") = detail.Total
+                    row("SIGNATORIES_1") = AMModule.FullName
+                    row("SIG1_POSITION") = AMModule.Position
+                    row("SINATORIES_2") = Signatory.Signatory_1
+                    row("SIG2_POSITION") = Signatory.Position_1
+                    row("SIGNATORIES_3") = Signatory.Signatory_2
+                    row("SIG3_POSITION") = Signatory.Position_2
+                    dt.Rows.Add(row)
+                Next
+            Next
+        End If
+
+        Return dt
+    End Function
+
+    Public Function GenerateCollectionReportDatatableDaily(ByVal dt As DataTable, ByVal selectedParticipant As String, ByVal isSeller As Boolean) As DataTable
+        'Get the signatories for WESM Invoice
+        Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
+        If isSeller = True Then
+            Dim selectedParticipants As New BRCollectionReportSellerParticipant
+            selectedParticipants = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
+
+            For Each detail In selectedParticipants.BRCollReportDetails
                 Dim row = dt.NewRow()
                 row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
                 row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
@@ -2083,7 +2327,7 @@ Public Class BRCollectionReportHelper
                 row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
                 row("FULL_NAME") = selectedParticipants.Participant.FullName
                 row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
-                row("COLLECTION_DATE") = detail.CollectionDate
+                row("COLLECTION_DATE") = detail.CollectionDate.ToString
                 row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
                 row("PARTICULARS") = detail.Particulars.ToString
                 row("RECEIVED_FROM") = detail.BuyerParticipant.FullName.ToString & " (" & detail.BuyerParticipant.IDNumber.ToString & ")"
@@ -2102,32 +2346,64 @@ Public Class BRCollectionReportHelper
                 row("SIG3_POSITION") = Signatory.Position_2
                 dt.Rows.Add(row)
             Next
-        Next
+        Else
+            Dim selectedParticipants As New BRCollectionReportBuyerParticipant
+            selectedParticipants = (From x In Me.BIRRulingCR.BuyerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
+
+            For Each detail In selectedParticipants.BRCollReportDetails
+                Dim row = dt.NewRow()
+                row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                row("CR_NUMBER") = "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & selectedParticipants.BRCollReportNumber.ToString("D4")
+                row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                row("FULL_NAME") = selectedParticipants.Participant.FullName
+                row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                row("COLLECTION_DATE") = detail.CollectionDate.ToString
+                row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                row("PARTICULARS") = detail.Particulars.ToString
+                row("RECEIVED_FROM") = detail.SellerParticipant.FullName.ToString & " (" & detail.SellerParticipant.IDNumber.ToString & ")"
+                row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                row("VATABLE_SALES") = detail.VatablePurchases.ToString
+                row("ZERO_RATED_SALES") = detail.ZeroRatedPurchases.ToString
+                row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZonePurchases.ToString
+                row("VAT_ON_SALES") = detail.VatOnPurchases.ToString
+                row("WHTAX") = detail.WithholdingTax.ToString
+                row("TOTAL") = detail.Total
+                row("SIGNATORIES_1") = AMModule.FullName
+                row("SIG1_POSITION") = AMModule.Position
+                row("SINATORIES_2") = Signatory.Signatory_1
+                row("SIG2_POSITION") = Signatory.Position_1
+                row("SIGNATORIES_3") = Signatory.Signatory_2
+                row("SIG3_POSITION") = Signatory.Position_2
+                dt.Rows.Add(row)
+            Next
+        End If
+
         Return dt
     End Function
 
-    Public Function GenerateCollectionReportDatatableMonthly(ByVal dt As DataTable, ByVal listOfSelectedParticipants As List(Of String)) As DataTable
+    Public Function GenerateCollectionReportDatatableMonthly(ByVal dt As DataTable, ByVal selectedParticipant As String, ByVal isSeller As Boolean) As DataTable
         'Get the signatories for WESM Invoice
         Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
+        If isSeller = True Then
+            Dim selectedParticipants As New BRCollectionReportSellerParticipant
+            selectedParticipants = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
 
-        For Each item In listOfSelectedParticipants
-            Dim selectedParticipants As BRCollectionReportParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = item Select x).FirstOrDefault
-
-            Dim groupByBRCollReportDetails As List(Of BRCollectionReportDetails) = selectedParticipants.BRCollReportDetails.
-                                                                                    GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
-                                                                                            Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
-                                                                                    Select(Function(t) New BRCollectionReportDetails With {
-                                                                                           .BillingPeriod = t.Key.BillingPeriod,
-                                                                                           .STLRun = t.Key.STLRun,
-                                                                                           .Particulars = t.Key.Particulars,
-                                                                                           .BuyerParticipant = t.Key.BuyerParticipant,
-                                                                                           .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
-                                                                                           .InvoiceNo = t.Key.InvoiceNo,
-                                                                                           .VatableSales = t.Sum(Function(x) x.VatableSales),
-                                                                                           .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
-                                                                                           .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
-                                                                                           .VatOnSales = t.Sum(Function(x) x.VatOnSales),
-                                                                                           .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+            Dim groupByBRCollReportDetails As List(Of BRCollectionReportSalesDetails) = selectedParticipants.BRCollReportDetails.
+                                                                                   GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                           Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
+                                                                                   Select(Function(t) New BRCollectionReportSalesDetails With {
+                                                                                          .BillingPeriod = t.Key.BillingPeriod,
+                                                                                          .STLRun = t.Key.STLRun,
+                                                                                          .Particulars = t.Key.Particulars,
+                                                                                          .BuyerParticipant = t.Key.BuyerParticipant,
+                                                                                          .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
+                                                                                          .InvoiceNo = t.Key.InvoiceNo,
+                                                                                          .VatableSales = t.Sum(Function(x) x.VatableSales),
+                                                                                          .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
+                                                                                          .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
+                                                                                          .VatOnSales = t.Sum(Function(x) x.VatOnSales),
+                                                                                          .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
 
             For Each detail In groupByBRCollReportDetails
                 Dim row = dt.NewRow()
@@ -2156,127 +2432,112 @@ Public Class BRCollectionReportHelper
                 row("SIG3_POSITION") = Signatory.Position_2
                 dt.Rows.Add(row)
             Next
-        Next
+        Else
+            Dim selectedParticipants As New BRCollectionReportBuyerParticipant
+            selectedParticipants = (From x In Me.BIRRulingCR.BuyerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
+
+            Dim groupByBRCollReportDetails As List(Of BRCollectionReportPurchasesDetails) = selectedParticipants.BRCollReportDetails.
+                                                                                   GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                           Key cr.SellerParticipant, Key cr.InvoiceNo, Key cr.SellerInvoiceNo}).
+                                                                                   Select(Function(t) New BRCollectionReportPurchasesDetails With {
+                                                                                          .BillingPeriod = t.Key.BillingPeriod,
+                                                                                          .STLRun = t.Key.STLRun,
+                                                                                          .Particulars = t.Key.Particulars,
+                                                                                          .SellerParticipant = t.Key.SellerParticipant,
+                                                                                          .SellerInvoiceNo = t.Key.SellerInvoiceNo,
+                                                                                          .InvoiceNo = t.Key.InvoiceNo,
+                                                                                          .VatablePurchases = t.Sum(Function(x) x.VatablePurchases),
+                                                                                          .ZeroRatedPurchases = t.Sum(Function(x) x.ZeroRatedPurchases),
+                                                                                          .ZeroRatedEcoZonePurchases = t.Sum(Function(x) x.ZeroRatedEcoZonePurchases),
+                                                                                          .VatOnPurchases = t.Sum(Function(x) x.VatOnPurchases),
+                                                                                          .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+
+            For Each detail In groupByBRCollReportDetails
+                Dim row = dt.NewRow()
+                row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
+                row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
+                row("CR_NUMBER") = "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & selectedParticipants.BRCollReportNumber.ToString("D4")
+                row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
+                row("FULL_NAME") = selectedParticipants.Participant.FullName
+                row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
+                'row("COLLECTION_DATE") = detail.CollectionDate
+                row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
+                row("PARTICULARS") = detail.Particulars.ToString
+                row("RECEIVED_FROM") = detail.SellerParticipant.FullName.ToString & " (" & detail.SellerParticipant.IDNumber.ToString & ")"
+                row("STATEMENT_NO") = detail.InvoiceNo.ToString
+                row("VATABLE_SALES") = detail.VatablePurchases.ToString
+                row("ZERO_RATED_SALES") = detail.ZeroRatedPurchases.ToString
+                row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZonePurchases.ToString
+                row("VAT_ON_SALES") = detail.VatOnPurchases.ToString
+                row("WHTAX") = detail.WithholdingTax.ToString
+                row("TOTAL") = detail.Total
+                row("SIGNATORIES_1") = AMModule.FullName
+                row("SIG1_POSITION") = AMModule.Position
+                row("SINATORIES_2") = Signatory.Signatory_1
+                row("SIG2_POSITION") = Signatory.Position_1
+                row("SIGNATORIES_3") = Signatory.Signatory_2
+                row("SIG3_POSITION") = Signatory.Position_2
+                dt.Rows.Add(row)
+            Next
+        End If
         Return dt
     End Function
 
-    Public Function GenerateCollectionReportDatatableDaily(ByVal dt As DataTable, ByVal selectedParticipant As String) As DataTable
-        'Get the signatories for WESM Invoice
-        Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
-
-        Dim selectedParticipants As BRCollectionReportParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
-        For Each detail In selectedParticipants.BRCollReportDetails
-            Dim row = dt.NewRow()
-            row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
-            row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
-            row("CR_NUMBER") = "CR-N" & selectedParticipants.BRCollReportNumber.ToString("D7")
-            row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
-            row("FULL_NAME") = selectedParticipants.Participant.FullName
-            row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
-            row("COLLECTION_DATE") = detail.CollectionDate.ToString
-            row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
-            row("PARTICULARS") = detail.Particulars.ToString
-            row("RECEIVED_FROM") = detail.BuyerParticipant.FullName.ToString & " (" & detail.BuyerParticipant.IDNumber.ToString & ")"
-            row("STATEMENT_NO") = detail.InvoiceNo.ToString
-            row("VATABLE_SALES") = detail.VatableSales.ToString
-            row("ZERO_RATED_SALES") = detail.ZeroRatedSales.ToString
-            row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZoneSales.ToString
-            row("VAT_ON_SALES") = detail.VatOnSales.ToString
-            row("WHTAX") = detail.WithholdingTax.ToString
-            row("TOTAL") = detail.Total
-            row("SIGNATORIES_1") = AMModule.FullName
-            row("SIG1_POSITION") = AMModule.Position
-            row("SINATORIES_2") = Signatory.Signatory_1
-            row("SIG2_POSITION") = Signatory.Position_1
-            row("SIGNATORIES_3") = Signatory.Signatory_2
-            row("SIG3_POSITION") = Signatory.Position_2
-            dt.Rows.Add(row)
-        Next
-
-        Return dt
-    End Function
-
-    Public Function GenerateCollectionReportDatatableMonthly(ByVal dt As DataTable, ByVal selectedParticipant As String) As DataTable
-        'Get the signatories for WESM Invoice
-        Dim Signatory = WBillHelper.GetSignatories("BIR_COLLREPORT").First()
-        Dim selectedParticipants As BRCollectionReportParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = selectedParticipant Select x).FirstOrDefault
-        Dim groupByBRCollReportDetails As List(Of BRCollectionReportDetails) = selectedParticipants.BRCollReportDetails.
-                                                                                    GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
-                                                                                            Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
-                                                                                    Select(Function(t) New BRCollectionReportDetails With {
-                                                                                           .BillingPeriod = t.Key.BillingPeriod,
-                                                                                           .STLRun = t.Key.STLRun,
-                                                                                           .Particulars = t.Key.Particulars,
-                                                                                           .BuyerParticipant = t.Key.BuyerParticipant,
-                                                                                           .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
-                                                                                           .InvoiceNo = t.Key.InvoiceNo,
-                                                                                           .VatableSales = t.Sum(Function(x) x.VatableSales),
-                                                                                           .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
-                                                                                           .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
-                                                                                           .VatOnSales = t.Sum(Function(x) x.VatOnSales),
-                                                                                           .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
-
-        For Each detail In groupByBRCollReportDetails
-            Dim row = dt.NewRow()
-            row("TRANS_DATE_FROM") = Me.BIRRulingCR.RemittanceDateFrom.ToShortDateString()
-            row("TRANS_DATE_TO") = Me.BIRRulingCR.RemittanceDateTo.ToShortDateString()
-            row("CR_NUMBER") = "CR-N" & selectedParticipants.BRCollReportNumber.ToString("D7")
-            row("ID_NUMBER") = selectedParticipants.Participant.IDNumber
-            row("FULL_NAME") = selectedParticipants.Participant.FullName
-            row("ADDRESS") = selectedParticipants.Participant.ParticipantAddress
-            'row("COLLECTION_DATE") = detail.CollectionDate
-            row("BILLING_REMARKS") = detail.BillingPeriod.ToString & " - " & detail.STLRun.ToString
-            row("PARTICULARS") = detail.Particulars.ToString
-            row("RECEIVED_FROM") = detail.BuyerParticipant.FullName.ToString & " (" & detail.BuyerParticipant.IDNumber.ToString & ")"
-            row("STATEMENT_NO") = detail.InvoiceNo.ToString
-            row("VATABLE_SALES") = detail.VatableSales.ToString
-            row("ZERO_RATED_SALES") = detail.ZeroRatedSales.ToString
-            row("ZERO_RATED_ECOZONE") = detail.ZeroRatedEcoZoneSales.ToString
-            row("VAT_ON_SALES") = detail.VatOnSales.ToString
-            row("WHTAX") = detail.WithholdingTax.ToString
-            row("TOTAL") = detail.Total
-            row("SIGNATORIES_1") = AMModule.FullName
-            row("SIG1_POSITION") = AMModule.Position
-            row("SINATORIES_2") = Signatory.Signatory_1
-            row("SIG2_POSITION") = Signatory.Position_1
-            row("SIGNATORIES_3") = Signatory.Signatory_2
-            row("SIG3_POSITION") = Signatory.Position_2
-            dt.Rows.Add(row)
-        Next
-
-        Return dt
-    End Function
-
-    Public Sub GenerateBIRCollectionReportExcel(ByVal Participant As String, ByVal SavingPathName As String, ByVal oneFileOnly As Boolean, ByVal collReporType As String, ByVal progress As IProgress(Of ProgressClass))
+    Public Sub GenerateBIRCollectionReportExcel(ByVal Participant As String, ByVal SavingPathName As String, ByVal oneFileOnly As Boolean, ByVal collReporType As String, ByVal progress As IProgress(Of ProgressClass), ByVal isSeller As Boolean)
         newProgress = New ProgressClass
         If oneFileOnly = False Then
             Dim getParticipantInfo As AMParticipants = (From x In Me.AMParticipantsList Where x.IDNumber = Participant Select x).First
-            Dim getBIRParticipant As BRCollectionReportParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = Participant Select x).First
-            If collReporType.Equals("DAILY") Then
-                newProgress.ProgressMsg = "Extracting Consolidated Daily Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
-                progress.Report(newProgress)
-                GenerateInExcelDaily(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
-            Else
-                newProgress.ProgressMsg = "Extracting Consolidated Monthly Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
-                progress.Report(newProgress)
-                GenerateInExcelMonthly(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
+            If isSeller = True Then
+                Dim getBIRParticipant As New BRCollectionReportSellerParticipant
+                getBIRParticipant = (From x In Me.BIRRulingCR.SellerDetails Where x.Participant.IDNumber = Participant Select x).First
+                If collReporType.Equals("DAILY") Then
+                    newProgress.ProgressMsg = "Extracting Consolidated Daily Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateInExcelDailySeller(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
+                Else
+                    newProgress.ProgressMsg = "Extracting Consolidated Monthly Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateInExcelMonthlySeller(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
+                End If
+            ElseIf isSeller = False Then
+                Dim getBIRParticipant As New BRCollectionReportBuyerParticipant
+                getBIRParticipant = (From x In Me.BIRRulingCR.BuyerDetails Where x.Participant.IDNumber = Participant Select x).First
+                If collReporType.Equals("DAILY") Then
+                    newProgress.ProgressMsg = "Extracting Consolidated Daily Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateInExcelDailyBuyer(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
+                Else
+                    newProgress.ProgressMsg = "Extracting Consolidated Monthly Collection Report " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateInExcelMonthlyBuyer(SavingPathName, getParticipantInfo, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo, getBIRParticipant)
+                End If
             End If
-
         Else
-            If collReporType.Equals("DAILY") Then
-                newProgress.ProgressMsg = "Extracting Daily Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
-                progress.Report(newProgress)
-                GenerateAllInExcelDaily(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
-            Else
-                newProgress.ProgressMsg = "Extracting Monthly Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
-                progress.Report(newProgress)
-                GenerateAllInExcelMonthly(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
+            If isSeller = True Then
+                If collReporType.Equals("DAILY") Then
+                    newProgress.ProgressMsg = "Extracting Daily Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateAllInExcelDailySeller(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
+                Else
+                    newProgress.ProgressMsg = "Extracting Monthly Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateAllInExcelMonthlySeller(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
+                End If
+            ElseIf isSeller = False Then
+                If collReporType.Equals("DAILY") Then
+                    newProgress.ProgressMsg = "Extracting Daily Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateAllInExcelDailyBuyer(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
+                Else
+                    newProgress.ProgressMsg = "Extracting Monthly Collection Report per TP " & Me.BIRRulingCR.RemittanceDateFrom.ToString("MMMM dd, yyyy") & " to " & Me.BIRRulingCR.RemittanceDateTo.ToString("MMMM dd, yyyy")
+                    progress.Report(newProgress)
+                    GenerateAllInExcelMonthlyBuyer(SavingPathName, Me.BIRRulingCR.RemittanceDateFrom, Me.BIRRulingCR.RemittanceDateTo)
+                End If
             End If
-
         End If
     End Sub
 
-    Private Sub GenerateAllInExcelDaily(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
+    Private Sub GenerateAllInExcelDailySeller(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
@@ -2296,7 +2557,6 @@ Public Class BRCollectionReportHelper
         Dim grandTotal As Object(,) = New Object(,) {}
 
         Try
-            '********************************************* Supply BIR Ruling Details per Participant
             If Me.BIRRulingCR.SellerDetails.Count > 0 Then
                 Dim bdIndx As Integer = 0
                 Dim dicDate As New Dictionary(Of Date, Integer)
@@ -2331,7 +2591,7 @@ Public Class BRCollectionReportHelper
                 Dim gTotalTotal As Decimal = 0
 
                 For Each birCRParticipant In Me.BIRRulingCR.SellerDetails
-                    For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportDetails) x.InvoiceNo).ToList
+                    For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportSalesDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportSalesDetails) x.InvoiceNo).ToList
                         bdIndx += 1
                         gTotalVatableSales += item.VatableSales
                         gTotalZRSales += item.ZeroRatedSales
@@ -2383,7 +2643,7 @@ Public Class BRCollectionReportHelper
                 Dim FileName As String = "CSR_ALL_" & transDate & ".xlsx"
 
                 xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
-                                Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                                    Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
                 xlWorkBook.Close(False)
                 xlApp.Quit()
 
@@ -2395,6 +2655,135 @@ Public Class BRCollectionReportHelper
                 releaseObject(xlApp)
 
             End If
+            '********************************************* Supply BIR Ruling Details per Participant
+        Catch ex As Exception
+            releaseObject(xlWorkSheet)
+            releaseObject(xlWorkBook)
+            releaseObject(xlApp)
+            Throw New Exception(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub GenerateAllInExcelDailyBuyer(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim xlRowRange1 As Excel.Range
+        Dim xlRowRange2 As Excel.Range
+        Dim xlContentDetails As Excel.Range
+
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim rowIndex As Integer = 1
+
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkSheet.Name = "Collection Report Details"
+
+        Dim contentDetails As Object(,) = New Object(,) {}
+        Dim grandTotal As Object(,) = New Object(,) {}
+
+        Try
+            If Me.BIRRulingCR.BuyerDetails.Count > 0 Then
+                Dim bdIndx As Integer = 0
+                Dim dicDate As New Dictionary(Of Date, Integer)
+
+                Dim countDetails As Long = 0
+                For Each item In Me.BIRRulingCR.BuyerDetails
+                    countDetails += item.BRCollReportDetails.Count
+                Next
+
+                ReDim contentDetails(countDetails + 1, 13)
+
+                contentDetails(bdIndx, 0) = "Billing" & vbNewLine & "Remarks"
+                contentDetails(bdIndx, 1) = "Remittance Date"
+                contentDetails(bdIndx, 2) = "Particulars"
+                contentDetails(bdIndx, 3) = "Seller STL ID"
+                contentDetails(bdIndx, 4) = "Paid To (Seller STL ID)"
+                contentDetails(bdIndx, 5) = "Paid To (Seller Full name)"
+                contentDetails(bdIndx, 6) = "Transaction No (Buyer)"
+                contentDetails(bdIndx, 7) = "Vatable Purchases"
+                contentDetails(bdIndx, 8) = "Zero Rated Purchases"
+                contentDetails(bdIndx, 9) = "Zero Rated Ecozone Purchases"
+                contentDetails(bdIndx, 10) = "VAT on Purchases"
+                contentDetails(bdIndx, 11) = "Withholding Tax"
+                contentDetails(bdIndx, 12) = "Total"
+                contentDetails(bdIndx, 13) = "Transaction No (Seller)"
+
+                Dim gTotalVatablePurchases As Decimal = 0
+                Dim gTotalZRPurchases As Decimal = 0
+                Dim gTotalZREcozonePurchases As Decimal = 0
+                Dim gTotalVATonPurchases As Decimal = 0
+                Dim gTotalWhTax As Decimal = 0
+                Dim gTotalTotal As Decimal = 0
+
+                For Each birCRParticipant In Me.BIRRulingCR.BuyerDetails
+                    For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportPurchasesDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportPurchasesDetails) x.InvoiceNo).ToList
+                        bdIndx += 1
+                        gTotalVatablePurchases += item.VatablePurchases
+                        gTotalZRPurchases += item.ZeroRatedPurchases
+                        gTotalZREcozonePurchases += item.ZeroRatedEcoZonePurchases
+                        gTotalVATonPurchases += item.VatOnPurchases
+                        gTotalWhTax += item.WithholdingTax
+                        gTotalTotal += item.Total
+
+                        contentDetails(bdIndx, 0) = item.BillingPeriod & " - " & item.STLRun
+                        contentDetails(bdIndx, 1) = item.CollectionDate.ToShortDateString
+                        contentDetails(bdIndx, 2) = item.Particulars
+                        contentDetails(bdIndx, 3) = birCRParticipant.Participant.IDNumber
+                        contentDetails(bdIndx, 4) = item.SellerParticipant.IDNumber
+                        contentDetails(bdIndx, 5) = item.SellerParticipant.FullName
+                        contentDetails(bdIndx, 6) = item.InvoiceNo
+                        contentDetails(bdIndx, 7) = item.VatablePurchases
+                        contentDetails(bdIndx, 8) = item.ZeroRatedPurchases
+                        contentDetails(bdIndx, 9) = item.ZeroRatedEcoZonePurchases
+                        contentDetails(bdIndx, 10) = item.VatOnPurchases
+                        contentDetails(bdIndx, 11) = item.WithholdingTax
+                        contentDetails(bdIndx, 12) = item.Total
+                        contentDetails(bdIndx, 13) = item.SellerInvoiceNo
+                    Next
+                Next
+
+                bdIndx += 1
+                contentDetails(bdIndx, 0) = ""
+                contentDetails(bdIndx, 1) = "Grand Total: "
+                contentDetails(bdIndx, 2) = ""
+                contentDetails(bdIndx, 3) = ""
+                contentDetails(bdIndx, 4) = ""
+                contentDetails(bdIndx, 5) = ""
+                contentDetails(bdIndx, 6) = ""
+                contentDetails(bdIndx, 7) = gTotalVatablePurchases
+                contentDetails(bdIndx, 8) = gTotalZRPurchases
+                contentDetails(bdIndx, 9) = gTotalZREcozonePurchases
+                contentDetails(bdIndx, 10) = gTotalVATonPurchases
+                contentDetails(bdIndx, 11) = gTotalWhTax
+                contentDetails(bdIndx, 12) = gTotalTotal
+                contentDetails(bdIndx, 13) = ""
+
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(rowIndex, 1), Excel.Range)
+                rowIndex += bdIndx
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(rowIndex, 14), Excel.Range)
+                xlContentDetails = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+                xlContentDetails.Value = contentDetails
+                Dim transDate As String = dateFrom.ToString("MM-dd-yyyy") & " - " & dateTo.ToString("MM-dd-yyyy") & "_DAILY"
+
+                Dim FileName As String = "CSR_ALL_" & transDate & ".xlsx"
+
+                xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
+                                    Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                xlWorkBook.Close(False)
+                xlApp.Quit()
+
+                releaseObject(xlContentDetails)
+                releaseObject(xlRowRange2)
+                releaseObject(xlRowRange1)
+                releaseObject(xlWorkSheet)
+                releaseObject(xlWorkBook)
+                releaseObject(xlApp)
+
+            End If
+            '********************************************* Supply BIR Ruling Details per Participant
+
 
         Catch ex As Exception
             releaseObject(xlWorkSheet)
@@ -2404,7 +2793,7 @@ Public Class BRCollectionReportHelper
         End Try
     End Sub
 
-    Private Sub GenerateAllInExcelMonthly(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
+    Private Sub GenerateAllInExcelMonthlySeller(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
@@ -2430,21 +2819,21 @@ Public Class BRCollectionReportHelper
                 Dim dicDate As New Dictionary(Of Date, Integer)
                 Dim countDetails As Long = 0
                 For Each birCRParticipant In Me.BIRRulingCR.SellerDetails
-                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportDetails) = birCRParticipant.BRCollReportDetails.
-                                                                                    GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
-                                                                                            Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
-                                                                                    Select(Function(t) New BRCollectionReportDetails With {
-                                                                                           .BillingPeriod = t.Key.BillingPeriod,
-                                                                                           .STLRun = t.Key.STLRun,
-                                                                                           .Particulars = t.Key.Particulars,
-                                                                                           .BuyerParticipant = t.Key.BuyerParticipant,
-                                                                                           .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
-                                                                                           .InvoiceNo = t.Key.InvoiceNo,
-                                                                                           .VatableSales = t.Sum(Function(x) x.VatableSales),
-                                                                                           .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
-                                                                                           .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
-                                                                                           .VatOnSales = t.Sum(Function(x) x.VatOnSales),
-                                                                                           .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportSalesDetails) = birCRParticipant.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportSalesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .BuyerParticipant = t.Key.BuyerParticipant,
+                                                                                               .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatableSales = t.Sum(Function(x) x.VatableSales),
+                                                                                               .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
+                                                                                               .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
+                                                                                               .VatOnSales = t.Sum(Function(x) x.VatOnSales),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
                     countDetails += groupByBRCollReportDetails.Count
                 Next
 
@@ -2472,22 +2861,22 @@ Public Class BRCollectionReportHelper
                 Dim gTotalTotal As Decimal = 0
 
                 For Each birCRParticipant In Me.BIRRulingCR.SellerDetails
-                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportDetails) = birCRParticipant.BRCollReportDetails.
-                                                                                    GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
-                                                                                            Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
-                                                                                    Select(Function(t) New BRCollectionReportDetails With {
-                                                                                           .BillingPeriod = t.Key.BillingPeriod,
-                                                                                           .STLRun = t.Key.STLRun,
-                                                                                           .Particulars = t.Key.Particulars,
-                                                                                           .BuyerParticipant = t.Key.BuyerParticipant,
-                                                                                           .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
-                                                                                           .InvoiceNo = t.Key.InvoiceNo,
-                                                                                           .VatableSales = t.Sum(Function(x) x.VatableSales),
-                                                                                           .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
-                                                                                           .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
-                                                                                           .VatOnSales = t.Sum(Function(x) x.VatOnSales),
-                                                                                           .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
-                    For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportDetails) n.BuyerParticipant.IDNumber).ThenBy(Function(x As BRCollectionReportDetails) x.InvoiceNo).ToList
+                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportSalesDetails) = birCRParticipant.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportSalesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .BuyerParticipant = t.Key.BuyerParticipant,
+                                                                                               .BuyerInvoiceNo = t.Key.BuyerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatableSales = t.Sum(Function(x) x.VatableSales),
+                                                                                               .ZeroRatedSales = t.Sum(Function(x) x.ZeroRatedSales),
+                                                                                               .ZeroRatedEcoZoneSales = t.Sum(Function(x) x.ZeroRatedEcoZoneSales),
+                                                                                               .VatOnSales = t.Sum(Function(x) x.VatOnSales),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+                    For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportSalesDetails) n.BuyerParticipant.IDNumber).ThenBy(Function(x As BRCollectionReportSalesDetails) x.InvoiceNo).ToList
                         bdIndx += 1
                         gTotalVatableSales += item.VatableSales
                         gTotalZRSales += item.ZeroRatedSales
@@ -2537,7 +2926,7 @@ Public Class BRCollectionReportHelper
                 Dim FileName As String = "CSR_ALL_" & transDate & ".xlsx"
 
                 xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
-                                Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                                    Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
                 xlWorkBook.Close(False)
                 xlApp.Quit()
 
@@ -2547,9 +2936,7 @@ Public Class BRCollectionReportHelper
                 releaseObject(xlWorkSheet)
                 releaseObject(xlWorkBook)
                 releaseObject(xlApp)
-
             End If
-
         Catch ex As Exception
             releaseObject(xlWorkSheet)
             releaseObject(xlWorkBook)
@@ -2558,7 +2945,160 @@ Public Class BRCollectionReportHelper
         End Try
     End Sub
 
-    Private Sub GenerateInExcelDaily(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date, ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportParticipant)
+    Private Sub GenerateAllInExcelMonthlyBuyer(ByVal SavingPathName As String, ByVal dateFrom As Date, ByVal dateTo As Date)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim xlRowRange1 As Excel.Range
+        Dim xlRowRange2 As Excel.Range
+        Dim xlContentDetails As Excel.Range
+
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim rowIndex As Integer = 1
+
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkSheet.Name = "Collection Report Details"
+
+        Dim contentDetails As Object(,) = New Object(,) {}
+        Dim grandTotal As Object(,) = New Object(,) {}
+
+        Try
+            '********************************************* Supply BIR Ruling Details per Participant
+            If Me.BIRRulingCR.BuyerDetails.Count > 0 Then
+                Dim bdIndx As Integer = 0
+                Dim dicDate As New Dictionary(Of Date, Integer)
+                Dim countDetails As Long = 0
+                For Each birCRParticipant In Me.BIRRulingCR.BuyerDetails
+                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportPurchasesDetails) = birCRParticipant.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.SellerParticipant, Key cr.InvoiceNo, Key cr.SellerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportPurchasesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .SellerParticipant = t.Key.SellerParticipant,
+                                                                                               .SellerInvoiceNo = t.Key.SellerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatablePurchases = t.Sum(Function(x) x.VatablePurchases),
+                                                                                               .ZeroRatedPurchases = t.Sum(Function(x) x.ZeroRatedPurchases),
+                                                                                               .ZeroRatedEcoZonePurchases = t.Sum(Function(x) x.ZeroRatedEcoZonePurchases),
+                                                                                               .VatOnPurchases = t.Sum(Function(x) x.VatOnPurchases),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+                    countDetails += groupByBRCollReportDetails.Count
+                Next
+
+                ReDim contentDetails(countDetails + 1, 12)
+
+                contentDetails(bdIndx, 0) = "Billing" & vbNewLine & "Remarks"
+                contentDetails(bdIndx, 1) = "Particulars"
+                contentDetails(bdIndx, 2) = "Buyer STL ID"
+                contentDetails(bdIndx, 3) = "Paid To (Seller STL ID)"
+                contentDetails(bdIndx, 4) = "Paid To (Seller Full name)"
+                contentDetails(bdIndx, 5) = "Transaction No (Buyer)"
+                contentDetails(bdIndx, 6) = "Vatable Purchases"
+                contentDetails(bdIndx, 7) = "Zero Rated Purchases"
+                contentDetails(bdIndx, 8) = "Zero Rated Ecozone Purchases"
+                contentDetails(bdIndx, 9) = "VAT on Purchases"
+                contentDetails(bdIndx, 10) = "Withholding Tax"
+                contentDetails(bdIndx, 11) = "Total"
+                contentDetails(bdIndx, 12) = "Transaction No (Seller)"
+
+                Dim gTotalVatablePurchases As Decimal = 0
+                Dim gTotalZRPurchases As Decimal = 0
+                Dim gTotalZREcozonePurchases As Decimal = 0
+                Dim gTotalVATonPurchases As Decimal = 0
+                Dim gTotalWhTax As Decimal = 0
+                Dim gTotalTotal As Decimal = 0
+
+                For Each birCRParticipant In Me.BIRRulingCR.BuyerDetails
+                    Dim groupByBRCollReportDetails As List(Of BRCollectionReportPurchasesDetails) = birCRParticipant.BRCollReportDetails.
+                                                                                        GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                                Key cr.SellerParticipant, Key cr.InvoiceNo, Key cr.SellerInvoiceNo}).
+                                                                                        Select(Function(t) New BRCollectionReportPurchasesDetails With {
+                                                                                               .BillingPeriod = t.Key.BillingPeriod,
+                                                                                               .STLRun = t.Key.STLRun,
+                                                                                               .Particulars = t.Key.Particulars,
+                                                                                               .SellerParticipant = t.Key.SellerParticipant,
+                                                                                               .SellerInvoiceNo = t.Key.SellerInvoiceNo,
+                                                                                               .InvoiceNo = t.Key.InvoiceNo,
+                                                                                               .VatablePurchases = t.Sum(Function(x) x.VatablePurchases),
+                                                                                               .ZeroRatedPurchases = t.Sum(Function(x) x.ZeroRatedPurchases),
+                                                                                               .ZeroRatedEcoZonePurchases = t.Sum(Function(x) x.ZeroRatedEcoZonePurchases),
+                                                                                               .VatOnPurchases = t.Sum(Function(x) x.VatOnPurchases),
+                                                                                               .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+                    For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportPurchasesDetails) n.SellerParticipant.IDNumber).ThenBy(Function(x As BRCollectionReportPurchasesDetails) x.InvoiceNo).ToList
+                        bdIndx += 1
+                        gTotalVatablePurchases += item.VatablePurchases
+                        gTotalZRPurchases += item.ZeroRatedPurchases
+                        gTotalZREcozonePurchases += item.ZeroRatedEcoZonePurchases
+                        gTotalVATonPurchases += item.VatOnPurchases
+                        gTotalWhTax += item.WithholdingTax
+                        gTotalTotal += item.Total
+
+                        contentDetails(bdIndx, 0) = item.BillingPeriod & " - " & item.STLRun
+                        contentDetails(bdIndx, 1) = item.Particulars
+                        contentDetails(bdIndx, 2) = birCRParticipant.Participant.IDNumber
+                        contentDetails(bdIndx, 3) = item.SellerParticipant.IDNumber
+                        contentDetails(bdIndx, 4) = item.SellerParticipant.FullName
+                        contentDetails(bdIndx, 5) = item.InvoiceNo
+                        contentDetails(bdIndx, 6) = item.VatablePurchases
+                        contentDetails(bdIndx, 7) = item.ZeroRatedPurchases
+                        contentDetails(bdIndx, 8) = item.ZeroRatedEcoZonePurchases
+                        contentDetails(bdIndx, 9) = item.VatOnPurchases
+                        contentDetails(bdIndx, 10) = item.WithholdingTax
+                        contentDetails(bdIndx, 11) = item.Total
+                        contentDetails(bdIndx, 12) = item.SellerInvoiceNo
+                    Next
+                Next
+
+                bdIndx += 1
+                contentDetails(bdIndx, 0) = ""
+                contentDetails(bdIndx, 1) = "Grand Total: "
+                contentDetails(bdIndx, 2) = ""
+                contentDetails(bdIndx, 3) = ""
+                contentDetails(bdIndx, 4) = ""
+                contentDetails(bdIndx, 5) = ""
+                contentDetails(bdIndx, 6) = gTotalVatablePurchases
+                contentDetails(bdIndx, 7) = gTotalZRPurchases
+                contentDetails(bdIndx, 8) = gTotalZREcozonePurchases
+                contentDetails(bdIndx, 9) = gTotalVATonPurchases
+                contentDetails(bdIndx, 10) = gTotalWhTax
+                contentDetails(bdIndx, 11) = gTotalTotal
+                contentDetails(bdIndx, 12) = ""
+
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(rowIndex, 1), Excel.Range)
+                rowIndex += bdIndx
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(rowIndex, 13), Excel.Range)
+                xlContentDetails = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+                xlContentDetails.Value = contentDetails
+                Dim transDate As String = dateFrom.ToString("MM-dd-yyyy") & " - " & dateTo.ToString("MM-dd-yyyy") & "_MONTHLY"
+
+                Dim FileName As String = "CSR_ALL_" & transDate & ".xlsx"
+
+                xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
+                                    Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                xlWorkBook.Close(False)
+                xlApp.Quit()
+
+                releaseObject(xlContentDetails)
+                releaseObject(xlRowRange2)
+                releaseObject(xlRowRange1)
+                releaseObject(xlWorkSheet)
+                releaseObject(xlWorkBook)
+                releaseObject(xlApp)
+            End If
+        Catch ex As Exception
+            releaseObject(xlWorkSheet)
+            releaseObject(xlWorkBook)
+            releaseObject(xlApp)
+            Throw New Exception(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub GenerateInExcelDailySeller(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date,
+                                     ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportSellerParticipant)
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
@@ -2626,7 +3166,7 @@ Public Class BRCollectionReportHelper
                 Dim gTotalWhTax As Decimal = 0
                 Dim gTotalTotal As Decimal = 0
 
-                For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportDetails) x.InvoiceNo).ToList
+                For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportSalesDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportSalesDetails) x.InvoiceNo).ToList
                     bdIndx += 1
 
                     gTotalVatableSales += item.VatableSales
@@ -2699,7 +3239,148 @@ Public Class BRCollectionReportHelper
         End Try
     End Sub
 
-    Private Sub GenerateInExcelMonthly(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date, ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportParticipant)
+    Private Sub GenerateInExcelDailyBuyer(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date,
+                                     ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportBuyerParticipant)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim xlRowRange1 As Excel.Range
+        Dim xlRowRange2 As Excel.Range
+        Dim xlContentHeader As Excel.Range
+        Dim xlContentDetails As Excel.Range
+
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim rowIndex As Integer = 5
+
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkSheet.Name = "Collection Report Details"
+
+        Dim contentHeader As Object(,) = New Object(,) {}
+        Dim contentDetails As Object(,) = New Object(,) {}
+        Dim grandTotal As Object(,) = New Object(,) {}
+
+        Try
+            '********************************************* Supply Content Header
+            ReDim contentHeader(3, 0)
+            contentHeader(0, 0) = "MP Name: " & partifipantInfo.FullName.ToString()
+            contentHeader(1, 0) = "MP ID No.: " & partifipantInfo.IDNumber.ToString()
+            If dateFrom = dateTo Then
+                contentHeader(2, 0) = "As of " & dateFrom.ToString("MMMM dd, yyyy")
+            Else
+                contentHeader(2, 0) = "As of " & dateFrom.ToString("MMMM dd, yyyy") & " to " & dateTo.ToString("MMMM dd, yyyy")
+            End If
+
+
+            xlRowRange1 = DirectCast(xlWorkSheet.Cells(2, 1), Excel.Range)
+            xlRowRange2 = DirectCast(xlWorkSheet.Cells(4, 1), Excel.Range)
+            xlContentHeader = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+            xlContentHeader.Value = contentHeader
+
+            '********************************************* Supply BIR Ruling Details per Participant
+            If birCRParticipant.BRCollReportDetails.Count > 0 Then
+                Dim bdIndx As Integer = 0
+                Dim dicDate As New Dictionary(Of Date, Integer)
+
+                Dim countCollDate As Long = (From x In birCRParticipant.BRCollReportDetails Select x.CollectionDate Distinct).Count
+                Dim countDetails As Long = (From x In birCRParticipant.BRCollReportDetails Select x).Count
+
+                ReDim contentDetails(countCollDate + countDetails + 1, 11)
+
+                contentDetails(bdIndx, 0) = "Billing" & vbNewLine & "Remarks"
+                contentDetails(bdIndx, 1) = "Remittance Date"
+                contentDetails(bdIndx, 2) = "Particulars"
+                contentDetails(bdIndx, 3) = "Paid To (Seller STL ID)"
+                contentDetails(bdIndx, 4) = "Paid To (Seller Full name)"
+                contentDetails(bdIndx, 5) = "Transaction No (Buyer)"
+                contentDetails(bdIndx, 6) = "Vatable Purchases"
+                contentDetails(bdIndx, 7) = "Zero Rated Purchases"
+                contentDetails(bdIndx, 8) = "Zero Rated Ecozone Purchases"
+                contentDetails(bdIndx, 9) = "VAT on Purchases"
+                contentDetails(bdIndx, 10) = "Withholding Tax"
+                contentDetails(bdIndx, 11) = "Total"
+
+                Dim gTotalVatablePurchases As Decimal = 0
+                Dim gTotalZRPurchases As Decimal = 0
+                Dim gTotalZREcozonePurchases As Decimal = 0
+                Dim gTotalVATonPurchases As Decimal = 0
+                Dim gTotalWhTax As Decimal = 0
+                Dim gTotalTotal As Decimal = 0
+
+                For Each item In birCRParticipant.BRCollReportDetails.OrderBy(Function(n As BRCollectionReportPurchasesDetails) n.CollectionDate).ThenBy(Function(x As BRCollectionReportPurchasesDetails) x.InvoiceNo).ToList
+                    bdIndx += 1
+
+                    gTotalVatablePurchases += item.VatablePurchases
+                    gTotalZRPurchases += item.ZeroRatedPurchases
+                    gTotalZREcozonePurchases += item.ZeroRatedEcoZonePurchases
+                    gTotalVATonPurchases += item.VatOnPurchases
+                    gTotalWhTax += item.WithholdingTax
+                    gTotalTotal += item.Total
+
+                    contentDetails(bdIndx, 0) = item.BillingPeriod & " - " & item.STLRun
+                    contentDetails(bdIndx, 1) = item.CollectionDate.ToShortDateString
+                    contentDetails(bdIndx, 2) = item.Particulars
+                    contentDetails(bdIndx, 3) = item.SellerParticipant.IDNumber
+                    contentDetails(bdIndx, 4) = item.SellerParticipant.FullName
+                    contentDetails(bdIndx, 5) = item.InvoiceNo
+                    contentDetails(bdIndx, 6) = item.VatablePurchases
+                    contentDetails(bdIndx, 7) = item.ZeroRatedPurchases
+                    contentDetails(bdIndx, 8) = item.ZeroRatedEcoZonePurchases
+                    contentDetails(bdIndx, 9) = item.VatOnPurchases
+                    contentDetails(bdIndx, 10) = item.WithholdingTax
+                    contentDetails(bdIndx, 11) = item.Total
+                Next
+
+                bdIndx += 1
+                contentDetails(bdIndx, 0) = ""
+                contentDetails(bdIndx, 1) = "Grand Total: "
+                contentDetails(bdIndx, 2) = ""
+                contentDetails(bdIndx, 3) = ""
+                contentDetails(bdIndx, 4) = ""
+                contentDetails(bdIndx, 5) = ""
+                contentDetails(bdIndx, 6) = gTotalVatablePurchases
+                contentDetails(bdIndx, 7) = gTotalZRPurchases
+                contentDetails(bdIndx, 8) = gTotalZREcozonePurchases
+                contentDetails(bdIndx, 9) = gTotalVATonPurchases
+                contentDetails(bdIndx, 10) = gTotalWhTax
+                contentDetails(bdIndx, 11) = gTotalTotal
+
+
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(rowIndex, 1), Excel.Range)
+                rowIndex += bdIndx
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(rowIndex, 12), Excel.Range)
+                xlContentDetails = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+                xlContentDetails.Value = contentDetails
+                Dim transDate As String = ""
+
+                transDate = dateTo.ToString("yyyyMMdd")
+
+                Dim FileName As String = "CSR_IEMOP_" & partifipantInfo.IDNumber.Replace("_FIT", "").ToString & "_" & "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & birCRParticipant.BRCollReportNumber.ToString("D4") & "_" & transDate & ".xlsx"
+
+                xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
+                            Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                xlWorkBook.Close(False)
+                xlApp.Quit()
+
+                releaseObject(xlContentDetails)
+                releaseObject(xlContentHeader)
+                releaseObject(xlRowRange2)
+                releaseObject(xlRowRange1)
+                releaseObject(xlWorkSheet)
+                releaseObject(xlWorkBook)
+                releaseObject(xlApp)
+            End If
+        Catch ex As Exception
+            releaseObject(xlWorkSheet)
+            releaseObject(xlWorkBook)
+            releaseObject(xlApp)
+            Throw New Exception(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub GenerateInExcelMonthlySeller(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date,
+                                       ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportSellerParticipant)
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
@@ -2740,10 +3421,10 @@ Public Class BRCollectionReportHelper
             If birCRParticipant.BRCollReportDetails.Count > 0 Then
                 Dim bdIndx As Integer = 0
                 Dim dicDate As New Dictionary(Of Date, Integer)
-                Dim groupByBRCollReportDetails As List(Of BRCollectionReportDetails) = birCRParticipant.BRCollReportDetails.
+                Dim groupByBRCollReportDetails As List(Of BRCollectionReportSalesDetails) = birCRParticipant.BRCollReportDetails.
                                                                                     GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
                                                                                             Key cr.BuyerParticipant, Key cr.InvoiceNo, Key cr.BuyerInvoiceNo}).
-                                                                                    Select(Function(t) New BRCollectionReportDetails With {
+                                                                                    Select(Function(t) New BRCollectionReportSalesDetails With {
                                                                                            .BillingPeriod = t.Key.BillingPeriod,
                                                                                            .STLRun = t.Key.STLRun,
                                                                                            .Particulars = t.Key.Particulars,
@@ -2764,7 +3445,7 @@ Public Class BRCollectionReportHelper
                 contentDetails(bdIndx, 1) = "Particulars"
                 contentDetails(bdIndx, 2) = "Received From (Buyer STL ID)"
                 contentDetails(bdIndx, 3) = "Received From (Buyer Full name)"
-                contentDetails(bdIndx, 4) = "Statement No (Seller)"
+                contentDetails(bdIndx, 4) = "Transaction No (Seller)"
                 contentDetails(bdIndx, 5) = "Vatable Sales"
                 contentDetails(bdIndx, 6) = "Zero Rated Sales"
                 contentDetails(bdIndx, 7) = "Zero Rated Ecozone"
@@ -2779,8 +3460,8 @@ Public Class BRCollectionReportHelper
                 Dim gTotalWhTax As Decimal = 0
                 Dim gTotalTotal As Decimal = 0
 
-                For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportDetails) n.BuyerParticipant.IDNumber).
-                                                            ThenBy(Function(x As BRCollectionReportDetails) x.InvoiceNo).ToList
+                For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportSalesDetails) n.BuyerParticipant.IDNumber).
+                                                            ThenBy(Function(x As BRCollectionReportSalesDetails) x.InvoiceNo).ToList
                     bdIndx += 1
 
                     gTotalVatableSales += item.VatableSales
@@ -2853,6 +3534,160 @@ Public Class BRCollectionReportHelper
         End Try
     End Sub
 
+    Private Sub GenerateInExcelMonthlyBuyer(ByVal SavingPathName As String, ByVal partifipantInfo As AMParticipants, ByVal dateFrom As Date,
+                                       ByVal dateTo As Date, ByVal birCRParticipant As BRCollectionReportBuyerParticipant)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim xlRowRange1 As Excel.Range
+        Dim xlRowRange2 As Excel.Range
+        Dim xlContentHeader As Excel.Range
+        Dim xlContentDetails As Excel.Range
+
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim rowIndex As Integer = 5
+
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkSheet.Name = "Collection Report Details"
+
+        Dim contentHeader As Object(,) = New Object(,) {}
+        Dim contentDetails As Object(,) = New Object(,) {}
+        Dim grandTotal As Object(,) = New Object(,) {}
+
+        Try
+            '********************************************* Supply Content Header
+            ReDim contentHeader(3, 0)
+            contentHeader(0, 0) = "MP Name: " & partifipantInfo.FullName.ToString()
+            contentHeader(1, 0) = "MP ID No.: " & partifipantInfo.IDNumber.ToString()
+            If dateFrom = dateTo Then
+                contentHeader(2, 0) = "As of " & dateFrom.ToString("MMMM dd, yyyy")
+            Else
+                contentHeader(2, 0) = "As of " & dateFrom.ToString("MMMM dd, yyyy") & " to " & dateTo.ToString("MMMM dd, yyyy")
+            End If
+
+            xlRowRange1 = DirectCast(xlWorkSheet.Cells(2, 1), Excel.Range)
+            xlRowRange2 = DirectCast(xlWorkSheet.Cells(4, 1), Excel.Range)
+            xlContentHeader = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+            xlContentHeader.Value = contentHeader
+
+            '********************************************* Supply BIR Ruling Details per Participant
+            If birCRParticipant.BRCollReportDetails.Count > 0 Then
+                Dim bdIndx As Integer = 0
+                Dim dicDate As New Dictionary(Of Date, Integer)
+                Dim groupByBRCollReportDetails As List(Of BRCollectionReportPurchasesDetails) = birCRParticipant.BRCollReportDetails.
+                                                                                    GroupBy(Function(cr) New With {Key cr.BillingPeriod, Key cr.STLRun, Key cr.Particulars,
+                                                                                            Key cr.SellerParticipant, Key cr.InvoiceNo, Key cr.SellerInvoiceNo}).
+                                                                                    Select(Function(t) New BRCollectionReportPurchasesDetails With {
+                                                                                           .BillingPeriod = t.Key.BillingPeriod,
+                                                                                           .STLRun = t.Key.STLRun,
+                                                                                           .Particulars = t.Key.Particulars,
+                                                                                           .SellerParticipant = t.Key.SellerParticipant,
+                                                                                           .SellerInvoiceNo = t.Key.SellerInvoiceNo,
+                                                                                           .InvoiceNo = t.Key.InvoiceNo,
+                                                                                           .VatablePurchases = t.Sum(Function(x) x.VatablePurchases),
+                                                                                           .ZeroRatedPurchases = t.Sum(Function(x) x.ZeroRatedPurchases),
+                                                                                           .ZeroRatedEcoZonePurchases = t.Sum(Function(x) x.ZeroRatedEcoZonePurchases),
+                                                                                           .VatOnPurchases = t.Sum(Function(x) x.VatOnPurchases),
+                                                                                           .WithholdingTax = t.Sum(Function(x) x.WithholdingTax)}).ToList
+
+                Dim countDetails As Long = (From x In groupByBRCollReportDetails Select x).Count
+
+                ReDim contentDetails(countDetails + 1, 10)
+
+                contentDetails(bdIndx, 0) = "Billing" & vbNewLine & "Remarks"
+                contentDetails(bdIndx, 1) = "Particulars"
+                contentDetails(bdIndx, 2) = "Received From (Buyer STL ID)"
+                contentDetails(bdIndx, 3) = "Received From (Buyer Full name)"
+                contentDetails(bdIndx, 4) = "Transaction No (Seller)"
+                contentDetails(bdIndx, 5) = "Vatable Sales"
+                contentDetails(bdIndx, 6) = "Zero Rated Sales"
+                contentDetails(bdIndx, 7) = "Zero Rated Ecozone"
+                contentDetails(bdIndx, 8) = "VAT on Sales"
+                contentDetails(bdIndx, 9) = "Withholding Tax"
+                contentDetails(bdIndx, 10) = "Total"
+
+                Dim gTotalVatablePurchases As Decimal = 0
+                Dim gTotalZRPurchases As Decimal = 0
+                Dim gTotalZREcozonePurchases As Decimal = 0
+                Dim gTotalVATonPurchases As Decimal = 0
+                Dim gTotalWhTax As Decimal = 0
+                Dim gTotalTotal As Decimal = 0
+
+                For Each item In groupByBRCollReportDetails.OrderBy(Function(n As BRCollectionReportPurchasesDetails) n.SellerParticipant.IDNumber).
+                                                            ThenBy(Function(x As BRCollectionReportPurchasesDetails) x.InvoiceNo).ToList
+                    bdIndx += 1
+
+                    gTotalVatablePurchases += item.VatablePurchases
+                    gTotalZRPurchases += item.ZeroRatedPurchases
+                    gTotalZREcozonePurchases += item.ZeroRatedEcoZonePurchases
+                    gTotalVATonPurchases += item.VatOnPurchases
+                    gTotalWhTax += item.WithholdingTax
+                    gTotalTotal += item.Total
+
+                    contentDetails(bdIndx, 0) = item.BillingPeriod & " - " & item.STLRun
+                    contentDetails(bdIndx, 1) = item.Particulars
+                    contentDetails(bdIndx, 2) = item.SellerParticipant.IDNumber
+                    contentDetails(bdIndx, 3) = item.SellerParticipant.FullName
+                    contentDetails(bdIndx, 4) = item.InvoiceNo
+                    contentDetails(bdIndx, 5) = item.VatablePurchases
+                    contentDetails(bdIndx, 6) = item.ZeroRatedPurchases
+                    contentDetails(bdIndx, 7) = item.ZeroRatedEcoZonePurchases
+                    contentDetails(bdIndx, 8) = item.VatOnPurchases
+                    contentDetails(bdIndx, 9) = item.WithholdingTax
+                    contentDetails(bdIndx, 10) = item.Total
+                Next
+
+                bdIndx += 1
+                contentDetails(bdIndx, 0) = ""
+                contentDetails(bdIndx, 1) = "Grand Total: "
+                contentDetails(bdIndx, 2) = ""
+                contentDetails(bdIndx, 3) = ""
+                contentDetails(bdIndx, 4) = ""
+                contentDetails(bdIndx, 5) = gTotalVatablePurchases
+                contentDetails(bdIndx, 6) = gTotalZRPurchases
+                contentDetails(bdIndx, 7) = gTotalZREcozonePurchases
+                contentDetails(bdIndx, 8) = gTotalVATonPurchases
+                contentDetails(bdIndx, 9) = gTotalWhTax
+                contentDetails(bdIndx, 10) = gTotalTotal
+
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(rowIndex, 1), Excel.Range)
+                rowIndex += bdIndx
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(rowIndex, 11), Excel.Range)
+                xlContentDetails = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
+                xlContentDetails.Value = contentDetails
+                Dim transDate As String = ""
+
+                If dateFrom = dateTo Then
+                    transDate = dateFrom.ToString("yyyyMMdd")
+                Else
+                    transDate = dateFrom.ToString("yyyyMMdd") & " - " & dateTo.ToString("yyyyMMdd")
+                End If
+
+                Dim FileName As String = "CSR_IEMOP_" & partifipantInfo.IDNumber.Replace("_FIT", "").ToString & "_" & "CR-N" & Me.BIRRulingCR.BIRRNo.ToString("D4") & "-" & birCRParticipant.BRCollReportNumber.ToString("D4") & "_" & transDate & ".xlsx"
+                xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
+                            Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+                xlWorkBook.Close(False)
+                xlApp.Quit()
+
+                releaseObject(xlContentDetails)
+                releaseObject(xlContentHeader)
+                releaseObject(xlRowRange2)
+                releaseObject(xlRowRange1)
+                releaseObject(xlWorkSheet)
+                releaseObject(xlWorkBook)
+                releaseObject(xlApp)
+
+            End If
+
+        Catch ex As Exception
+            releaseObject(xlWorkSheet)
+            releaseObject(xlWorkBook)
+            releaseObject(xlApp)
+            Throw New Exception(ex.Message)
+        End Try
+    End Sub
     Private Sub releaseObject(ByVal obj As Object)
         Try
             System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)

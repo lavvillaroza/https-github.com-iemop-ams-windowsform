@@ -211,9 +211,9 @@ Namespace WESMLib.Auth.Lib
         'Authenticate User's Credential
         Public Function AuthUserCredentials(userId As String, password As String, appName As String) As Boolean
             Try
-                If userId.ToUpper.Contains("@IEMOP.PH") Then
-                    userId = userId.Replace("@iemop.ph", "")
-                End If
+                'If userId.ToUpper.Contains("@IEMOP.PH") Then
+                '    userId = userId.Replace("@iemop.ph", "")
+                'End If
                 _ldapInfo.UserId = userId.ToLower
                 _ldapInfo.Password = password
                 _ldapControl = New LdapControl()
@@ -222,9 +222,9 @@ Namespace WESMLib.Auth.Lib
                 End If
                 'Using AD
                 If _ldapControl.EstablishConnection(_ldapInfo) Then
-                    If Not userId.ToUpper.Contains("@IEMOP.PH") Then
-                        userId = userId.ToLower & "@iemop.ph"
-                    End If
+                    'If Not userId.ToUpper.Contains("@IEMOP.PH") Then
+                    '    userId = userId.ToLower & "@iemop.ph"
+                    'End If
                     LoadAccessList(userId)
                     If HasAccess(AccessWindow) Then
                         _userLogged = userId
@@ -242,9 +242,9 @@ Namespace WESMLib.Auth.Lib
                 End If
 
                 'Direct Login   
-                If Not userId.ToUpper.Contains("@IEMOP.PH") Then
-                    userId = userId.ToLower & "@iemop.ph"
-                End If
+                'If Not userId.ToUpper.Contains("@IEMOP.PH") Then
+                '    userId = userId.ToLower & "@iemop.ph"
+                'End If
                 _userLogged = userId
                 LoadAccessList(userId)
                 Return True

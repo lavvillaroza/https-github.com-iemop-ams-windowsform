@@ -66,15 +66,24 @@ Public Class PaymentHelper
 
 #Region "ClassSetup"
     Private _ORNumber As Long = 0
+    Private DicRFPPaymentTypePR As New Dictionary(Of String, EnumParticipantPaymentType)
+    Private DicRFPParticularPR As New Dictionary(Of String, String)
+    Private DicRFPPaymentTypeFP As New Dictionary(Of String, EnumParticipantPaymentType)
+    Private DicRFPParticularFP As New Dictionary(Of String, String)
+
+    Public offsettingIterationCount As Integer
+    Private getWESMBillSalesAndPurchases As New List(Of WESMBillSalesAndPurchasedForWT)
+    Private getWESMBillParticulars As New Dictionary(Of String, String)
+    Private cts As CancellationToken
+    Private progress As IProgress(Of ProgressClass)
+
     Public Sub New()
         'Get the current instance of the dal
         Me._DataAccess = DAL.GetInstance()
         Me._WBillHelper = WESMBillHelper.GetInstance
         Me._BFactory = BusinessFactory.GetInstance
         Me._PaymentProformaEntries = New PaymentProformaEntries
-
         Me.ResetObject()
-
     End Sub
 
     Private Sub ResetObject()
@@ -196,7 +205,7 @@ Public Class PaymentHelper
     Public Sub InitializeObject(ByVal SelectedAllocDate As AllocationDate)
 
         Me.ResetObject()
-        Me.ProgressRemarks = "Fetching Data..."
+        'Me.ProgressRemarks = "Fetching Data..."
         Me._PayAllocDate = SelectedAllocDate
         Me._PaymentProformaEntries = New PaymentProformaEntries
         Me._PaymentProformaEntries.JVSign = WBillHelper.GetSignatories("JV").First
@@ -206,23 +215,28 @@ Public Class PaymentHelper
         Me._CollectionMonitoring = Me.WBillHelper.GetCollectionMonitoring(SelectedAllocDate.CollAllocationDate)
         Me._CalendarBP = Me.WBillHelper.GetCalendarBP
         Me._WESMBillList = Me.WBillHelper.GetWESMBillList
-        Me.InsertIntoDic()
+        'Me.InsertIntoDic()
         Me._AMCollectionList = Me.WBillHelper.GetCollections(Me.PayAllocDate.CollAllocationDate, Me.PayAllocDate.CollAllocationDate, False)
 
         Me._AMCollectionAllocList = Me.WBillHelper.GetCollectionAllocation(Me.PayAllocDate.CollAllocationDate, Me.PayAllocDate.CollAllocationDate, False)
         Me.PrevDeferredPaymentList = Me.WBillHelper.GetCurrentDeferredPayment()
         Me.CollFundTransferform = WBillHelper.GetFundTransferForm(Me.PayAllocDate.CollAllocationDate, Me.PayAllocDate.CollAllocationDate)
-        Dim DailyInterestRateDic = Me.WBillHelper.GetDailyInterestRate()
 
+        Dim DailyInterestRateDic = Me.WBillHelper.GetDailyInterestRate()
         If DailyInterestRateDic.ContainsKey(SelectedAllocDate.CollAllocationDate) Then
             Me.DailyInterestRate = DailyInterestRateDic.Item(SelectedAllocDate.CollAllocationDate)
         Else
             Me.DailyInterestRate = 0
         End If
+
         Me._AMParticipants = WBillHelper.GetAMParticipants()
         Me.WESMBillSummaryList = (From x In WBillHelper.GetWESMBillSummaryAll(SelectedAllocDate.CollAllocationDate)
                                   Select x).ToList()
-        Me.ProgressRemarks = "Done fetching Data.."
+
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
+
     End Sub
 
     Public Sub InitializeObjectView(ByVal _BusinessFactory As BusinessFactory,
@@ -264,6 +278,10 @@ Public Class PaymentHelper
                          Where x.TransactionType = EnumORTransactionType.FinPenAmount
                          Select x).ToList()
 
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
+
     End Sub
 
     Public Sub InitializeObjectOnPostedTypeP(ByVal _BusinessFactory As BusinessFactory,
@@ -279,11 +297,13 @@ Public Class PaymentHelper
         Me._AMParticipants = WBillHelper.GetAMParticipants()
         Me._CalendarBP = Me.WBillHelper.GetCalendarBP
         Me._WESMBillList = Me.WBillHelper.GetWESMBillList
-        Me.InsertIntoDic()
+
+        'Me.InsertIntoDic()
         'Dim JVNoList As List(Of Long) = WBillHelper.GetAMPaymentNewDetails(Me.PayAllocDate.PaymentNo)
         'Me.JournalVoucherList = WBillHelper.GetPaymentJV(JVNoList)
         'Me.FundTransferform = WBillHelper.GetFTFforPayment((From x In Me.JournalVoucherList Select x.BatchCode).ToList())
         'Me.RequestForPayment = WBillHelper.GetAMRFPMain(Me.PayAllocDate.PaymentNo)
+
         Me.CurrentDeferredPaymentList = Me.WBillHelper.GetCurrentDeferredPayment(Me.PayAllocDate.PaymentNo)
         Me.PrevDeferredPaymentList = Me.WBillHelper.GetPrevDeferredPayment(Me.PayAllocDate.PaymentNo)
         Me.EFTSummaryReportList = Me.WBillHelper.GetAMPaymentEFT(Me.PayAllocDate.PaymentNo)
@@ -319,6 +339,7 @@ Public Class PaymentHelper
         Dim JVNoList As List(Of Long) = WBillHelper.GetAMPaymentNewDetails(Me.PayAllocDate.PaymentNo)
         Me.JournalVoucherList = WBillHelper.GetPaymentJV(JVNoList)
         Me.RequestForPayment = WBillHelper.GetAMRFPMain(Me.PayAllocDate.PaymentNo)
+
     End Sub
 
     Public Sub InitializeObjectOnGP(ByVal _BusinessFactory As BusinessFactory,
@@ -336,7 +357,7 @@ Public Class PaymentHelper
         Me._AMParticipants = WBillHelper.GetAMParticipants()
         Me._CalendarBP = Me.WBillHelper.GetCalendarBP
         Me._WESMBillList = Me.WBillHelper.GetWESMBillList
-        Me.InsertIntoDic()
+        'Me.InsertIntoDic()
         Me._AMCollectionList = Me.WBillHelper.GetCollections(Me.PayAllocDate.CollAllocationDate, Me.PayAllocDate.CollAllocationDate, False)
 
         Dim JVNoList As List(Of Long) = WBillHelper.GetAMPaymentNewDetails(Me.PayAllocDate.PaymentNo)
@@ -355,18 +376,17 @@ Public Class PaymentHelper
     End Sub
 #End Region
 
-    Private DicRFPPaymentTypePR As New Dictionary(Of String, EnumParticipantPaymentType)
-    Private DicRFPParticularPR As New Dictionary(Of String, String)
-    Private DicRFPPaymentTypeFP As New Dictionary(Of String, EnumParticipantPaymentType)
-    Private DicRFPParticularFP As New Dictionary(Of String, String)
+#Region "Set of Cancellation Token"
+    Public Sub SetCTS(ByVal ct As CancellationToken)
+        Me.cts = ct
+    End Sub
+#End Region
 
-    Public ProgressRemarks As String
-    Public ProgressBoolean As Boolean
-    Public OffsettingIterationCount As Integer
-    Public oProgressThread As Object
-    Private getWESMBillSalesAndPurchases As New List(Of WESMBillSalesAndPurchasedForWT)
-    Private getWESMBillParticulars As New Dictionary(Of String, String)
-
+#Region "Set Progress Report"
+    Public Sub SetProgress(ByVal progress As IProgress(Of ProgressClass))
+        Me.progress = progress
+    End Sub
+#End Region
 #Region "Property of WESM Bill"
     Private _WESMBillList As New List(Of WESMBill)
     Private ReadOnly Property WESMBillList() As List(Of WESMBill)
@@ -374,13 +394,13 @@ Public Class PaymentHelper
             Return _WESMBillList
         End Get
     End Property
-    Private Sub InsertIntoDic()
-        For Each item In _WESMBillList
-            If Not getWESMBillParticulars.ContainsKey(item.InvoiceNumber & "|" & item.ChargeType.ToString) Then
-                getWESMBillParticulars.Add(item.InvoiceNumber & "|" & item.ChargeType.ToString, item.Remarks)
-            End If
-        Next
-    End Sub
+    'Private Sub InsertIntoDic()
+    '    For Each item In _WESMBillList
+    '        If Not getWESMBillParticulars.ContainsKey(item.InvoiceNumber & "|" & item.ChargeType.ToString) Then
+    '            getWESMBillParticulars.Add(item.InvoiceNumber & "|" & item.ChargeType.ToString, item.Remarks)
+    '        End If
+    '    Next
+    'End Sub
 #End Region
 
 #Region "Property of Calendar Billing Period"
@@ -1154,6 +1174,8 @@ Public Class PaymentHelper
         Dim SumofCollectionAllocation As Decimal = 0
         Dim SumOfExcessCollection As Decimal = 0
 
+
+
         ARCollectionList = WBillHelper.GetCollectionAllocation(Me.PayAllocDate.CollAllocationDate, EnumIsAllocated.NotAllocated)
 
         ARCollectionsProc.GetARAllocationList(ARCollectionList)
@@ -1180,15 +1202,17 @@ Public Class PaymentHelper
         Me._TotalVATCollectionPerBP = ARCollectionsProc.TotalVATCollectionPerBP
         Me._TotalMFCollectionPerBP = ARCollectionsProc.TotalMFCollectionPerBP
 
-        Me.ProgressBoolean = True
 
         ARCollectionsProc = Nothing
         ARCollectionList = Nothing
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
     End Sub
 #End Region
 
 #Region "Methods For GetAPAllocations"
-    Public Sub GetAPAllocations(ByVal progress As IProgress(Of ProgressClass))
+    Public Sub GetAPAllocations()
         Dim JVFromCollection As New JournalVoucher
         Dim APAllocationProc As New APAllocationProcessNew 'APAllocationProcess
         Dim WBillSummaryList As New List(Of WESMBillSummary)
@@ -1219,7 +1243,7 @@ Public Class PaymentHelper
                                 Me.EnergyListCollection,
                                 Me.VATonEnergyCollectionList,
                                 Me.MFwithVATCollectionList,
-                                progress)
+                                Me.progress)
 
 
             Me._WESMTransCoverSummaryList = .WESMTransCoverSummaryList
@@ -1249,105 +1273,112 @@ Public Class PaymentHelper
         JVFromCollection = Nothing
         APAllocationProc = Nothing
         WBillSummaryList = Nothing
+
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
+
     End Sub
 #End Region
 
 #Region "Function For GetOffsetting"
-    Public Sub GetOffsetting(ByVal progress As IProgress(Of ProgressClass))
-        Try
-            'Dim _OffsettingProcess As New OffsettingProcess
-            Dim JVFromPaymentAlloc As New JournalVoucher
-            Dim JVFromPaymentEFTCheck As New JournalVoucher
+    Public Sub GetOffsetting()
 
-            'Updated by Lance on 2/19/2016
-            Dim WBillSummaryList As New List(Of WESMBillSummary)
+        'Dim _OffsettingProcess As New OffsettingProcess
+        Dim JVFromPaymentAlloc As New JournalVoucher
+        Dim JVFromPaymentEFTCheck As New JournalVoucher
 
-            WBillSummaryList = (From x In Me.WESMBillSummaryList
-                                Where (Math.Abs(x.EndingBalance) > Math.Abs(x.EnergyWithhold) _
-                                       Or (Math.Abs(x.EnergyWithhold) <> 0 And x.EnergyWithholdStatus <> EnumEnergyWithholdStatus.NotApplicable)) _
-                                And x.EndingBalance <> 0
-                                Select x).ToList()
-            Using _OffsettingProcess As New OffsettingProcess
-                With _OffsettingProcess
-                    ._PaymentProformaEntries = Me._PaymentProformaEntries
-                    ._AMParticipants = Me.AMParticipants
-                    ._SPAInvoiceList = Me.SPAInvoiceList
-                    .GetOffsettingList(Me.PayAllocDate.CollAllocationDate,
-                                       DailyInterestRate,
-                                       Me.EnergyAllocationList,
-                                       Me.VATonEnergyAllocationList,
-                                       Me.MFwithVATAllocationList,
-                                       WBillSummaryList,
-                                       Me.AMParticipants,
-                                       Me.PrevDeferredPaymentList,
-                                       progress)
-                    OffsettingIterationCount = .OffsettingSequence
-                    For Each item In .ListofDMCM
-                        Me.ListofDMCM.Add(item)
-                    Next
+        'Updated by Lance on 2/19/2016
+        Dim WBillSummaryList As New List(Of WESMBillSummary)
 
-                    Me._OffsettingMFwithVATCollectionList = .OffsettingMFwithVATCollectionList
-                    Me._OffsettingMFwithVATAllocationList = .OffsettingMFwithVATAllocation
-                    Me._OffsettingEnergyCollectionList = .OffsettingEnergyCollectionList
-                    Me._OffsettingEnergyAllocationList = .OffsettingEnergyAllocationList
-                    Me._OffsettingVATonEnergyCollectionList = .OffsettingVATonEnergyCollectionList
-                    Me._OffsettingVATonEnergyAllocationList = .OffsettingVATonEnergyAllocationList
+        WBillSummaryList = (From x In Me.WESMBillSummaryList
+                            Where (Math.Abs(x.EndingBalance) > Math.Abs(x.EnergyWithhold) _
+                                    Or (Math.Abs(x.EnergyWithhold) <> 0 And x.EnergyWithholdStatus <> EnumEnergyWithholdStatus.NotApplicable)) _
+                            And x.EndingBalance <> 0
+                            Select x).ToList()
+        Using _OffsettingProcess As New OffsettingProcess
+            With _OffsettingProcess
+                ._PaymentProformaEntries = Me._PaymentProformaEntries
+                ._AMParticipants = Me.AMParticipants
+                ._SPAInvoiceList = Me.SPAInvoiceList
+                .GetOffsettingList(Me.PayAllocDate.CollAllocationDate,
+                                    DailyInterestRate,
+                                    Me.EnergyAllocationList,
+                                    Me.VATonEnergyAllocationList,
+                                    Me.MFwithVATAllocationList,
+                                    WBillSummaryList,
+                                    Me.AMParticipants,
+                                    Me.PrevDeferredPaymentList,
+                                    Me.progress)
+                offsettingIterationCount = .OffsettingSequence
+                For Each item In .ListofDMCM
+                    Me.ListofDMCM.Add(item)
+                Next
 
-                    Me._EnergyShare = .EnergyShare
-                    Me._VATonEnergyShare = .VATonEnergyShare
-                    Me._MFwithVATShare = .MFwithVATShare
+                Me._OffsettingMFwithVATCollectionList = .OffsettingMFwithVATCollectionList
+                Me._OffsettingMFwithVATAllocationList = .OffsettingMFwithVATAllocation
+                Me._OffsettingEnergyCollectionList = .OffsettingEnergyCollectionList
+                Me._OffsettingEnergyAllocationList = .OffsettingEnergyAllocationList
+                Me._OffsettingVATonEnergyCollectionList = .OffsettingVATonEnergyCollectionList
+                Me._OffsettingVATonEnergyAllocationList = .OffsettingVATonEnergyAllocationList
 
-                    Me.CreateFTFForEWT()
-                    Me.CreateFTFForMFOffsetting()
-                    Me.CreatePaymentTransferToPR()
-                    Me.GeneratePaymentORFromList()
+                Me._EnergyShare = .EnergyShare
+                Me._VATonEnergyShare = .VATonEnergyShare
+                Me._MFwithVATShare = .MFwithVATShare
 
-                    If Me.EnergyListCollection.Count > 0 Or Me.EnergyAllocationList.Count > 0 Or Me.VATonEnergyCollectionList.Count > 0 _
-                        Or Me.VATonEnergyAllocationList.Count > 0 Or Me.MFwithVATCollectionList.Count > 0 Or Me.MFwithVATAllocationList.Count > 0 _
-                        Or Me.OffsettingEnergyCollectionList.Count > 0 Or Me.OffsettingEnergyAllocationList.Count > 0 Or Me.OffsettingVATonEnergyCollectionList.Count > 0 _
-                        Or Me.OffsettingVATonEnergyAllocationList.Count > 0 Or Me.OffsettingMFwithVATCollectionList.Count > 0 Or Me.OffsettingMFwithVATAllocationList.Count > 0 Then
-                        Me.CreateNoTransAR()
-                    End If
+                Me.CreateFTFForEWT()
+                Me.CreateFTFForMFOffsetting()
+                Me.CreatePaymentTransferToPR()
+                Me.GeneratePaymentORFromList()
 
-                    Me.AdjustWESMBillSummaryForWHTAXADJ()
+                If Me.EnergyListCollection.Count > 0 Or Me.EnergyAllocationList.Count > 0 Or Me.VATonEnergyCollectionList.Count > 0 _
+                    Or Me.VATonEnergyAllocationList.Count > 0 Or Me.MFwithVATCollectionList.Count > 0 Or Me.MFwithVATAllocationList.Count > 0 _
+                    Or Me.OffsettingEnergyCollectionList.Count > 0 Or Me.OffsettingEnergyAllocationList.Count > 0 Or Me.OffsettingVATonEnergyCollectionList.Count > 0 _
+                    Or Me.OffsettingVATonEnergyAllocationList.Count > 0 Or Me.OffsettingMFwithVATCollectionList.Count > 0 Or Me.OffsettingMFwithVATAllocationList.Count > 0 Then
+                    Me.CreateNoTransAR()
+                End If
 
-                    'Creation of JV PaymentAlloc
-                    Dim GetMFRefund = (From x In Me.MFwithVATAllocationList Where x.PaymentCategory = EnumCollectionCategory.Cash Select x).ToList()
+                Me.AdjustWESMBillSummaryForWHTAXADJ()
 
-                    If Me.ListofDMCM.Count > 0 Or GetMFRefund.Count > 0 Then
-                        JVFromPaymentAlloc = Me._PaymentProformaEntries.GenerateJVFromPaymentAlloc(Me.PayAllocDate.CollAllocationDate, Me.ListofDMCM, GetMFRefund)
-                        Me.JournalVoucherList.Add(JVFromPaymentAlloc)
-                    End If
+                'Creation of JV PaymentAlloc
+                Dim GetMFRefund = (From x In Me.MFwithVATAllocationList Where x.PaymentCategory = EnumCollectionCategory.Cash Select x).ToList()
 
-                    'Creation of JV EFT
-                    JVFromPaymentEFTCheck = Me.PaymentProformaEntries.GenerateJVFromPaymentEFTCheck(Me.PayAllocDate.RemittanceDate,
-                                                                                                      Me.RequestForPayment,
-                                                                                                      Me.FundTransferform,
-                                                                                                      Me.CollFundTransferform,
-                                                                                                      Me.PrevDeferredPaymentList,
-                                                                                                      Me.CurrentDeferredPaymentList)
-                    If Not JVFromPaymentEFTCheck.JVNumber = 0 Then
-                        Me.JournalVoucherList.Add(JVFromPaymentEFTCheck)
-                    End If
+                If Me.ListofDMCM.Count > 0 Or GetMFRefund.Count > 0 Then
+                    JVFromPaymentAlloc = Me._PaymentProformaEntries.GenerateJVFromPaymentAlloc(Me.PayAllocDate.CollAllocationDate, Me.ListofDMCM, GetMFRefund)
+                    Me.JournalVoucherList.Add(JVFromPaymentAlloc)
+                End If
 
-                    Me.CreateWESMBillSummaryBalance()
-                    Me.AdjustWESMBillSummaryForWHTAXADJ2()
+                'Creation of JV EFT
+                JVFromPaymentEFTCheck = Me.PaymentProformaEntries.GenerateJVFromPaymentEFTCheck(Me.PayAllocDate.RemittanceDate,
+                                                                                                    Me.RequestForPayment,
+                                                                                                    Me.FundTransferform,
+                                                                                                    Me.CollFundTransferform,
+                                                                                                    Me.PrevDeferredPaymentList,
+                                                                                                    Me.CurrentDeferredPaymentList)
+                If Not JVFromPaymentEFTCheck.JVNumber = 0 Then
+                    Me.JournalVoucherList.Add(JVFromPaymentEFTCheck)
+                End If
 
-                    'Me._OffsettingMFCollectionListDT = .OffsettingMFwithVATCollectionListDT
-                    'Me._OffsettingMFAllocationListDT = .OffsettingMFwithVATAllocationListDT
-                    'Me._OffsettingEnergyCollectionListDT = .OffsettingEnergyCollectionListDT
-                    'Me._OffsettingEnergyAllocationListDT = .OffsettingEnergyAllocationListDT
-                    'Me._OffsettingVATonEnergyCollectionListDT = .OffsettingVATonEnergyCollectionListDT
-                    'Me._OffsettingVATonEnergyAllocationListDT = .OffsettingVATonEnergyAllocationListDT
+                Dim newProgress As New ProgressClass
+                newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances..."
+                Me.progress.Report(newProgress)
 
-                End With
-            End Using
-            JVFromPaymentAlloc = Nothing
-            JVFromPaymentEFTCheck = Nothing
-            WBillSummaryList = Nothing
-        Catch ex As Exception
-            Throw New Exception(ex.Message)
-        End Try
+                Me.CreateWESMBillSummaryBalance()
+                Me.AdjustWESMBillSummaryForWHTAXADJ2()
+
+                newProgress = New ProgressClass
+                newProgress.ProgressMsg = "Allocation completed! Please check the result."
+                Me.progress.Report(newProgress)
+
+            End With
+        End Using
+        JVFromPaymentAlloc = Nothing
+        JVFromPaymentEFTCheck = Nothing
+        WBillSummaryList = Nothing
+
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
     End Sub
 #End Region
 
@@ -1380,7 +1411,8 @@ Public Class PaymentHelper
 
         Dim GetEnergyNoTransList As List(Of WESMBillSummary) = (From x In GetWESMBillSummaryWithNoTrans
                                                                 Where (x.ChargeType = EnumChargeType.E And Not GetEnergyAR.Contains(x.WESMBillSummaryNo)) _
-                                                                Or (x.ChargeType = EnumChargeType.E And Not GetEnergyAR.Contains(x.WESMBillSummaryNo) And GetEnergyARByBatchNo.Contains(x.WESMBillBatchNo))
+                                                                    Or (x.ChargeType = EnumChargeType.E And Not GetEnergyAR.Contains(x.WESMBillSummaryNo) _
+                                                                        And GetEnergyARByBatchNo.Contains(x.WESMBillBatchNo))
                                                                 Select x).ToList()
 
         Dim GetVATAR As List(Of Long) = (From x In Me.VATonEnergyCollectionList Select x.WESMBillSummaryNo).Union _
@@ -1396,7 +1428,8 @@ Public Class PaymentHelper
 
         Dim GetVATNoTransList As List(Of WESMBillSummary) = (From x In GetWESMBillSummaryWithNoTrans
                                                              Where (x.ChargeType = EnumChargeType.EV And Not GetVATAR.Contains(x.WESMBillSummaryNo)) _
-                                                             Or (x.ChargeType = EnumChargeType.EV And Not GetVATAR.Contains(x.WESMBillSummaryNo) And GetVATARByBatchNo.Contains(x.WESMBillBatchNo))
+                                                             Or (x.ChargeType = EnumChargeType.EV And Not GetVATAR.Contains(x.WESMBillSummaryNo) _
+                                                                 And GetVATARByBatchNo.Contains(x.WESMBillBatchNo))
                                                              Select x).ToList()
 
         Dim GetMFwitVATAR As List(Of Long) = (From x In Me.MFwithVATCollectionList Select x.WESMBillSummaryNo).Union _
@@ -1420,9 +1453,11 @@ Public Class PaymentHelper
                                       Into AmountBalance = Sum(x.EndingBalance)
                                       Order By WESMBillBatchNo).ToList()
 
+
+
         Dim listofWBBatchNoNoBalEnergy As New List(Of Long)
         For Each item In checkBatchIsZeroEnergy
-            If item.AmountBalance <> 0 Then
+            If item.AmountBalance <> 0 Or GetEnergyARByBatchNo.Contains(item.WESMBillBatchNo) Then
                 listofWBBatchNoNoBalEnergy.Add(item.WESMBillBatchNo)
             End If
         Next
@@ -1436,7 +1471,6 @@ Public Class PaymentHelper
                 Me._EnergyNoTransactionAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
                                                                    item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumPaymentNewType.Energy, item.ChargeType, item.BillingRemarks))
             End If
-
         Next
 
         Dim checkBatchIsZeroVAT = (From x In GetVATNoTransList
@@ -1447,10 +1481,11 @@ Public Class PaymentHelper
 
         Dim listofWBBatchNoNoBalVAT As New List(Of Long)
         For Each item In checkBatchIsZeroVAT
-            If item.AmountBalance <> 0 Then
+            If item.AmountBalance <> 0 Or GetVATARByBatchNo.Contains(item.WESMBillBatchNo) Then
                 listofWBBatchNoNoBalVAT.Add(item.WESMBillBatchNo)
             End If
         Next
+
         Dim updateGetVATNoTransList = (From x In GetVATNoTransList Where listofWBBatchNoNoBalVAT.Contains(x.WESMBillBatchNo) Select x).ToList
         For Each item In updateGetVATNoTransList
             If item.BalanceType = EnumBalanceType.AR Then
@@ -1471,7 +1506,7 @@ Public Class PaymentHelper
 
         Dim listofWBBatchNoNoBalMF As New List(Of Long)
         For Each item In checkBatchIsZeroMF
-            If item.AmountBalance <> 0 Then
+            If item.AmountBalance <> 0 Or GetMFwitVATARByBatchNo.Contains(item.WESMBillBatchNo) Then
                 listofWBBatchNoNoBalMF.Add(item.WESMBillBatchNo)
             End If
         Next
@@ -1523,6 +1558,172 @@ Public Class PaymentHelper
 
 #Region "Methods For WESMBillSummary Balance"
     Private Sub CreateWESMBillSummaryBalance()
+        Dim PaymentWBSHBalance As New List(Of PaymentWBSHistoryBalance)
+        Dim WESMBillSummaryReceivablesList = (From x In Me.WESMBillSummaryList
+                                              Where x.BeginningBalance < 0 Or x.EndingBalance < 0
+                                              Group By WESMBillBatchNo = x.WESMBillBatchNo,
+                                                       BillingPeriod = x.BillPeriod,
+                                                       OrigDueDate = x.DueDate,
+                                                       IDNumber = x.IDNumber,
+                                                       ChargeType = x.ChargeType,
+                                                       Remarks = x.BillingRemarks
+                                              Into AmountBalance = Sum(x.EndingBalance)
+                                              Order By WESMBillBatchNo).ToList()
+
+        Dim TotalAmountPerWESMBillAR = (From x In Me.WESMBillSummaryList
+                                        Where x.BeginningBalance < 0 Or x.EndingBalance < 0
+                                        Group By WESMBillBatchNo = x.WESMBillBatchNo,
+                                                BillingPeriod = x.BillPeriod,
+                                                OrigDueDate = x.DueDate,
+                                                ChargeType = x.ChargeType,
+                                                Remarks = x.BillingRemarks
+                                        Into TotalBillAmount = Sum(x.BeginningBalance)
+                                        Order By WESMBillBatchNo).ToList()
+
+        Dim ObjARDictionary As New Dictionary(Of String, String)
+        Dim counter As Integer = 0
+        Dim newProgress As ProgressClass
+
+        For Each item In WESMBillSummaryReceivablesList
+            counter += 1
+            newProgress = New ProgressClass
+            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AR " & counter.ToString("N0") & "/" & WESMBillSummaryReceivablesList.Count.ToString("N0")
+            Me.progress.Report(newProgress)
+
+            Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
+                                 & item.BillingPeriod.ToString & "|" _
+                                 & item.OrigDueDate.ToShortDateString & "|" _
+                                 & item.ChargeType.ToString & "|" _
+                                 & item.IDNumber.IDNumber.ToString
+            If Not ObjARDictionary.ContainsKey(DicKey) Then
+                ObjARDictionary.Add(DicKey, "NOTHING")
+                Dim GetTotalBill = (From x In TotalAmountPerWESMBillAR
+                                    Where x.BillingPeriod = item.BillingPeriod _
+                                        And x.OrigDueDate = item.OrigDueDate _
+                                        And x.ChargeType = item.ChargeType _
+                                        And x.WESMBillBatchNo = item.WESMBillBatchNo
+                                    Select x.TotalBillAmount).Distinct().FirstOrDefault
+
+
+                Using _PymntWBSHistoryBalance As New PaymentWBSHistoryBalance
+                    With _PymntWBSHistoryBalance
+                        .WESMBillBatchNo = item.WESMBillBatchNo
+                        .BillingPeriod = item.BillingPeriod
+                        .BillingPeriodRemarks = item.Remarks
+                        .OriginalDueDate = item.OrigDueDate
+                        .TotalBillAmount = CDec(GetTotalBill)
+                        .IDNumber = New AMParticipants(item.IDNumber.IDNumber, item.IDNumber.ParticipantID)
+                        .AmountBalance = item.AmountBalance
+                        .ChargeType = item.ChargeType
+                        .BalanceType = EnumBalanceType.AR
+                    End With
+                    PaymentWBSHBalance.Add(_PymntWBSHistoryBalance)
+                End Using
+            Else
+                If item.AmountBalance <> 0 Then
+                    Dim EditPaymntWBSHBalance As PaymentWBSHistoryBalance = (From x In PaymentWBSHBalance
+                                                                             Where x.IDNumber.IDNumber = item.IDNumber.IDNumber _
+                                                                                 And x.ChargeType = item.ChargeType And x.OriginalDueDate = item.OrigDueDate _
+                                                                                 And x.BillingPeriod = item.BillingPeriod And x.BalanceType = EnumBalanceType.AR _
+                                                                                 And x.WESMBillBatchNo = item.WESMBillBatchNo
+                                                                             Select x).FirstOrDefault
+                    If Not EditPaymntWBSHBalance Is Nothing Then
+                        EditPaymntWBSHBalance.AmountBalance += item.AmountBalance
+                    End If
+                End If
+            End If
+        Next
+
+        Dim WESMBillSummaryPayablesList = (From x In Me.WESMBillSummaryList
+                                           Where x.BeginningBalance > 0
+                                           Group By WESMBillBatchNo = x.WESMBillBatchNo,
+                                                   BillingPeriod = x.BillPeriod,
+                                                   OrigDueDate = x.DueDate,
+                                                   IDNumber = x.IDNumber,
+                                                   ChargeType = x.ChargeType,
+                                                   Remarks = x.BillingRemarks
+                                           Into AmountBalance = Sum(x.EndingBalance)
+                                           Order By WESMBillBatchNo).ToList()
+
+        Dim TotalAmountPerWESMBillAP = (From x In Me.WESMBillSummaryList
+                                        Where x.BeginningBalance > 0
+                                        Group By WESMBillBatchNo = x.WESMBillBatchNo,
+                                                BillingPeriod = x.BillPeriod,
+                                                OrigDueDate = x.DueDate,
+                                                ChargeType = x.ChargeType,
+                                                Remarks = x.BillingRemarks
+                                        Into TotalBillAmount = Sum(x.BeginningBalance)
+                                        Order By WESMBillBatchNo).ToList()
+
+        Dim WESMBillSummaryPayablesListDistinct = (From x In WESMBillSummaryPayablesList Select x.WESMBillBatchNo, x.BillingPeriod, x.OrigDueDate, x.ChargeType).Distinct.ToList()
+        Dim ObjAPDictionary As New Dictionary(Of String, String)
+        counter = 0
+        For Each item In WESMBillSummaryPayablesList
+            counter += 1
+            newProgress = New ProgressClass
+            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AP " & counter.ToString("N0") & "/" & WESMBillSummaryReceivablesList.Count.ToString("N0")
+            Me.progress.Report(newProgress)
+            Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
+                                   & item.BillingPeriod.ToString & "|" _
+                                   & item.OrigDueDate.ToShortDateString & "|" _
+                                   & item.ChargeType.ToString & "|" _
+                                   & item.IDNumber.IDNumber.ToString
+
+            If Not ObjAPDictionary.ContainsKey(DicKey) Then
+                ObjAPDictionary.Add(DicKey, "NOTHING")
+                Dim GetTotalBill = (From x In TotalAmountPerWESMBillAP
+                                    Where x.BillingPeriod = item.BillingPeriod _
+                                    And x.OrigDueDate = item.OrigDueDate _
+                                    And x.ChargeType = item.ChargeType _
+                                    And x.WESMBillBatchNo = item.WESMBillBatchNo
+                                    Select x.TotalBillAmount).Distinct().FirstOrDefault
+
+                Using _PymntWBSHistoryBalance As New PaymentWBSHistoryBalance
+                    With _PymntWBSHistoryBalance
+                        .WESMBillBatchNo = item.WESMBillBatchNo
+                        .BillingPeriod = item.BillingPeriod
+                        .BillingPeriodRemarks = item.Remarks
+                        .OriginalDueDate = item.OrigDueDate
+                        .TotalBillAmount = CDec(GetTotalBill)
+                        .IDNumber = New AMParticipants(item.IDNumber.IDNumber, item.IDNumber.ParticipantID)
+                        .AmountBalance = item.AmountBalance
+                        .ChargeType = item.ChargeType
+                        .BalanceType = EnumBalanceType.AP
+                    End With
+
+                    PaymentWBSHBalance.Add(_PymntWBSHistoryBalance)
+                End Using
+            Else
+                If item.AmountBalance <> 0 Then
+                    Dim EditPaymntWBSHBalance As PaymentWBSHistoryBalance = (From x In PaymentWBSHBalance
+                                                                             Where x.IDNumber.IDNumber = item.IDNumber.IDNumber _
+                                                                             And x.ChargeType = item.ChargeType And x.OriginalDueDate = item.OrigDueDate _
+                                                                             And x.WESMBillBatchNo = item.WESMBillBatchNo _
+                                                                             And x.BillingPeriod = item.BillingPeriod And x.BalanceType = EnumBalanceType.AP
+                                                                             Select x).FirstOrDefault
+
+                    If Not EditPaymntWBSHBalance Is Nothing Then
+                        EditPaymntWBSHBalance.AmountBalance += item.AmountBalance
+                    End If
+                End If
+            End If
+        Next
+
+        Me.PymntWBSHistoryBalance = PaymentWBSHBalance
+        PaymentWBSHBalance = Nothing
+        WESMBillSummaryReceivablesList = Nothing
+        TotalAmountPerWESMBillAR = Nothing
+        ObjARDictionary = Nothing
+        WESMBillSummaryPayablesList = Nothing
+        TotalAmountPerWESMBillAP = Nothing
+        WESMBillSummaryPayablesListDistinct = Nothing
+        ObjAPDictionary = Nothing
+        If cts.IsCancellationRequested Then
+            Throw New OperationCanceledException
+        End If
+    End Sub
+
+    Private Sub CreateWESMBillSummaryBalanceNew()
         Dim PaymentWBSHBalance As New List(Of PaymentWBSHistoryBalance)
         Dim WESMBillSummaryReceivablesList = (From x In Me.WESMBillSummaryList
                                               Where x.BeginningBalance < 0 Or x.EndingBalance < 0
@@ -1677,6 +1878,7 @@ Public Class PaymentHelper
         ObjAPDictionary = Nothing
 
     End Sub
+
 #End Region
 
 #Region "Functions For Offsetting of AR and AP DataTable"
@@ -4940,7 +5142,7 @@ Public Class PaymentHelper
                         .FullyTransferToPR = False
                         .TransferToPrudential = 0
                     Else
-                        'Added by LAVV 03/26/2022 to ensure that no PR shall be reflenished if the ID_Number does not exist to the Prudential Monitoring Table 
+                        'Added by LAVV 03/26/2022 to ensure that no PR shall be False if the ID_Number does not exist to the Prudential Monitoring Table 
                         If getMPPrudential Is Nothing Then
                             .FullyTransferToPR = False
                             .TransferToPrudential = 0
@@ -4956,6 +5158,10 @@ Public Class PaymentHelper
                                 .TransferToPrudential = 0
                             End If
                         End If
+
+                        '---Disable the auto replenishment on 10/20/2022 as requested by Annsburg of AMU
+                        '.FullyTransferToPR = False
+                        '.TransferToPrudential = 0
                     End If
 
                     .FullyTransferToFinPen = False

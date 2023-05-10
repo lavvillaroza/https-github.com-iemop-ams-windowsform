@@ -36,8 +36,6 @@ Partial Class frmImportWESMBillFromCRSS
         Me.tc_Viewer = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.dgv_WESMInvoices = New System.Windows.Forms.DataGridView()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.dgv_wesmbillsalesandpurchases = New System.Windows.Forms.DataGridView()
         Me.chkbox_select = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.txtbox_BillingPeriod = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtbox_stlRun = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -45,6 +43,8 @@ Partial Class frmImportWESMBillFromCRSS
         Me.txtbox_TotalARAmount = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtbox_TotalAPAmount = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtbox_Remarks = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.dgv_wesmbillsalesandpurchases = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -129,7 +129,7 @@ Partial Class frmImportWESMBillFromCRSS
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -144,10 +144,10 @@ Partial Class frmImportWESMBillFromCRSS
         '
         Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(17, 22)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 15)
+        Me.Label2.Size = New System.Drawing.Size(61, 15)
         Me.Label2.TabIndex = 12
         Me.Label2.Text = "Due Date:"
         '
@@ -157,12 +157,12 @@ Partial Class frmImportWESMBillFromCRSS
         Me.cmb_DueDate.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.cmb_DueDate.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_DueDate.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_DueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_DueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_DueDate.ForeColor = System.Drawing.Color.Black
         Me.cmb_DueDate.FormattingEnabled = True
         Me.cmb_DueDate.Location = New System.Drawing.Point(87, 20)
         Me.cmb_DueDate.Name = "cmb_DueDate"
-        Me.cmb_DueDate.Size = New System.Drawing.Size(131, 20)
+        Me.cmb_DueDate.Size = New System.Drawing.Size(131, 22)
         Me.cmb_DueDate.TabIndex = 2
         '
         'tc_Viewer
@@ -204,7 +204,7 @@ Partial Class frmImportWESMBillFromCRSS
         Me.dgv_WESMInvoices.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.chkbox_select, Me.txtbox_BillingPeriod, Me.txtbox_stlRun, Me.txtbox_FileType, Me.txtbox_TotalARAmount, Me.txtbox_TotalAPAmount, Me.txtbox_Remarks})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
@@ -217,46 +217,6 @@ Partial Class frmImportWESMBillFromCRSS
         Me.dgv_WESMInvoices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_WESMInvoices.Size = New System.Drawing.Size(863, 408)
         Me.dgv_WESMInvoices.TabIndex = 16
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.dgv_wesmbillsalesandpurchases)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(866, 417)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "WESM Bill Sales And Purchases"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'dgv_wesmbillsalesandpurchases
-        '
-        Me.dgv_wesmbillsalesandpurchases.AllowUserToAddRows = False
-        Me.dgv_wesmbillsalesandpurchases.AllowUserToDeleteRows = False
-        Me.dgv_wesmbillsalesandpurchases.AllowUserToResizeColumns = False
-        Me.dgv_wesmbillsalesandpurchases.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_wesmbillsalesandpurchases.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
-        Me.dgv_wesmbillsalesandpurchases.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgv_wesmbillsalesandpurchases.ColumnHeadersHeight = 30
-        Me.dgv_wesmbillsalesandpurchases.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_wesmbillsalesandpurchases.DefaultCellStyle = DataGridViewCellStyle4
-        Me.dgv_wesmbillsalesandpurchases.Location = New System.Drawing.Point(5, 4)
-        Me.dgv_wesmbillsalesandpurchases.Name = "dgv_wesmbillsalesandpurchases"
-        Me.dgv_wesmbillsalesandpurchases.ReadOnly = True
-        Me.dgv_wesmbillsalesandpurchases.RowHeadersVisible = False
-        Me.dgv_wesmbillsalesandpurchases.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_wesmbillsalesandpurchases.Size = New System.Drawing.Size(858, 408)
-        Me.dgv_wesmbillsalesandpurchases.TabIndex = 17
         '
         'chkbox_select
         '
@@ -307,6 +267,46 @@ Partial Class frmImportWESMBillFromCRSS
         Me.txtbox_Remarks.ReadOnly = True
         Me.txtbox_Remarks.Width = 300
         '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.dgv_wesmbillsalesandpurchases)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(866, 417)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "WESM Bill Sales And Purchases"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'dgv_wesmbillsalesandpurchases
+        '
+        Me.dgv_wesmbillsalesandpurchases.AllowUserToAddRows = False
+        Me.dgv_wesmbillsalesandpurchases.AllowUserToDeleteRows = False
+        Me.dgv_wesmbillsalesandpurchases.AllowUserToResizeColumns = False
+        Me.dgv_wesmbillsalesandpurchases.AllowUserToResizeRows = False
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_wesmbillsalesandpurchases.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.dgv_wesmbillsalesandpurchases.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgv_wesmbillsalesandpurchases.ColumnHeadersHeight = 30
+        Me.dgv_wesmbillsalesandpurchases.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_wesmbillsalesandpurchases.DefaultCellStyle = DataGridViewCellStyle4
+        Me.dgv_wesmbillsalesandpurchases.Location = New System.Drawing.Point(5, 4)
+        Me.dgv_wesmbillsalesandpurchases.Name = "dgv_wesmbillsalesandpurchases"
+        Me.dgv_wesmbillsalesandpurchases.ReadOnly = True
+        Me.dgv_wesmbillsalesandpurchases.RowHeadersVisible = False
+        Me.dgv_wesmbillsalesandpurchases.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_wesmbillsalesandpurchases.Size = New System.Drawing.Size(858, 408)
+        Me.dgv_wesmbillsalesandpurchases.TabIndex = 17
+        '
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.HeaderText = "Billing Period"
@@ -351,7 +351,7 @@ Partial Class frmImportWESMBillFromCRSS
         Me.MaximizeBox = False
         Me.Name = "frmImportWESMBillFromCRSS"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Import WESMBill From CRSSDB"
+        Me.Text = "Import WESMBill From CRSSDB (Market Fees Only)"
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()

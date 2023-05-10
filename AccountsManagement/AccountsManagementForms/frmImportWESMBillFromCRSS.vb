@@ -105,7 +105,7 @@ Public Class frmImportWESMBillFromCRSS
                                 And x.FileType = filetype _
                                 Select x).ToList
 
-        If getWESMBillGroup.Count > 1 Then
+        If getWESMBillGroup.Count > 0 Then
             For Each item In getWESMBillGroup
                 If item.ListOfError.Distinct.Count > 0 Then
                     MessageBox.Show("Error found in uploaded data.", "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

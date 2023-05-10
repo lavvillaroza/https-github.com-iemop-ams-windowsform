@@ -25429,6 +25429,8 @@ Partial Public Class DSReport
         
         Private columnTRANS_DATE_TO As Global.System.Data.DataColumn
         
+        Private columnBUYER_SELLER_TYPE As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Sub New()
@@ -25649,6 +25651,14 @@ Partial Public Class DSReport
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public ReadOnly Property BUYER_SELLER_TYPEColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBUYER_SELLER_TYPE
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -25708,9 +25718,10 @@ Partial Public Class DSReport
                     ByVal SIG3_POSITION As String,  _
                     ByVal TOTAL As Decimal,  _
                     ByVal COLLECTION_DATE As Date,  _
-                    ByVal TRANS_DATE_TO As Date) As BIRRulingMainRow
+                    ByVal TRANS_DATE_TO As Date,  _
+                    ByVal BUYER_SELLER_TYPE As String) As BIRRulingMainRow
             Dim rowBIRRulingMainRow As BIRRulingMainRow = CType(Me.NewRow,BIRRulingMainRow)
-            Dim columnValuesArray() As Object = New Object() {TRANS_DATE_FROM, CR_NUMBER, ID_NUMBER, FULL_NAME, ADDRESS, BILLING_REMARKS, PARTICULARS, RECEIVED_FROM, STATEMENT_NO, VATABLE_SALES, ZERO_RATED_SALES, ZERO_RATED_ECOZONE, VAT_ON_SALES, WHTAX, SIGNATORIES_1, SIG1_POSITION, SINATORIES_2, SIG2_POSITION, SIGNATORIES_3, SIG3_POSITION, TOTAL, COLLECTION_DATE, TRANS_DATE_TO}
+            Dim columnValuesArray() As Object = New Object() {TRANS_DATE_FROM, CR_NUMBER, ID_NUMBER, FULL_NAME, ADDRESS, BILLING_REMARKS, PARTICULARS, RECEIVED_FROM, STATEMENT_NO, VATABLE_SALES, ZERO_RATED_SALES, ZERO_RATED_ECOZONE, VAT_ON_SALES, WHTAX, SIGNATORIES_1, SIG1_POSITION, SINATORIES_2, SIG2_POSITION, SIGNATORIES_3, SIG3_POSITION, TOTAL, COLLECTION_DATE, TRANS_DATE_TO, BUYER_SELLER_TYPE}
             rowBIRRulingMainRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBIRRulingMainRow)
             Return rowBIRRulingMainRow
@@ -25756,6 +25767,7 @@ Partial Public Class DSReport
             Me.columnTOTAL = MyBase.Columns("TOTAL")
             Me.columnCOLLECTION_DATE = MyBase.Columns("COLLECTION_DATE")
             Me.columnTRANS_DATE_TO = MyBase.Columns("TRANS_DATE_TO")
+            Me.columnBUYER_SELLER_TYPE = MyBase.Columns("BUYER_SELLER_TYPE")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -25807,6 +25819,8 @@ Partial Public Class DSReport
             MyBase.Columns.Add(Me.columnCOLLECTION_DATE)
             Me.columnTRANS_DATE_TO = New Global.System.Data.DataColumn("TRANS_DATE_TO", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTRANS_DATE_TO)
+            Me.columnBUYER_SELLER_TYPE = New Global.System.Data.DataColumn("BUYER_SELLER_TYPE", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBUYER_SELLER_TYPE)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -48252,6 +48266,21 @@ Partial Public Class DSReport
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Property BUYER_SELLER_TYPE() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableBIRRulingMain.BUYER_SELLER_TYPEColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'BUYER_SELLER_TYPE' in table 'BIRRulingMain' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableBIRRulingMain.BUYER_SELLER_TYPEColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Function IsTRANS_DATE_FROMNull() As Boolean
             Return Me.IsNull(Me.tableBIRRulingMain.TRANS_DATE_FROMColumn)
         End Function
@@ -48524,6 +48553,18 @@ Partial Public Class DSReport
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Sub SetTRANS_DATE_TONull()
             Me(Me.tableBIRRulingMain.TRANS_DATE_TOColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Function IsBUYER_SELLER_TYPENull() As Boolean
+            Return Me.IsNull(Me.tableBIRRulingMain.BUYER_SELLER_TYPEColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Sub SetBUYER_SELLER_TYPENull()
+            Me(Me.tableBIRRulingMain.BUYER_SELLER_TYPEColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

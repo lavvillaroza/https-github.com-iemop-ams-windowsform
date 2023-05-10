@@ -1717,21 +1717,39 @@ Public Class frmReportViewer
 
     End Sub
 
-    Public Sub LoadBIRCollectionReport(ByVal dt As DataTable, ByVal colReportType As String)
-        If colReportType.Equals("DAILY") Then
-            Me.FormTitle = "BIR Collection Report (Daily)"
-            Dim rpt As New RPTBIRCollectionReportSummary
-            rpt.SetDataSource(dt)
-            With Me.RPTViewer
-                .ReportSource = rpt
-            End With
+    Public Sub LoadBIRCollectionReport(ByVal dt As DataTable, ByVal colReportType As String, ByVal isSeller As Boolean)
+        If isSeller = True Then
+            If colReportType.Equals("DAILY") Then
+                Me.FormTitle = "BIR Collection Report (Daily)"
+                Dim rpt As New RPTBIRCollectionReportSummary
+                rpt.SetDataSource(dt)
+                With Me.RPTViewer
+                    .ReportSource = rpt
+                End With
+            Else
+                Me.FormTitle = "BIR Collection Report (Monthly)"
+                Dim rpt As New RPTBIRCollectionReportSummaryMonthly
+                rpt.SetDataSource(dt)
+                With Me.RPTViewer
+                    .ReportSource = rpt
+                End With
+            End If
         Else
-            Me.FormTitle = "BIR Collection Report (Monthly)"
-            Dim rpt As New RPTBIRCollectionReportSummaryMonthly
-            rpt.SetDataSource(dt)
-            With Me.RPTViewer
-                .ReportSource = rpt
-            End With
+            If colReportType.Equals("DAILY") Then
+                Me.FormTitle = "BIR Collection Report (Daily)"
+                Dim rpt As New RPTBIRCollectionReportSummaryBuyer
+                rpt.SetDataSource(dt)
+                With Me.RPTViewer
+                    .ReportSource = rpt
+                End With
+            Else
+                Me.FormTitle = "BIR Collection Report (Monthly)"
+                Dim rpt As New RPTBIRCollectionReportSummaryMonthlyBuyer
+                rpt.SetDataSource(dt)
+                With Me.RPTViewer
+                    .ReportSource = rpt
+                End With
+            End If
         End If
 
     End Sub

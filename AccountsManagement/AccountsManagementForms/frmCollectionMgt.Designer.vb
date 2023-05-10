@@ -837,7 +837,7 @@ Partial Class frmCollectionMgt
         Me.btnSave.ForeColor = System.Drawing.Color.Black
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSave.Location = New System.Drawing.Point(944, 503)
+        Me.btnSave.Location = New System.Drawing.Point(944, 502)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(130, 39)
         Me.btnSave.TabIndex = 1
@@ -856,7 +856,7 @@ Partial Class frmCollectionMgt
         Me.btnCancel.ForeColor = System.Drawing.Color.Black
         Me.btnCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancel.Location = New System.Drawing.Point(1083, 503)
+        Me.btnCancel.Location = New System.Drawing.Point(1083, 502)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(130, 39)
         Me.btnCancel.TabIndex = 2
@@ -870,7 +870,7 @@ Partial Class frmCollectionMgt
         Me.AutoScroll = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1225, 554)
+        Me.ClientSize = New System.Drawing.Size(1225, 548)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.btnCancel)

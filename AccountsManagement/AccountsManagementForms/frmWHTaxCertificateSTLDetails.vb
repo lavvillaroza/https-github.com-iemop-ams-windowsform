@@ -8,7 +8,7 @@ Imports System.Threading
 Imports System.Threading.Tasks
 
 Public Class frmWHTaxCertificateSTLDetails
-    Public _WHTaxCertSTLHelper As WHTaxCertificateSTLHelperNew
+    Public _WHTaxCertSTLHelper As WHTaxCertificateSTLHelper
     Public _ViewCertificate As Boolean = False
     Public _CertificateNo As Long = 0
     Private cts As CancellationTokenSource

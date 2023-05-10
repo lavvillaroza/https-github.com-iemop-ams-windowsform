@@ -222,6 +222,12 @@ Public Class Login
         End Get
     End Property
 
+    Public ReadOnly Property AMSSchema() As String
+        Get
+            Return _as.AMSDbUserId
+        End Get
+    End Property
+
     Public Function HasAccess(ByVal access As String) As Boolean
         Return _as.HasAccess(access)
     End Function

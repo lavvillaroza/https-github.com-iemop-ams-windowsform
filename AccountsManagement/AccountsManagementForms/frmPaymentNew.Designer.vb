@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmPaymentNew
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmPaymentNew
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim GroupBox31 As System.Windows.Forms.GroupBox
@@ -82,6 +82,8 @@ Partial Class frmPaymentNew
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabelMsg2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tsslbl_timer = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         GroupBox31 = New System.Windows.Forms.GroupBox()
         GroupBox31.SuspendLayout()
         CType(Me.dgv_PaymentTransToPR, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -949,28 +951,47 @@ Partial Class frmPaymentNew
         '
         'ctrl_statusStrip
         '
-        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg, Me.ToolStripStatusLabelMsg2})
-        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 648)
+        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg, Me.ToolStripStatusLabelMsg2, Me.tsslbl_timer})
+        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 646)
         Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
-        Me.ctrl_statusStrip.Size = New System.Drawing.Size(1169, 22)
+        Me.ctrl_statusStrip.Size = New System.Drawing.Size(1169, 24)
         Me.ctrl_statusStrip.TabIndex = 60
         Me.ctrl_statusStrip.Text = "StatusStrip1"
         '
         'ToolStripStatus_LabelMsg
         '
+        Me.ToolStripStatus_LabelMsg.AutoSize = False
         Me.ToolStripStatus_LabelMsg.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.ToolStripStatus_LabelMsg.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
         Me.ToolStripStatus_LabelMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ToolStripStatus_LabelMsg.Name = "ToolStripStatus_LabelMsg"
         Me.ToolStripStatus_LabelMsg.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripStatus_LabelMsg.Size = New System.Drawing.Size(45, 17)
-        Me.ToolStripStatus_LabelMsg.Text = "Ready.."
+        Me.ToolStripStatus_LabelMsg.Size = New System.Drawing.Size(950, 19)
+        Me.ToolStripStatus_LabelMsg.Text = "Ready"
         Me.ToolStripStatus_LabelMsg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ToolStripStatus_LabelMsg.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
         'ToolStripStatusLabelMsg2
         '
         Me.ToolStripStatusLabelMsg2.Name = "ToolStripStatusLabelMsg2"
-        Me.ToolStripStatusLabelMsg2.Size = New System.Drawing.Size(0, 17)
+        Me.ToolStripStatusLabelMsg2.Size = New System.Drawing.Size(0, 19)
+        '
+        'tsslbl_timer
+        '
+        Me.tsslbl_timer.AutoSize = False
+        Me.tsslbl_timer.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.tsslbl_timer.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
+        Me.tsslbl_timer.Name = "tsslbl_timer"
+        Me.tsslbl_timer.Size = New System.Drawing.Size(200, 19)
+        Me.tsslbl_timer.Text = "Timer:"
+        Me.tsslbl_timer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Timer1
+        '
         '
         'frmPaymentNew
         '
@@ -979,6 +1000,7 @@ Partial Class frmPaymentNew
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1169, 670)
+        Me.ControlBox = False
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.mainTLPanel)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -987,7 +1009,7 @@ Partial Class frmPaymentNew
         Me.MinimizeBox = False
         Me.Name = "frmPaymentNew"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Payment"
+        Me.Text = "Payment Management"
         GroupBox31.ResumeLayout(False)
         GroupBox31.PerformLayout()
         CType(Me.dgv_PaymentTransToPR, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1063,4 +1085,6 @@ Partial Class frmPaymentNew
     Friend WithEvents ctrl_statusStrip As StatusStrip
     Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabelMsg2 As ToolStripStatusLabel
+    Friend WithEvents tsslbl_timer As ToolStripStatusLabel
+    Friend WithEvents Timer1 As Timer
 End Class

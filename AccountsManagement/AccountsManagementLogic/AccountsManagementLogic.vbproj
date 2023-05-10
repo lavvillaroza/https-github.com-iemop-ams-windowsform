@@ -180,8 +180,8 @@
     <Compile Include="WBSChangeParentIdHelper.vb" />
     <Compile Include="WESMBillsExemptionHelper.vb" />
     <Compile Include="WESMBillTransSummaryPrintHelper.vb" />
-    <Compile Include="WHTaxCertificateSTLHelperNew.vb" />
     <Compile Include="WHTaxCertificateSTLHelper.vb" />
+    <Compile Include="WHVATCertificateSTLHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

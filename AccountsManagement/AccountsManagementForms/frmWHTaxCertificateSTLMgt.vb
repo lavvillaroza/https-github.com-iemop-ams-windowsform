@@ -9,36 +9,38 @@ Imports System.Threading.Tasks
 Imports System.Threading
 
 Public Class frmWHTaxCertificateSTLMgt
-    Private _WHTaxCertSTLHelper As New WHTaxCertificateSTLHelperNew
+    Private _WHTaxCertSTLHelper As New WHTaxCertificateSTLHelper
     Private cts As CancellationTokenSource
+    Private stopWatch As New Diagnostics.Stopwatch
+    Private newProgress As New ProgressClass
     Private Sub frmWHTaxCertificateCollection_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
         Me.DGridViewCollection.Rows.Clear()
     End Sub
 
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
-        ToolStripStatus_LabelMsg.Text = _ProgressMsg.ProgressMsg
+        tsslbl_Msg.Text = _ProgressMsg.ProgressMsg
         ctrl_statusStrip.Refresh()
     End Sub
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Try
-            ProgressThread.Show("Please wait while loding...")
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Adding New Certificate."}
+            UpdateProgress(newProgress)
+
             Dim frmWTCertColTag As New frmWHTaxCertificateSTLDetails
             With frmWTCertColTag
                 ._WHTaxCertSTLHelper = _WHTaxCertSTLHelper
                 .TabControl1.TabPages(1).Hide()
-                ProgressThread.Close()
                 .ShowDialog()
             End With
 
             If _WHTaxCertSTLHelper.NewWHTaxCertSTL Is Nothing Then
-                ProgressThread.Close()
                 MessageBox.Show("No added data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
 
             If _WHTaxCertSTLHelper.NewWHTaxCertSTL.CertificateNo = 0 Then
-                ProgressThread.Close()
                 MessageBox.Show("Data is not save!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
@@ -52,12 +54,17 @@ Public Class frmWHTaxCertificateSTLMgt
             _WHTaxCertSTLHelper.NewWHTaxCertSTL = New WHTaxCertificateSTL
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready"}
+            UpdateProgress(newProgress)
         End Try
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         Try
-            ProgressThread.Show("Please wait while searching...")
+            MainPanel.Enabled = False
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while searching..."}
+            UpdateProgress(newProgress)
             Dim dateFrom As Date = CDate(FormatDateTime(Me.dtFrom.Value, DateFormat.ShortDate))
             Dim dateTo As Date = CDate(FormatDateTime(Me.dtTo.Value, DateFormat.ShortDate))
             Dim notAllocated As Boolean = CBool(chkbox_Allocated.Checked)
@@ -66,16 +73,17 @@ Public Class frmWHTaxCertificateSTLMgt
             _WHTaxCertSTLHelper.SearchByDateRangeForWTCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
             If _WHTaxCertSTLHelper.ViewListOfWHTCertSTL.Count <> 0 Then
                 PutDataInDisplayGrid(_WHTaxCertSTLHelper.ViewListOfWHTCertSTL)
-                ProgressThread.Close()
-
             Else
-                ProgressThread.Close()
                 MessageBox.Show("No available data found!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
             chkbox_SelectAll.Checked = False
         Catch ex As Exception
-            ProgressThread.Close()
+            MainPanel.Enabled = True
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            MainPanel.Enabled = True
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready"}
+            UpdateProgress(newProgress)
         End Try
     End Sub
 
@@ -105,6 +113,7 @@ Public Class frmWHTaxCertificateSTLMgt
 
     Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
         Try
+
             If Me.DGridViewCollection.Rows.Count = 0 Then
                 MessageBox.Show("No available data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
@@ -118,13 +127,14 @@ Public Class frmWHTaxCertificateSTLMgt
             Dim i As Integer = Me.DGridViewCollection.CurrentRow.Index
             Dim certifNo As Long = CLng(Me.DGridViewCollection.Rows(i).Cells(0).Value)
 
-            ProgressThread.Show("Please wait while loding...")
+            newProgress = New ProgressClass With {.ProgressMsg = "Viewing CertificateNo:" & certifNo.ToString("N0")}
+            UpdateProgress(newProgress)
+
             Dim frmWTCertColTag As New frmWHTaxCertificateSTLDetails
             With frmWTCertColTag
                 ._WHTaxCertSTLHelper = _WHTaxCertSTLHelper
                 ._ViewCertificate = True
                 ._CertificateNo = certifNo
-                ProgressThread.Close()
                 .ShowDialog()
             End With
         Catch ex As Exception
@@ -139,7 +149,7 @@ Public Class frmWHTaxCertificateSTLMgt
             Me.gbMenu2.Enabled = False
             Me.chkbox_SelectAll.Enabled = False
             Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
-            cts = New CancellationTokenSource
+
             Dim rowCounter As Integer = 0
             For Each row As DataGridViewRow In DGridViewCollection.Rows
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
@@ -156,18 +166,27 @@ Public Class frmWHTaxCertificateSTLMgt
             If ask = DialogResult.No Then
                 Exit Sub
             End If
-            ProgressThread.Show("Please wait while allocating...")
+
             Dim getListOfRemittanceDate As New Date
             Dim getTimeStart As New DateTime
             Dim getTimeEnd As New DateTime
             getTimeStart = DateTime.Now()
 
+            cts = New CancellationTokenSource
+            Me.Timer1.Start()
+            Me.stopWatch.Start()
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while preparing."}
+            UpdateProgress(newProgress)
+
             For Each row As DataGridViewRow In DGridViewCollection.Rows
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
                     Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
                     getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
-                    ProgressThread.Close()
-                    ProgressThread.Show("Currently allocating Certificate No:" & certifNo.ToString)
+
+                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
+                    UpdateProgress(newProgress)
+
                     Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
@@ -177,14 +196,30 @@ Public Class frmWHTaxCertificateSTLMgt
             Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveSTLNoticeNew(getListOfRemittanceDate, progressIndicator, cts.Token))
             getTimeEnd = DateTime.Now()
             cts = Nothing
+
             ProgressThread.Close()
             MessageBox.Show("The processed data have been successfully allocated and saved." & vbNewLine _
                                 & "Date Time Start: " & getTimeStart.ToString("MM/dd/yyyy hh:mm") & vbNewLine _
                                 & "Date Time End: " & getTimeEnd.ToString("MM/dd/yyyy hh:mm"), "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As OperationCanceledException
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled as requested."}
+            UpdateProgress(newProgress)
+            cts = Nothing
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
-            ProgressThread.Close()
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to error."}
+            UpdateProgress(newProgress)
+            cts = Nothing
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
+            Me.Timer1.Stop()
+            Me.stopWatch.Stop()
+            Me.stopWatch.Reset()
+
+            Me.tsslbl_Msg.Text = "Ready"
+            Me.tsslbl_Timer.Text = Me.DGridViewCollection.RowCount.ToString("N0") & " records"
+
             Me.gbMenu1.Enabled = True
             Me.gbMenu2.Enabled = True
             Me.chkbox_SelectAll.Enabled = True
@@ -321,6 +356,21 @@ Public Class frmWHTaxCertificateSTLMgt
                 e.Cancel = True
                 Me.Show()
             End If
+        End If
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
+        tsslbl_Timer.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
+    End Sub
+
+    Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
+        If cts IsNot Nothing Then
+            cts.Cancel()
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while canceling..."}
+            Me.UpdateProgress(newProgress)
+            btn_Close.Enabled = False
+        Else
+            Me.Close()
         End If
     End Sub
 End Class

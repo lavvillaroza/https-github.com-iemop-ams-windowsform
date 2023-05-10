@@ -411,6 +411,9 @@ Public Class DAL
             savetransaction = Me._conn.BeginTransaction()
             Dim cnt As Integer = 0
             For Each _SQL As String In _ListSQL
+                If ct.IsCancellationRequested Then
+                    Throw New OperationCanceledException
+                End If
                 cnt += 1
                 errMsg = cnt.ToString & " " & _SQL
                 Me._myCommand = New OracleCommand()
@@ -418,14 +421,14 @@ Public Class DAL
                 Me._myCommand.CommandText = _SQL
                 Me._myCommand.Transaction = savetransaction
                 Me._myCommand.ExecuteNonQuery()
-
+                Debug.Print(_SQL)
                 newProgress.ProgressMsg = "Executing SQL scripts for saving: " & cnt.ToString("N0") & "/" & _ListSQL.Count.ToString("N0")
                 progress.Report(newProgress)
             Next
             savetransaction.Commit()
         Catch ex As ApplicationException
-            report.ErrorMessage = ex.Message & vbNewLine & errMsg
             savetransaction.Rollback()
+            report.ErrorMessage = ex.Message & vbNewLine & errMsg
         Catch ex1 As OracleException
             If ex1.Number = 1756 Then
                 report.ErrorMessage = "Single quote is not allowed. Please remove all single quote in all fields"
@@ -434,11 +437,11 @@ Public Class DAL
             End If
             savetransaction.Rollback()
         Catch exCancel As OperationCanceledException
-            report.ErrorMessage = "Saving in db is canceled!"
             savetransaction.Rollback()
+            report.ErrorMessage = "Saving in db is requested to cancel!"
         Catch ex2 As Exception
-            report.ErrorMessage = ex2.Message & vbNewLine & errMsg
             savetransaction.Rollback()
+            report.ErrorMessage = ex2.Message & vbNewLine & errMsg
         Finally
             If Me._conn.State <> ConnectionState.Closed Then
                 Me._conn.Close()

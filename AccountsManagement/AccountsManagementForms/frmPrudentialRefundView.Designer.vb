@@ -56,10 +56,10 @@ Partial Class frmPrudentialRefundView
         Me.btnGenerateFTF.ForeColor = System.Drawing.Color.Black
         Me.btnGenerateFTF.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnGenerateFTF.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnGenerateFTF.Location = New System.Drawing.Point(12, 245)
+        Me.btnGenerateFTF.Location = New System.Drawing.Point(12, 264)
         Me.btnGenerateFTF.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnGenerateFTF.Name = "btnGenerateFTF"
-        Me.btnGenerateFTF.Size = New System.Drawing.Size(203, 39)
+        Me.btnGenerateFTF.Size = New System.Drawing.Size(203, 42)
         Me.btnGenerateFTF.TabIndex = 80
         Me.btnGenerateFTF.Text = "      Generate FTF"
         Me.btnGenerateFTF.UseVisualStyleBackColor = True
@@ -73,10 +73,10 @@ Partial Class frmPrudentialRefundView
         Me.BtnJVEFT.ForeColor = System.Drawing.Color.Black
         Me.BtnJVEFT.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.BtnJVEFT.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnJVEFT.Location = New System.Drawing.Point(13, 202)
+        Me.BtnJVEFT.Location = New System.Drawing.Point(13, 218)
         Me.BtnJVEFT.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnJVEFT.Name = "BtnJVEFT"
-        Me.BtnJVEFT.Size = New System.Drawing.Size(203, 39)
+        Me.BtnJVEFT.Size = New System.Drawing.Size(203, 42)
         Me.BtnJVEFT.TabIndex = 79
         Me.BtnJVEFT.Text = "      Journal Voucher EFT"
         Me.BtnJVEFT.UseVisualStyleBackColor = True
@@ -90,10 +90,10 @@ Partial Class frmPrudentialRefundView
         Me.BtnJVClosing.ForeColor = System.Drawing.Color.Black
         Me.BtnJVClosing.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.BtnJVClosing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnJVClosing.Location = New System.Drawing.Point(12, 159)
+        Me.BtnJVClosing.Location = New System.Drawing.Point(12, 171)
         Me.BtnJVClosing.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnJVClosing.Name = "BtnJVClosing"
-        Me.BtnJVClosing.Size = New System.Drawing.Size(203, 39)
+        Me.BtnJVClosing.Size = New System.Drawing.Size(203, 42)
         Me.BtnJVClosing.TabIndex = 78
         Me.BtnJVClosing.Text = "      Journal Voucher Closing"
         Me.BtnJVClosing.UseVisualStyleBackColor = True
@@ -107,9 +107,9 @@ Partial Class frmPrudentialRefundView
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnClose.Location = New System.Drawing.Point(12, 289)
+        Me.btnClose.Location = New System.Drawing.Point(12, 311)
         Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(203, 39)
+        Me.btnClose.Size = New System.Drawing.Size(203, 42)
         Me.btnClose.TabIndex = 77
         Me.btnClose.Text = "&Close"
         Me.btnClose.UseVisualStyleBackColor = True
@@ -123,10 +123,10 @@ Partial Class frmPrudentialRefundView
         Me.btnJVSetup.ForeColor = System.Drawing.Color.Black
         Me.btnJVSetup.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnJVSetup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnJVSetup.Location = New System.Drawing.Point(13, 116)
+        Me.btnJVSetup.Location = New System.Drawing.Point(13, 125)
         Me.btnJVSetup.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnJVSetup.Name = "btnJVSetup"
-        Me.btnJVSetup.Size = New System.Drawing.Size(203, 39)
+        Me.btnJVSetup.Size = New System.Drawing.Size(203, 42)
         Me.btnJVSetup.TabIndex = 76
         Me.btnJVSetup.Text = "      Journal Voucher Setup"
         Me.btnJVSetup.UseVisualStyleBackColor = True
@@ -138,11 +138,11 @@ Partial Class frmPrudentialRefundView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Allocation.Controls.Add(Me.cbo_TransDate)
         Me.GB_Allocation.Controls.Add(Me.btn_ViewTrans)
-        Me.GB_Allocation.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GB_Allocation.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Allocation.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
-        Me.GB_Allocation.Location = New System.Drawing.Point(12, 12)
+        Me.GB_Allocation.Location = New System.Drawing.Point(12, 13)
         Me.GB_Allocation.Name = "GB_Allocation"
-        Me.GB_Allocation.Size = New System.Drawing.Size(235, 99)
+        Me.GB_Allocation.Size = New System.Drawing.Size(235, 107)
         Me.GB_Allocation.TabIndex = 81
         Me.GB_Allocation.TabStop = False
         Me.GB_Allocation.Text = "Select Transaction Date:"
@@ -152,12 +152,12 @@ Partial Class frmPrudentialRefundView
         Me.cbo_TransDate.BackColor = System.Drawing.Color.White
         Me.cbo_TransDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbo_TransDate.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cbo_TransDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_TransDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_TransDate.ForeColor = System.Drawing.Color.DimGray
         Me.cbo_TransDate.FormattingEnabled = True
-        Me.cbo_TransDate.Location = New System.Drawing.Point(9, 20)
+        Me.cbo_TransDate.Location = New System.Drawing.Point(9, 22)
         Me.cbo_TransDate.Name = "cbo_TransDate"
-        Me.cbo_TransDate.Size = New System.Drawing.Size(187, 20)
+        Me.cbo_TransDate.Size = New System.Drawing.Size(187, 22)
         Me.cbo_TransDate.TabIndex = 49
         '
         'btn_ViewTrans
@@ -167,13 +167,13 @@ Partial Class frmPrudentialRefundView
         Me.btn_ViewTrans.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_ViewTrans.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_ViewTrans.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_ViewTrans.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ViewTrans.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_ViewTrans.ForeColor = System.Drawing.Color.Black
         Me.btn_ViewTrans.Image = Global.AccountsManagementForms.My.Resources.Resources.FileSearchIcon22x22
         Me.btn_ViewTrans.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_ViewTrans.Location = New System.Drawing.Point(8, 45)
+        Me.btn_ViewTrans.Location = New System.Drawing.Point(8, 48)
         Me.btn_ViewTrans.Name = "btn_ViewTrans"
-        Me.btn_ViewTrans.Size = New System.Drawing.Size(187, 39)
+        Me.btn_ViewTrans.Size = New System.Drawing.Size(187, 42)
         Me.btn_ViewTrans.TabIndex = 50
         Me.btn_ViewTrans.Text = "View Refund"
         Me.btn_ViewTrans.UseVisualStyleBackColor = False
@@ -185,15 +185,15 @@ Partial Class frmPrudentialRefundView
         Me.DGridViewPrudential.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGridViewPrudential.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewPrudential.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colTransDate, Me.colIDNumber, Me.colParticipantID, Me.colParticipantName, Me.colPRAmount, Me.ColInterestAmount, Me.colAmountRefund})
-        Me.DGridViewPrudential.Location = New System.Drawing.Point(222, 11)
+        Me.DGridViewPrudential.Location = New System.Drawing.Point(222, 12)
         Me.DGridViewPrudential.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DGridViewPrudential.MultiSelect = False
         Me.DGridViewPrudential.Name = "DGridViewPrudential"
         Me.DGridViewPrudential.RowHeadersWidth = 20
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGridViewPrudential.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGridViewPrudential.Size = New System.Drawing.Size(888, 378)
+        Me.DGridViewPrudential.Size = New System.Drawing.Size(888, 407)
         Me.DGridViewPrudential.TabIndex = 82
         '
         'colTransDate
@@ -247,9 +247,10 @@ Partial Class frmPrudentialRefundView
         '
         'frmPrudentialRefundView
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1121, 403)
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.ClientSize = New System.Drawing.Size(1121, 434)
         Me.Controls.Add(Me.DGridViewPrudential)
         Me.Controls.Add(Me.GB_Allocation)
         Me.Controls.Add(Me.btnGenerateFTF)
@@ -257,6 +258,7 @@ Partial Class frmPrudentialRefundView
         Me.Controls.Add(Me.BtnJVClosing)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.btnJVSetup)
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "frmPrudentialRefundView"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Refund View"

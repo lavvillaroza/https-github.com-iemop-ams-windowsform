@@ -99,7 +99,7 @@ Partial Class frmGPInterface
         Me.gb_TransType.Controls.Add(Me.rb_Collection)
         Me.gb_TransType.Controls.Add(Me.rb_Offsetting)
         Me.gb_TransType.Controls.Add(Me.rb_Uploaded)
-        Me.gb_TransType.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_TransType.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_TransType.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_TransType.Location = New System.Drawing.Point(6, 89)
         Me.gb_TransType.Name = "gb_TransType"
@@ -111,11 +111,11 @@ Partial Class frmGPInterface
         'rb_WhTaxAdj
         '
         Me.rb_WhTaxAdj.AutoSize = True
-        Me.rb_WhTaxAdj.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_WhTaxAdj.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_WhTaxAdj.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_WhTaxAdj.Location = New System.Drawing.Point(17, 225)
         Me.rb_WhTaxAdj.Name = "rb_WhTaxAdj"
-        Me.rb_WhTaxAdj.Size = New System.Drawing.Size(117, 16)
+        Me.rb_WhTaxAdj.Size = New System.Drawing.Size(115, 18)
         Me.rb_WhTaxAdj.TabIndex = 9
         Me.rb_WhTaxAdj.TabStop = True
         Me.rb_WhTaxAdj.Text = "WHTax Adjustment"
@@ -124,11 +124,11 @@ Partial Class frmGPInterface
         'rb_SPA
         '
         Me.rb_SPA.AutoSize = True
-        Me.rb_SPA.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_SPA.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_SPA.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_SPA.Location = New System.Drawing.Point(17, 203)
         Me.rb_SPA.Name = "rb_SPA"
-        Me.rb_SPA.Size = New System.Drawing.Size(44, 16)
+        Me.rb_SPA.Size = New System.Drawing.Size(45, 18)
         Me.rb_SPA.TabIndex = 8
         Me.rb_SPA.TabStop = True
         Me.rb_SPA.Text = "SPA"
@@ -137,11 +137,11 @@ Partial Class frmGPInterface
         'rb_EarnedInterest
         '
         Me.rb_EarnedInterest.AutoSize = True
-        Me.rb_EarnedInterest.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_EarnedInterest.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_EarnedInterest.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_EarnedInterest.Location = New System.Drawing.Point(18, 181)
         Me.rb_EarnedInterest.Name = "rb_EarnedInterest"
-        Me.rb_EarnedInterest.Size = New System.Drawing.Size(98, 16)
+        Me.rb_EarnedInterest.Size = New System.Drawing.Size(98, 18)
         Me.rb_EarnedInterest.TabIndex = 7
         Me.rb_EarnedInterest.TabStop = True
         Me.rb_EarnedInterest.Text = "Earned Interest"
@@ -150,11 +150,11 @@ Partial Class frmGPInterface
         'rb_nssInterest
         '
         Me.rb_nssInterest.AutoSize = True
-        Me.rb_nssInterest.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_nssInterest.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_nssInterest.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_nssInterest.Location = New System.Drawing.Point(17, 158)
         Me.rb_nssInterest.Name = "rb_nssInterest"
-        Me.rb_nssInterest.Size = New System.Drawing.Size(85, 16)
+        Me.rb_nssInterest.Size = New System.Drawing.Size(85, 18)
         Me.rb_nssInterest.TabIndex = 6
         Me.rb_nssInterest.TabStop = True
         Me.rb_nssInterest.Text = "NSS Interest"
@@ -163,11 +163,11 @@ Partial Class frmGPInterface
         'rb_prudential
         '
         Me.rb_prudential.AutoSize = True
-        Me.rb_prudential.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_prudential.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_prudential.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_prudential.Location = New System.Drawing.Point(17, 135)
         Me.rb_prudential.Name = "rb_prudential"
-        Me.rb_prudential.Size = New System.Drawing.Size(71, 16)
+        Me.rb_prudential.Size = New System.Drawing.Size(72, 18)
         Me.rb_prudential.TabIndex = 5
         Me.rb_prudential.TabStop = True
         Me.rb_prudential.Text = "Prudential"
@@ -176,11 +176,11 @@ Partial Class frmGPInterface
         'rb_Adjustment
         '
         Me.rb_Adjustment.AutoSize = True
-        Me.rb_Adjustment.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Adjustment.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Adjustment.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Adjustment.Location = New System.Drawing.Point(17, 112)
         Me.rb_Adjustment.Name = "rb_Adjustment"
-        Me.rb_Adjustment.Size = New System.Drawing.Size(77, 16)
+        Me.rb_Adjustment.Size = New System.Drawing.Size(79, 18)
         Me.rb_Adjustment.TabIndex = 4
         Me.rb_Adjustment.TabStop = True
         Me.rb_Adjustment.Text = "Adjustment"
@@ -189,11 +189,11 @@ Partial Class frmGPInterface
         'rb_Payment
         '
         Me.rb_Payment.AutoSize = True
-        Me.rb_Payment.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Payment.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Payment.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Payment.Location = New System.Drawing.Point(17, 89)
         Me.rb_Payment.Name = "rb_Payment"
-        Me.rb_Payment.Size = New System.Drawing.Size(66, 16)
+        Me.rb_Payment.Size = New System.Drawing.Size(66, 18)
         Me.rb_Payment.TabIndex = 3
         Me.rb_Payment.TabStop = True
         Me.rb_Payment.Text = "Payment"
@@ -202,11 +202,11 @@ Partial Class frmGPInterface
         'rb_Collection
         '
         Me.rb_Collection.AutoSize = True
-        Me.rb_Collection.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Collection.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Collection.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Collection.Location = New System.Drawing.Point(17, 66)
         Me.rb_Collection.Name = "rb_Collection"
-        Me.rb_Collection.Size = New System.Drawing.Size(70, 16)
+        Me.rb_Collection.Size = New System.Drawing.Size(71, 18)
         Me.rb_Collection.TabIndex = 2
         Me.rb_Collection.TabStop = True
         Me.rb_Collection.Text = "Collection"
@@ -215,11 +215,11 @@ Partial Class frmGPInterface
         'rb_Offsetting
         '
         Me.rb_Offsetting.AutoSize = True
-        Me.rb_Offsetting.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Offsetting.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Offsetting.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Offsetting.Location = New System.Drawing.Point(17, 42)
         Me.rb_Offsetting.Name = "rb_Offsetting"
-        Me.rb_Offsetting.Size = New System.Drawing.Size(70, 16)
+        Me.rb_Offsetting.Size = New System.Drawing.Size(73, 18)
         Me.rb_Offsetting.TabIndex = 1
         Me.rb_Offsetting.TabStop = True
         Me.rb_Offsetting.Text = "Offsetting"
@@ -228,11 +228,11 @@ Partial Class frmGPInterface
         'rb_Uploaded
         '
         Me.rb_Uploaded.AutoSize = True
-        Me.rb_Uploaded.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Uploaded.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Uploaded.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Uploaded.Location = New System.Drawing.Point(17, 19)
         Me.rb_Uploaded.Name = "rb_Uploaded"
-        Me.rb_Uploaded.Size = New System.Drawing.Size(69, 16)
+        Me.rb_Uploaded.Size = New System.Drawing.Size(70, 18)
         Me.rb_Uploaded.TabIndex = 0
         Me.rb_Uploaded.TabStop = True
         Me.rb_Uploaded.Text = "Uploaded"
@@ -240,7 +240,7 @@ Partial Class frmGPInterface
         '
         'dtp_From
         '
-        Me.dtp_From.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_From.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_From.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_From.Location = New System.Drawing.Point(59, 16)
         Me.dtp_From.Name = "dtp_From"
@@ -249,7 +249,7 @@ Partial Class frmGPInterface
         '
         'dtp_To
         '
-        Me.dtp_To.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_To.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_To.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_To.Location = New System.Drawing.Point(59, 43)
         Me.dtp_To.Name = "dtp_To"
@@ -262,7 +262,7 @@ Partial Class frmGPInterface
         Me.gb_TransDate.Controls.Add(Me.Label1)
         Me.gb_TransDate.Controls.Add(Me.dtp_To)
         Me.gb_TransDate.Controls.Add(Me.dtp_From)
-        Me.gb_TransDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_TransDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_TransDate.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_TransDate.Location = New System.Drawing.Point(6, 9)
         Me.gb_TransDate.Name = "gb_TransDate"
@@ -274,18 +274,18 @@ Partial Class frmGPInterface
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label2.Location = New System.Drawing.Point(15, 43)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(25, 14)
+        Me.Label2.Size = New System.Drawing.Size(23, 14)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "To:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label1.Location = New System.Drawing.Point(15, 20)
         Me.Label1.Name = "Label1"
@@ -298,7 +298,7 @@ Partial Class frmGPInterface
         Me.gb_Status.Controls.Add(Me.rb_All)
         Me.gb_Status.Controls.Add(Me.rb_NotPost)
         Me.gb_Status.Controls.Add(Me.rb_Posted)
-        Me.gb_Status.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_Status.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_Status.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_Status.Location = New System.Drawing.Point(6, 463)
         Me.gb_Status.Name = "gb_Status"
@@ -310,11 +310,11 @@ Partial Class frmGPInterface
         'rb_All
         '
         Me.rb_All.AutoSize = True
-        Me.rb_All.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_All.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_All.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_All.Location = New System.Drawing.Point(17, 63)
         Me.rb_All.Name = "rb_All"
-        Me.rb_All.Size = New System.Drawing.Size(34, 16)
+        Me.rb_All.Size = New System.Drawing.Size(37, 18)
         Me.rb_All.TabIndex = 2
         Me.rb_All.Text = "All"
         Me.rb_All.UseVisualStyleBackColor = True
@@ -323,11 +323,11 @@ Partial Class frmGPInterface
         '
         Me.rb_NotPost.AutoSize = True
         Me.rb_NotPost.Checked = True
-        Me.rb_NotPost.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_NotPost.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_NotPost.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_NotPost.Location = New System.Drawing.Point(17, 17)
         Me.rb_NotPost.Name = "rb_NotPost"
-        Me.rb_NotPost.Size = New System.Drawing.Size(78, 16)
+        Me.rb_NotPost.Size = New System.Drawing.Size(78, 18)
         Me.rb_NotPost.TabIndex = 1
         Me.rb_NotPost.TabStop = True
         Me.rb_NotPost.Text = "Not-Posted"
@@ -336,11 +336,11 @@ Partial Class frmGPInterface
         'rb_Posted
         '
         Me.rb_Posted.AutoSize = True
-        Me.rb_Posted.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Posted.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Posted.ForeColor = System.Drawing.SystemColors.ControlText
         Me.rb_Posted.Location = New System.Drawing.Point(17, 40)
         Me.rb_Posted.Name = "rb_Posted"
-        Me.rb_Posted.Size = New System.Drawing.Size(57, 16)
+        Me.rb_Posted.Size = New System.Drawing.Size(58, 18)
         Me.rb_Posted.TabIndex = 0
         Me.rb_Posted.Text = "Posted"
         Me.rb_Posted.UseVisualStyleBackColor = True
@@ -364,7 +364,7 @@ Partial Class frmGPInterface
         Me.gb_ChargeType.Controls.Add(Me.cb_EVat)
         Me.gb_ChargeType.Controls.Add(Me.cb_MarketFees)
         Me.gb_ChargeType.Controls.Add(Me.cb_Energy)
-        Me.gb_ChargeType.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_ChargeType.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_ChargeType.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_ChargeType.Location = New System.Drawing.Point(6, 342)
         Me.gb_ChargeType.Name = "gb_ChargeType"
@@ -378,11 +378,11 @@ Partial Class frmGPInterface
         Me.cb_MFVat.AutoSize = True
         Me.cb_MFVat.Checked = True
         Me.cb_MFVat.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_MFVat.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_MFVat.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cb_MFVat.ForeColor = System.Drawing.SystemColors.ControlText
         Me.cb_MFVat.Location = New System.Drawing.Point(17, 87)
         Me.cb_MFVat.Name = "cb_MFVat"
-        Me.cb_MFVat.Size = New System.Drawing.Size(125, 16)
+        Me.cb_MFVat.Size = New System.Drawing.Size(123, 18)
         Me.cb_MFVat.TabIndex = 3
         Me.cb_MFVat.Text = "VAT on Market Fees"
         Me.cb_MFVat.UseVisualStyleBackColor = True
@@ -392,11 +392,11 @@ Partial Class frmGPInterface
         Me.cb_EVat.AutoSize = True
         Me.cb_EVat.Checked = True
         Me.cb_EVat.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_EVat.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_EVat.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cb_EVat.ForeColor = System.Drawing.SystemColors.ControlText
         Me.cb_EVat.Location = New System.Drawing.Point(17, 42)
         Me.cb_EVat.Name = "cb_EVat"
-        Me.cb_EVat.Size = New System.Drawing.Size(98, 16)
+        Me.cb_EVat.Size = New System.Drawing.Size(98, 18)
         Me.cb_EVat.TabIndex = 2
         Me.cb_EVat.Text = "VAT on Energy"
         Me.cb_EVat.UseVisualStyleBackColor = True
@@ -406,11 +406,11 @@ Partial Class frmGPInterface
         Me.cb_MarketFees.AutoSize = True
         Me.cb_MarketFees.Checked = True
         Me.cb_MarketFees.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_MarketFees.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_MarketFees.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cb_MarketFees.ForeColor = System.Drawing.SystemColors.ControlText
         Me.cb_MarketFees.Location = New System.Drawing.Point(17, 66)
         Me.cb_MarketFees.Name = "cb_MarketFees"
-        Me.cb_MarketFees.Size = New System.Drawing.Size(86, 16)
+        Me.cb_MarketFees.Size = New System.Drawing.Size(85, 18)
         Me.cb_MarketFees.TabIndex = 1
         Me.cb_MarketFees.Text = "Market Fees"
         Me.cb_MarketFees.UseVisualStyleBackColor = True
@@ -420,11 +420,11 @@ Partial Class frmGPInterface
         Me.cb_Energy.AutoSize = True
         Me.cb_Energy.Checked = True
         Me.cb_Energy.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_Energy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cb_Energy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cb_Energy.ForeColor = System.Drawing.SystemColors.ControlText
         Me.cb_Energy.Location = New System.Drawing.Point(17, 19)
         Me.cb_Energy.Name = "cb_Energy"
-        Me.cb_Energy.Size = New System.Drawing.Size(59, 16)
+        Me.cb_Energy.Size = New System.Drawing.Size(60, 18)
         Me.cb_Energy.TabIndex = 0
         Me.cb_Energy.Text = "Energy"
         Me.cb_Energy.UseVisualStyleBackColor = True
@@ -435,7 +435,7 @@ Partial Class frmGPInterface
         Me.cmd_search.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_search.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_search.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_search.ForeColor = System.Drawing.Color.Black
         Me.cmd_search.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.cmd_search.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -452,7 +452,7 @@ Partial Class frmGPInterface
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_close.ForeColor = System.Drawing.Color.Black
         Me.cmd_close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -497,11 +497,11 @@ Partial Class frmGPInterface
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label4.Location = New System.Drawing.Point(4, 403)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(101, 14)
+        Me.Label4.Size = New System.Drawing.Size(102, 14)
         Me.Label4.TabIndex = 47
         Me.Label4.Text = "GP Reference No:"
         '
@@ -521,7 +521,7 @@ Partial Class frmGPInterface
         Me.cmd_Details1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Details1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Details1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Details1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Details1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Details1.ForeColor = System.Drawing.Color.Black
         Me.cmd_Details1.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_Details1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -550,7 +550,7 @@ Partial Class frmGPInterface
         Me.grp_Details.Controls.Add(Me.txt_Amount1)
         Me.grp_Details.Controls.Add(Me.lbl_Amount2)
         Me.grp_Details.Controls.Add(Me.lbl_Amount1)
-        Me.grp_Details.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.grp_Details.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grp_Details.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.grp_Details.Location = New System.Drawing.Point(7, 439)
         Me.grp_Details.Name = "grp_Details"
@@ -562,7 +562,7 @@ Partial Class frmGPInterface
         'txt_BillPeriod
         '
         Me.txt_BillPeriod.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_BillPeriod.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_BillPeriod.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_BillPeriod.ForeColor = System.Drawing.Color.Black
         Me.txt_BillPeriod.Location = New System.Drawing.Point(94, 47)
         Me.txt_BillPeriod.Name = "txt_BillPeriod"
@@ -574,7 +574,7 @@ Partial Class frmGPInterface
         'lbl_BillingPeriod
         '
         Me.lbl_BillingPeriod.AutoSize = True
-        Me.lbl_BillingPeriod.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_BillingPeriod.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_BillingPeriod.ForeColor = System.Drawing.Color.Black
         Me.lbl_BillingPeriod.Location = New System.Drawing.Point(6, 49)
         Me.lbl_BillingPeriod.Name = "lbl_BillingPeriod"
@@ -585,7 +585,7 @@ Partial Class frmGPInterface
         'txt_BatchCode
         '
         Me.txt_BatchCode.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_BatchCode.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_BatchCode.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_BatchCode.ForeColor = System.Drawing.Color.Black
         Me.txt_BatchCode.Location = New System.Drawing.Point(94, 21)
         Me.txt_BatchCode.Name = "txt_BatchCode"
@@ -597,18 +597,18 @@ Partial Class frmGPInterface
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(15, 23)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(73, 14)
+        Me.Label3.Size = New System.Drawing.Size(72, 14)
         Me.Label3.TabIndex = 12
         Me.Label3.Text = "Batch Code:"
         '
         'txt_STLRun
         '
         Me.txt_STLRun.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_STLRun.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_STLRun.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_STLRun.ForeColor = System.Drawing.Color.Black
         Me.txt_STLRun.Location = New System.Drawing.Point(390, 72)
         Me.txt_STLRun.Name = "txt_STLRun"
@@ -620,7 +620,7 @@ Partial Class frmGPInterface
         'txt_DueDate
         '
         Me.txt_DueDate.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_DueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_DueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_DueDate.ForeColor = System.Drawing.Color.Black
         Me.txt_DueDate.Location = New System.Drawing.Point(390, 46)
         Me.txt_DueDate.Name = "txt_DueDate"
@@ -632,7 +632,7 @@ Partial Class frmGPInterface
         'txt_ChargeType
         '
         Me.txt_ChargeType.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_ChargeType.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_ChargeType.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_ChargeType.ForeColor = System.Drawing.Color.Black
         Me.txt_ChargeType.Location = New System.Drawing.Point(390, 21)
         Me.txt_ChargeType.Name = "txt_ChargeType"
@@ -644,40 +644,40 @@ Partial Class frmGPInterface
         'lbl_STLRun
         '
         Me.lbl_STLRun.AutoSize = True
-        Me.lbl_STLRun.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_STLRun.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_STLRun.ForeColor = System.Drawing.Color.Black
         Me.lbl_STLRun.Location = New System.Drawing.Point(327, 75)
         Me.lbl_STLRun.Name = "lbl_STLRun"
-        Me.lbl_STLRun.Size = New System.Drawing.Size(57, 14)
+        Me.lbl_STLRun.Size = New System.Drawing.Size(55, 14)
         Me.lbl_STLRun.TabIndex = 8
         Me.lbl_STLRun.Text = "STL Run:"
         '
         'lbl_DueDate
         '
         Me.lbl_DueDate.AutoSize = True
-        Me.lbl_DueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_DueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_DueDate.ForeColor = System.Drawing.Color.Black
         Me.lbl_DueDate.Location = New System.Drawing.Point(325, 48)
         Me.lbl_DueDate.Name = "lbl_DueDate"
-        Me.lbl_DueDate.Size = New System.Drawing.Size(59, 14)
+        Me.lbl_DueDate.Size = New System.Drawing.Size(58, 14)
         Me.lbl_DueDate.TabIndex = 7
         Me.lbl_DueDate.Text = "Due Date:"
         '
         'lbl_ChargeType
         '
         Me.lbl_ChargeType.AutoSize = True
-        Me.lbl_ChargeType.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_ChargeType.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_ChargeType.ForeColor = System.Drawing.Color.Black
         Me.lbl_ChargeType.Location = New System.Drawing.Point(306, 22)
         Me.lbl_ChargeType.Name = "lbl_ChargeType"
-        Me.lbl_ChargeType.Size = New System.Drawing.Size(78, 14)
+        Me.lbl_ChargeType.Size = New System.Drawing.Size(79, 14)
         Me.lbl_ChargeType.TabIndex = 6
         Me.lbl_ChargeType.Text = "Charge Type:"
         '
         'txt_Amount3
         '
         Me.txt_Amount3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_Amount3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Amount3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Amount3.ForeColor = System.Drawing.Color.Black
         Me.txt_Amount3.Location = New System.Drawing.Point(696, 72)
         Me.txt_Amount3.Name = "txt_Amount3"
@@ -689,18 +689,18 @@ Partial Class frmGPInterface
         'lbl_Amount3
         '
         Me.lbl_Amount3.AutoSize = True
-        Me.lbl_Amount3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Amount3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Amount3.ForeColor = System.Drawing.Color.Black
         Me.lbl_Amount3.Location = New System.Drawing.Point(627, 76)
         Me.lbl_Amount3.Name = "lbl_Amount3"
-        Me.lbl_Amount3.Size = New System.Drawing.Size(63, 14)
+        Me.lbl_Amount3.Size = New System.Drawing.Size(60, 14)
         Me.lbl_Amount3.TabIndex = 4
         Me.lbl_Amount3.Text = "Total NSS:"
         '
         'txt_Amount2
         '
         Me.txt_Amount2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_Amount2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Amount2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Amount2.ForeColor = System.Drawing.Color.Black
         Me.txt_Amount2.Location = New System.Drawing.Point(696, 46)
         Me.txt_Amount2.Name = "txt_Amount2"
@@ -712,7 +712,7 @@ Partial Class frmGPInterface
         'txt_Amount1
         '
         Me.txt_Amount1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_Amount1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Amount1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Amount1.ForeColor = System.Drawing.Color.Black
         Me.txt_Amount1.Location = New System.Drawing.Point(696, 20)
         Me.txt_Amount1.Name = "txt_Amount1"
@@ -724,22 +724,22 @@ Partial Class frmGPInterface
         'lbl_Amount2
         '
         Me.lbl_Amount2.AutoSize = True
-        Me.lbl_Amount2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Amount2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Amount2.ForeColor = System.Drawing.Color.Black
         Me.lbl_Amount2.Location = New System.Drawing.Point(633, 48)
         Me.lbl_Amount2.Name = "lbl_Amount2"
-        Me.lbl_Amount2.Size = New System.Drawing.Size(57, 14)
+        Me.lbl_Amount2.Size = New System.Drawing.Size(54, 14)
         Me.lbl_Amount2.TabIndex = 1
         Me.lbl_Amount2.Text = "Total AR:"
         '
         'lbl_Amount1
         '
         Me.lbl_Amount1.AutoSize = True
-        Me.lbl_Amount1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Amount1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Amount1.ForeColor = System.Drawing.Color.Black
         Me.lbl_Amount1.Location = New System.Drawing.Point(634, 22)
         Me.lbl_Amount1.Name = "lbl_Amount1"
-        Me.lbl_Amount1.Size = New System.Drawing.Size(56, 14)
+        Me.lbl_Amount1.Size = New System.Drawing.Size(54, 14)
         Me.lbl_Amount1.TabIndex = 0
         Me.lbl_Amount1.Text = "Total AP:"
         '
@@ -753,7 +753,7 @@ Partial Class frmGPInterface
         Me.dgv_ViewJV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -773,7 +773,7 @@ Partial Class frmGPInterface
         Me.cmd_GenReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenReport.ForeColor = System.Drawing.Color.Black
         Me.cmd_GenReport.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_GenReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -790,7 +790,7 @@ Partial Class frmGPInterface
         Me.cmd_Post.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Post.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Post.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Post.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Post.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Post.ForeColor = System.Drawing.Color.Black
         Me.cmd_Post.Image = Global.AccountsManagementForms.My.Resources.Resources.PostIcon22x22
         Me.cmd_Post.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -803,17 +803,17 @@ Partial Class frmGPInterface
         '
         'frmGPInterface
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1116, 618)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmGPInterface"
-        Me.Text = "Journal Entry Interface"
+        Me.Text = "Journal Posting Interface"
         Me.gb_TransType.ResumeLayout(False)
         Me.gb_TransType.PerformLayout()
         Me.gb_TransDate.ResumeLayout(False)

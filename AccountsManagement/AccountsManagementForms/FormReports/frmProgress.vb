@@ -25,6 +25,7 @@ Public Class frmProgress
     Private Sub frmProgress_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Me.Timer1.Enabled = False
     End Sub
+
     Public Sub CloseIt()
         Me.Close()
         Me.Dispose()
@@ -34,7 +35,7 @@ Public Class frmProgress
         Try
             timeRun = True
             Me.Timer1.Enabled = True
-            MESSAGE = msg
+            message = msg
             Me.lbl_Message.Text = msg
             Me.ShowDialog()
         Catch
@@ -43,10 +44,6 @@ Public Class frmProgress
 
     Public Sub stopForm()
         timeRun = False
-    End Sub
-
-    Private Sub frmProgress_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
@@ -62,5 +59,6 @@ Public Class frmProgress
 
         End Try
     End Sub
+
 
 End Class

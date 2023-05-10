@@ -93,7 +93,7 @@ Public Class frmBRCollectionReportMgt
         ctrl_statusStrip.Refresh()
     End Sub
 
-    Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
+    Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnViewBySeller.Click
         Try
             If Me.DGVBRCollectionReport.Rows.Count = 0 Then
                 MessageBox.Show("No available data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -104,7 +104,7 @@ Public Class frmBRCollectionReportMgt
                 MessageBox.Show("No selected data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Exit Sub
             End If
-            ProgressThread.Show("Please wait while loding...")
+            ProgressThread.Show("Please wait while loading...")
             Dim i As Integer = Me.DGVBRCollectionReport.CurrentRow.Index
 
             Dim _BIRRNo As Long = CLng(Me.DGVBRCollectionReport.Rows(i).Cells(0).Value)
@@ -112,6 +112,7 @@ Public Class frmBRCollectionReportMgt
             Dim frmBRCRDetails As New frmBRCollectionReportDetails
             With frmBRCRDetails
                 ._BRCollReportHelper = BRCollReportHelper
+                .forSellerOrBuyer = EnumCollectionReportType.Seller
                 ProgressThread.Close()
                 .ShowDialog()
             End With
@@ -135,5 +136,36 @@ Public Class frmBRCollectionReportMgt
                 Me.Show()
             End If
         End If
+    End Sub
+
+    Private Sub btnViewByBuyer_Click(sender As Object, e As EventArgs) Handles btnViewByBuyer.Click
+        Try
+            If Me.DGVBRCollectionReport.Rows.Count = 0 Then
+                MessageBox.Show("No available data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If Me.DGVBRCollectionReport.CurrentRow.Index = -1 Then
+                MessageBox.Show("No selected data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+            ProgressThread.Show("Please wait while loading...")
+            Dim i As Integer = Me.DGVBRCollectionReport.CurrentRow.Index
+
+            Dim _BIRRNo As Long = CLng(Me.DGVBRCollectionReport.Rows(i).Cells(0).Value)
+            BRCollReportHelper.SetBIRRulingData(_BIRRNo)
+            BRCollReportHelper.SetBIRRulingDataForBuyers()
+
+            Dim frmBRCRDetails As New frmBRCollectionReportDetails
+            With frmBRCRDetails
+                ._BRCollReportHelper = BRCollReportHelper
+                .forSellerOrBuyer = EnumCollectionReportType.Buyer
+                ProgressThread.Close()
+                .ShowDialog()
+            End With
+        Catch ex As Exception
+            ProgressThread.Close()
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

@@ -22,8 +22,9 @@ Partial Class frmWHTaxCertificateSTLMgt
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.gbMenu2 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.DGridViewCollection = New System.Windows.Forms.DataGridView()
@@ -47,18 +48,23 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnAdd = New System.Windows.Forms.Button()
         Me.chkbox_SelectAll = New System.Windows.Forms.CheckBox()
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tsslbl_Msg = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.btn_Close = New System.Windows.Forms.Button()
+        Me.tsslbl_Timer = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.MainPanel = New System.Windows.Forms.Panel()
         Me.gbMenu2.SuspendLayout()
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbMenu1.SuspendLayout()
         Me.ctrl_statusStrip.SuspendLayout()
+        Me.MainPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'gbMenu2
         '
         Me.gbMenu2.Controls.Add(Me.Label3)
         Me.gbMenu2.Controls.Add(Me.DGridViewCollection)
-        Me.gbMenu2.Location = New System.Drawing.Point(9, 119)
+        Me.gbMenu2.Location = New System.Drawing.Point(3, 110)
         Me.gbMenu2.Name = "gbMenu2"
         Me.gbMenu2.Size = New System.Drawing.Size(823, 315)
         Me.gbMenu2.TabIndex = 9
@@ -78,24 +84,23 @@ Partial Class frmWHTaxCertificateSTLMgt
         'DGridViewCollection
         '
         Me.DGridViewCollection.AllowUserToAddRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGridViewCollection.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridViewCollection.BackgroundColor = System.Drawing.SystemColors.ButtonShadow
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.DimGray
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.DGridViewCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewCollection.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCertificateNo, Me.colRemittanceDate, Me.ColBillingIDNo, Me.colCollectedAmount, Me.colAllocatedToAP, Me.colUntag})
         Me.DGridViewCollection.Location = New System.Drawing.Point(9, 19)
-        Me.DGridViewCollection.MultiSelect = False
         Me.DGridViewCollection.Name = "DGridViewCollection"
         Me.DGridViewCollection.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewCollection.Size = New System.Drawing.Size(808, 290)
@@ -146,6 +151,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         '
         'gbMenu1
         '
+        Me.gbMenu1.Controls.Add(Me.btn_Close)
         Me.gbMenu1.Controls.Add(Me.chkbox_Untagged)
         Me.gbMenu1.Controls.Add(Me.chkbox_Allocated)
         Me.gbMenu1.Controls.Add(Me.btnUntag)
@@ -157,7 +163,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.gbMenu1.Controls.Add(Me.btnView)
         Me.gbMenu1.Controls.Add(Me.btnSearch)
         Me.gbMenu1.Controls.Add(Me.btnAdd)
-        Me.gbMenu1.Location = New System.Drawing.Point(9, 12)
+        Me.gbMenu1.Location = New System.Drawing.Point(3, 3)
         Me.gbMenu1.Name = "gbMenu1"
         Me.gbMenu1.Size = New System.Drawing.Size(823, 85)
         Me.gbMenu1.TabIndex = 29
@@ -198,7 +204,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnUntag.ForeColor = System.Drawing.Color.Black
         Me.btnUntag.Image = Global.AccountsManagementForms.My.Resources.Resources.TrashCanRedIcon22x22
         Me.btnUntag.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnUntag.Location = New System.Drawing.Point(727, 19)
+        Me.btnUntag.Location = New System.Drawing.Point(631, 19)
         Me.btnUntag.Name = "btnUntag"
         Me.btnUntag.Size = New System.Drawing.Size(90, 39)
         Me.btnUntag.TabIndex = 52
@@ -216,11 +222,11 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnAllocateToAP.ForeColor = System.Drawing.Color.Black
         Me.btnAllocateToAP.Image = Global.AccountsManagementForms.My.Resources.Resources.ArrowRight
         Me.btnAllocateToAP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAllocateToAP.Location = New System.Drawing.Point(597, 19)
+        Me.btnAllocateToAP.Location = New System.Drawing.Point(535, 18)
         Me.btnAllocateToAP.Name = "btnAllocateToAP"
-        Me.btnAllocateToAP.Size = New System.Drawing.Size(124, 39)
+        Me.btnAllocateToAP.Size = New System.Drawing.Size(90, 39)
         Me.btnAllocateToAP.TabIndex = 51
-        Me.btnAllocateToAP.Text = "  Allocate &To AP"
+        Me.btnAllocateToAP.Text = "  Allocat&e"
         Me.btnAllocateToAP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnAllocateToAP.UseVisualStyleBackColor = False
         '
@@ -271,7 +277,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnView.ForeColor = System.Drawing.Color.Black
         Me.btnView.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
         Me.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnView.Location = New System.Drawing.Point(501, 19)
+        Me.btnView.Location = New System.Drawing.Point(439, 18)
         Me.btnView.Name = "btnView"
         Me.btnView.Size = New System.Drawing.Size(90, 39)
         Me.btnView.TabIndex = 8
@@ -290,9 +296,9 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnSearch.ForeColor = System.Drawing.Color.Black
         Me.btnSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSearch.Location = New System.Drawing.Point(256, 26)
+        Me.btnSearch.Location = New System.Drawing.Point(256, 27)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(35, 29)
+        Me.btnSearch.Size = New System.Drawing.Size(34, 27)
         Me.btnSearch.TabIndex = 7
         Me.btnSearch.UseVisualStyleBackColor = False
         '
@@ -307,7 +313,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.btnAdd.ForeColor = System.Drawing.Color.Black
         Me.btnAdd.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAdd.Location = New System.Drawing.Point(405, 19)
+        Me.btnAdd.Location = New System.Drawing.Point(343, 18)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(90, 39)
         Me.btnAdd.TabIndex = 1
@@ -319,7 +325,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.chkbox_SelectAll.AutoSize = True
         Me.chkbox_SelectAll.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkbox_SelectAll.ForeColor = System.Drawing.Color.Black
-        Me.chkbox_SelectAll.Location = New System.Drawing.Point(762, 102)
+        Me.chkbox_SelectAll.Location = New System.Drawing.Point(756, 94)
         Me.chkbox_SelectAll.Name = "chkbox_SelectAll"
         Me.chkbox_SelectAll.Size = New System.Drawing.Size(70, 18)
         Me.chkbox_SelectAll.TabIndex = 30
@@ -328,36 +334,73 @@ Partial Class frmWHTaxCertificateSTLMgt
         '
         'ctrl_statusStrip
         '
-        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg})
-        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 441)
+        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsslbl_Msg, Me.tsslbl_Timer})
+        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 432)
         Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
-        Me.ctrl_statusStrip.Size = New System.Drawing.Size(842, 22)
+        Me.ctrl_statusStrip.Size = New System.Drawing.Size(835, 22)
         Me.ctrl_statusStrip.TabIndex = 59
         Me.ctrl_statusStrip.Text = "StatusStrip1"
         '
-        'ToolStripStatus_LabelMsg
+        'tsslbl_Msg
         '
-        Me.ToolStripStatus_LabelMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ToolStripStatus_LabelMsg.Name = "ToolStripStatus_LabelMsg"
-        Me.ToolStripStatus_LabelMsg.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripStatus_LabelMsg.Size = New System.Drawing.Size(39, 17)
-        Me.ToolStripStatus_LabelMsg.Text = "Ready"
-        Me.ToolStripStatus_LabelMsg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ToolStripStatus_LabelMsg.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.tsslbl_Msg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.tsslbl_Msg.Name = "tsslbl_Msg"
+        Me.tsslbl_Msg.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.tsslbl_Msg.Size = New System.Drawing.Size(700, 17)
+        Me.tsslbl_Msg.Spring = True
+        Me.tsslbl_Msg.Text = "Ready"
+        Me.tsslbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.tsslbl_Msg.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        '
+        'btn_Close
+        '
+        Me.btn_Close.BackColor = System.Drawing.Color.White
+        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.ForeColor = System.Drawing.Color.Black
+        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
+        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Close.Location = New System.Drawing.Point(727, 19)
+        Me.btn_Close.Name = "btn_Close"
+        Me.btn_Close.Size = New System.Drawing.Size(90, 39)
+        Me.btn_Close.TabIndex = 55
+        Me.btn_Close.Text = "   &Cancel"
+        Me.btn_Close.UseVisualStyleBackColor = False
+        '
+        'tsslbl_Timer
+        '
+        Me.tsslbl_Timer.AutoSize = False
+        Me.tsslbl_Timer.Name = "tsslbl_Timer"
+        Me.tsslbl_Timer.Size = New System.Drawing.Size(120, 17)
+        '
+        'Timer1
+        '
+        '
+        'MainPanel
+        '
+        Me.MainPanel.Controls.Add(Me.gbMenu1)
+        Me.MainPanel.Controls.Add(Me.gbMenu2)
+        Me.MainPanel.Controls.Add(Me.chkbox_SelectAll)
+        Me.MainPanel.Location = New System.Drawing.Point(0, 1)
+        Me.MainPanel.Name = "MainPanel"
+        Me.MainPanel.Size = New System.Drawing.Size(832, 429)
+        Me.MainPanel.TabIndex = 60
         '
         'frmWHTaxCertificateSTLMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(842, 463)
+        Me.ClientSize = New System.Drawing.Size(835, 454)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.MainPanel)
         Me.Controls.Add(Me.ctrl_statusStrip)
-        Me.Controls.Add(Me.chkbox_SelectAll)
-        Me.Controls.Add(Me.gbMenu1)
-        Me.Controls.Add(Me.gbMenu2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmWHTaxCertificateSTLMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Withholding Tax Certificate Settlement"
+        Me.Text = "Withholding Tax Certificate Management"
         Me.gbMenu2.ResumeLayout(False)
         Me.gbMenu2.PerformLayout()
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).EndInit()
@@ -365,6 +408,8 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.gbMenu1.PerformLayout()
         Me.ctrl_statusStrip.ResumeLayout(False)
         Me.ctrl_statusStrip.PerformLayout()
+        Me.MainPanel.ResumeLayout(False)
+        Me.MainPanel.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -393,5 +438,9 @@ Partial Class frmWHTaxCertificateSTLMgt
     Friend WithEvents chkbox_Untagged As CheckBox
     Friend WithEvents chkbox_Allocated As CheckBox
     Friend WithEvents ctrl_statusStrip As StatusStrip
-    Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
+    Friend WithEvents tsslbl_Msg As ToolStripStatusLabel
+    Friend WithEvents btn_Close As Button
+    Friend WithEvents tsslbl_Timer As ToolStripStatusLabel
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents MainPanel As Panel
 End Class

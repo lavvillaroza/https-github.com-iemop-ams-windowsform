@@ -277,7 +277,7 @@ Partial Class MainForm
         '
         Me.WESMBillExtractionFromCRSSDBToolStripMenuItem.Name = "WESMBillExtractionFromCRSSDBToolStripMenuItem"
         Me.WESMBillExtractionFromCRSSDBToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
-        Me.WESMBillExtractionFromCRSSDBToolStripMenuItem.Text = "WESM Bill From CRSS DB"
+        Me.WESMBillExtractionFromCRSSDBToolStripMenuItem.Text = "WESM Bill From CRSS DB (Market Fees)"
         '
         'WESMBillsAggregateInvoicesMappingToolStripMenuItem
         '
@@ -450,6 +450,7 @@ Partial Class MainForm
         Me.ToolStripEarnedInterest.Name = "ToolStripEarnedInterest"
         Me.ToolStripEarnedInterest.Size = New System.Drawing.Size(229, 22)
         Me.ToolStripEarnedInterest.Text = "Earned Interest"
+        Me.ToolStripEarnedInterest.Visible = False
         '
         'NSSToolStripMenuItem
         '
@@ -470,6 +471,7 @@ Partial Class MainForm
         Me.ReplenishmentToolStripMenuItem1.Name = "ReplenishmentToolStripMenuItem1"
         Me.ReplenishmentToolStripMenuItem1.Size = New System.Drawing.Size(175, 22)
         Me.ReplenishmentToolStripMenuItem1.Text = "Replenishment"
+        Me.ReplenishmentToolStripMenuItem1.Visible = False
         '
         'InterestToolStripMenuItem1
         '
@@ -554,6 +556,7 @@ Partial Class MainForm
         Me.BIRAccessToRecordToolStripMenuItem.Name = "BIRAccessToRecordToolStripMenuItem"
         Me.BIRAccessToRecordToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.BIRAccessToRecordToolStripMenuItem.Text = "BIR Access To Record"
+        Me.BIRAccessToRecordToolStripMenuItem.Visible = False
         '
         'BIRRulingToolStripMenuItem
         '
@@ -573,42 +576,49 @@ Partial Class MainForm
         Me.Checks_TSMenuItem.Name = "Checks_TSMenuItem"
         Me.Checks_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.Checks_TSMenuItem.Text = "Checks"
+        Me.Checks_TSMenuItem.Visible = False
         '
         'CollectionSummary_TSMenuItem
         '
         Me.CollectionSummary_TSMenuItem.Name = "CollectionSummary_TSMenuItem"
         Me.CollectionSummary_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.CollectionSummary_TSMenuItem.Text = "Collection Summary"
+        Me.CollectionSummary_TSMenuItem.Visible = False
         '
         'DailyCollectionSummary_TSMenuItem
         '
         Me.DailyCollectionSummary_TSMenuItem.Name = "DailyCollectionSummary_TSMenuItem"
         Me.DailyCollectionSummary_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DailyCollectionSummary_TSMenuItem.Text = "Daily Cash Collection Summary"
+        Me.DailyCollectionSummary_TSMenuItem.Visible = False
         '
         'DebitCreditMemo_TSMenuItem
         '
         Me.DebitCreditMemo_TSMenuItem.Name = "DebitCreditMemo_TSMenuItem"
         Me.DebitCreditMemo_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DebitCreditMemo_TSMenuItem.Text = "Debit/Credit Memo"
+        Me.DebitCreditMemo_TSMenuItem.Visible = False
         '
         'DefaultNotice_TSMenuItem
         '
         Me.DefaultNotice_TSMenuItem.Name = "DefaultNotice_TSMenuItem"
         Me.DefaultNotice_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DefaultNotice_TSMenuItem.Text = "Default Notice"
+        Me.DefaultNotice_TSMenuItem.Visible = False
         '
         'DeferredPayment_TSMenuItem
         '
         Me.DeferredPayment_TSMenuItem.Name = "DeferredPayment_TSMenuItem"
         Me.DeferredPayment_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DeferredPayment_TSMenuItem.Text = "Deferred Payment"
+        Me.DeferredPayment_TSMenuItem.Visible = False
         '
         'EFT_TSMenuItem
         '
         Me.EFT_TSMenuItem.Name = "EFT_TSMenuItem"
         Me.EFT_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.EFT_TSMenuItem.Text = "EFT"
+        Me.EFT_TSMenuItem.Visible = False
         '
         'EWT_TagAlloc_Report_ToolStripMenuItem
         '
@@ -621,6 +631,7 @@ Partial Class MainForm
         Me.FundTransferForm_TSMenuItem.Name = "FundTransferForm_TSMenuItem"
         Me.FundTransferForm_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.FundTransferForm_TSMenuItem.Text = "Fund Transfer Form"
+        Me.FundTransferForm_TSMenuItem.Visible = False
         '
         'GeneralLedgerToolStripMenuItem
         '
@@ -628,6 +639,7 @@ Partial Class MainForm
         Me.GeneralLedgerToolStripMenuItem.Name = "GeneralLedgerToolStripMenuItem"
         Me.GeneralLedgerToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.GeneralLedgerToolStripMenuItem.Text = "General Ledger"
+        Me.GeneralLedgerToolStripMenuItem.Visible = False
         '
         'CashInBankPrudential_TSMenuItem
         '
@@ -658,6 +670,7 @@ Partial Class MainForm
         Me.JournalVoucher_TSMenuItem.Name = "JournalVoucher_TSMenuItem"
         Me.JournalVoucher_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.JournalVoucher_TSMenuItem.Text = "Journal Voucher"
+        Me.JournalVoucher_TSMenuItem.Visible = False
         '
         'MarketFeesSummary_TSMenuItem
         '
@@ -671,6 +684,7 @@ Partial Class MainForm
         Me.MAPBIR_TSMenuItem.Name = "MAPBIR_TSMenuItem"
         Me.MAPBIR_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.MAPBIR_TSMenuItem.Text = "MAP And EWT Certificates"
+        Me.MAPBIR_TSMenuItem.Visible = False
         '
         'NoticeOfDrawdown_TSMenuItem
         '
@@ -691,6 +705,7 @@ Partial Class MainForm
         Me.OfficialReceipt_TSMenuItem.Name = "OfficialReceipt_TSMenuItem"
         Me.OfficialReceipt_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.OfficialReceipt_TSMenuItem.Text = "Official Receipt"
+        Me.OfficialReceipt_TSMenuItem.Visible = False
         '
         'PaymentDetails_TSMenuItem
         '
@@ -709,6 +724,7 @@ Partial Class MainForm
         Me.RequestForPayment_TSMenuItem.Name = "RequestForPayment_TSMenuItem"
         Me.RequestForPayment_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.RequestForPayment_TSMenuItem.Text = "Request For Payment"
+        Me.RequestForPayment_TSMenuItem.Visible = False
         '
         'SettlementNotice_TSMenuItem
         '
@@ -721,6 +737,7 @@ Partial Class MainForm
         Me.StatementAccount_TSMenuItem.Name = "StatementAccount_TSMenuItem"
         Me.StatementAccount_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.StatementAccount_TSMenuItem.Text = "Statement of Account"
+        Me.StatementAccount_TSMenuItem.Visible = False
         '
         'Subsidiary_Ledger_TSMenuItem
         '
@@ -728,6 +745,7 @@ Partial Class MainForm
         Me.Subsidiary_Ledger_TSMenuItem.Name = "Subsidiary_Ledger_TSMenuItem"
         Me.Subsidiary_Ledger_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.Subsidiary_Ledger_TSMenuItem.Text = "Subsidiary Ledger"
+        Me.Subsidiary_Ledger_TSMenuItem.Visible = False
         '
         'AccountsReceivable_TSMenuItem
         '
@@ -752,6 +770,7 @@ Partial Class MainForm
         Me.SummaryForAccountingBooks_TSMenuItem.Name = "SummaryForAccountingBooks_TSMenuItem"
         Me.SummaryForAccountingBooks_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.SummaryForAccountingBooks_TSMenuItem.Text = "Summary For Accounting Books"
+        Me.SummaryForAccountingBooks_TSMenuItem.Visible = False
         '
         'SummaryOfDefaultInterest_TSMenuItem
         '
@@ -777,7 +796,7 @@ Partial Class MainForm
         '
         Me.WESMBills_TSMenuItem.Name = "WESMBills_TSMenuItem"
         Me.WESMBills_TSMenuItem.Size = New System.Drawing.Size(291, 22)
-        Me.WESMBills_TSMenuItem.Text = "WESM Bills Summary"
+        Me.WESMBills_TSMenuItem.Text = "WESM Bills Summary Uploaded"
         Me.WESMBills_TSMenuItem.Visible = False
         '
         'WESMTransAllocationSummary_TSMenuItem

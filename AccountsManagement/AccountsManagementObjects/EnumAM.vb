@@ -707,11 +707,6 @@ Public Enum EnumSPAStatus
     OnGoing = 2
 End Enum
 
-Public Enum EnumBRBuyerSellerType
-    BUYER = 1
-    SELLER = 2
-End Enum
-
 Public Enum EnumBRTransactionType
     CASH = 1
     DRAWDOWN = 2
@@ -721,5 +716,10 @@ Public Enum EnumWESMBillImportType
     WF = 1
     WAD = 2
     WAC = 3
+End Enum
+
+Public Enum EnumCollectionReportType
+    Seller = 1
+    Buyer = 2
 End Enum
 

@@ -58,7 +58,7 @@ Namespace Library.Core.LDAP
 
         'Functions
         Public Function GetUserCn() As String
-            Return String.Format("iemop\{0}", UserId)
+            Return String.Format("WESMSYS\{0}", UserId)
         End Function
 
         Public Function GetUserDn() As String            

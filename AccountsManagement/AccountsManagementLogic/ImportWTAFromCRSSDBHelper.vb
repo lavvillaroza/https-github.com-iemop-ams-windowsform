@@ -163,8 +163,8 @@ Public Class ImportWTAFromCRSSDBHelper
                     item.SummaryId = CLng(Trim(.Item("summary_id")))
                     item.STLRun = CStr(Trim(.Item("STL_RUN")))
                     item.BillingPeriod = CInt(Trim(.Item("BILLING_PERIOD")))
-                    item.StlID = CStr(Trim(.Item("trading_participant_settlement_id")))
-                    item.BillingID = CStr(Trim(.Item("billing_id")))
+                    item.StlID = CStr(Trim(.Item("trading_participant_settlement_id"))).ToUpper
+                    item.BillingID = CStr(Trim(.Item("billing_id"))).ToUpper
                     item.WHT = CStr(Trim(.Item("wht")))
                     item.ITH = CStr(Trim(.Item("ith")))
                     item.NonVatableTag = CStr(Trim(.Item("non_vatable")))
@@ -244,8 +244,8 @@ Public Class ImportWTAFromCRSSDBHelper
                     Dim grossSales As Decimal = CDec(Trim(.Item("vatable_sales"))) + CDec(Trim(.Item("zero_rated_sales"))) + CDec(Trim(.Item("zero_rated_ecozone_sales")))
                     Dim grossPurchases As Decimal = CDec(Trim(.Item("vatable_purchases"))) + CDec(Trim(.Item("zero_rated_purchases"))) + CDec(Trim(.Item("zero_rated_ecozone_purchases")))
                     If grossSales <> 0 And grossPurchases <> 0 Then
-                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id")))
-                        item.BillingID = CStr(Trim(.Item("tp_billing_id")))
+                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id"))).ToUpper
+                        item.BillingID = CStr(Trim(.Item("tp_billing_id"))).ToUpper
                         item.FacilityType = CStr(Trim(.Item("facility_type")))
                         item.WHTTag = CStr(Trim(.Item("wht")))
                         item.ITHTag = CStr(Trim(.Item("ith")))
@@ -265,8 +265,8 @@ Public Class ImportWTAFromCRSSDBHelper
                         result.Add(item)
 
                         item = New WESMBillAllocDisaggDetails
-                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id")))
-                        item.BillingID = CStr(Trim(.Item("tp_billing_id")))
+                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id"))).ToUpper
+                        item.BillingID = CStr(Trim(.Item("tp_billing_id"))).ToUpper
                         item.FacilityType = CStr(Trim(.Item("facility_type")))
                         item.WHTTag = CStr(Trim(.Item("wht")))
                         item.ITHTag = CStr(Trim(.Item("ith")))
@@ -286,8 +286,8 @@ Public Class ImportWTAFromCRSSDBHelper
                         result.Add(item)
 
                     ElseIf grossSales <> 0 And grossPurchases = 0 Then
-                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id")))
-                        item.BillingID = CStr(Trim(.Item("tp_billing_id")))
+                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id"))).ToUpper
+                        item.BillingID = CStr(Trim(.Item("tp_billing_id"))).ToUpper
                         item.FacilityType = CStr(Trim(.Item("facility_type")))
                         item.WHTTag = CStr(Trim(.Item("wht")))
                         item.ITHTag = CStr(Trim(.Item("ith")))
@@ -306,8 +306,8 @@ Public Class ImportWTAFromCRSSDBHelper
                         item.SummaryId = CLng(Trim(.Item("summary_id")))
                         result.Add(item)
                     ElseIf grossSales = 0 And grossPurchases <> 0 Then
-                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id")))
-                        item.BillingID = CStr(Trim(.Item("tp_billing_id")))
+                        item.STLID = CStr(Trim(.Item("trading_participant_settlement_id"))).ToUpper
+                        item.BillingID = CStr(Trim(.Item("tp_billing_id"))).ToUpper
                         item.FacilityType = CStr(Trim(.Item("facility_type")))
                         item.WHTTag = CStr(Trim(.Item("wht")))
                         item.ITHTag = CStr(Trim(.Item("ith")))
@@ -349,6 +349,7 @@ Public Class ImportWTAFromCRSSDBHelper
         Dim SQL As String
 
         Try
+
             If AMModule.RegionType = "LV" Then
                 SQL = "SELECT bp.billing_period, tacs.stl_run, tacs.group_id, tacs.due_date, tacs.date, " & vbNewLine _
                     & "SUM(tacs.vatable_sales + tacs.zero_rated_sales + tacs.zero_rated_ecozone_sales) as Net_Sales, " & vbNewLine _
@@ -365,7 +366,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     & "GROUP BY bp.billing_period, tacs.stl_run, tacs.group_id, " & vbNewLine _
                     & "tacs.due_date, tacs.date, tacs.gmr, tacs.market_fees_rate, tacs.remarks " & vbNewLine _
                     & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run"
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT bp.billing_period, tacs.stl_run, tacs.group_id, tacs.due_date, tacs.date, " & vbNewLine _
                     & "SUM(tacs.vatable_sales + tacs.zero_rated_sales + tacs.zero_rated_ecozone_sales) as Net_Sales, " & vbNewLine _
                     & "SUM(tacs.vatable_purchases + tacs.zero_rated_purchases + tacs.zero_rated_ecozone_purchases) as Net_Purchases, " & vbNewLine _
@@ -381,6 +382,22 @@ Public Class ImportWTAFromCRSSDBHelper
                     & "GROUP BY bp.billing_period, tacs.stl_run, tacs.group_id, " & vbNewLine _
                     & "tacs.due_date, tacs.date, tacs.gmr, tacs.market_fees_rate, tacs.remarks " & vbNewLine _
                     & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run"
+            Else
+                SQL = "SELECT bp.billing_period, tacs.stl_run, tacs.group_id, tacs.due_date, tacs.date, " & vbNewLine _
+                   & "SUM(tacs.vatable_sales + tacs.zero_rated_sales + tacs.zero_rated_ecozone_sales) as Net_Sales, " & vbNewLine _
+                   & "SUM(tacs.vatable_purchases + tacs.zero_rated_purchases + tacs.zero_rated_ecozone_purchases) as Net_Purchases, " & vbNewLine _
+                   & "SUM(tacs.vat_on_sales) as Net_VAT_On_Sales, SUM(tacs.vat_on_purchases) as Net_VAT_On_Purchases, " & vbNewLine _
+                   & "SUM(tacs.nss_flowback) as Total_NSS_Flowback, SUM(tacs.energy_witholding_tax_sales) as EWT_Sales, " & vbNewLine _
+                   & "SUM(tacs.energy_witholding_tax_purchases) as EWT_Purchases, " & vbNewLine _
+                   & "SUM(tacs.net_energy_qty) as Total_Energy_QTY, SUM(tacs.genx_flowback) as Total_Genx_Flowback, " & vbNewLine _
+                   & "tacs.gmr, tacs.market_fees_rate, tacs.remarks " & vbNewLine _
+                   & "FROM settlement.txn_alloc_cover_summary tacs " & vbNewLine _
+                   & "JOIN meterprocess.txn_billing_period bp ON bp.start_date = tacs.billing_period_start " & vbNewLine _
+                   & "AND bp.end_date = tacs.billing_period_end " & vbNewLine _
+                   & "WHERE tacs.stl_run Like 'F%' and tacs.due_date = to_date('" & duedate & "', 'mm/dd/yyyy') " & vbNewLine _
+                   & "GROUP BY bp.billing_period, tacs.stl_run, tacs.group_id, " & vbNewLine _
+                   & "tacs.due_date, tacs.date, tacs.gmr, tacs.market_fees_rate, tacs.remarks " & vbNewLine _
+                   & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run"
             End If
 
             report = Me._NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -501,7 +518,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     .NetSellerBuyerTag = "NET_SELLER"
                     .TransactionDate = item.TransactionDate
                     .DueDate = item.DueDate
-                    .TransactionNo = item.TransactionNo.Replace("_WTA", "S")
+                    .TransactionNo = item.TransactionNo & "S"
                     .VatableSales = item.VatableSales
                     .ZeroRatedSales = item.ZeroRatedSales
                     .ZeroRatedEcoZoneSales = item.ZeroRatedEcoZoneSales
@@ -570,7 +587,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     .NetSellerBuyerTag = "NET_BUYER"
                     .TransactionDate = item.TransactionDate
                     .DueDate = item.DueDate
-                    .TransactionNo = item.TransactionNo.Replace("_WTA", "P")
+                    .TransactionNo = item.TransactionNo & "P"
                     .VatableSales = 0
                     .ZeroRatedSales = 0
                     .ZeroRatedEcoZoneSales = 0
@@ -640,7 +657,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     .NetSellerBuyerTag = item.NetSellerBuyerTag
                     .TransactionDate = item.TransactionDate
                     .DueDate = item.DueDate
-                    .TransactionNo = item.TransactionNo.Replace("_WTA", "")
+                    .TransactionNo = item.TransactionNo
                     .VatableSales = item.VatableSales
                     .ZeroRatedSales = item.ZeroRatedSales
                     .ZeroRatedEcoZoneSales = item.ZeroRatedEcoZoneSales
@@ -709,7 +726,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     .NetSellerBuyerTag = item.NetSellerBuyerTag
                     .TransactionDate = item.TransactionDate
                     .DueDate = item.DueDate
-                    .TransactionNo = item.TransactionNo.Replace("_WTA", "")
+                    .TransactionNo = item.TransactionNo
                     .VatableSales = 0
                     .ZeroRatedSales = 0
                     .ZeroRatedEcoZoneSales = 0

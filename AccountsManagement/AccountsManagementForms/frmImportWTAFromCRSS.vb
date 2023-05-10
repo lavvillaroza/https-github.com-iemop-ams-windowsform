@@ -102,10 +102,11 @@ Public Class frmImportWTAFromCRSS
 
                         'Updated By Lance 08/17/2014
                         _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString, "BP: " & billingPeriod & "; STLRun: " & stlRun & "; GroupID: " & groupID & "; DueDate: " & getSelectedDueDate.ToShortDateString(), "Uploading WESM Bills from CRSS DB", "", CType(EnumColorCode.Blue, ColorCode), EnumLogType.SuccessfullyUploaded.ToString, AMModule.UserName)
-                        Me.dgv_WTAList.Rows.RemoveAt(index)
+                        'Me.dgv_WTAList.Rows.RemoveAt(index)
                     End If
                 End With
             Next
+
             cts = Nothing
             ProgressThread.Close()
             MsgBox("Successfully uploaded to Database", MsgBoxStyle.Information, "Success!")
@@ -113,6 +114,7 @@ Public Class frmImportWTAFromCRSS
             cts = Nothing
             ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString, ex.Message, "Uploading WESM Bills from CRSS DB", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.ErrorInSaving.ToString, AMModule.UserName)
         Finally
             Panel_Head.Enabled = True
             tc_Viewer.Enabled = True

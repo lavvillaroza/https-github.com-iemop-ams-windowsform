@@ -172,7 +172,7 @@ Public Class MainForm
             AMModule.FullName = _LDAPUserInfo.Name  '"Vladimir E. Espiritu" 
             AMModule.Position = _LDAPUserInfo.Position  '"Sr. Software Engineer" 
 
-            User_TSStatusLabel.Text = "User: " & Strings.Left(AMModule.UserName, InStr(AMModule.UserName, "@") - 1).ToUpper
+            User_TSStatusLabel.Text = "User: " & AMModule.UserName 'Strings.Left(AMModule.UserName, InStr(AMModule.UserName, "@") - 1).ToUpper
 
             _DAL = DAL.GetInstance()
             _BFactory = BusinessFactory.GetInstance()
@@ -1119,4 +1119,6 @@ Public Class MainForm
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
     End Sub
+
+
 End Class

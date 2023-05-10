@@ -55,7 +55,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(53, 49)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(89, 12)
+        Me.Label1.Size = New System.Drawing.Size(89, 14)
         Me.Label1.TabIndex = 15
         Me.Label1.Text = "Billing Period No.:"
         '
@@ -72,7 +72,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(53, 75)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(63, 12)
+        Me.Label2.Size = New System.Drawing.Size(63, 14)
         Me.Label2.TabIndex = 16
         Me.Label2.Text = "Invoice No.:"
         '
@@ -81,7 +81,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(53, 101)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(94, 12)
+        Me.Label3.Size = New System.Drawing.Size(93, 14)
         Me.Label3.TabIndex = 17
         Me.Label3.Text = "Original Due Date:"
         '
@@ -98,7 +98,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(53, 130)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(94, 12)
+        Me.Label4.Size = New System.Drawing.Size(93, 14)
         Me.Label4.TabIndex = 18
         Me.Label4.Text = "Current Due Date:"
         '
@@ -115,7 +115,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(420, 25)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(72, 12)
+        Me.Label5.Size = New System.Drawing.Size(71, 14)
         Me.Label5.TabIndex = 19
         Me.Label5.Text = "Charge Type:"
         '
@@ -133,14 +133,14 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(420, 52)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(74, 12)
+        Me.Label6.Size = New System.Drawing.Size(74, 14)
         Me.Label6.TabIndex = 20
         Me.Label6.Text = "EWT Balance:"
         '
         'CurrentBalance_TextBox
         '
         Me.CurrentBalance_TextBox.BackColor = System.Drawing.SystemColors.Info
-        Me.CurrentBalance_TextBox.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CurrentBalance_TextBox.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CurrentBalance_TextBox.Location = New System.Drawing.Point(536, 102)
         Me.CurrentBalance_TextBox.Name = "CurrentBalance_TextBox"
         Me.CurrentBalance_TextBox.Size = New System.Drawing.Size(144, 21)
@@ -152,14 +152,14 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(421, 106)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(87, 12)
+        Me.Label7.Size = New System.Drawing.Size(88, 14)
         Me.Label7.TabIndex = 22
         Me.Label7.Text = "Current Balance:"
         '
         'BegginingBalance_TextBox
         '
         Me.BegginingBalance_TextBox.BackColor = System.Drawing.SystemColors.Info
-        Me.BegginingBalance_TextBox.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BegginingBalance_TextBox.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BegginingBalance_TextBox.Location = New System.Drawing.Point(536, 75)
         Me.BegginingBalance_TextBox.Name = "BegginingBalance_TextBox"
         Me.BegginingBalance_TextBox.Size = New System.Drawing.Size(144, 21)
@@ -171,7 +171,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(421, 78)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(97, 12)
+        Me.Label8.Size = New System.Drawing.Size(99, 14)
         Me.Label8.TabIndex = 21
         Me.Label8.Text = "Beginning Balance:"
         '
@@ -183,7 +183,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.cmdSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSave.ForeColor = System.Drawing.Color.Black
         Me.cmdSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.cmdSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -202,7 +202,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.Black
         Me.btnCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -226,7 +226,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label9.AutoSize = True
         Me.Label9.Location = New System.Drawing.Point(53, 26)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(73, 12)
+        Me.Label9.Size = New System.Drawing.Size(72, 14)
         Me.Label9.TabIndex = 14
         Me.Label9.Text = "Participant ID:"
         '
@@ -236,7 +236,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.ChangeParticipantID_ComboBox.FormattingEnabled = True
         Me.ChangeParticipantID_ComboBox.Location = New System.Drawing.Point(181, 20)
         Me.ChangeParticipantID_ComboBox.Name = "ChangeParticipantID_ComboBox"
-        Me.ChangeParticipantID_ComboBox.Size = New System.Drawing.Size(121, 20)
+        Me.ChangeParticipantID_ComboBox.Size = New System.Drawing.Size(121, 22)
         Me.ChangeParticipantID_ComboBox.TabIndex = 1
         '
         'GroupBox2
@@ -254,7 +254,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(6, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(125, 12)
+        Me.Label10.Size = New System.Drawing.Size(124, 14)
         Me.Label10.TabIndex = 23
         Me.Label10.Text = "Invoice Changed History"
         '
@@ -285,7 +285,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         '
         'frmUpdateWESMBillSummaryMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.White
@@ -312,12 +312,12 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BillingPeriodNo_TextBox)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmUpdateWESMBillSummaryMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "WESM Bill Summary Adjustment Per Participant Management"
+        Me.Text = "WESM Bill Summary Adjustment"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.InvChangeHistory_DGV, System.ComponentModel.ISupportInitialize).EndInit()

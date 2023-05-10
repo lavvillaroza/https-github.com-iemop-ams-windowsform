@@ -13,14 +13,16 @@ Imports WESMLib.Auth.Lib
 Imports System.Threading
 
 Public Class frmPaymentNew
-    
-    Dim WBillHelper As WESMBillHelper
-    Dim BFactory As BusinessFactory
-    Dim SelectedAllocationDate As New AllocationDate
-    Private PaymntHelper As New PaymentHelper
-    Private cts As CancellationTokenSource
 
-    Private Sub frmPaymentNew_Load(sender As Object, e As EventArgs) Handles Me.Load      
+    Dim wBillHelper As WESMBillHelper
+    Dim bFactory As BusinessFactory
+    Dim selectedAllocationDate As New AllocationDate
+    Private paymntHelper As New PaymentHelper
+    Private cts As CancellationTokenSource
+    Private stopWatch As New Diagnostics.Stopwatch
+    Private newProgress As New ProgressClass
+    Private processingBool As Boolean = False
+    Private Sub frmPaymentNew_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.MdiParent = MainForm
         Try
             WBillHelper = WESMBillHelper.GetInstance()
@@ -36,15 +38,20 @@ Public Class frmPaymentNew
                                     ex.Message, "", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.ErrorInAccessing.ToString, AMModule.UserName)
         End Try
     End Sub
+
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
         ToolStripStatus_LabelMsg.Text = _ProgressMsg.ProgressMsg
         ctrl_statusStrip.Refresh()
     End Sub
+
+
+
     Public Sub LoadComboItems()
         Me.btn_Calculate.Enabled = False
         Me.GB_ProformaEntries.Enabled = False
         Me.GB_ProformaEntriesDetails.Enabled = False
-        Me.GB_CntButtons.Enabled = False
+        Me.btn_SaveAllocation.Enabled = False
+        Me.btn_Close.Enabled = True
 
         Me.cbo_CollectionAllocDate.Items.Clear() 'Clear Combobox
         Dim CollAllocDate As New List(Of AllocationDate)
@@ -71,7 +78,6 @@ Public Class frmPaymentNew
         Try
             Dim getTimeStart As New DateTime
             Dim getTimeEnd As New DateTime
-            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
             With frmPaymentRemittanceDate
                 .AllocationDate = CDate(cbo_CollectionAllocDate.SelectedItem.ToString)
@@ -84,32 +90,37 @@ Public Class frmPaymentNew
                 End If
             End With
 
+            Me.btn_Calculate.Enabled = False
+            Me.cbo_CollectionAllocDate.Enabled = False
             cts = New CancellationTokenSource
+            Me.paymntHelper.SetCTS(cts.Token)
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocations."}
+            UpdateProgress(newProgress)
+
             getTimeStart = WBillHelper.GetSystemDateTime
 
-            ProgressThread.Show("Please wait while processing payment allocations.")
-
             'Allocation
-            Await Task.Run(Sub() PaymntHelper.GetAPAllocations(progressIndicator))
+            Await Task.Run(Sub() PaymntHelper.GetAPAllocations())
 
-            ProgressThread.Close()
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocations offsetting."}
+            UpdateProgress(newProgress)
 
-            ProgressThread.Show("Please wait while processing payment offsetting.")
             'Offsetting        
-            Await Task.Run(Sub() PaymntHelper.GetOffsetting(progressIndicator))
+            Await Task.Run(Sub() PaymntHelper.GetOffsetting())
 
-            ProgressThread.Close()
-            ProgressThread.Show("Please wait while preparing the processed data for viewing.")
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while finalizing the processed data for payment."}
+            UpdateProgress(newProgress)
 
             Me.dgv_PaymentTransToPR.DataSource = PaymntHelper.PaymentTrasferToPRDT()
             Me.DataGridViewFormatTransferToPR(Me.dgv_PaymentTransToPR)
             Me.FormatTextBox()
 
-            ProgressThread.Close()
             Me.btn_Calculate.Enabled = False
-            Me.GB_CntButtons.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
+            Me.btn_SaveAllocation.Enabled = True
+            Me.btn_Close.Enabled = True
 
             getTimeEnd = WBillHelper.GetSystemDateTime
 
@@ -127,13 +138,24 @@ Public Class frmPaymentNew
                                 & "Date Time End: " & getTimeEnd.ToString("MM/dd/yyyy hh:mm"), "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
-            ToolStripStatus_LabelMsg.Text = "Ready..."
+            ToolStripStatus_LabelMsg.Text = "Ready"
             ctrl_statusStrip.Refresh()
-            cts = Nothing
-        Catch ex As Exception
-            cts = Nothing
-            ProgressThread.Close()
+        Catch ex As OperationCanceledException
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled as requested."}
+            UpdateProgress(newProgress)
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to error."}
+            UpdateProgress(newProgress)
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Timer1.Stop()
+            Me.StopWatch.Stop()
+            Me.StopWatch.Reset()
+            Me.tsslbl_timer.Text = Me.dgv_PaymentTransToPR.RowCount.ToString("N0") & " records"
+
+            cts = Nothing
+            Me.btn_Calculate.Enabled = True
         End Try
     End Sub
 
@@ -145,57 +167,53 @@ Public Class frmPaymentNew
             Dim _Colls As New List(Of PaymentNew)
             Dim _ARAlloc As New List(Of DataTable)
             Dim _PaymentProformaEntries As New PaymentProformaEntries
+            Dim progressIndctr As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
-            ProgressThread.Show("Please wait while preparing collections for viewing.")
-            btn_Calculate.Enabled = True
+            cts = New CancellationTokenSource
+            Me.Timer1.Start()
+            Me.StopWatch.Start()
+
+            Me.cbo_CollectionAllocDate.Enabled = False
+
+            Dim newProgress As New ProgressClass
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while preparing collections for payment allocation."}
+            UpdateProgress(newProgress)
 
             If Me.PaymntHelper IsNot Nothing Then
                 Me.PaymntHelper = Nothing
             End If
 
             Me.PaymntHelper = New PaymentHelper 'PaymentHelper.GetInstance()
-            Me.PaymntHelper.InitializeObject(SelectedAllocationDate)
+            Me.PaymntHelper.SetCTS(cts.Token)
+            Me.PaymntHelper.SetProgress(progressIndctr)
+
+            Await Task.Run(Sub() Me.PaymntHelper.InitializeObject(SelectedAllocationDate))
             Await Task.Run(Sub() PaymntHelper.GetARCollections())
 
-        Catch ex As Exception
-            ProgressThread.Close()
+            newProgress = New ProgressClass With {.ProgressMsg = "Please select allocate button to continue the payment allocation process."}
+            UpdateProgress(newProgress)
+
+            MessageBox.Show("Collection date has been successfully selected and ready to allocate!", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Me.btn_Calculate.Enabled = True
+            Me.cbo_CollectionAllocDate.Enabled = True
+
+        Catch ex As OperationCanceledException
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled as requested."}
+            UpdateProgress(newProgress)
+            cts = Nothing
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to error."}
+            UpdateProgress(newProgress)
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            cts = Nothing
         Finally
-            ProgressThread.Close()
+            Me.btn_Close.Enabled = True
         End Try
     End Sub
 
     Private Sub ClearControlls()
-        'Me.dgv_EnergyAR.DataSource = Nothing
-        'Me.dgv_VATAR.DataSource = Nothing
-        'Me.dgv_MFAR.DataSource = Nothing
-        'Me.dgv_EnergyAP.DataSource = Nothing
-        'Me.dgv_VATAP.DataSource = Nothing
-        'Me.dgv_MFAP.DataSource = Nothing
-
-        'Me.dgv_OffsetEnergyAR.DataSource = Nothing
-        'Me.dgv_OffsetEnergyAP.DataSource = Nothing
-        'Me.dgv_OffsetMFAR.DataSource = Nothing
-        'Me.dgv_OffsetMFAP.DataSource = Nothing
-        'Me.dgv_OffsetVATAR.DataSource = Nothing
-        'Me.dgv_OffsetVATAP.DataSource = Nothing
-
-
-
-        'Me.dgv_EnergyAR.Rows.Clear()
-        'Me.dgv_VATAR.Rows.Clear()
-        'Me.dgv_MFAR.Rows.Clear()
-        'Me.dgv_EnergyAP.Rows.Clear()
-        'Me.dgv_VATAP.Rows.Clear()
-        'Me.dgv_MFAP.Rows.Clear()
-
-        'Me.dgv_OffsetEnergyAR.Rows.Clear()
-        'Me.dgv_OffsetEnergyAP.Rows.Clear()
-        'Me.dgv_OffsetMFAR.Rows.Clear()
-        'Me.dgv_OffsetMFAP.Rows.Clear()
-        'Me.dgv_OffsetVATAR.Rows.Clear()
-        'Me.dgv_OffsetVATAP.Rows.Clear()
-
         Me.dgv_PaymentTransToPR.DataSource = Nothing
         Me.dgv_PaymentTransToPR.Rows.Clear()
 
@@ -1496,41 +1514,57 @@ Public Class frmPaymentNew
         Try
             Dim msgAns As New MsgBoxResult
             msgAns = MsgBox("Do you really want to save the Payment Allocations?", CType(MsgBoxStyle.YesNo + MsgBoxStyle.Question, MsgBoxStyle), "System Message")
+
             If msgAns = MsgBoxResult.Yes Then
-                mainTLPanel.Enabled = False
                 Dim getTimeStart As New DateTime
                 Dim getTimeEnd As New DateTime
+
                 cts = New CancellationTokenSource
-                ProgressThread.Show("Please wait while SAVING.")
-                Me.GB_CntButtons.Enabled = False
-                getTimeStart = WBillHelper.GetSystemDateTime
+                Me.Timer1.Start()
+                Me.stopWatch.Start()
+
+                newProgress = New ProgressClass With {.ProgressMsg = "Please wait while SAVING."}
+                UpdateProgress(newProgress)
+
+                Me.btn_Calculate.Enabled = False
+                Me.GB_ProformaEntries.Enabled = False
+                Me.GB_ProformaEntriesDetails.Enabled = False
+                Me.btn_SaveAllocation.Enabled = False
+                Me.btn_Close.Enabled = True
+
+                getTimeStart = wBillHelper.GetSystemDateTime
                 Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
-                Await Task.Run(Sub() PaymntHelper.SavePaymentProcess(progressIndicator, cts.Token))
-                getTimeEnd = WBillHelper.GetSystemDateTime
-                _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PaymentAllocationWindow.ToString, "", "Saving allocation date " & PaymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
+                Await Task.Run(Sub() paymntHelper.SavePaymentProcess(progressIndicator, cts.Token))
+
+                getTimeEnd = wBillHelper.GetSystemDateTime
+                _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PaymentAllocationWindow.ToString, "", "Saving allocation date " & paymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
 
                 'Disposing trash data in memory                
-                PaymntHelper.Dispose()
-                PaymntHelper = Nothing
-                PaymntHelper = New PaymentHelper
+                paymntHelper.Dispose()
+                paymntHelper = Nothing
+                paymntHelper = New PaymentHelper
 
                 ProgressThread.Close()
 
                 MessageBox.Show("The processed data have been successfully saved." & vbNewLine _
                                 & "Date Time Start: " & getTimeStart.ToString("MM/dd/yyyy hh:mm") & vbNewLine _
                                 & "Date Time End: " & getTimeEnd.ToString("MM/dd/yyyy hh:mm"), "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                ToolStripStatus_LabelMsg.Text = "Ready"
                 Me.ClearControlls()
                 Me.LoadComboItems()
-                cts = Nothing
-                mainTLPanel.Enabled = True
             End If
-        Catch ex As Exception
-            mainTLPanel.Enabled = True
-            cts = Nothing
-            ProgressThread.Close()
+        Catch ex As OperationCanceledException
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to request to cancel."}
+            UpdateProgress(newProgress)
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.GB_CntButtons.Enabled = True
+        Catch ex As Exception
+            newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to error."}
+            UpdateProgress(newProgress)
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            cts = Nothing
         End Try
     End Sub
 
@@ -1552,11 +1586,10 @@ Public Class frmPaymentNew
 
     Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
         If cts IsNot Nothing Then
-            If MessageBox.Show("Are you sure to cancel the saving process?", "Close",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                cts.Cancel()
-                Me.Close()
-            End If
+            cts.Cancel()
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while canceling..."}
+            Me.UpdateProgress(newProgress)
+            btn_Close.Enabled = False
         Else
             Me.Close()
         End If
@@ -1611,19 +1644,9 @@ Public Class frmPaymentNew
 
         End Try
     End Sub
-    Private Sub frmPaymentNew_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If cts IsNot Nothing Then
-            ProgressThread.Close()
-            If MessageBox.Show("Are you sure to cancel this process?", "Close",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                cts.Cancel()
-                e.Cancel = True
-                MessageBox.Show("Please try to close again!", "Close", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                ProgressThread.Show("Please wait while continuing the process.")
-                e.Cancel = True
-                Me.Show()
-            End If
-        End If
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
+        tsslbl_timer.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
     End Sub
 End Class

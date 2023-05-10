@@ -22,9 +22,9 @@ Partial Class frmWHTaxCertificateSTLDetails
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.mainTLP = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ddlRemittanceDate = New System.Windows.Forms.ComboBox()
@@ -342,8 +342,8 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.dgTagging.AllowUserToAddRows = False
         Me.dgTagging.AllowUserToDeleteRows = False
         Me.dgTagging.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.dgTagging.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgTagging.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgTagging.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAR, Me.colBatchNoAR, Me.colBillingNoAR, Me.colIDNumberAR, Me.colTransactionNoAR, Me.colOrigDueDateAR, Me.colNewDueDateAR, Me.colEndingBalanceAR, Me.colWithholdingTaxAR, Me.colFullyPaid, Me.colTagAmountAR, Me.colNewEndingBalanceAR})
@@ -407,10 +407,10 @@ Partial Class frmWHTaxCertificateSTLDetails
         '
         'colEndingBalanceAR
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle2
         Me.colEndingBalanceAR.Frozen = True
         Me.colEndingBalanceAR.HeaderText = "Ending Balance"
         Me.colEndingBalanceAR.Name = "colEndingBalanceAR"
@@ -512,8 +512,8 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.dgAllocation.AllowUserToAddRows = False
         Me.dgAllocation.AllowUserToDeleteRows = False
         Me.dgAllocation.AllowUserToResizeRows = False
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgAllocation.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgAllocation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgAllocation.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAP, Me.colBatchNoAP, Me.colBillingPeriodAP, Me.colIDNumberAP, Me.colTransctionNoAP, Me.colOrigDueDateAP, Me.colNewDueDateAP, Me.colWithholdingTaxAP, Me.colAllocAmountAP})
@@ -620,12 +620,13 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1208, 616)
+        Me.ControlBox = False
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.mainTLP)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmWHTaxCertificateSTLDetails"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Withholding Tax Certificate Tagging And Allocation"
+        Me.Text = "Withholding Tax Certificate Tagging"
         Me.mainTLP.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

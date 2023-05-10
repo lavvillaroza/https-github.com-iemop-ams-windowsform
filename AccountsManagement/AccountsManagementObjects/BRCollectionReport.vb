@@ -49,13 +49,23 @@
         End Set
     End Property
 
-    Private _SellerParticipantInfo As List(Of BRCollectionReportParticipant)
-    Public Property SellerDetails() As List(Of BRCollectionReportParticipant)
+    Private _SellerDetails As List(Of BRCollectionReportSellerParticipant)
+    Public Property SellerDetails() As List(Of BRCollectionReportSellerParticipant)
         Get
-            Return _SellerParticipantInfo
+            Return _SellerDetails
         End Get
-        Set(ByVal value As List(Of BRCollectionReportParticipant))
-            _SellerParticipantInfo = value
+        Set(ByVal value As List(Of BRCollectionReportSellerParticipant))
+            _SellerDetails = value
+        End Set
+    End Property
+
+    Private _BuyerDetails As List(Of BRCollectionReportBuyerParticipant)
+    Public Property BuyerDetails() As List(Of BRCollectionReportBuyerParticipant)
+        Get
+            Return _BuyerDetails
+        End Get
+        Set(ByVal value As List(Of BRCollectionReportBuyerParticipant))
+            _BuyerDetails = value
         End Set
     End Property
 End Class

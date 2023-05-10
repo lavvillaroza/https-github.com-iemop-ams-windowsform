@@ -14,17 +14,31 @@ Imports WESMLib.Auth.Lib
 Public Class frmBRCollectionReportDetails
     Public _BRCollReportHelper As BRCollectionReportHelper
     Private cts As CancellationTokenSource
+    Public forSellerOrBuyer As EnumCollectionReportType
+
     Private Sub frmBRCollectionReportDetails_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.rbDaily.Checked = True
-        FillUpCheckBoxList()
+        If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+            FillUpCheckBoxListSeller()
+        Else
+            FillUpCheckBoxListBuyer()
+        End If
     End Sub
 
-    Private Sub FillUpCheckBoxList()
+    Private Sub FillUpCheckBoxListSeller()
         Me.chkLB_Participants.Items.Clear()
         For Each item In _BRCollReportHelper.BIRRulingCR.SellerDetails
             Me.chkLB_Participants.Items.Add(item.Participant.IDNumber)
         Next
     End Sub
+
+    Private Sub FillUpCheckBoxListBuyer()
+        Me.chkLB_Participants.Items.Clear()
+        For Each item In _BRCollReportHelper.BIRRulingCR.BuyerDetails
+            Me.chkLB_Participants.Items.Add(item.Participant.IDNumber)
+        Next
+    End Sub
+
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
         ToolStripStatusLabelCR.Text = _ProgressMsg.ProgressMsg
         ctrl_statusStrip.Refresh()
@@ -64,25 +78,42 @@ Public Class frmBRCollectionReportDetails
                 For cnt As Integer = 0 To Me.chkLB_Participants.CheckedItems.Count - 1
                     Dim selectedParticipant As String = Me.chkLB_Participants.CheckedItems(cnt).ToString()
                     Dim dataSource As New DataTable
+                    If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                        If Me.rbDaily.Checked = True Then
+                            dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, selectedParticipant, True)
+                        Else
+                            dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, selectedParticipant, True)
+                        End If
 
-                    If Me.rbDaily.Checked = True Then
-                        dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, selectedParticipant)
+                        Dim getCRNumber As String = (From x In dataSource.AsEnumerable() Select x.Field(Of String)("CR_NUMBER") Distinct).First()
+
+                        Dim expReport = New RPTBIRCollectionReportSummary
+                        expReport.SetDataSource(dataSource)
+                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, fPathName & "\" &
+                                               "CSR_IEMOP_" & selectedParticipant.Replace("_FIT", "").ToString & "_" & getCRNumber & "_" & _BRCollReportHelper.BIRRulingCR.RemittanceDateTo.ToString("yyyyMMdd") & ".pdf")
+                        expReport.Close()
+                        expReport.Dispose()
                     Else
-                        dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, selectedParticipant)
+                        If Me.rbDaily.Checked = True Then
+                            dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, selectedParticipant, False)
+                        Else
+                            dataSource = _BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, selectedParticipant, False)
+                        End If
+
+                        Dim getCRNumber As String = (From x In dataSource.AsEnumerable() Select x.Field(Of String)("CR_NUMBER") Distinct).First()
+
+                        Dim expReport = New RPTBIRCollectionReportSummaryBuyer
+                        expReport.SetDataSource(dataSource)
+                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, fPathName & "\" &
+                                               "CSR_IEMOP_" & selectedParticipant.Replace("_FIT", "").ToString & "_" & getCRNumber & "_" & _BRCollReportHelper.BIRRulingCR.RemittanceDateTo.ToString("yyyyMMdd") & ".pdf")
+                        expReport.Close()
+                        expReport.Dispose()
                     End If
-
-                    Dim getCRNumber As String = (From x In dataSource.AsEnumerable() Select x.Field(Of String)("CR_NUMBER") Distinct).First()
-
-                    Dim expReport = New RPTBIRCollectionReportSummary
-                    expReport.SetDataSource(dataSource)
-                    expReport.ExportToDisk(ExportFormatType.PortableDocFormat, fPathName & "\" &
-                                           "CSR_IEMOP_" & selectedParticipant.Replace("_FIT", "").ToString & "_" & getCRNumber & "_" & _BRCollReportHelper.BIRRulingCR.RemittanceDateTo.ToString("yyyyMMdd") & ".pdf")
-                    expReport.Close()
-                    expReport.Dispose()
                 Next
 
                 ProgressThread.Close()
-                MsgBox("Successfully downloaded!", MsgBoxStyle.Information, "Downloaded")
+                MessageBox.Show("Successfully downloaded!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
             End With
         Catch ex As Exception
             ProgressThread.Close()
@@ -100,6 +131,12 @@ Public Class frmBRCollectionReportDetails
             For cnt As Integer = 0 To Me.chkLB_Participants.CheckedItems.Count - 1
                 listOfSelectedParticipant.Add(Me.chkLB_Participants.CheckedItems(cnt).ToString())
             Next
+
+            If listOfSelectedParticipant.Count = 0 Then
+                MessageBox.Show("No participant selected", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
             Dim collReporType As String = ""
 
             If Me.rbDaily.Checked = True Then
@@ -113,9 +150,18 @@ Public Class frmBRCollectionReportDetails
 
             With rptView
                 If collReporType.Equals("DAILY") Then
-                    .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant), collReporType)
+                    If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                        .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant, True), collReporType, True)
+                    Else
+                        .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableDaily(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant, False), collReporType, False)
+                    End If
+
                 ElseIf collReporType.Equals("MONTHLY") Then
-                    .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant), collReporType)
+                    If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                        .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant, True), collReporType, True)
+                    Else
+                        .LoadBIRCollectionReport(_BRCollReportHelper.GenerateCollectionReportDatatableMonthly(New DSReport.BIRRulingMainDataTable, listOfSelectedParticipant, False), collReporType, False)
+                    End If
                 End If
                 .ShowDialog()
             End With
@@ -157,7 +203,11 @@ Public Class frmBRCollectionReportDetails
                         'Get the selected participants
                         For cnt As Integer = 0 To Me.chkLB_Participants.CheckedItems.Count - 1
                             Dim selectedParticipant As String = Me.chkLB_Participants.CheckedItems(cnt).ToString()
-                            Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator))
+                            If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                                Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator, True))
+                            Else
+                                Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator, False))
+                            End If
                             shortCounter += 1
                         Next
                         ProgressThread.Close()
@@ -175,7 +225,11 @@ Public Class frmBRCollectionReportDetails
                         End If
                         ProgressThread.Show("Please wait while loading.")
                         fPathName = .SelectedPath
-                        Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel("", fPathName, True, collReporType, progressIndicator))
+                        If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                            Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel("", fPathName, True, collReporType, progressIndicator, True))
+                        Else
+                            Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel("", fPathName, True, collReporType, progressIndicator, False))
+                        End If
                         ProgressThread.Close()
                         MessageBox.Show("Successfully downloaded!", "Downloaded", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     End With
@@ -191,7 +245,11 @@ Public Class frmBRCollectionReportDetails
                     'Get the selected participants
                     For cnt As Integer = 0 To Me.chkLB_Participants.CheckedItems.Count - 1
                         Dim selectedParticipant As String = Me.chkLB_Participants.CheckedItems(cnt).ToString()
-                        Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator))
+                        If forSellerOrBuyer = EnumCollectionReportType.Seller Then
+                            Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator, True))
+                        Else
+                            Await Task.Run(Sub() _BRCollReportHelper.GenerateBIRCollectionReportExcel(selectedParticipant, fPathName, False, collReporType, progressIndicator, False))
+                        End If
                     Next
                     ProgressThread.Close()
                     MessageBox.Show("Successfully downloaded!", "Downloaded", MessageBoxButtons.OK, MessageBoxIcon.Information)

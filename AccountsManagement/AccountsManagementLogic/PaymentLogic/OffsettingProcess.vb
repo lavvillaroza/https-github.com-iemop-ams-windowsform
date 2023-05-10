@@ -273,7 +273,9 @@ Public Class OffsettingProcess
                         .ChargeType = Item.ChargeType
                         .OffsettingSequence = Item.OffsettingSequence
                         .WESMBillBatchNo = Item.WESMBillBatchNo
-                        If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.Contains("-ADJ") Then
+                        If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
+                            .AllowOffsetToAR = False
+                        ElseIf .InvoiceNumber.Contains("INV") And .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                             .AllowOffsetToAR = False
                         Else
                             .AllowOffsetToAR = True
@@ -305,6 +307,11 @@ Public Class OffsettingProcess
                     .ChargeType = Item.ChargeType
                     .OffsettingSequence = 0
                     .WESMBillBatchNo = 0
+                    'If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.Contains("-ADJ") Then
+                    '    .AllowOffsetToAR = False
+                    'Else
+                    '    .AllowOffsetToAR = True
+                    'End If
                 End With
                 Me._EnergyShare.Add(_Item)
             End Using
@@ -340,7 +347,9 @@ Public Class OffsettingProcess
                     .ChargeType = Item.ChargeType
                     .OffsettingSequence = Item.OffsettingSequence
                     .WESMBillBatchNo = Item.WESMBillBatchNo
-                    If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.Contains("-ADJ") Then
+                    If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
+                        .AllowOffsetToAR = False
+                    ElseIf .InvoiceNumber.Contains("INV") And .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                         .AllowOffsetToAR = False
                     Else
                         .AllowOffsetToAR = True
@@ -370,6 +379,11 @@ Public Class OffsettingProcess
                     .ChargeType = Item.ChargeType
                     .OffsettingSequence = 0
                     .WESMBillBatchNo = 0
+                    'If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.Contains("-ADJ") Then
+                    '    .AllowOffsetToAR = False
+                    'Else
+                    '    .AllowOffsetToAR = True
+                    'End If
                 End With
                 Me._VATonEnergyShare.Add(_Item)
             End Using
@@ -447,7 +461,7 @@ Public Class OffsettingProcess
             'End If
 
             Dim ContinueToMFOffset As Boolean = True
-            Dim ContinueToMFFITOffset As Boolean = True
+            Dim ContinueToMFFITOffset As Boolean = False
             Dim ContinueToEnergyOffset As Boolean = True
             Dim ContinueToEnergyVATOffset As Boolean = True
             Dim ContinueToEnergyFITOffset As Boolean = False
@@ -457,7 +471,8 @@ Public Class OffsettingProcess
 
             ARWESMBillSummaryListMFMFV = (From x In WESMBillSummaryList
                                           Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
-                                           And x.EndingBalance < 0 And x.DueDate <= AllocationDate
+                                           And x.EndingBalance < 0 And x.DueDate <= AllocationDate _
+                                           And x.NoOffset = False
                                           Select x Order By x.WESMBillBatchNo, x.DueDate, x.BillPeriod, x.EndingBalance Descending).ToList()
 
             ARWESMBillSummaryListEnergy = (From x In WESMBillSummaryList
@@ -690,70 +705,71 @@ Public Class OffsettingProcess
                 Next
 
                 'From Energyshare To VAT AR with outstanding balance Note: this is applicable only in Generator
-                If ContinueToMFOffset = False And ContinueToEnergyVATOffset = False And ContinueToEnergyOffset = False _
-                            And ContinueToEnergyFITOffset = False And ContinueToEnergyVATFITOffset = False Then
+                'Disabled by LAVV as of 03/28/2023
+                'If ContinueToMFOffset = False And ContinueToEnergyVATOffset = False And ContinueToEnergyOffset = False _
+                '            And ContinueToEnergyFITOffset = False And ContinueToEnergyVATFITOffset = False Then
 
-                    Me._OffsettingVATonEnergyCollectionListTemp.Clear()
+                '    Me._OffsettingVATonEnergyCollectionListTemp.Clear()
 
-                    Dim AMParticipantsGen = (From x In Me.AMParticipants
-                                             Where x.GenLoad = EnumGenLoad.G
-                                             Select x.IDNumber).ToList
+                '    Dim AMParticipantsGen = (From x In Me.AMParticipants
+                '                             Where x.GenLoad = EnumGenLoad.G
+                '                             Select x.IDNumber).ToList
 
-                    Dim _EnergyShareForVAT = (From x In Me.EnergyShare
-                                              Where x.AmountBalance > 0 _
-                                              And AMParticipantsGen.Contains(x.IDNumber)
-                                              Group By IDNumber = x.IDNumber
-                                              Into Amount_Balance = Sum(x.AmountBalance)).ToList()
+                '    Dim _EnergyShareForVAT = (From x In Me.EnergyShare
+                '                              Where x.AmountBalance > 0 _
+                '                              And AMParticipantsGen.Contains(x.IDNumber)
+                '                              Group By IDNumber = x.IDNumber
+                '                              Into Amount_Balance = Sum(x.AmountBalance)).ToList()
 
 
-                    Dim _ARWESMBillSummaryListOffsetVAT2 As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListVAT
-                                                                                        Where y.EndingBalance < 0 And (Math.Abs(y.EndingBalance) - Math.Abs(y.EnergyWithhold)) > 0
-                                                                                        Join x In _EnergyShareForVAT On x.IDNumber Equals y.IDNumber.IDNumber
-                                                                                        Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate, y.BillPeriod, y.EndingBalance Descending).ToList()
+                '    Dim _ARWESMBillSummaryListOffsetVAT2 As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListVAT
+                '                                                                        Where y.EndingBalance < 0 And (Math.Abs(y.EndingBalance) - Math.Abs(y.EnergyWithhold)) > 0
+                '                                                                        Join x In _EnergyShareForVAT On x.IDNumber Equals y.IDNumber.IDNumber
+                '                                                                        Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate, y.BillPeriod, y.EndingBalance Descending).ToList()
 
-                    If _ARWESMBillSummaryListOffsetVAT2.Count > 0 And _EnergyShareForVAT.Count > 0 Then
+                '    If _ARWESMBillSummaryListOffsetVAT2.Count > 0 And _EnergyShareForVAT.Count > 0 Then
 
-                        ContinueToEnergyVATOffset = Me.GetOffsettingARCollectionsForEnergyVAT2(_ARWESMBillSummaryListOffsetVAT2, AllocationDate, AMParticipants)
+                '        ContinueToEnergyVATOffset = Me.GetOffsettingARCollectionsForEnergyVAT2(_ARWESMBillSummaryListOffsetVAT2, AllocationDate, AMParticipants)
 
-                        Dim OffsetARCollProc2 As New ARCollectionProcess
-                        Dim OffsetAPAllocProc2 As New APAllocationProcessNew
+                '        Dim OffsetARCollProc2 As New ARCollectionProcess
+                '        Dim OffsetAPAllocProc2 As New APAllocationProcessNew
 
-                        OffsetAPAllocProc2._AMParticipantsList = Me.AMParticipants
-                        OffsetAPAllocProc2._PaymentProformaEntries = Me.PaymentProformaEntries
+                '        OffsetAPAllocProc2._AMParticipantsList = Me.AMParticipants
+                '        OffsetAPAllocProc2._PaymentProformaEntries = Me.PaymentProformaEntries
 
-                        'VAT Offsetting AR
-                        OffsetARCollProc2.ComputeARCollection(Me.OffsettingVATonEnergyCollectionListTemp, EnumCollectionType.VatOnEnergy)
-                        If OffsetARCollProc2.VATCollection.Count() > 0 Then
-                            For Each EnergyVATItem In OffsetARCollProc2.VATCollection
-                                Me._OffsettingVATonEnergyCollectionList.Add(EnergyVATItem)
-                            Next
-                        End If
+                '        'VAT Offsetting AR
+                '        OffsetARCollProc2.ComputeARCollection(Me.OffsettingVATonEnergyCollectionListTemp, EnumCollectionType.VatOnEnergy)
+                '        If OffsetARCollProc2.VATCollection.Count() > 0 Then
+                '            For Each EnergyVATItem In OffsetARCollProc2.VATCollection
+                '                Me._OffsettingVATonEnergyCollectionList.Add(EnergyVATItem)
+                '            Next
+                '        End If
 
-                        OffsetAPAllocProc2.OffsettingSequence = Me.OffsettingSequence
+                '        OffsetAPAllocProc2.OffsettingSequence = Me.OffsettingSequence
 
-                        'VAT Offsetting AP
-                        Dim UpdatedWESMBillSummaryOnVAT2 = (From x In WESMBillSummaryList
-                                                            Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.EV
-                                                            Select x).ToList()
+                '        'VAT Offsetting AP
+                '        Dim UpdatedWESMBillSummaryOnVAT2 = (From x In WESMBillSummaryList
+                '                                            Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.EV
+                '                                            Select x).ToList()
 
-                        If UpdatedWESMBillSummaryOnVAT2.Count > 0 And OffsetARCollProc2.TotalVATCollectionPerBP.Count > 0 Then
-                            OffsetAPAllocProc2.ComputeVATAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnVAT2,
-                                                                          OffsetARCollProc2.VATCollection, progress)
-                            For Each OffsetItem In OffsetAPAllocProc2.VATonEnergyAPAllocationList
-                                Me._OffsettingVATonEnergyAllocationList.Add(OffsetItem)
-                            Next
+                '        If UpdatedWESMBillSummaryOnVAT2.Count > 0 And OffsetARCollProc2.TotalVATCollectionPerBP.Count > 0 Then
+                '            OffsetAPAllocProc2.ComputeVATAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnVAT2,
+                '                                                          OffsetARCollProc2.VATCollection, progress)
+                '            For Each OffsetItem In OffsetAPAllocProc2.VATonEnergyAPAllocationList
+                '                Me._OffsettingVATonEnergyAllocationList.Add(OffsetItem)
+                '            Next
 
-                            Me.AssignVATonEnergyShareToList(OffsetAPAllocProc2.VATonEnergyAPAllocationList)
-                        End If
+                '            Me.AssignVATonEnergyShareToList(OffsetAPAllocProc2.VATonEnergyAPAllocationList)
+                '        End If
 
-                        For Each ItemDMCM In OffsetAPAllocProc2.ListofDMCMAP
-                            Me._ListofDMCM.Add(ItemDMCM)
-                        Next
+                '        For Each ItemDMCM In OffsetAPAllocProc2.ListofDMCMAP
+                '            Me._ListofDMCM.Add(ItemDMCM)
+                '        Next
 
-                    Else
-                        ContinueToEnergyVATOffset = False
-                    End If
-                End If
+                '    Else
+                '        ContinueToEnergyVATOffset = False
+                '    End If
+                'End If
 
                 If ContinueToMFOffset = False And ContinueToEnergyOffset = False And ContinueToEnergyVATOffset = False Then
                     If useDeferredShare = False Then
@@ -768,178 +784,179 @@ Public Class OffsettingProcess
                 End If
 
                 'From EnergyFit and VatFit with outstanding balance
-                If ContinueToMFOffset = False And ContinueToEnergyOffset = False And ContinueToEnergyVATOffset = False Then
+                'Disabled by LAVV as of 03/28/2023
+                'If ContinueToMFOffset = False And ContinueToEnergyOffset = False And ContinueToEnergyVATOffset = False Then
 
-                    'MF FIT Offsetting***************************************************************************************************************************************************************
-                    Dim ARWESMBillSummaryListMFFIT = (From x In ARWESMBillSummaryListMFMFV
-                                                      Where x.IDNumber.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString) _
-                                                         And (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
-                                                         And x.EndingBalance < 0
-                                                      Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
+                '    'MF FIT Offsetting***************************************************************************************************************************************************************
+                '    Dim ARWESMBillSummaryListMFFIT = (From x In ARWESMBillSummaryListMFMFV
+                '                                      Where x.IDNumber.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString) _
+                '                                         And (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
+                '                                         And x.EndingBalance < 0
+                '                                      Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
 
-                    Dim _EnergyFITShareListForMF = (From x In Me.EnergyShare
-                                                    Where x.AmountBalance > 0 _
-                                                    And x.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString)
-                                                    Group By IDNumber = x.IDNumber
-                                                    Into Amount_Balance = Sum(x.AmountBalance)).ToList()
+                '    Dim _EnergyFITShareListForMF = (From x In Me.EnergyShare
+                '                                    Where x.AmountBalance > 0 _
+                '                                    And x.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString)
+                '                                    Group By IDNumber = x.IDNumber
+                '                                    Into Amount_Balance = Sum(x.AmountBalance)).ToList()
 
-                    Dim _GetEnergyFITShareListForMFFIT = (From x In _EnergyFITShareListForMF Where x.Amount_Balance > 1 Select x).ToList()
+                '    Dim _GetEnergyFITShareListForMFFIT = (From x In _EnergyFITShareListForMF Where x.Amount_Balance > 1 Select x).ToList()
 
-                    Dim _OffsetEnergyFITSHareListForMFFIT As List(Of PaymentShare) = (From x In Me.EnergyShare
-                                                                                      Join y In _GetEnergyFITShareListForMFFIT
-                                                                                   On y.IDNumber Equals x.IDNumber
-                                                                                      Select x).ToList()
+                '    Dim _OffsetEnergyFITSHareListForMFFIT As List(Of PaymentShare) = (From x In Me.EnergyShare
+                '                                                                      Join y In _GetEnergyFITShareListForMFFIT
+                '                                                                   On y.IDNumber Equals x.IDNumber
+                '                                                                      Select x).ToList()
 
-                    Dim _ARWESMBillSummaryListMFMFVFIT As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListMFFIT
-                                                                                      Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate,
-                                                                                      y.BillPeriod, y.EndingBalance Descending).ToList()
+                '    Dim _ARWESMBillSummaryListMFMFVFIT As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListMFFIT
+                '                                                                      Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate,
+                '                                                                      y.BillPeriod, y.EndingBalance Descending).ToList()
 
-                    If _ARWESMBillSummaryListMFMFVFIT.Count > 0 And _OffsetEnergyFITSHareListForMFFIT.Count > 0 Then
-                        ContinueToMFFITOffset = Me.GetOffsettingARCollectionsForMFMFVFIT(_ARWESMBillSummaryListMFMFVFIT, _OffsetEnergyFITSHareListForMFFIT, DefaultInterestRate, AllocationDate, AMParticipants)
-                    Else
-                        ContinueToMFFITOffset = False
-                    End If
-                    'End of MF FIT Offsetting******************************************************************************************************************************************************
+                '    If _ARWESMBillSummaryListMFMFVFIT.Count > 0 And _OffsetEnergyFITSHareListForMFFIT.Count > 0 Then
+                '        ContinueToMFFITOffset = Me.GetOffsettingARCollectionsForMFMFVFIT(_ARWESMBillSummaryListMFMFVFIT, _OffsetEnergyFITSHareListForMFFIT, DefaultInterestRate, AllocationDate, AMParticipants)
+                '    Else
+                '        ContinueToMFFITOffset = False
+                '    End If
+                '    'End of MF FIT Offsetting******************************************************************************************************************************************************
 
-                    'Energy FIT Offsetting****************************************************************************************************************************************************
-                    Dim ARWESMBillSummaryListEnergyFIT = (From x In ARWESMBillSummaryListEnergy
-                                                          Where x.IDNumber.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString) _
-                                                         And x.ChargeType = EnumChargeType.E _
-                                                         And x.EndingBalance < 0 _
-                                                         And (Math.Abs(x.EndingBalance) - Math.Abs(x.EnergyWithhold)) > 0
-                                                          Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
+                '    'Energy FIT Offsetting****************************************************************************************************************************************************
+                '    Dim ARWESMBillSummaryListEnergyFIT = (From x In ARWESMBillSummaryListEnergy
+                '                                          Where x.IDNumber.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString) _
+                '                                         And x.ChargeType = EnumChargeType.E _
+                '                                         And x.EndingBalance < 0 _
+                '                                         And (Math.Abs(x.EndingBalance) - Math.Abs(x.EnergyWithhold)) > 0
+                '                                          Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
 
-                    Dim _EnergyFITShareListForEnergy = (From x In Me.EnergyShare
-                                                        Where x.AmountBalance > 0 _
-                                                       And x.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString)
-                                                        Group By IDNumber = x.IDNumber
-                                                       Into Amount_Balance = Sum(x.AmountBalance)).ToList()
+                '    Dim _EnergyFITShareListForEnergy = (From x In Me.EnergyShare
+                '                                        Where x.AmountBalance > 0 _
+                '                                       And x.IDNumber.EndsWith(AMModule.FITParticipantCode.ToString)
+                '                                        Group By IDNumber = x.IDNumber
+                '                                       Into Amount_Balance = Sum(x.AmountBalance)).ToList()
 
-                    Dim _GetEnergyFITShareListForEnergy = (From x In _EnergyFITShareListForEnergy Where x.Amount_Balance > 1 Select x).ToList()
+                '    Dim _GetEnergyFITShareListForEnergy = (From x In _EnergyFITShareListForEnergy Where x.Amount_Balance > 1 Select x).ToList()
 
-                    Dim _OffsetEnergyFITShareListForEnergy As List(Of PaymentShare) = (From x In Me.EnergyShare
-                                                                                       Join y In _GetEnergyFITShareListForEnergy
-                                                                                       On y.IDNumber Equals x.IDNumber
-                                                                                       Select x).ToList()
+                '    Dim _OffsetEnergyFITShareListForEnergy As List(Of PaymentShare) = (From x In Me.EnergyShare
+                '                                                                       Join y In _GetEnergyFITShareListForEnergy
+                '                                                                       On y.IDNumber Equals x.IDNumber
+                '                                                                       Select x).ToList()
 
-                    Dim _ARWESMBillSUmmaryListFITEnergy As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListEnergyFIT
-                                                                                       Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate,
-                                                                                                         y.BillPeriod, y.EndingBalance Descending).ToList()
+                '    Dim _ARWESMBillSUmmaryListFITEnergy As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListEnergyFIT
+                '                                                                       Select y Order By y.WESMBillBatchNo, y.OrigNewDueDate,
+                '                                                                                         y.BillPeriod, y.EndingBalance Descending).ToList()
 
-                    If _ARWESMBillSUmmaryListFITEnergy.Count > 0 And _OffsetEnergyFITShareListForEnergy.Count > 0 Then
-                        ContinueToEnergyFITOffset = Me.GetOffsettingARCollectionsForEnergyFIT(_ARWESMBillSUmmaryListFITEnergy, _OffsetEnergyFITShareListForEnergy,
-                                                                                              DefaultInterestRate, AllocationDate, AMParticipants)
-                    Else
-                        ContinueToEnergyFITOffset = False
-                    End If
-                    'End of Energy FIT Offsetting**********************************************************************************************************************************************
+                '    If _ARWESMBillSUmmaryListFITEnergy.Count > 0 And _OffsetEnergyFITShareListForEnergy.Count > 0 Then
+                '        ContinueToEnergyFITOffset = Me.GetOffsettingARCollectionsForEnergyFIT(_ARWESMBillSUmmaryListFITEnergy, _OffsetEnergyFITShareListForEnergy,
+                '                                                                              DefaultInterestRate, AllocationDate, AMParticipants)
+                '    Else
+                '        ContinueToEnergyFITOffset = False
+                '    End If
+                '    'End of Energy FIT Offsetting**********************************************************************************************************************************************
 
-                    'VAT FIT Offsetting********************************************************************************************************************************************************
-                    'Dim ARWESMBillSummaryListVATFIT = (From x In ARWESMBillSummaryListVAT _
-                    '                              Where x.IDNumber.IDNumber.EndsWith("F") _
-                    '                              And x.ChargeType = EnumChargeType.EV _
-                    '                              And x.EndingBalance < 0 _
-                    '                              And (Math.Abs(x.EndingBalance) - Math.Abs(x.EnergyWithhold)) > 0 _
-                    '                              Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
+                '    'VAT FIT Offsetting********************************************************************************************************************************************************
+                '    'Dim ARWESMBillSummaryListVATFIT = (From x In ARWESMBillSummaryListVAT _
+                '    '                              Where x.IDNumber.IDNumber.EndsWith("F") _
+                '    '                              And x.ChargeType = EnumChargeType.EV _
+                '    '                              And x.EndingBalance < 0 _
+                '    '                              And (Math.Abs(x.EndingBalance) - Math.Abs(x.EnergyWithhold)) > 0 _
+                '    '                              Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance Descending).ToList()
 
-                    'Dim _VATFITShareListForVAT = (From x In Me.VATonEnergyShare
-                    '                            Where x.AmountBalance > 0 _
-                    '                            And x.IDNumber.EndsWith("F") _
-                    '                            Group By IDNumber = x.IDNumber _
-                    '                            Into Amount_Balance = Sum(x.AmountBalance)).ToList()
+                '    'Dim _VATFITShareListForVAT = (From x In Me.VATonEnergyShare
+                '    '                            Where x.AmountBalance > 0 _
+                '    '                            And x.IDNumber.EndsWith("F") _
+                '    '                            Group By IDNumber = x.IDNumber _
+                '    '                            Into Amount_Balance = Sum(x.AmountBalance)).ToList()
 
-                    'Dim _GetVATFITShareListForVAT = (From x In _VATFITShareListForVAT Where x.Amount_Balance > 1 Select x).ToList()
+                '    'Dim _GetVATFITShareListForVAT = (From x In _VATFITShareListForVAT Where x.Amount_Balance > 1 Select x).ToList()
 
-                    'Dim _OffsetVATFITShareListForVAT As List(Of PaymentShare) = (From x In Me.VATonEnergyShare _
-                    '                                                             Join y In _GetVATFITShareListForVAT _
-                    '                                                             On y.IDNumber Equals x.IDNumber _
-                    '                                                             Select x).ToList()
+                '    'Dim _OffsetVATFITShareListForVAT As List(Of PaymentShare) = (From x In Me.VATonEnergyShare _
+                '    '                                                             Join y In _GetVATFITShareListForVAT _
+                '    '                                                             On y.IDNumber Equals x.IDNumber _
+                '    '                                                             Select x).ToList()
 
-                    'Dim _ARWESMBillSUmmaryListFITVAT As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListVATFIT _
-                    '                                                                Select y Order By y.WESMBillBatchNo, _
-                    '                                                                                  y.OrigNewDueDate, y.EndingBalance Descending).ToList()
+                '    'Dim _ARWESMBillSUmmaryListFITVAT As List(Of WESMBillSummary) = (From y In ARWESMBillSummaryListVATFIT _
+                '    '                                                                Select y Order By y.WESMBillBatchNo, _
+                '    '                                                                                  y.OrigNewDueDate, y.EndingBalance Descending).ToList()
 
-                    'If _ARWESMBillSUmmaryListFITVAT.Count() > 0 And _OffsetVATFITShareListForVAT.Count > 0 Then
-                    '    ContinueToEnergyVATFITOffset = Me.GetOffsettingARCollectionsForEnergyVATFIT(_ARWESMBillSUmmaryListFITVAT, _OffsetVATFITShareListForVAT,
-                    '                                                                                AllocationDate, AMParticipants)
-                    'Else
-                    '    ContinueToEnergyVATFITOffset = False
-                    'End If
+                '    'If _ARWESMBillSUmmaryListFITVAT.Count() > 0 And _OffsetVATFITShareListForVAT.Count > 0 Then
+                '    '    ContinueToEnergyVATFITOffset = Me.GetOffsettingARCollectionsForEnergyVATFIT(_ARWESMBillSUmmaryListFITVAT, _OffsetVATFITShareListForVAT,
+                '    '                                                                                AllocationDate, AMParticipants)
+                '    'Else
+                '    '    ContinueToEnergyVATFITOffset = False
+                '    'End If
 
-                    'End of VAT FIT Offsetting**************************************************************************************************************************************************
+                '    'End of VAT FIT Offsetting**************************************************************************************************************************************************
 
-                    Dim OffsetARCollProc3 As New ARCollectionProcess
-                    Dim OffsetAPAllocProc3 As New APAllocationProcess
+                '    Dim OffsetARCollProc3 As New ARCollectionProcess
+                '    Dim OffsetAPAllocProc3 As New APAllocationProcess
 
-                    OffsetAPAllocProc3._AMParticipantsList = Me.AMParticipants
-                    OffsetAPAllocProc3._PaymentProformaEntries = Me.PaymentProformaEntries
-                    OffsetAPAllocProc3.OffsettingSequence = Me.OffsettingSequence
+                '    OffsetAPAllocProc3._AMParticipantsList = Me.AMParticipants
+                '    OffsetAPAllocProc3._PaymentProformaEntries = Me.PaymentProformaEntries
+                '    OffsetAPAllocProc3.OffsettingSequence = Me.OffsettingSequence
 
-                    'Me._OffsettingVATonEnergyCollectionListTemp.Clear()
-                    'Me._OffsettingEnergyCollListTemp.Clear()
+                '    'Me._OffsettingVATonEnergyCollectionListTemp.Clear()
+                '    'Me._OffsettingEnergyCollListTemp.Clear()
 
-                    If _ARWESMBillSummaryListMFMFVFIT.Count > 0 And _OffsetEnergyFITSHareListForMFFIT.Count > 0 Then
-                        'MF Offsetting AR
-                        OffsetARCollProc3.ComputeARCollection(Me.OffsettingMFwithVATCollListTemp, EnumCollectionType.MarketFees)
-                        If OffsetARCollProc3.MFwithVATCollectionList.Count() > 0 Then
-                            For Each MFItem In OffsetARCollProc3.MFwithVATCollectionList
-                                Me._OffsettingMFwithVATCollectionList.Add(MFItem)
-                            Next
-                        End If
-                    End If
+                '    If _ARWESMBillSummaryListMFMFVFIT.Count > 0 And _OffsetEnergyFITSHareListForMFFIT.Count > 0 Then
+                '        'MF Offsetting AR
+                '        OffsetARCollProc3.ComputeARCollection(Me.OffsettingMFwithVATCollListTemp, EnumCollectionType.MarketFees)
+                '        If OffsetARCollProc3.MFwithVATCollectionList.Count() > 0 Then
+                '            For Each MFItem In OffsetARCollProc3.MFwithVATCollectionList
+                '                Me._OffsettingMFwithVATCollectionList.Add(MFItem)
+                '            Next
+                '        End If
+                '    End If
 
-                    If _ARWESMBillSUmmaryListFITEnergy.Count > 0 And _OffsetEnergyFITShareListForEnergy.Count > 0 Then
-                        'Energy Offsetting AR
-                        OffsetARCollProc3.ComputeARCollection(Me.OffsettingEnergyCollListTemp, EnumCollectionType.Energy)
-                        If OffsetARCollProc3.EnergyCollection.Count() > 0 Then
-                            For Each EnergyItem In OffsetARCollProc3.EnergyCollection
-                                Me._OffsettingEnergyCollectionList.Add(EnergyItem)
-                            Next
-                        End If
-                    End If
+                '    If _ARWESMBillSUmmaryListFITEnergy.Count > 0 And _OffsetEnergyFITShareListForEnergy.Count > 0 Then
+                '        'Energy Offsetting AR
+                '        OffsetARCollProc3.ComputeARCollection(Me.OffsettingEnergyCollListTemp, EnumCollectionType.Energy)
+                '        If OffsetARCollProc3.EnergyCollection.Count() > 0 Then
+                '            For Each EnergyItem In OffsetARCollProc3.EnergyCollection
+                '                Me._OffsettingEnergyCollectionList.Add(EnergyItem)
+                '            Next
+                '        End If
+                '    End If
 
-                    'If _ARWESMBillSUmmaryListFITVAT.Count > 0 And _OffsetVATFITShareListForVAT.Count > 0 Then
-                    '    'VAT Offsetting AR
-                    '    OffsetARCollProc3.ComputeARCollection(Me.OffsettingVATonEnergyCollectionListTemp, EnumCollectionType.VatOnEnergy)
-                    '    If OffsetARCollProc3.VATCollection.Count() > 0 Then
-                    '        For Each EnergyVATItem In OffsetARCollProc3.VATCollection
-                    '            Me._OffsettingVATonEnergyCollectionList.Add(EnergyVATItem)
-                    '        Next
-                    '    End If
-                    'End If
+                '    'If _ARWESMBillSUmmaryListFITVAT.Count > 0 And _OffsetVATFITShareListForVAT.Count > 0 Then
+                '    '    'VAT Offsetting AR
+                '    '    OffsetARCollProc3.ComputeARCollection(Me.OffsettingVATonEnergyCollectionListTemp, EnumCollectionType.VatOnEnergy)
+                '    '    If OffsetARCollProc3.VATCollection.Count() > 0 Then
+                '    '        For Each EnergyVATItem In OffsetARCollProc3.VATCollection
+                '    '            Me._OffsettingVATonEnergyCollectionList.Add(EnergyVATItem)
+                '    '        Next
+                '    '    End If
+                '    'End If
 
-                    'Energy and Energy FiT Offsetting AP
-                    Dim UpdatedWESMBillSummaryOnEnergyFIT = (From x In WESMBillSummaryList
-                                                             Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.E
-                                                             Select x Order By x.NewDueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance).ToList()
+                '    'Energy and Energy FiT Offsetting AP
+                '    Dim UpdatedWESMBillSummaryOnEnergyFIT = (From x In WESMBillSummaryList
+                '                                             Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.E
+                '                                             Select x Order By x.NewDueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance).ToList()
 
-                    If UpdatedWESMBillSummaryOnEnergyFIT.Count > 0 And OffsetARCollProc3.TotalEnergyCollectionPerBP.Count > 0 Then
-                        OffsetAPAllocProc3.ComputeEnergyAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnEnergyFIT,
-                                                                        OffsetARCollProc3.TotalEnergyCollectionPerBP)
-                        For Each OffsetItem In OffsetAPAllocProc3.EnergyAPAllocationList
-                            Me._OffsettingEnergyAllocationList.Add(OffsetItem)
-                        Next
-                        Me.AssignEnergyShareToList(OffsetAPAllocProc3.EnergyAPAllocationList)
-                    End If
+                '    If UpdatedWESMBillSummaryOnEnergyFIT.Count > 0 And OffsetARCollProc3.TotalEnergyCollectionPerBP.Count > 0 Then
+                '        OffsetAPAllocProc3.ComputeEnergyAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnEnergyFIT,
+                '                                                        OffsetARCollProc3.TotalEnergyCollectionPerBP)
+                '        For Each OffsetItem In OffsetAPAllocProc3.EnergyAPAllocationList
+                '            Me._OffsettingEnergyAllocationList.Add(OffsetItem)
+                '        Next
+                '        Me.AssignEnergyShareToList(OffsetAPAllocProc3.EnergyAPAllocationList)
+                '    End If
 
-                    'VAT and VAT FIT offsetting AP
-                    Dim UpdatedWESMBillSummaryOnVATFIT = (From x In WESMBillSummaryList
-                                                          Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.EV
-                                                          Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance).ToList()
+                '    'VAT and VAT FIT offsetting AP
+                '    Dim UpdatedWESMBillSummaryOnVATFIT = (From x In WESMBillSummaryList
+                '                                          Where x.EndingBalance > 0 And x.ChargeType = EnumChargeType.EV
+                '                                          Select x Order By x.DueDate, x.WESMBillBatchNo, x.BillPeriod, x.EndingBalance).ToList()
 
-                    If UpdatedWESMBillSummaryOnVATFIT.Count > 0 And OffsetARCollProc3.TotalVATCollectionPerBP.Count > 0 Then
-                        OffsetAPAllocProc3.ComputeVATAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnVATFIT,
-                                                              OffsetARCollProc3.TotalVATCollectionPerBP)
-                        For Each OffsetItem In OffsetAPAllocProc3.VATonEnergyAPAllocationList
-                            Me._OffsettingVATonEnergyAllocationList.Add(OffsetItem)
-                        Next
-                        Me.AssignVATonEnergyShareToList(OffsetAPAllocProc3.VATonEnergyAPAllocationList)
-                    End If
+                '    If UpdatedWESMBillSummaryOnVATFIT.Count > 0 And OffsetARCollProc3.TotalVATCollectionPerBP.Count > 0 Then
+                '        OffsetAPAllocProc3.ComputeVATAPAllocationList(AllocationDate, UpdatedWESMBillSummaryOnVATFIT,
+                '                                              OffsetARCollProc3.TotalVATCollectionPerBP)
+                '        For Each OffsetItem In OffsetAPAllocProc3.VATonEnergyAPAllocationList
+                '            Me._OffsettingVATonEnergyAllocationList.Add(OffsetItem)
+                '        Next
+                '        Me.AssignVATonEnergyShareToList(OffsetAPAllocProc3.VATonEnergyAPAllocationList)
+                '    End If
 
-                    For Each ItemDMCM In OffsetAPAllocProc3.ListofDMCMAP
-                        Me._ListofDMCM.Add(ItemDMCM)
-                    Next
-                End If
+                '    For Each ItemDMCM In OffsetAPAllocProc3.ListofDMCMAP
+                '        Me._ListofDMCM.Add(ItemDMCM)
+                '    Next
+                'End If
                 If Me._OffsettingSequence > AMModule.OffsettingLimit And AMModule.OffsettingLimit <> 0 Then
                     Exit Do
                 End If
@@ -1779,7 +1796,7 @@ Public Class OffsettingProcess
                 If .NewDueDate = AllocationDate Then
                     DIonMF = 0D
                 Else
-                    If .SummaryType = EnumSummaryType.DMCM Then
+                    If .SummaryType = EnumSummaryType.DMCM And .NoDefInt = True Then
                         DIonMF = 0D
                     Else
                         DIonMF = _BusinessFactory.ComputeDefaultInterest(.DueDate, .NewDueDate, AllocationDate, (.EndingBalance - .EnergyWithhold), DefaultInterestRATE)
@@ -2213,7 +2230,7 @@ Public Class OffsettingProcess
         WESMBillSummaryMFV = (From x In WESMBillSummaryItem Where x.ChargeType = EnumChargeType.MFV Select x).FirstOrDefault
 
         With WESMBillSummaryMF
-            If .NewDueDate = AllocationDate Then
+            If .NewDueDate = AllocationDate And .NoDefInt = True Then
                 DIonMF = 0D
             Else
                 DIonMF = _BusinessFactory.ComputeDefaultInterest(.DueDate, .NewDueDate, AllocationDate, (.EndingBalance - .EnergyWithhold), DefaultInterestRATE)

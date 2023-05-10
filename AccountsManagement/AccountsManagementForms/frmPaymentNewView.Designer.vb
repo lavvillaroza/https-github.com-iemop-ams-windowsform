@@ -24,9 +24,9 @@ Partial Class frmPaymentNewView
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim GroupBox31 As System.Windows.Forms.GroupBox
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPaymentNewView))
         Me.Label80 = New System.Windows.Forms.Label()
         Me.dgv_PaymentTransToPR = New System.Windows.Forms.DataGridView()
@@ -79,9 +79,9 @@ Partial Class frmPaymentNewView
         Me.btn_Close = New System.Windows.Forms.Button()
         Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ts_Progressbar = New System.Windows.Forms.ToolStripProgressBar()
         Me.ts_StatusDesc = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ts_LabelName = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         GroupBox31 = New System.Windows.Forms.GroupBox()
         GroupBox31.SuspendLayout()
         CType(Me.dgv_PaymentTransToPR, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -132,29 +132,29 @@ Partial Class frmPaymentNewView
         Me.dgv_PaymentTransToPR.AllowUserToDeleteRows = False
         Me.dgv_PaymentTransToPR.AllowUserToResizeColumns = False
         Me.dgv_PaymentTransToPR.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_PaymentTransToPR.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_PaymentTransToPR.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle16
         Me.dgv_PaymentTransToPR.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_PaymentTransToPR.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_PaymentTransToPR.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_PaymentTransToPR.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
         Me.dgv_PaymentTransToPR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_PaymentTransToPR.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_PaymentTransToPR.DefaultCellStyle = DataGridViewCellStyle18
         Me.dgv_PaymentTransToPR.Location = New System.Drawing.Point(4, 19)
         Me.dgv_PaymentTransToPR.Name = "dgv_PaymentTransToPR"
         Me.dgv_PaymentTransToPR.RowHeadersVisible = False
@@ -917,31 +917,21 @@ Partial Class frmPaymentNewView
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ts_Progressbar, Me.ts_StatusDesc, Me.ts_LabelName})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ts_StatusDesc, Me.ts_LabelName})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 613)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1169, 24)
         Me.StatusStrip1.TabIndex = 65
         Me.StatusStrip1.Text = "StatusStrip_Payment"
         '
-        'ts_Progressbar
-        '
-        Me.ts_Progressbar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ts_Progressbar.BackColor = System.Drawing.Color.White
-        Me.ts_Progressbar.Name = "ts_Progressbar"
-        Me.ts_Progressbar.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ts_Progressbar.Size = New System.Drawing.Size(300, 18)
-        Me.ts_Progressbar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.ts_Progressbar.Visible = False
-        '
         'ts_StatusDesc
         '
+        Me.ts_StatusDesc.AutoSize = False
         Me.ts_StatusDesc.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ts_StatusDesc.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
         Me.ts_StatusDesc.Name = "ts_StatusDesc"
-        Me.ts_StatusDesc.Size = New System.Drawing.Size(721, 19)
+        Me.ts_StatusDesc.Size = New System.Drawing.Size(923, 19)
         Me.ts_StatusDesc.Spring = True
         Me.ts_StatusDesc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -951,13 +941,14 @@ Partial Class frmPaymentNewView
         Me.ts_LabelName.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ts_LabelName.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
         Me.ts_LabelName.Name = "ts_LabelName"
         Me.ts_LabelName.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ts_LabelName.Size = New System.Drawing.Size(100, 19)
-        Me.ts_LabelName.Text = "0 record"
-        Me.ts_LabelName.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ts_LabelName.Size = New System.Drawing.Size(200, 19)
+        Me.ts_LabelName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ts_LabelName.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal
+        '
+        'Timer1
+        '
         '
         'frmPaymentNewView
         '
@@ -966,6 +957,7 @@ Partial Class frmPaymentNewView
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1169, 637)
+        Me.ControlBox = False
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TableLayoutPanel7)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -974,7 +966,7 @@ Partial Class frmPaymentNewView
         Me.MaximizeBox = False
         Me.Name = "frmPaymentNewView"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "View Payment History"
+        Me.Text = "Payment Allocated Management"
         GroupBox31.ResumeLayout(False)
         GroupBox31.PerformLayout()
         CType(Me.dgv_PaymentTransToPR, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1048,6 +1040,6 @@ Partial Class frmPaymentNewView
     Friend WithEvents Txtbox_TotalOffsetDeferredEnergy As System.Windows.Forms.TextBox
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents ts_LabelName As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents ts_Progressbar As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents ts_StatusDesc As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents Timer1 As Timer
 End Class

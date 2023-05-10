@@ -2255,10 +2255,33 @@ Public Class WESMBillHelper
         Dim SQL As String
 
         Try
-            
 
-            SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE " & _
-                  "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " & _
+
+            SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE " &
+                  "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " &
+                  "OR stl_run <> '" & SettlementRun & "'"
+
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            result = Me.GetMaxInvoiceNo(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+
+    Public Function GetMaxInvoiceNoNew(ByVal BillingPeriod As Integer, ByVal FileType As EnumFileType, ByVal SettlementRun As String) As Long
+        Dim result As Long = 0
+        Dim report As New DataReport
+        Dim SQL As String
+
+        Try
+            SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE_LVM_VIEW " &
+                  "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " &
                   "OR stl_run <> '" & SettlementRun & "'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -4107,13 +4130,18 @@ Public Class WESMBillHelper
         Try
             Dim SQL As String = "SELECT A.* FROM AM_WESM_ALLOC_COVER_SUMMARY A " & vbNewLine _
                               & "WHERE A.TRANSACTION_NUMBER IN ("
-
+            Dim x As Integer = 0
             For Each item In listOfInvoices
-                SQL &= "'" & item & "',"
+                Dim modVal As Integer = (x Mod 1000)
+                If modVal = 0 And x <> 0 Then
+                    SQL = Left(SQL, SQL.Length - 1) & ") OR A.TRANSACTION_NUMBER IN ("
+                    SQL &= "'" & item & "',"
+                Else
+                    SQL &= "'" & item & "',"
+                End If
+                x += 1
             Next
-
             SQL = Left(SQL, SQL.Length - 1) & ")"
-
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
@@ -13839,7 +13867,7 @@ Public Class WESMBillHelper
             listSQL.Add(SQL)
 
             'Get the Maximum Invoice No
-            Dim InvoiceNo = Me.GetMaxInvoiceNo(calendarBP.BillingPeriod, filetype, settlementrun)
+            Dim InvoiceNo As Long = Me.GetMaxInvoiceNoNew(calendarBP.BillingPeriod, filetype, settlementrun) ' Me.GetMaxInvoiceNo(calendarBP.BillingPeriod, filetype, settlementrun) 'Changed by LAVV as of 04/14/2023            
 
             If InvoiceNo = 0 Then
                 InvoiceNo = AMModule.OldWESMBILL
@@ -13902,7 +13930,7 @@ Public Class WESMBillHelper
                 row = dtWESMInvoice.NewRow()
                 rowP = dtWESMInvoicePrinting.NewRow()
                 With item
-                    Dim UniqueKey = .IDNumber & .RegistrationID                    
+                    Dim UniqueKey = .IDNumber & .RegistrationID
                     Dim getParentID As String = (From x In wbschangeparentidlist
                                                  Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
                                                  Select x.NewParentParticipants.IDNumber).FirstOrDefault
@@ -20588,6 +20616,7 @@ Public Class WESMBillHelper
             While dr.Read()
                 With dr
                     Dim item As New APAllocation
+                    Debug.Print(CStr(.Item("INV_DM_CM")))
                     item.BillingRemarks = CStr(.Item("REMARKS"))
                     item.BillingPeriod = CInt(.Item("BILLING_PERIOD"))
                     item.EndingBalance = CDec(.Item("ENDING_BALANCE"))
@@ -29320,13 +29349,12 @@ Public Class WESMBillHelper
         Dim ret As New List(Of String)
         Dim Report As New DataReport
         Try
-            
-            Dim SQL As String = "SELECT DISTINCT C.PARTICIPANT_ID " & _
-                               "FROM AM_STL_NOTICE_NEW A " & _
-                               "LEFT JOIN AM_WESM_BILL_SUMMARY B ON B.WESMBILL_SUMMARY_NO = A.WESMBILL_SUMMARY_NO " & _
-                               "LEFT JOIN AM_PARTICIPANTS C ON B.ID_NUMBER = C.ID_NUMBER " & _
-                               "WHERE A.STL_NOTICE_DATE = TO_DATE('" & FormatDateTime(TransactionDate, DateFormat.ShortDate) & "','MM/DD/YYYY') " & _
-                               "ORDER BY C.PARTICIPANT_ID"
+            Dim previousDate As Date = TransactionDate.AddMonths(-2)
+            Dim getpreviousDate As Date = New Date(previousDate.Year, previousDate.Month, 1).AddDays(-1)
+
+
+            Dim SQL As String = "SELECT DISTINCT A.ID_NUMBER " &
+                               "FROM AM_PARTICIPANTS A WHERE STATUS = 1"
 
             Report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If Report.ErrorMessage.Length <> 0 Then
