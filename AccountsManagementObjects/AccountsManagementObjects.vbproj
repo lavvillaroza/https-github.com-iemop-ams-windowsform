@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E38648F9-4B4B-4266-934A-DF5F602D6389}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AccountsManagementObjects</RootNamespace>
+    <AssemblyName>AccountsManagementObjects</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>AccountsManagementObjects.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountingCode.vb" />
+    <Compile Include="AdminSettings.vb" />
+    <Compile Include="AMModule.vb" />
+    <Compile Include="AMParticipants.vb" />
+    <Compile Include="BankReconDetails.vb" />
+    <Compile Include="BankReconMain.vb" />
+    <Compile Include="AMBeginningBalance.vb" />
+    <Compile Include="BIRAlphanumericTaxCode.vb" />
+    <Compile Include="BIRRuling.vb" />
+    <Compile Include="BIRRulingDetails.vb" />
+    <Compile Include="BIRRulingParticipant.vb" />
+    <Compile Include="BRCollectionReportPurchasesDetails.vb" />
+    <Compile Include="BRCollectionReportBuyerParticipant.vb" />
+    <Compile Include="CashSummary.vb" />
+    <Compile Include="BRCollectionReport.vb" />
+    <Compile Include="BRCollectionReportSellerParticipant.vb" />
+    <Compile Include="BRCollectionReportSalesDetails.vb" />
+    <Compile Include="ImportWTAFromCRSS.vb" />
+    <Compile Include="EWTTaggedAllocated.vb" />
+    <Compile Include="PaymentTag.vb" />
+    <Compile Include="PaymentTagDetails.vb" />
+    <Compile Include="ProgressClass.vb" />
+    <Compile Include="SellerBuyerInformation.vb" />
+    <Compile Include="WESMBillAllocCoverSummary.vb" />
+    <Compile Include="WESMBillAllocDisaggDetails.vb" />
+    <Compile Include="WESMBillFileOutput.vb" />
+    <Compile Include="WESMBillSTLIDMapping.vb" />
+    <Compile Include="WESMTransDetailsSummaryHistory.vb" />
+    <Compile Include="WESMTransDetailsSummary.vb" />
+    <Compile Include="WHTaxCertificateSTL.vb" />
+    <Compile Include="WHTaxCertificateDetails.vb" />
+    <Compile Include="Check.vb" />
+    <Compile Include="CheckVoucherDetails.vb" />
+    <Compile Include="CheckVoucherMain.vb" />
+    <Compile Include="Collection.vb" />
+    <Compile Include="CollectionAllocation.vb" />
+    <Compile Include="CollectionMonitoring.vb" />
+    <Compile Include="CRSSParticipants.vb" />
+    <Compile Include="WESMInvoiceCRSSMappping.vb" />
+    <Compile Include="DebitCreditMemoSummary.vb" />
+    <Compile Include="DefaultNoticeDetails.vb" />
+    <Compile Include="EWTPayableBIR.vb" />
+    <Compile Include="ExcludedParticipantsInOffsetting.vb" />
+    <Compile Include="ImportWESMBillFromCRSS.vb" />
+    <Compile Include="ParentChildExemption.vb" />
+    <Compile Include="ParticipantRepresentative.vb" />
+    <Compile Include="PaymentBO\DebitCreditMemoSummaryNew.vb" />
+    <Compile Include="DefaultNotice.vb" />
+    <Compile Include="DeferredMonitoringReport.vb" />
+    <Compile Include="EFT.vb" />
+    <Compile Include="FuncAutoPaymentAllocationResult.vb" />
+    <Compile Include="FundTransferFormDetails.vb" />
+    <Compile Include="FundTransferFormMain.vb" />
+    <Compile Include="FundTransferFormParticipant.vb" />
+    <Compile Include="GeneralLedgerCashInBankPrudential.vb" />
+    <Compile Include="GeneralLedgerCashInBankSettlement.vb" />
+    <Compile Include="GeneralLedgerInterestPayablePrudential.vb" />
+    <Compile Include="GeneralLedgerInterestPayableSettlement.vb" />
+    <Compile Include="GeneralLedgerPrudentialPerParticipant.vb" />
+    <Compile Include="InitializationTable.vb" />
+    <Compile Include="InterestEarned.vb" />
+    <Compile Include="JournalVoucherSupport.vb" />
+    <Compile Include="MarketFeesSummary.vb" />
+    <Compile Include="NetSettlementSurplusAdjustmentReport.vb" />
+    <Compile Include="NetSettlementSurplusDetails.vb" />
+    <Compile Include="NetSettlementSurplusMain.vb" />
+    <Compile Include="NetSettlementSurplusSummary.vb" />
+    <Compile Include="OfficialReceiptDetails.vb" />
+    <Compile Include="OfficialReceiptMain.vb" />
+    <Compile Include="OfficialReceiptReportDetailsNew.vb" />
+    <Compile Include="OfficialReceiptReportDetails.vb" />
+    <Compile Include="DeferredMonitoring.vb" />
+    <Compile Include="OfficialReceiptReportMain.vb" />
+    <Compile Include="OfficialReceiptReportRawDetailsNew.vb" />
+    <Compile Include="OfficialReceiptReportRawDetails.vb" />
+    <Compile Include="OfficialReceiptSummary.vb" />
+    <Compile Include="Payment.vb" />
+    <Compile Include="DocSignatories.vb" />
+    <Compile Include="CollectionNotice.vb" />
+    <Compile Include="CollectionNoticeDetails.vb" />
+    <Compile Include="DebitCreditMemo.vb" />
+    <Compile Include="DebitCreditMemoDetails.vb" />
+    <Compile Include="Exporter.vb" />
+    <Compile Include="JournalVoucher.vb" />
+    <Compile Include="CalendarBillingPeriod.vb" />
+    <Compile Include="ChargeId.vb" />
+    <Compile Include="EnumAM.vb" />
+    <Compile Include="JournalVoucherDetails.vb" />
+    <Compile Include="LogLib.vb" />
+    <Compile Include="BillParticipants.vb" />
+    <Compile Include="OffsetP2PC2CDetails.vb" />
+    <Compile Include="ParentChildMapping.vb" />
+    <Compile Include="ParticipantLineage.vb" />
+    <Compile Include="ParticipantParentChildMapping.vb" />
+    <Compile Include="AllocatedPayment.vb" />
+    <Compile Include="PaymentAllocationAccount.vb" />
+    <Compile Include="PaymentAllocationParticipant.vb" />
+    <Compile Include="PaymentAllocation.vb" />
+    <Compile Include="PaymentAllocationTxnLogs.vb" />
+    <Compile Include="PaymentBO\AllocationDate.vb" />
+    <Compile Include="PaymentBO\APAllocation.vb" />
+    <Compile Include="PaymentBO\ARCollection.vb" />
+    <Compile Include="PaymentBO\ARCollectionPerBP.vb" />
+    <Compile Include="PaymentBO\DeferredMain.vb" />
+    <Compile Include="PaymentBO\PaymentShare.vb" />
+    <Compile Include="PaymentBO\PaymentShareDetails.vb" />
+    <Compile Include="PaymentBO\PaymentNew.vb" />
+    <Compile Include="PaymentBO\PaymentProformaEntries.vb" />
+    <Compile Include="PaymentBO\PaymentTransferToPR.vb" />
+    <Compile Include="PaymentBO\PaymentWBSHistoryBalance.vb" />
+    <Compile Include="PaymentBO\SPAInvoices.vb" />
+    <Compile Include="PaymentBO\WBSNoTransaction.vb" />
+    <Compile Include="Prudential.vb" />
+    <Compile Include="PrudentialDrawdown.vb" />
+    <Compile Include="PrudentialHistory.vb" />
+    <Compile Include="PrudentialMarginCall.vb" />
+    <Compile Include="PrudentialMarginCallSummary.vb" />
+    <Compile Include="PrudentialObj.vb" />
+    <Compile Include="PrudentialRefund.vb" />
+    <Compile Include="PrudentialRefundDetails.vb" />
+    <Compile Include="RequestForPayment.vb" />
+    <Compile Include="RequestForPaymentDetails.vb" />
+    <Compile Include="SPA.vb" />
+    <Compile Include="SPADetails.vb" />
+    <Compile Include="SPAMonitoring.vb" />
+    <Compile Include="StatementOfAccount.vb" />
+    <Compile Include="StatementOfAccountMainDetails.vb" />
+    <Compile Include="StatementofAccountNew.vb" />
+    <Compile Include="STLBeginningBalance.vb" />
+    <Compile Include="STLNotice.vb" />
+    <Compile Include="STLNoticeDetails.vb" />
+    <Compile Include="STLNoticeNew.vb" />
+    <Compile Include="SubsidiaryLedgerAP.vb" />
+    <Compile Include="SubsidiaryLedgerAR.vb" />
+    <Compile Include="SummaryAccoutingBooks.vb" />
+    <Compile Include="SummaryObj.vb" />
+    <Compile Include="WESMBill.vb" />
+    <Compile Include="WESMBillGPPosted.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="WESMBillSalesAndPurchased.vb" />
+    <Compile Include="WESMBillSalesAndPurchasedForWT.vb" />
+    <Compile Include="WESMBillsExemption.vb" />
+    <Compile Include="WESMBillSummary.vb" />
+    <Compile Include="WESMBillSummaryAmountAdjustment.vb" />
+    <Compile Include="WESMBillSummaryAmountAdjustmentDetails.vb" />
+    <Compile Include="WESMBillSummaryAmountAdjustmentMonitoring.vb" />
+    <Compile Include="WESMBillSummaryChangeLogs.vb" />
+    <Compile Include="WESMBillSummaryChangeParentId.vb" />
+    <Compile Include="WESMBillSummaryHistory.vb" />
+    <Compile Include="WESMBillSummaryTransaction.vb" />
+    <Compile Include="WESMBillSummaryWithInvoice.vb" />
+    <Compile Include="WESMBPChangeHistory.vb" />
+    <Compile Include="WESMInvoice.vb" />
+    <Compile Include="WESMLogsTransaction.vb" />
+    <Compile Include="WHVATCertificateDetails.vb" />
+    <Compile Include="WHVATCertificateSTL.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
