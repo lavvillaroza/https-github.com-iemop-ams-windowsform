@@ -405,6 +405,12 @@
     <Compile Include="FormReports\frmExportWTASummary.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormReports\frmWVATTaggedAllocReport.Designer.vb">
+      <DependentUpon>frmWVATTaggedAllocReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReports\frmWVATTaggedAllocReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm1stOffsettingExemptMgt.Designer.vb">
       <DependentUpon>frm1stOffsettingExemptMgt.vb</DependentUpon>
     </Compile>
@@ -940,10 +946,10 @@
     <Compile Include="frmWHTaxCertificateSTLDetails.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmWHVatCertificatesSTLMgt.Designer.vb">
-      <DependentUpon>frmWHVatCertificatesSTLMgt.vb</DependentUpon>
+    <Compile Include="frmWHVATCertificateSTLMgt.Designer.vb">
+      <DependentUpon>frmWHVATCertificateSTLMgt.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmWHVatCertificatesSTLMgt.vb">
+    <Compile Include="frmWHVATCertificateSTLMgt.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmWHVATCertificateSTLDetails.Designer.vb">
@@ -1570,6 +1576,9 @@
     <EmbeddedResource Include="FormReports\frmExportWTASummary.resx">
       <DependentUpon>frmExportWTASummary.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReports\frmWVATTaggedAllocReport.resx">
+      <DependentUpon>frmWVATTaggedAllocReport.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm1stOffsettingExemptMgt.resx">
       <DependentUpon>frm1stOffsettingExemptMgt.vb</DependentUpon>
     </EmbeddedResource>
@@ -1876,8 +1885,8 @@
     <EmbeddedResource Include="frmWHTaxCertificateSTLDetails.resx">
       <DependentUpon>frmWHTaxCertificateSTLDetails.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmWHVatCertificatesSTLMgt.resx">
-      <DependentUpon>frmWHVatCertificatesSTLMgt.vb</DependentUpon>
+    <EmbeddedResource Include="frmWHVATCertificateSTLMgt.resx">
+      <DependentUpon>frmWHVATCertificateSTLMgt.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWHVATCertificateSTLDetails.resx">
       <DependentUpon>frmWHVATCertificateSTLDetails.vb</DependentUpon>

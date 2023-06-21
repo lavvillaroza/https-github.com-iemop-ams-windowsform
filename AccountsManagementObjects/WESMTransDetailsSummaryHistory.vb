@@ -111,6 +111,17 @@
         End Set
     End Property
 
+
+    Private _AllocatedInWVAT As Decimal
+    Public Property AllocatedInWVAT() As Decimal
+        Get
+            Return _AllocatedInWVAT
+        End Get
+        Set(ByVal value As Decimal)
+            _AllocatedInWVAT = value
+        End Set
+    End Property
+
     Private _Status As String
     Public Property Status() As String
         Get

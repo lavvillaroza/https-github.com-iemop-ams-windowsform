@@ -1,11 +1,6 @@
 ﻿Option Explicit On
 Option Strict On
 
-Imports System.IO
-Imports System.Data
-Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Windows.Forms
 Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 Imports System.Threading.Tasks
@@ -43,8 +38,6 @@ Public Class frmPaymentNew
         ToolStripStatus_LabelMsg.Text = _ProgressMsg.ProgressMsg
         ctrl_statusStrip.Refresh()
     End Sub
-
-
 
     Public Sub LoadComboItems()
         Me.btn_Calculate.Enabled = False
@@ -92,10 +85,13 @@ Public Class frmPaymentNew
 
             Me.btn_Calculate.Enabled = False
             Me.cbo_CollectionAllocDate.Enabled = False
+
             cts = New CancellationTokenSource
+            Me.Timer1.Start()
+            Me.stopWatch.Start()
             Me.paymntHelper.SetCTS(cts.Token)
 
-            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocations."}
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocation."}
             UpdateProgress(newProgress)
 
             getTimeStart = WBillHelper.GetSystemDateTime
@@ -103,13 +99,13 @@ Public Class frmPaymentNew
             'Allocation
             Await Task.Run(Sub() PaymntHelper.GetAPAllocations())
 
-            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocations offsetting."}
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing payment allocation offsetting."}
             UpdateProgress(newProgress)
 
             'Offsetting        
             Await Task.Run(Sub() PaymntHelper.GetOffsetting())
 
-            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while finalizing the processed data for payment."}
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while finalizing the processed data for payment allocation."}
             UpdateProgress(newProgress)
 
             Me.dgv_PaymentTransToPR.DataSource = PaymntHelper.PaymentTrasferToPRDT()
@@ -176,7 +172,7 @@ Public Class frmPaymentNew
             Me.cbo_CollectionAllocDate.Enabled = False
 
             Dim newProgress As New ProgressClass
-            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while preparing collections for payment allocation."}
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while loading the collections for payment allocation."}
             UpdateProgress(newProgress)
 
             If Me.PaymntHelper IsNot Nothing Then
@@ -209,6 +205,10 @@ Public Class frmPaymentNew
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             cts = Nothing
         Finally
+            Me.Timer1.Stop()
+            Me.stopWatch.Stop()
+            Me.stopWatch.Reset()
+
             Me.btn_Close.Enabled = True
         End Try
     End Sub
@@ -1441,7 +1441,7 @@ Public Class frmPaymentNew
         End Try
     End Sub
 
-    Private Sub btn_CollectionAndPaymentReport_Click(sender As Object, e As EventArgs) Handles btn_CollectionAndPaymentReport.Click
+    Private Async Sub btn_CollectionAndPaymentReport_Click(sender As Object, e As EventArgs) Handles btn_CollectionAndPaymentReport.Click
         Dim sFolderDialog As New FolderBrowserDialog
         Dim FilePath As String = ""
         Try
@@ -1453,8 +1453,13 @@ Public Class frmPaymentNew
                     FilePath = sFolderDialog.SelectedPath
                 End If
             End With
-            ProgressThread.Show("Please wait while preparing CAPSummary Report.")            
-            PaymntHelper.CreateCollAndPaySummReport(FilePath)
+
+            ProgressThread.Show("Please wait while preparing CAPSummary Report.")
+
+            Await Task.Run(Sub()
+                               paymntHelper.CreateCollAndPaySummReport(FilePath)
+                           End Sub)
+
             ProgressThread.Close()
             MessageBox.Show("Successfully exported please see in targeted path.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception

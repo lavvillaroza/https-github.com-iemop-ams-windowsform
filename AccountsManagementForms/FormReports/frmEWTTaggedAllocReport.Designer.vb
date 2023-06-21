@@ -27,9 +27,9 @@ Partial Class frmEWTTaggedAllocReport
         Me.dtTo = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnExportToExcel = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -84,6 +84,17 @@ Partial Class frmEWTTaggedAllocReport
         Me.Label3.TabIndex = 18
         Me.Label3.Text = "To:"
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Panel1)
+        Me.GroupBox1.Controls.Add(Me.btnExportToExcel)
+        Me.GroupBox1.Controls.Add(Me.btnClose)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(338, 146)
+        Me.GroupBox1.TabIndex = 25
+        Me.GroupBox1.TabStop = False
+        '
         'btnExportToExcel
         '
         Me.btnExportToExcel.AccessibleName = ""
@@ -95,7 +106,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.btnExportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.btnExportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnExportToExcel.Location = New System.Drawing.Point(35, 85)
+        Me.btnExportToExcel.Location = New System.Drawing.Point(31, 86)
         Me.btnExportToExcel.Name = "btnExportToExcel"
         Me.btnExportToExcel.Size = New System.Drawing.Size(140, 39)
         Me.btnExportToExcel.TabIndex = 19
@@ -112,23 +123,12 @@ Partial Class frmEWTTaggedAllocReport
         Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.DeleteIcon24x24
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnClose.Location = New System.Drawing.Point(181, 85)
+        Me.btnClose.Location = New System.Drawing.Point(177, 86)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(140, 39)
         Me.btnClose.TabIndex = 20
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.Panel1)
-        Me.GroupBox1.Controls.Add(Me.btnExportToExcel)
-        Me.GroupBox1.Controls.Add(Me.btnClose)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(338, 146)
-        Me.GroupBox1.TabIndex = 25
-        Me.GroupBox1.TabStop = False
         '
         'frmEWTTaggedAllocReport
         '
@@ -136,6 +136,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(364, 169)
+        Me.ControlBox = False
         Me.Controls.Add(Me.GroupBox1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

@@ -69,13 +69,13 @@
         End Set
     End Property
 
-    Private _UntagEWT As String
-    Public Property UntagEWT() As String
+    Private _UntagWVAT As String
+    Public Property UntagWVAT() As String
         Get
-            Return _UntagEWT
+            Return _UntagWVAT
         End Get
         Set(ByVal value As String)
-            _UntagEWT = value
+            _UntagWVAT = value
         End Set
     End Property
 End Class

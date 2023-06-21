@@ -22,11 +22,11 @@ Partial Class frmPrudentialRefundView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnGenerateFTF = New System.Windows.Forms.Button()
         Me.BtnJVEFT = New System.Windows.Forms.Button()
         Me.BtnJVClosing = New System.Windows.Forms.Button()
@@ -181,8 +181,8 @@ Partial Class frmPrudentialRefundView
         'DGridViewPrudential
         '
         Me.DGridViewPrudential.AllowUserToAddRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewPrudential.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewPrudential.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
         Me.DGridViewPrudential.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewPrudential.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colTransDate, Me.colIDNumber, Me.colParticipantID, Me.colParticipantName, Me.colPRAmount, Me.ColInterestAmount, Me.colAmountRefund})
         Me.DGridViewPrudential.Location = New System.Drawing.Point(222, 12)
@@ -190,8 +190,8 @@ Partial Class frmPrudentialRefundView
         Me.DGridViewPrudential.MultiSelect = False
         Me.DGridViewPrudential.Name = "DGridViewPrudential"
         Me.DGridViewPrudential.RowHeadersWidth = 20
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle10
         Me.DGridViewPrudential.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DGridViewPrudential.Size = New System.Drawing.Size(888, 407)
         Me.DGridViewPrudential.TabIndex = 82
@@ -223,24 +223,24 @@ Partial Class frmPrudentialRefundView
         '
         'colPRAmount
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colPRAmount.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colPRAmount.DefaultCellStyle = DataGridViewCellStyle7
         Me.colPRAmount.HeaderText = "PR Amount"
         Me.colPRAmount.Name = "colPRAmount"
         Me.colPRAmount.ReadOnly = True
         '
         'ColInterestAmount
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.ColInterestAmount.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.ColInterestAmount.DefaultCellStyle = DataGridViewCellStyle8
         Me.ColInterestAmount.HeaderText = "Interest Amount"
         Me.ColInterestAmount.Name = "ColInterestAmount"
         Me.ColInterestAmount.Width = 110
         '
         'colAmountRefund
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colAmountRefund.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colAmountRefund.DefaultCellStyle = DataGridViewCellStyle9
         Me.colAmountRefund.HeaderText = "Amount Refund"
         Me.colAmountRefund.Name = "colAmountRefund"
         Me.colAmountRefund.Width = 130
@@ -251,6 +251,7 @@ Partial Class frmPrudentialRefundView
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = New System.Drawing.Size(1121, 434)
+        Me.ControlBox = False
         Me.Controls.Add(Me.DGridViewPrudential)
         Me.Controls.Add(Me.GB_Allocation)
         Me.Controls.Add(Me.btnGenerateFTF)
@@ -259,6 +260,7 @@ Partial Class frmPrudentialRefundView
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.btnJVSetup)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmPrudentialRefundView"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Refund View"

@@ -22,13 +22,13 @@ Partial Class frmPrudential
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.DGridViewPrudential = New System.Windows.Forms.DataGridView()
@@ -81,11 +81,11 @@ Partial Class frmPrudential
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(9, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(74, 14)
+        Me.Label3.Size = New System.Drawing.Size(75, 14)
         Me.Label3.TabIndex = 25
         Me.Label3.Text = "Participants:"
         '
@@ -93,14 +93,14 @@ Partial Class frmPrudential
         '
         Me.DGridViewPrudential.AllowUserToAddRows = False
         Me.DGridViewPrudential.AllowUserToDeleteRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewPrudential.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewPrudential.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle15
         Me.DGridViewPrudential.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewPrudential.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colIDNumber, Me.colParticipantID, Me.colParticipantName, Me.colPrudentialAmount, Me.colInterestAmount, Me.colRepName, Me.colRepPosition, Me.colRepAddress})
         Me.DGridViewPrudential.Location = New System.Drawing.Point(6, 17)
         Me.DGridViewPrudential.Name = "DGridViewPrudential"
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle18
         Me.DGridViewPrudential.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewPrudential.Size = New System.Drawing.Size(720, 246)
         Me.DGridViewPrudential.TabIndex = 0
@@ -125,20 +125,20 @@ Partial Class frmPrudential
         '
         'colPrudentialAmount
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.colPrudentialAmount.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
+        DataGridViewCellStyle16.Format = "N2"
+        DataGridViewCellStyle16.NullValue = Nothing
+        Me.colPrudentialAmount.DefaultCellStyle = DataGridViewCellStyle16
         Me.colPrudentialAmount.HeaderText = "PrudentialAmount"
         Me.colPrudentialAmount.Name = "colPrudentialAmount"
         Me.colPrudentialAmount.ReadOnly = True
         '
         'colInterestAmount
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.colInterestAmount.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
+        DataGridViewCellStyle17.Format = "N2"
+        DataGridViewCellStyle17.NullValue = Nothing
+        Me.colInterestAmount.DefaultCellStyle = DataGridViewCellStyle17
         Me.colInterestAmount.HeaderText = "InterestAmount"
         Me.colInterestAmount.Name = "colInterestAmount"
         Me.colInterestAmount.ReadOnly = True
@@ -177,11 +177,11 @@ Partial Class frmPrudential
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(9, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(137, 14)
+        Me.Label1.Size = New System.Drawing.Size(140, 14)
         Me.Label1.TabIndex = 26
         Me.Label1.Text = "Prudential Transactions:"
         '
@@ -196,16 +196,16 @@ Partial Class frmPrudential
         Me.DGridViewPrudentialHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colID, Me.colTransDate, Me.colCreatedDocument, Me.colAmount, Me.colTransType, Me.colORNo, Me.colDMCMNo, Me.colFTFNo})
         Me.DGridViewPrudentialHistory.Location = New System.Drawing.Point(6, 19)
         Me.DGridViewPrudentialHistory.Name = "DGridViewPrudentialHistory"
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DGridViewPrudentialHistory.RowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DGridViewPrudentialHistory.RowsDefaultCellStyle = DataGridViewCellStyle21
         Me.DGridViewPrudentialHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewPrudentialHistory.Size = New System.Drawing.Size(719, 165)
         Me.DGridViewPrudentialHistory.TabIndex = 1
         '
         'colID
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colID.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colID.DefaultCellStyle = DataGridViewCellStyle19
         Me.colID.HeaderText = "ID"
         Me.colID.Name = "colID"
         Me.colID.Visible = False
@@ -239,8 +239,8 @@ Partial Class frmPrudential
         '
         'colORNo
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colORNo.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colORNo.DefaultCellStyle = DataGridViewCellStyle20
         Me.colORNo.HeaderText = "ORNo"
         Me.colORNo.Name = "colORNo"
         Me.colORNo.ReadOnly = True
@@ -262,11 +262,11 @@ Partial Class frmPrudential
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(16, 15)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(37, 14)
+        Me.Label2.Size = New System.Drawing.Size(36, 14)
         Me.Label2.TabIndex = 29
         Me.Label2.Text = "Type:"
         '
@@ -277,18 +277,18 @@ Partial Class frmPrudential
         Me.ddlType.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.ddlType.Location = New System.Drawing.Point(58, 12)
         Me.ddlType.Name = "ddlType"
-        Me.ddlType.Size = New System.Drawing.Size(121, 20)
+        Me.ddlType.Size = New System.Drawing.Size(121, 22)
         Me.ddlType.TabIndex = 30
         '
         'Label5
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(498, 15)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(82, 14)
+        Me.Label5.Size = New System.Drawing.Size(81, 14)
         Me.Label5.TabIndex = 35
         Me.Label5.Text = "Participant ID:"
         '
@@ -304,7 +304,7 @@ Partial Class frmPrudential
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(231, 328)
         Me.Label4.Name = "Label4"
@@ -315,7 +315,7 @@ Partial Class frmPrudential
         'txtPrudential
         '
         Me.txtPrudential.BackColor = System.Drawing.Color.LemonChiffon
-        Me.txtPrudential.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrudential.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPrudential.ForeColor = System.Drawing.Color.Black
         Me.txtPrudential.Location = New System.Drawing.Point(332, 326)
         Me.txtPrudential.Name = "txtPrudential"
@@ -326,18 +326,18 @@ Partial Class frmPrudential
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(499, 330)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(81, 14)
+        Me.Label6.Size = New System.Drawing.Size(83, 14)
         Me.Label6.TabIndex = 39
         Me.Label6.Text = "Total Interest:"
         '
         'txtInterest
         '
         Me.txtInterest.BackColor = System.Drawing.Color.LemonChiffon
-        Me.txtInterest.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtInterest.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtInterest.ForeColor = System.Drawing.Color.Black
         Me.txtInterest.Location = New System.Drawing.Point(586, 328)
         Me.txtInterest.Name = "txtInterest"
@@ -357,12 +357,13 @@ Partial Class frmPrudential
         Me.btnSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.btnSearch.Location = New System.Drawing.Point(693, 12)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(35, 30)
+        Me.btnSearch.Size = New System.Drawing.Size(29, 24)
         Me.btnSearch.TabIndex = 34
         Me.btnSearch.UseVisualStyleBackColor = True
         '
         'btnFilter
         '
+        Me.btnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btnFilter.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnFilter.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnFilter.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -371,7 +372,7 @@ Partial Class frmPrudential
         Me.btnFilter.Image = Global.AccountsManagementForms.My.Resources.Resources.FilterIconColored22x22
         Me.btnFilter.Location = New System.Drawing.Point(185, 12)
         Me.btnFilter.Name = "btnFilter"
-        Me.btnFilter.Size = New System.Drawing.Size(35, 30)
+        Me.btnFilter.Size = New System.Drawing.Size(24, 24)
         Me.btnFilter.TabIndex = 31
         Me.btnFilter.UseVisualStyleBackColor = True
         '
@@ -394,7 +395,7 @@ Partial Class frmPrudential
         '
         'frmPrudential
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(752, 601)
@@ -411,9 +412,10 @@ Partial Class frmPrudential
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPrudential"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Monitoring"

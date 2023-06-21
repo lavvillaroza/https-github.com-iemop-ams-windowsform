@@ -19,7 +19,7 @@ Public Class frmWHVATCertificateSTLDetails
             Me.FillRemittanceDateSelection()
         End If
 
-        Me.btn_Allocate.Enabled = False
+        Me.btn_Commit.Enabled = False
         Me.btnSave.Enabled = False
     End Sub
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
@@ -43,7 +43,7 @@ Public Class frmWHVATCertificateSTLDetails
             Me.ddlParticipantID.SelectedIndex = 0
             Me.ddlParticipantID.Enabled = False
 
-            Me.btn_Allocate.Hide()
+            Me.btn_Commit.Hide()
             Me.btnSave.Hide()
 
             Me.dgTagging.Rows.Clear()
@@ -87,7 +87,7 @@ Public Class frmWHVATCertificateSTLDetails
         End Try
     End Sub
 
-    Private Sub btn_Allocate_Click(sender As Object, e As EventArgs) Handles btn_Allocate.Click
+    Private Sub btn_Allocate_Click(sender As Object, e As EventArgs) Handles btn_Commit.Click
         Try
             Dim ListWHTCertCollectionTagged As New List(Of WHVATCertificateDetails)
             ProgressThread.Show("Please wait while processing the allocation...")
@@ -96,7 +96,7 @@ Public Class frmWHVATCertificateSTLDetails
                 If CDec(row.Cells("colTagAmountAR").Value) > 0 Then
                     Dim itemWHVCertCollectionTagged As New WHVATCertificateDetails
                     Dim invoiceNo As String = CStr(row.Cells("colTransactionNoAR").Value)
-                    itemWHVCertCollectionTagged = (From x In _WHVatCertSTLHelper.FetchListWHVCertDetails Where x.WESMBillSummary.INVDMCMNo = invoiceNo Select x).First
+                    itemWHVCertCollectionTagged = (From x In _WHVatCertSTLHelper.FetchListWHVATCertDetails Where x.WESMBillSummary.INVDMCMNo = invoiceNo Select x).First
                     itemWHVCertCollectionTagged.AmountTagged = CDec(row.Cells("colTagAmountAR").Value)
                     itemWHVCertCollectionTagged.NewEndingBalance = CDec(row.Cells("colNewEndingBalanceAR").Value)
                     ListWHTCertCollectionTagged.Add(itemWHVCertCollectionTagged)
@@ -112,7 +112,7 @@ Public Class frmWHVATCertificateSTLDetails
 
             Me.FillDGViews()
             Me.btnSave.Enabled = True
-            Me.btn_Allocate.Enabled = False
+            Me.btn_Commit.Enabled = False
             ProgressThread.Close()
         Catch ex As Exception
             ProgressThread.Close()
@@ -123,11 +123,12 @@ Public Class frmWHVATCertificateSTLDetails
     Private Sub FillDGViews()
         Me.dgTagging.Rows.Clear()
         Me.dgTagging.Columns(10).ReadOnly = True
-        For Each item In _WHVatCertSTLHelper.NewWHVatCertSTL.TagDetails
+        For Each item In _WHVatCertSTLHelper.NewWHVATCertSTL.TagDetails
+            Me.dgTagging.Columns("colFullyPaid").Visible = False
             Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True),
-                                  FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True), FormatNumber(item.NewEndingBalance, UseParensForNegativeNumbers:=TriState.True))
+                                  False, FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True), FormatNumber(item.NewEndingBalance, UseParensForNegativeNumbers:=TriState.True))
         Next
 
         Me.FormatTextBoxForDGVTagging()
@@ -197,4 +198,128 @@ Public Class frmWHVATCertificateSTLDetails
             Me.Close()
         End Try
     End Sub
+
+    Private Sub ddlRemittanceDate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlRemittanceDate.SelectedIndexChanged
+        Try
+            FillParticipantsSelection()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub ddlParticipantID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlParticipantID.SelectedIndexChanged
+        Try
+            If ddlParticipantID.SelectedIndex = -1 Then
+                Exit Sub
+            End If
+
+            If _ViewCertificate = True Then
+                Exit Sub
+            End If
+
+            Dim selectedIDNumber As String = CStr(ddlParticipantID.Text)
+            Dim selectedRemittanceDate As Date = CDate(ddlRemittanceDate.Text)
+            ProgressThread.Show("Please wait while preparing the list of WESM Transaction.")
+            _WHVatCertSTLHelper.GetWESMBillSummaryWHVAT(selectedIDNumber, selectedRemittanceDate)
+
+            Dim getWESMBillSummaryForSelectedID As List(Of WHVATCertificateDetails) = (From x In _WHVatCertSTLHelper.FetchListWHVATCertDetails Where x.WESMBillSummary.IDNumber.IDNumber = selectedIDNumber Select x).ToList
+            Me.dgTagging.Rows.Clear()
+            If getWESMBillSummaryForSelectedID.Count = 0 Then
+                ProgressThread.Close()
+                MessageBox.Show("No available WVAT to tag!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            For Each item In getWESMBillSummaryForSelectedID
+                Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
+                                          item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
+                                          item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True),
+                                          False, "0.00", FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True))
+            Next
+
+            Me.btn_Commit.Enabled = True
+            ProgressThread.Close()
+        Catch ex As Exception
+            ProgressThread.Close()
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub FillParticipantsSelection()
+        Try
+            If ddlRemittanceDate.SelectedIndex = -1 Then
+                Exit Sub
+            End If
+
+            Dim selectedRemittanceDate As Date = CDate(ddlRemittanceDate.Text)
+            Dim listOfParticipant As List(Of String) = Me._WHVatCertSTLHelper.GetListOfParticipants(selectedRemittanceDate)
+            ddlParticipantID.Text = ""
+            ddlParticipantID.Items.Clear()
+            For Each item In listOfParticipant
+                ddlParticipantID.Items.Add(item)
+            Next
+            ddlParticipantID.SelectedIndex = -1
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
+
+    Private Sub dgTagging_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgTagging.CellValueChanged
+        Try
+            If Me.dgTagging.Rows.Count > 0 Then
+                Select Case e.ColumnIndex
+                    Case 8
+                        If Not CBool(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) = False Then
+                            Me.dgTagging.Rows(e.RowIndex).Cells(9).Value = FormatNumber(Math.Abs(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value)), UseParensForNegativeNumbers:=TriState.True)
+                            Me.dgTagging.Rows(e.RowIndex).Cells(10).Value = FormatNumber(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value) + CDec(Me.dgTagging.Rows(e.RowIndex).Cells(9).Value), UseParensForNegativeNumbers:=TriState.True)
+                        Else
+                            Me.dgTagging.Rows(e.RowIndex).Cells(9).Value = FormatNumber(0, UseParensForNegativeNumbers:=TriState.True)
+                            Me.dgTagging.Rows(e.RowIndex).Cells(10).Value = FormatNumber(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value), UseParensForNegativeNumbers:=TriState.True)
+                        End If
+                        Me.FormatTextBoxForDGVTagging()
+                    Case Else
+                        Me.dgTagging.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                End Select
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub dgTagging_CurrentCellDirtyStateChanged(sender As Object, e As EventArgs) Handles dgTagging.CurrentCellDirtyStateChanged
+        If Me.dgTagging.IsCurrentCellDirty Then
+            Me.dgTagging.CommitEdit(DataGridViewDataErrorContexts.Commit)
+        End If
+    End Sub
+
+    Private Sub dgTagging_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgTagging.CellEndEdit
+        Try
+            Select Case e.ColumnIndex
+                Case 9
+                    If Not IsNumeric(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) Then
+                        MessageBox.Show("WhVAT Amount is not numeric.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
+                    Else
+                        If CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) <= 0 Then
+                            MessageBox.Show("WhVAT Amount should not be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
+                        ElseIf CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) > Math.Abs(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value)) Then
+                            MessageBox.Show("WhVAT Amount should not be greater than Ending Balance.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
+                        Else
+                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = FormatNumber(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value, UseParensForNegativeNumbers:=TriState.True)
+                            Me.dgTagging.Rows(e.RowIndex).Cells(10).Value = FormatNumber(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value) + CDec(Me.dgTagging.Rows(e.RowIndex).Cells(9).Value), UseParensForNegativeNumbers:=TriState.True)
+                        End If
+                        Me.FormatTextBoxForDGVTagging()
+                    End If
+                Case Else
+                    Me.dgTagging.CommitEdit(DataGridViewDataErrorContexts.Commit)
+            End Select
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
 End Class

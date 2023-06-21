@@ -902,7 +902,7 @@ Partial Class frmCollectionMgt
         Me.MaximizeBox = False
         Me.Name = "frmCollectionMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Collection Management"
+        Me.Text = "Collection"
         CType(Me.DGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gpManual.ResumeLayout(False)
         Me.gpManual.PerformLayout()

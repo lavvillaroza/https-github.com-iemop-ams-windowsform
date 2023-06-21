@@ -47,7 +47,7 @@ Partial Class frmSearchTransDate
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(11, 28)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(34, 12)
+        Me.Label1.Size = New System.Drawing.Size(34, 14)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "From:"
         '
@@ -64,7 +64,7 @@ Partial Class frmSearchTransDate
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(23, 56)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(21, 12)
+        Me.Label2.Size = New System.Drawing.Size(21, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "To:"
         '
@@ -95,7 +95,7 @@ Partial Class frmSearchTransDate
         Me.Label3.ForeColor = System.Drawing.Color.Blue
         Me.Label3.Location = New System.Drawing.Point(11, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(89, 12)
+        Me.Label3.Size = New System.Drawing.Size(89, 14)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "Transaction Date"
         '
@@ -120,7 +120,7 @@ Partial Class frmSearchTransDate
         Me.ddlQuarter.FormattingEnabled = True
         Me.ddlQuarter.Location = New System.Drawing.Point(62, 49)
         Me.ddlQuarter.Name = "ddlQuarter"
-        Me.ddlQuarter.Size = New System.Drawing.Size(144, 20)
+        Me.ddlQuarter.Size = New System.Drawing.Size(144, 22)
         Me.ddlQuarter.TabIndex = 8
         '
         'ddlYear
@@ -137,18 +137,18 @@ Partial Class frmSearchTransDate
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(11, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(111, 14)
+        Me.Label4.Size = New System.Drawing.Size(113, 14)
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "Transaction Period:"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(22, 27)
         Me.Label5.Name = "Label5"
@@ -159,11 +159,11 @@ Partial Class frmSearchTransDate
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(6, 51)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(51, 14)
+        Me.Label6.Size = New System.Drawing.Size(52, 14)
         Me.Label6.TabIndex = 2
         Me.Label6.Text = "Quarter:"
         '
@@ -173,7 +173,7 @@ Partial Class frmSearchTransDate
         Me.ddlMonth.FormattingEnabled = True
         Me.ddlMonth.Location = New System.Drawing.Point(87, 264)
         Me.ddlMonth.Name = "ddlMonth"
-        Me.ddlMonth.Size = New System.Drawing.Size(144, 20)
+        Me.ddlMonth.Size = New System.Drawing.Size(144, 22)
         Me.ddlMonth.TabIndex = 7
         '
         'btnCancel
@@ -183,7 +183,7 @@ Partial Class frmSearchTransDate
         Me.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.Black
         Me.btnCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -214,21 +214,21 @@ Partial Class frmSearchTransDate
         '
         'frmSearchTransDate
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(241, 148)
+        Me.ControlBox = False
         Me.Controls.Add(Me.ddlMonth)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnSearch)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmSearchTransDate"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Search Date"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

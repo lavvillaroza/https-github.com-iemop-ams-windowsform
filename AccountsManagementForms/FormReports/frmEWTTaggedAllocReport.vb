@@ -9,7 +9,7 @@ Public Class frmEWTTaggedAllocReport
     Private Sub frmEWTTaggedAllocReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
     End Sub
-    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnExportToExcel.Click
+    Private Sub btnExportToExcel_Click(sender As Object, e As EventArgs) Handles btnExportToExcel.Click
         Dim sFolderDialog As New FolderBrowserDialog
         Dim TargetPath As String = ""
         Try

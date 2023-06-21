@@ -1120,5 +1120,19 @@ Public Class MainForm
         End Try
     End Sub
 
+    Private Sub WithholdingVATCertificateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WithholdingVATCertificateToolStripMenuItem.Click
+        Try
+            frmWHVATCertificateSTLMgt.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
+    Private Sub WVAT_TagAlloc_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WVAT_TagAlloc_ToolStripMenuItem.Click
+        Try
+            frmWVATTaggedAllocReport.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class

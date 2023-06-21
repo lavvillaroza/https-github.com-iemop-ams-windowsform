@@ -32,10 +32,10 @@ Partial Class frmPaymentRemittanceDate
         'lblRemittanceDate
         '
         Me.lblRemittanceDate.AutoSize = True
-        Me.lblRemittanceDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblRemittanceDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRemittanceDate.Location = New System.Drawing.Point(12, 24)
         Me.lblRemittanceDate.Name = "lblRemittanceDate"
-        Me.lblRemittanceDate.Size = New System.Drawing.Size(92, 14)
+        Me.lblRemittanceDate.Size = New System.Drawing.Size(91, 14)
         Me.lblRemittanceDate.TabIndex = 2
         Me.lblRemittanceDate.Text = "Allocation Date:"
         '
@@ -83,6 +83,7 @@ Partial Class frmPaymentRemittanceDate
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(268, 98)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.lblRemittanceDate)

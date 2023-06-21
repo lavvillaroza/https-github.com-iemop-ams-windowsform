@@ -70,6 +70,7 @@ Partial Class MainForm
         Me.ViewAllocatedCollectionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WithholdingTaxCertificateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PaymentGenXTaggingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WithholdingVATCertificateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Monitoring_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripEarnedInterest = New System.Windows.Forms.ToolStripMenuItem()
         Me.NSSToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -97,6 +98,7 @@ Partial Class MainForm
         Me.DefaultNotice_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeferredPayment_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EFT_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WVAT_TagAlloc_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EWT_TagAlloc_Report_ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FundTransferForm_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GeneralLedgerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -179,6 +181,7 @@ Partial Class MainForm
         Me.BIRAlphanumericTaxCode_TSMenuItem.Name = "BIRAlphanumericTaxCode_TSMenuItem"
         Me.BIRAlphanumericTaxCode_TSMenuItem.Size = New System.Drawing.Size(368, 22)
         Me.BIRAlphanumericTaxCode_TSMenuItem.Text = "BIR Alphanumeric Tax Code"
+        Me.BIRAlphanumericTaxCode_TSMenuItem.Visible = False
         '
         'CalendarBillingPeriodToolStripMenuItem1
         '
@@ -233,12 +236,14 @@ Partial Class MainForm
         Me.UploadCSVToolStripMenuItem.Name = "UploadCSVToolStripMenuItem"
         Me.UploadCSVToolStripMenuItem.Size = New System.Drawing.Size(368, 22)
         Me.UploadCSVToolStripMenuItem.Text = "Upload CSV"
+        Me.UploadCSVToolStripMenuItem.Visible = False
         '
         'WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem
         '
         Me.WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem.Name = "WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem"
         Me.WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem.Size = New System.Drawing.Size(368, 22)
         Me.WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem.Text = "WESM Bills Aggregation Mapping - Change Invoice ID"
+        Me.WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem.Visible = False
         '
         'LogoutToolStripMenuItem
         '
@@ -266,12 +271,14 @@ Partial Class MainForm
         Me.WESMBillToolStripMenuItem.Name = "WESMBillToolStripMenuItem"
         Me.WESMBillToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
         Me.WESMBillToolStripMenuItem.Text = "WESM Bill From Flat File"
+        Me.WESMBillToolStripMenuItem.Visible = False
         '
         'WESMSalesAndPurchasedToolStripMenuItem
         '
         Me.WESMSalesAndPurchasedToolStripMenuItem.Name = "WESMSalesAndPurchasedToolStripMenuItem"
         Me.WESMSalesAndPurchasedToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
         Me.WESMSalesAndPurchasedToolStripMenuItem.Text = "WESM Bill Sales and Purchased From Flat File"
+        Me.WESMSalesAndPurchasedToolStripMenuItem.Visible = False
         '
         'WESMBillExtractionFromCRSSDBToolStripMenuItem
         '
@@ -284,6 +291,7 @@ Partial Class MainForm
         Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem.Name = "WESMBillsAggregateInvoicesMappingToolStripMenuItem"
         Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
         Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem.Text = "WESM Bill Aggregation Mapping"
+        Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem.Visible = False
         '
         'WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem
         '
@@ -329,6 +337,7 @@ Partial Class MainForm
         Me.StatementOfAccountToolStripMenuItem.ShowShortcutKeys = False
         Me.StatementOfAccountToolStripMenuItem.Size = New System.Drawing.Size(273, 22)
         Me.StatementOfAccountToolStripMenuItem.Text = "Statement of Account"
+        Me.StatementOfAccountToolStripMenuItem.Visible = False
         '
         'ExemptionToolStripMenuItem
         '
@@ -373,7 +382,7 @@ Partial Class MainForm
         '
         'CollectionPayment_TSMenuItem
         '
-        Me.CollectionPayment_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SssToolStripMenuItem, Me.PaymentToolStripMenuItem, Me.WithholdingTaxCertificateToolStripMenuItem, Me.PaymentGenXTaggingToolStripMenuItem})
+        Me.CollectionPayment_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SssToolStripMenuItem, Me.PaymentToolStripMenuItem, Me.WithholdingTaxCertificateToolStripMenuItem, Me.PaymentGenXTaggingToolStripMenuItem, Me.WithholdingVATCertificateToolStripMenuItem})
         Me.CollectionPayment_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.CollectionPayment_TSMenuItem.Name = "CollectionPayment_TSMenuItem"
         Me.CollectionPayment_TSMenuItem.Size = New System.Drawing.Size(148, 20)
@@ -383,7 +392,7 @@ Partial Class MainForm
         '
         Me.SssToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CollectionEntryAllocationToolStripMenuItem, Me.PostDailyCollectionToolStripMenuItem, Me.PostManualCollectionsToolStripMenuItem})
         Me.SssToolStripMenuItem.Name = "SssToolStripMenuItem"
-        Me.SssToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
+        Me.SssToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
         Me.SssToolStripMenuItem.Text = "Collection"
         '
         'CollectionEntryAllocationToolStripMenuItem
@@ -408,7 +417,7 @@ Partial Class MainForm
         '
         Me.PaymentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllocateCollectionsToolStripMenuItem, Me.ViewAllocatedCollectionsToolStripMenuItem})
         Me.PaymentToolStripMenuItem.Name = "PaymentToolStripMenuItem"
-        Me.PaymentToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
+        Me.PaymentToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
         Me.PaymentToolStripMenuItem.Text = "Payment"
         '
         'AllocateCollectionsToolStripMenuItem
@@ -426,15 +435,21 @@ Partial Class MainForm
         'WithholdingTaxCertificateToolStripMenuItem
         '
         Me.WithholdingTaxCertificateToolStripMenuItem.Name = "WithholdingTaxCertificateToolStripMenuItem"
-        Me.WithholdingTaxCertificateToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
+        Me.WithholdingTaxCertificateToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
         Me.WithholdingTaxCertificateToolStripMenuItem.Text = "Withholding Tax Certificate"
         '
         'PaymentGenXTaggingToolStripMenuItem
         '
         Me.PaymentGenXTaggingToolStripMenuItem.Name = "PaymentGenXTaggingToolStripMenuItem"
-        Me.PaymentGenXTaggingToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
+        Me.PaymentGenXTaggingToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
         Me.PaymentGenXTaggingToolStripMenuItem.Text = "Payment GenX Tagging"
         Me.PaymentGenXTaggingToolStripMenuItem.Visible = False
+        '
+        'WithholdingVATCertificateToolStripMenuItem
+        '
+        Me.WithholdingVATCertificateToolStripMenuItem.Name = "WithholdingVATCertificateToolStripMenuItem"
+        Me.WithholdingVATCertificateToolStripMenuItem.Size = New System.Drawing.Size(220, 22)
+        Me.WithholdingVATCertificateToolStripMenuItem.Text = "Withholding VAT Certificate"
         '
         'Monitoring_TSMenuItem
         '
@@ -509,6 +524,7 @@ Partial Class MainForm
         Me.SPAToolStripMenuItem.Name = "SPAToolStripMenuItem"
         Me.SPAToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.SPAToolStripMenuItem.Text = "Special Payment Agreement"
+        Me.SPAToolStripMenuItem.Visible = False
         '
         'WESMBillSummaryToolStripMenuItem
         '
@@ -516,6 +532,7 @@ Partial Class MainForm
         Me.WESMBillSummaryToolStripMenuItem.Name = "WESMBillSummaryToolStripMenuItem"
         Me.WESMBillSummaryToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.WESMBillSummaryToolStripMenuItem.Text = "Withholding Tax"
+        Me.WESMBillSummaryToolStripMenuItem.Visible = False
         '
         'PerParticipantToolStripMenuItem
         '
@@ -531,7 +548,7 @@ Partial Class MainForm
         '
         'InquiryReports_TSMenuItem
         '
-        Me.InquiryReports_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgingReport_TSMenuItem, Me.BankReconStatement_TSMenuItem, Me.BIRAccessToRecordToolStripMenuItem, Me.BIRRulingToolStripMenuItem, Me.CashSummaryReport_TSMenuItem, Me.Checks_TSMenuItem, Me.CollectionSummary_TSMenuItem, Me.DailyCollectionSummary_TSMenuItem, Me.DebitCreditMemo_TSMenuItem, Me.DefaultNotice_TSMenuItem, Me.DeferredPayment_TSMenuItem, Me.EFT_TSMenuItem, Me.EWT_TagAlloc_Report_ToolStripMenuItem, Me.FundTransferForm_TSMenuItem, Me.GeneralLedgerToolStripMenuItem, Me.JournalVoucher_TSMenuItem, Me.MarketFeesSummary_TSMenuItem, Me.MAPBIR_TSMenuItem, Me.NoticeOfDrawdown_TSMenuItem, Me.NSSRA_TSMenuItem, Me.OfficialReceipt_TSMenuItem, Me.PaymentDetails_TSMenuItem, Me.Prudential_TSMenuItem, Me.RequestForPayment_TSMenuItem, Me.SettlementNotice_TSMenuItem, Me.StatementAccount_TSMenuItem, Me.Subsidiary_Ledger_TSMenuItem, Me.SummaryForAccountingBooks_TSMenuItem, Me.SummaryOfDefaultInterest_TSMenuItem, Me.SummaryOfOutstandingBalances_TSMenuItem, Me.WESMInvoice_TSMenuItem, Me.WESMBills_TSMenuItem, Me.WESMTransAllocationSummary_TSMenuItem, Me.WESMBillsSummary_TSMenuItem})
+        Me.InquiryReports_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgingReport_TSMenuItem, Me.BankReconStatement_TSMenuItem, Me.BIRAccessToRecordToolStripMenuItem, Me.BIRRulingToolStripMenuItem, Me.CashSummaryReport_TSMenuItem, Me.Checks_TSMenuItem, Me.CollectionSummary_TSMenuItem, Me.DailyCollectionSummary_TSMenuItem, Me.DebitCreditMemo_TSMenuItem, Me.DefaultNotice_TSMenuItem, Me.DeferredPayment_TSMenuItem, Me.EFT_TSMenuItem, Me.WVAT_TagAlloc_ToolStripMenuItem, Me.EWT_TagAlloc_Report_ToolStripMenuItem, Me.FundTransferForm_TSMenuItem, Me.GeneralLedgerToolStripMenuItem, Me.JournalVoucher_TSMenuItem, Me.MarketFeesSummary_TSMenuItem, Me.MAPBIR_TSMenuItem, Me.NoticeOfDrawdown_TSMenuItem, Me.NSSRA_TSMenuItem, Me.OfficialReceipt_TSMenuItem, Me.PaymentDetails_TSMenuItem, Me.Prudential_TSMenuItem, Me.RequestForPayment_TSMenuItem, Me.SettlementNotice_TSMenuItem, Me.StatementAccount_TSMenuItem, Me.Subsidiary_Ledger_TSMenuItem, Me.SummaryForAccountingBooks_TSMenuItem, Me.SummaryOfDefaultInterest_TSMenuItem, Me.SummaryOfOutstandingBalances_TSMenuItem, Me.WESMInvoice_TSMenuItem, Me.WESMBills_TSMenuItem, Me.WESMTransAllocationSummary_TSMenuItem, Me.WESMBillsSummary_TSMenuItem})
         Me.InquiryReports_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.InquiryReports_TSMenuItem.Name = "InquiryReports_TSMenuItem"
         Me.InquiryReports_TSMenuItem.Size = New System.Drawing.Size(101, 20)
@@ -583,14 +600,12 @@ Partial Class MainForm
         Me.CollectionSummary_TSMenuItem.Name = "CollectionSummary_TSMenuItem"
         Me.CollectionSummary_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.CollectionSummary_TSMenuItem.Text = "Collection Summary"
-        Me.CollectionSummary_TSMenuItem.Visible = False
         '
         'DailyCollectionSummary_TSMenuItem
         '
         Me.DailyCollectionSummary_TSMenuItem.Name = "DailyCollectionSummary_TSMenuItem"
         Me.DailyCollectionSummary_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DailyCollectionSummary_TSMenuItem.Text = "Daily Cash Collection Summary"
-        Me.DailyCollectionSummary_TSMenuItem.Visible = False
         '
         'DebitCreditMemo_TSMenuItem
         '
@@ -611,7 +626,6 @@ Partial Class MainForm
         Me.DeferredPayment_TSMenuItem.Name = "DeferredPayment_TSMenuItem"
         Me.DeferredPayment_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.DeferredPayment_TSMenuItem.Text = "Deferred Payment"
-        Me.DeferredPayment_TSMenuItem.Visible = False
         '
         'EFT_TSMenuItem
         '
@@ -619,6 +633,12 @@ Partial Class MainForm
         Me.EFT_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.EFT_TSMenuItem.Text = "EFT"
         Me.EFT_TSMenuItem.Visible = False
+        '
+        'WVAT_TagAlloc_ToolStripMenuItem
+        '
+        Me.WVAT_TagAlloc_ToolStripMenuItem.Name = "WVAT_TagAlloc_ToolStripMenuItem"
+        Me.WVAT_TagAlloc_ToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
+        Me.WVAT_TagAlloc_ToolStripMenuItem.Text = "WVAT Tagged And Allocated"
         '
         'EWT_TagAlloc_Report_ToolStripMenuItem
         '
@@ -907,7 +927,7 @@ Partial Class MainForm
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Accounts Management System (LUZVIS v4.0.20220731) "
+        Me.Text = "Accounts Management System (LUZVIS v4.1.20230525) "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
@@ -1028,4 +1048,6 @@ Partial Class MainForm
     Friend WithEvents WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EWT_TagAlloc_Report_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WESMTransactionSummaryFromCRSSDBToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WithholdingVATCertificateToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WVAT_TagAlloc_ToolStripMenuItem As ToolStripMenuItem
 End Class

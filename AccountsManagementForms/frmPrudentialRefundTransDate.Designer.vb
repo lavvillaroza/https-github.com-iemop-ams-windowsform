@@ -76,7 +76,7 @@ Partial Class frmPrudentialRefundTransDate
         'lblTransaction
         '
         Me.lblTransaction.AutoSize = True
-        Me.lblTransaction.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTransaction.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTransaction.ForeColor = System.Drawing.Color.Black
         Me.lblTransaction.Location = New System.Drawing.Point(9, 21)
         Me.lblTransaction.Name = "lblTransaction"
@@ -97,6 +97,7 @@ Partial Class frmPrudentialRefundTransDate
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(299, 101)
+        Me.ControlBox = False
         Me.Controls.Add(Me.gpCollection)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False

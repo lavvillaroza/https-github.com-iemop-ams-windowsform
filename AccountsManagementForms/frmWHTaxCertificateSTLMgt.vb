@@ -50,6 +50,7 @@ Public Class frmWHTaxCertificateSTLMgt
                           _WHTaxCertSTLHelper.NewWHTaxCertSTL.RemittanceDate.ToString("MM/dd/yyyy"),
                           _WHTaxCertSTLHelper.NewWHTaxCertSTL.BillingIDNumber.IDNumber,
                           FormatNumber(_WHTaxCertSTLHelper.NewWHTaxCertSTL.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
+                .RowsDefaultCellStyle.ForeColor = Drawing.Color.Black
             End With
             _WHTaxCertSTLHelper.NewWHTaxCertSTL = New WHTaxCertificateSTL
         Catch ex As Exception

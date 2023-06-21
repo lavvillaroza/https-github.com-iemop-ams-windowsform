@@ -677,7 +677,7 @@ Partial Class frmPaymentNew
         Me.btn_Close.Name = "btn_Close"
         Me.btn_Close.Size = New System.Drawing.Size(174, 36)
         Me.btn_Close.TabIndex = 57
-        Me.btn_Close.Text = "Close"
+        Me.btn_Close.Text = "Cancel"
         Me.btn_Close.UseVisualStyleBackColor = False
         '
         'btn_SaveAllocation

@@ -22,9 +22,9 @@ Partial Class frmWHVATCertificateSTLDetails
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -33,19 +33,10 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.txtTotalAllocAmount = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.dgAllocation = New System.Windows.Forms.DataGridView()
-        Me.colWBSummaryNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBatchNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBillingPeriodAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIDNumberAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colTransctionNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colOrigDueDateAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNewDueDateAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colWithholdingTaxAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAllocAmountAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.mainTLP = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ddlRemittanceDate = New System.Windows.Forms.ComboBox()
-        Me.btn_Allocate = New System.Windows.Forms.Button()
+        Me.btn_Commit = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.lblCollectionDate = New System.Windows.Forms.Label()
@@ -69,8 +60,17 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.colOrigDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colNewDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colFullyPaid = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.colTagAmountAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colNewEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colWBSummaryNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBatchNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBillingPeriodAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colIDNumberAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTransctionNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colOrigDueDateAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNewDueDateAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAllocAmountAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ctrl_statusStrip.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -172,11 +172,11 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.dgAllocation.AllowUserToAddRows = False
         Me.dgAllocation.AllowUserToDeleteRows = False
         Me.dgAllocation.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.dgAllocation.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgAllocation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgAllocation.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAP, Me.colBatchNoAP, Me.colBillingPeriodAP, Me.colIDNumberAP, Me.colTransctionNoAP, Me.colOrigDueDateAP, Me.colNewDueDateAP, Me.colWithholdingTaxAP, Me.colAllocAmountAP})
+        Me.dgAllocation.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAP, Me.colBatchNoAP, Me.colBillingPeriodAP, Me.colIDNumberAP, Me.colTransctionNoAP, Me.colOrigDueDateAP, Me.colNewDueDateAP, Me.colAllocAmountAP})
         Me.dgAllocation.Dock = System.Windows.Forms.DockStyle.Left
         Me.dgAllocation.Location = New System.Drawing.Point(3, 3)
         Me.dgAllocation.Name = "dgAllocation"
@@ -185,76 +185,6 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.dgAllocation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgAllocation.Size = New System.Drawing.Size(1042, 360)
         Me.dgAllocation.TabIndex = 27
-        '
-        'colWBSummaryNoAP
-        '
-        Me.colWBSummaryNoAP.Frozen = True
-        Me.colWBSummaryNoAP.HeaderText = "WBSummaryNo"
-        Me.colWBSummaryNoAP.Name = "colWBSummaryNoAP"
-        Me.colWBSummaryNoAP.ReadOnly = True
-        Me.colWBSummaryNoAP.Visible = False
-        '
-        'colBatchNoAP
-        '
-        Me.colBatchNoAP.Frozen = True
-        Me.colBatchNoAP.HeaderText = "Batch No"
-        Me.colBatchNoAP.Name = "colBatchNoAP"
-        Me.colBatchNoAP.ReadOnly = True
-        Me.colBatchNoAP.Width = 75
-        '
-        'colBillingPeriodAP
-        '
-        Me.colBillingPeriodAP.Frozen = True
-        Me.colBillingPeriodAP.HeaderText = "Billing Period"
-        Me.colBillingPeriodAP.Name = "colBillingPeriodAP"
-        Me.colBillingPeriodAP.ReadOnly = True
-        Me.colBillingPeriodAP.Width = 90
-        '
-        'colIDNumberAP
-        '
-        Me.colIDNumberAP.Frozen = True
-        Me.colIDNumberAP.HeaderText = "ID Number"
-        Me.colIDNumberAP.Name = "colIDNumberAP"
-        Me.colIDNumberAP.ReadOnly = True
-        Me.colIDNumberAP.Width = 120
-        '
-        'colTransctionNoAP
-        '
-        Me.colTransctionNoAP.Frozen = True
-        Me.colTransctionNoAP.HeaderText = "Transaction No"
-        Me.colTransctionNoAP.Name = "colTransctionNoAP"
-        Me.colTransctionNoAP.ReadOnly = True
-        Me.colTransctionNoAP.Width = 140
-        '
-        'colOrigDueDateAP
-        '
-        Me.colOrigDueDateAP.Frozen = True
-        Me.colOrigDueDateAP.HeaderText = "Orig Due Date"
-        Me.colOrigDueDateAP.Name = "colOrigDueDateAP"
-        Me.colOrigDueDateAP.ReadOnly = True
-        '
-        'colNewDueDateAP
-        '
-        Me.colNewDueDateAP.Frozen = True
-        Me.colNewDueDateAP.HeaderText = "New Due Date"
-        Me.colNewDueDateAP.Name = "colNewDueDateAP"
-        Me.colNewDueDateAP.ReadOnly = True
-        Me.colNewDueDateAP.Width = 110
-        '
-        'colWithholdingTaxAP
-        '
-        Me.colWithholdingTaxAP.DataPropertyName = "colWithholdingTaxAP"
-        Me.colWithholdingTaxAP.HeaderText = "Withholding Tax"
-        Me.colWithholdingTaxAP.Name = "colWithholdingTaxAP"
-        Me.colWithholdingTaxAP.ReadOnly = True
-        Me.colWithholdingTaxAP.Width = 110
-        '
-        'colAllocAmountAP
-        '
-        Me.colAllocAmountAP.HeaderText = "Allocated Amount"
-        Me.colAllocAmountAP.Name = "colAllocAmountAP"
-        Me.colAllocAmountAP.ReadOnly = True
-        Me.colAllocAmountAP.Width = 120
         '
         'mainTLP
         '
@@ -273,7 +203,7 @@ Partial Class frmWHVATCertificateSTLDetails
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.ddlRemittanceDate)
-        Me.GroupBox1.Controls.Add(Me.btn_Allocate)
+        Me.GroupBox1.Controls.Add(Me.btn_Commit)
         Me.GroupBox1.Controls.Add(Me.btnSave)
         Me.GroupBox1.Controls.Add(Me.btnCancel)
         Me.GroupBox1.Controls.Add(Me.lblCollectionDate)
@@ -296,24 +226,24 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.ddlRemittanceDate.Size = New System.Drawing.Size(172, 21)
         Me.ddlRemittanceDate.TabIndex = 53
         '
-        'btn_Allocate
+        'btn_Commit
         '
-        Me.btn_Allocate.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.btn_Allocate.BackColor = System.Drawing.Color.White
-        Me.btn_Allocate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btn_Allocate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btn_Allocate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btn_Allocate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Allocate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Allocate.ForeColor = System.Drawing.Color.Black
-        Me.btn_Allocate.Image = Global.AccountsManagementForms.My.Resources.Resources.OKicon24x24
-        Me.btn_Allocate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Allocate.Location = New System.Drawing.Point(645, 19)
-        Me.btn_Allocate.Name = "btn_Allocate"
-        Me.btn_Allocate.Size = New System.Drawing.Size(130, 39)
-        Me.btn_Allocate.TabIndex = 52
-        Me.btn_Allocate.Text = "&Commit"
-        Me.btn_Allocate.UseVisualStyleBackColor = False
+        Me.btn_Commit.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.btn_Commit.BackColor = System.Drawing.Color.White
+        Me.btn_Commit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Commit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Commit.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Commit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Commit.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Commit.ForeColor = System.Drawing.Color.Black
+        Me.btn_Commit.Image = Global.AccountsManagementForms.My.Resources.Resources.OKicon24x24
+        Me.btn_Commit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Commit.Location = New System.Drawing.Point(645, 19)
+        Me.btn_Commit.Name = "btn_Commit"
+        Me.btn_Commit.Size = New System.Drawing.Size(130, 39)
+        Me.btn_Commit.TabIndex = 52
+        Me.btn_Commit.Text = "&Commit"
+        Me.btn_Commit.UseVisualStyleBackColor = False
         '
         'btnSave
         '
@@ -497,11 +427,11 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.dgTagging.AllowUserToAddRows = False
         Me.dgTagging.AllowUserToDeleteRows = False
         Me.dgTagging.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.dgTagging.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgTagging.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgTagging.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAR, Me.colBatchNoAR, Me.colBillingNoAR, Me.colIDNumberAR, Me.colTransactionNoAR, Me.colOrigDueDateAR, Me.colNewDueDateAR, Me.colEndingBalanceAR, Me.colTagAmountAR, Me.colNewEndingBalanceAR})
+        Me.dgTagging.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAR, Me.colBatchNoAR, Me.colBillingNoAR, Me.colIDNumberAR, Me.colTransactionNoAR, Me.colOrigDueDateAR, Me.colNewDueDateAR, Me.colEndingBalanceAR, Me.colFullyPaid, Me.colTagAmountAR, Me.colNewEndingBalanceAR})
         Me.dgTagging.Dock = System.Windows.Forms.DockStyle.Left
         Me.dgTagging.Location = New System.Drawing.Point(3, 3)
         Me.dgTagging.MultiSelect = False
@@ -562,19 +492,23 @@ Partial Class frmWHVATCertificateSTLDetails
         '
         'colEndingBalanceAR
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle6
-        Me.colEndingBalanceAR.Frozen = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle3
         Me.colEndingBalanceAR.HeaderText = "Ending Balance"
         Me.colEndingBalanceAR.Name = "colEndingBalanceAR"
         Me.colEndingBalanceAR.Width = 110
         '
+        'colFullyPaid
+        '
+        Me.colFullyPaid.HeaderText = "Fully Paid"
+        Me.colFullyPaid.Name = "colFullyPaid"
+        Me.colFullyPaid.Width = 75
+        '
         'colTagAmountAR
         '
-        Me.colTagAmountAR.Frozen = True
-        Me.colTagAmountAR.HeaderText = "WHVAT Tag Amount"
+        Me.colTagAmountAR.HeaderText = "WHVAT Amount"
         Me.colTagAmountAR.Name = "colTagAmountAR"
         Me.colTagAmountAR.Width = 150
         '
@@ -583,6 +517,68 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.colNewEndingBalanceAR.HeaderText = "New Ending Balance"
         Me.colNewEndingBalanceAR.Name = "colNewEndingBalanceAR"
         Me.colNewEndingBalanceAR.Width = 130
+        '
+        'colWBSummaryNoAP
+        '
+        Me.colWBSummaryNoAP.Frozen = True
+        Me.colWBSummaryNoAP.HeaderText = "WBSummaryNo"
+        Me.colWBSummaryNoAP.Name = "colWBSummaryNoAP"
+        Me.colWBSummaryNoAP.ReadOnly = True
+        Me.colWBSummaryNoAP.Visible = False
+        '
+        'colBatchNoAP
+        '
+        Me.colBatchNoAP.Frozen = True
+        Me.colBatchNoAP.HeaderText = "Batch No"
+        Me.colBatchNoAP.Name = "colBatchNoAP"
+        Me.colBatchNoAP.ReadOnly = True
+        Me.colBatchNoAP.Width = 75
+        '
+        'colBillingPeriodAP
+        '
+        Me.colBillingPeriodAP.Frozen = True
+        Me.colBillingPeriodAP.HeaderText = "Billing Period"
+        Me.colBillingPeriodAP.Name = "colBillingPeriodAP"
+        Me.colBillingPeriodAP.ReadOnly = True
+        Me.colBillingPeriodAP.Width = 90
+        '
+        'colIDNumberAP
+        '
+        Me.colIDNumberAP.Frozen = True
+        Me.colIDNumberAP.HeaderText = "ID Number"
+        Me.colIDNumberAP.Name = "colIDNumberAP"
+        Me.colIDNumberAP.ReadOnly = True
+        Me.colIDNumberAP.Width = 120
+        '
+        'colTransctionNoAP
+        '
+        Me.colTransctionNoAP.Frozen = True
+        Me.colTransctionNoAP.HeaderText = "Transaction No"
+        Me.colTransctionNoAP.Name = "colTransctionNoAP"
+        Me.colTransctionNoAP.ReadOnly = True
+        Me.colTransctionNoAP.Width = 140
+        '
+        'colOrigDueDateAP
+        '
+        Me.colOrigDueDateAP.Frozen = True
+        Me.colOrigDueDateAP.HeaderText = "Orig Due Date"
+        Me.colOrigDueDateAP.Name = "colOrigDueDateAP"
+        Me.colOrigDueDateAP.ReadOnly = True
+        '
+        'colNewDueDateAP
+        '
+        Me.colNewDueDateAP.Frozen = True
+        Me.colNewDueDateAP.HeaderText = "New Due Date"
+        Me.colNewDueDateAP.Name = "colNewDueDateAP"
+        Me.colNewDueDateAP.ReadOnly = True
+        Me.colNewDueDateAP.Width = 110
+        '
+        'colAllocAmountAP
+        '
+        Me.colAllocAmountAP.HeaderText = "Allocated Amount"
+        Me.colAllocAmountAP.Name = "colAllocAmountAP"
+        Me.colAllocAmountAP.ReadOnly = True
+        Me.colAllocAmountAP.Width = 120
         '
         'frmWHVATCertificateSTLDetails
         '
@@ -594,6 +590,7 @@ Partial Class frmWHVATCertificateSTLDetails
         Me.Controls.Add(Me.mainTLP)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmWHVATCertificateSTLDetails"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Withholding Vat Certificate Tagging"
         Me.ctrl_statusStrip.ResumeLayout(False)
         Me.ctrl_statusStrip.PerformLayout()
@@ -625,19 +622,10 @@ Partial Class frmWHVATCertificateSTLDetails
     Friend WithEvents txtTotalAllocAmount As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents dgAllocation As DataGridView
-    Friend WithEvents colWBSummaryNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colBatchNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colBillingPeriodAP As DataGridViewTextBoxColumn
-    Friend WithEvents colIDNumberAP As DataGridViewTextBoxColumn
-    Friend WithEvents colTransctionNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colOrigDueDateAP As DataGridViewTextBoxColumn
-    Friend WithEvents colNewDueDateAP As DataGridViewTextBoxColumn
-    Friend WithEvents colWithholdingTaxAP As DataGridViewTextBoxColumn
-    Friend WithEvents colAllocAmountAP As DataGridViewTextBoxColumn
     Friend WithEvents mainTLP As TableLayoutPanel
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents ddlRemittanceDate As ComboBox
-    Friend WithEvents btn_Allocate As Button
+    Friend WithEvents btn_Commit As Button
     Friend WithEvents btnSave As Button
     Friend WithEvents btnCancel As Button
     Friend WithEvents lblCollectionDate As Label
@@ -661,6 +649,15 @@ Partial Class frmWHVATCertificateSTLDetails
     Friend WithEvents colOrigDueDateAR As DataGridViewTextBoxColumn
     Friend WithEvents colNewDueDateAR As DataGridViewTextBoxColumn
     Friend WithEvents colEndingBalanceAR As DataGridViewTextBoxColumn
+    Friend WithEvents colFullyPaid As DataGridViewCheckBoxColumn
     Friend WithEvents colTagAmountAR As DataGridViewTextBoxColumn
     Friend WithEvents colNewEndingBalanceAR As DataGridViewTextBoxColumn
+    Friend WithEvents colWBSummaryNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colBatchNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colBillingPeriodAP As DataGridViewTextBoxColumn
+    Friend WithEvents colIDNumberAP As DataGridViewTextBoxColumn
+    Friend WithEvents colTransctionNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colOrigDueDateAP As DataGridViewTextBoxColumn
+    Friend WithEvents colNewDueDateAP As DataGridViewTextBoxColumn
+    Friend WithEvents colAllocAmountAP As DataGridViewTextBoxColumn
 End Class

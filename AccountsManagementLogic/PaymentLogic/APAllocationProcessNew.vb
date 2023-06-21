@@ -383,7 +383,7 @@ Public Class APAllocationProcessNew
     End Sub
 #End Region
 
-#Region "Method Step 2 for AP Allocation On MF"
+#Region "Method Step 2 for AP Allocation on MF"
     Private Sub AllocatePaymentOnMF(ByRef WESMBillSummaryListPerBP As List(Of WESMBillSummary),
                                     ByVal TotalARAmountCollectedPerBP As ARCollectionPerBP)
         Dim BPTotalBalance As Decimal = (From x In WESMBillSummaryListPerBP Select x.EndingBalance).Sum() 'Total of Outstanding Balances per BillingPeriod based on WESMBillSummaryList
@@ -761,8 +761,14 @@ Public Class APAllocationProcessNew
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
 
         Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") _
-                                                                                      And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").OrderBy(Function(x) x.InvoiceNumber).ThenBy(Function(x) x.CollectionType).ToList
-        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+                                                                                      And Not x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                      .OrderByDescending(Function(x) x.AllocationAmount) _
+                                                                                      .OrderBy(Function(x) x.InvoiceNumber) _
+                                                                                      .ThenBy(Function(x) x.CollectionType) _
+                                                                                      .ToList
+
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
 
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
@@ -771,26 +777,23 @@ Public Class APAllocationProcessNew
             For Each itemAP In listWESMBillSummaryPerWBatch
                 Dim CashShareOnEnergy As Decimal = 0D
                 If getWTDSummary.Count > 0 Then
+                    Dim originalTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OrigBalanceInEnergy).Sum)
+                    Dim originalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                                           And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                                                           Select(Function(y) y.OrigBalanceInEnergy).FirstOrDefault)
                     If itemAR.CollectionType = EnumCollectionType.Energy Then
                         If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum()) Then
-                            CashShareOnEnergy = Math.Abs(getWTDSummary.
+                            Dim outstandingBalanceOfAP As Decimal = Math.Abs(getWTDSummary.
                                                          Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
                                                          And x.SellerTransNo = itemAP.INVDMCMNo).
                                                          Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault)
+                            CashShareOnEnergy = outstandingBalanceOfAP
 
                         Else
-                            CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
-                                                                                            And x.SellerTransNo = itemAP.INVDMCMNo).
-                                                                                            Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault),
-                                                                     Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum),
-                                                                     Math.Abs(itemAR.AllocationAmount))
+                            CashShareOnEnergy = Me.ComputeAllocation(originalAmountOfAP, originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
                         End If
                     ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
-                        CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
-                                                                                           And x.SellerTransNo = itemAP.INVDMCMNo).
-                                                                                           Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault),
-                                                                    Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum),
-                                                                    Math.Abs(itemAR.AllocationAmount))
+                        CashShareOnEnergy = Me.ComputeAllocation(originalAmountOfAP, originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
 
                     End If
                 Else
@@ -985,18 +988,18 @@ Public Class APAllocationProcessNew
             For Each itemAP In cListWESMBillSummaryPerWBatch
                 Dim CashShareOnVAT As Decimal = 0D
                 If getWTDSummary.Count > 0 Then
+                    Dim originalTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OrigBalanceInVAT).Sum)
+                    Dim originalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                                        And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                                                        Select(Function(y) y.OrigBalanceInVAT).FirstOrDefault)
                     If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum()) Then
-                        CashShareOnVAT = Math.Abs(getWTDSummary.
+                        Dim outstandingBalanceOfAP As Decimal = Math.Abs(getWTDSummary.
                                                      Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
                                                      And x.SellerTransNo = itemAP.INVDMCMNo).
                                                      Select(Function(y) y.OutstandingBalanceInVAT).FirstOrDefault)
-
+                        CashShareOnVAT = outstandingBalanceOfAP
                     Else
-                        CashShareOnVAT = Me.ComputeAllocation(Math.Abs(getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
-                                                                                        And x.SellerTransNo = itemAP.INVDMCMNo).
-                                                                                        Select(Function(y) y.OutstandingBalanceInVAT).FirstOrDefault),
-                                                                 Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum),
-                                                                 Math.Abs(itemAR.AllocationAmount))
+                        CashShareOnVAT = Me.ComputeAllocation(originalAmountOfAP, originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
                     End If
                 Else
                     Throw New Exception("No available WTA Summary Details for InvoiceNo: " & itemAR.InvoiceNumber & vbNewLine & "Please contact the administrator.")
@@ -1250,7 +1253,7 @@ Public Class APAllocationProcessNew
     Private Function ComputeAllocation(ByVal InvOutstandingBalance As Decimal, ByVal CurrentBP_TotalBalance As Decimal, ByVal TotalPaymentForBP As Decimal) As Decimal
         Dim returnAmntAlloc As Decimal
         If InvOutstandingBalance <> 0 Then
-            returnAmntAlloc = (InvOutstandingBalance / CurrentBP_TotalBalance) * TotalPaymentForBP
+            returnAmntAlloc = CDec(InvOutstandingBalance / CurrentBP_TotalBalance) * TotalPaymentForBP
         Else
             returnAmntAlloc = 0
         End If
