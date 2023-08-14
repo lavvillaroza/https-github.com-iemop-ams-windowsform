@@ -40,7 +40,7 @@ Partial Class frmOutstandingBalancesNew
         Me.cmd_GenerateReportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReportToExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenerateReportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenerateReportToExcel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenerateReportToExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenerateReportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.cmd_GenerateReportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_GenerateReportToExcel.Location = New System.Drawing.Point(112, 113)
@@ -56,7 +56,7 @@ Partial Class frmOutstandingBalancesNew
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_close.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_close.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_close.Location = New System.Drawing.Point(268, 112)
@@ -72,29 +72,28 @@ Partial Class frmOutstandingBalancesNew
         Me.cmd_browse.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_browse.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_browse.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_browse.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_browse.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_browse.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
-        Me.cmd_browse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmd_browse.Location = New System.Drawing.Point(377, 67)
+        Me.cmd_browse.Location = New System.Drawing.Point(376, 65)
         Me.cmd_browse.Name = "cmd_browse"
-        Me.cmd_browse.Size = New System.Drawing.Size(35, 30)
+        Me.cmd_browse.Size = New System.Drawing.Size(26, 24)
         Me.cmd_browse.TabIndex = 21
         Me.cmd_browse.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(11, 72)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(96, 12)
+        Me.Label1.Size = New System.Drawing.Size(96, 14)
         Me.Label1.TabIndex = 22
         Me.Label1.Text = "Destination Folder:"
         '
         'txt_DestFile
         '
         Me.txt_DestFile.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_DestFile.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_DestFile.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_DestFile.Location = New System.Drawing.Point(112, 67)
         Me.txt_DestFile.Name = "txt_DestFile"
         Me.txt_DestFile.ReadOnly = True
@@ -130,21 +129,21 @@ Partial Class frmOutstandingBalancesNew
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(50, 46)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(57, 12)
+        Me.Label2.Size = New System.Drawing.Size(57, 14)
         Me.Label2.TabIndex = 24
         Me.Label2.Text = "Due Date :"
         '
         'ddl_DueDateList
         '
         Me.ddl_DueDateList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ddl_DueDateList.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ddl_DueDateList.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ddl_DueDateList.FormattingEnabled = True
         Me.ddl_DueDateList.Location = New System.Drawing.Point(112, 41)
         Me.ddl_DueDateList.Name = "ddl_DueDateList"
-        Me.ddl_DueDateList.Size = New System.Drawing.Size(186, 20)
+        Me.ddl_DueDateList.Size = New System.Drawing.Size(186, 22)
         Me.ddl_DueDateList.TabIndex = 23
         '
         'frmOutstandingBalancesNew

@@ -3,6 +3,8 @@ Option Strict On
 
 Imports AccountsManagementObjects
 Imports AccountsManagementLogic
+Imports System.Threading.Tasks
+
 Public Class frmSTLNoticeNew
     Private WbillHelper As WESMBillHelper
     Private _STLNoticeHelper As New STLNoticeHelper
@@ -94,9 +96,9 @@ Public Class frmSTLNoticeNew
         Me.ToolStripStatusLabel_Text.Text = "Please wait while processing..."
         Try
             _STLNoticeHelper.STLNoticeDate = CDate(Me.cbo_date.Text)
-            _STLNoticeHelper.FilePath = TargetPath            
+            _STLNoticeHelper.FilePath = TargetPath
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)            
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             bgw_STLNotice.WorkerSupportsCancellation = True
             bgw_STLNotice.WorkerReportsProgress = True
@@ -111,13 +113,14 @@ Public Class frmSTLNoticeNew
             End If
             Dim i As Integer = 0
             Dim j As Integer = Me.chkLB_Participants.CheckedItems.Count
-            For Each item In Me.chkLB_Participants.CheckedItems
+
+            For Each item In chkLB_Participants.CheckedItems
                 i += 1
                 _STLNoticeHelper.GenerateSTLNoticeReport(item.ToString)
                 bgw_STLNotice.ReportProgress(CInt((i / j) * 100), "Running...")
             Next
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)                        
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             e.Cancel = True
         End Try
     End Sub
@@ -128,8 +131,8 @@ Public Class frmSTLNoticeNew
             Me.ToolStripStatusLabel_Percent.Text = e.ProgressPercentage.ToString("0.00") & " %"
             Me.ToolStripStatusLabel_Text.Text = _STLNoticeHelper.ProcessRemarks.ToString
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)            
-        End Try        
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub bgw_STLNotice_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw_STLNotice.RunWorkerCompleted
@@ -157,6 +160,6 @@ Public Class frmSTLNoticeNew
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try        
+        End Try
     End Sub
 End Class

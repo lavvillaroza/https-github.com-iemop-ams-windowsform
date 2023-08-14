@@ -28,7 +28,7 @@ Public Class frmBRCollectionReportDetails
     Private Sub FillUpCheckBoxListSeller()
         Me.chkLB_Participants.Items.Clear()
         For Each item In _BRCollReportHelper.BIRRulingCR.SellerDetails
-            Me.chkLB_Participants.Items.Add(item.Participant.IDNumber)
+            Me.chkLB_Participants.Items.Add(item.SellerParticipantInfo.IDNumber)
         Next
     End Sub
 

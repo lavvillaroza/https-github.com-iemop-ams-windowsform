@@ -65,9 +65,10 @@ Public Class ImportWTAFromCRSSDBHelper
         Try
             If AMModule.RegionType = "LV" Then
                 SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_alloc_cover_summary WHERE REGION_GROUP = 'LUZON_VISAYAS' and due_date is not null Order by due_date desc"
-
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_alloc_cover_summary WHERE REGION_GROUP = 'MINDANAO'  and due_date is not null Order by due_date desc"
+            Else
+                SQL = "SELECT DISTINCT DUE_DATE FROM settlement.txn_alloc_cover_summary WHERE due_date is not null Order by due_date desc"
             End If
 
             report = Me._NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
@@ -124,7 +125,7 @@ Public Class ImportWTAFromCRSSDBHelper
                     & "WHERE tacs.due_date = to_date('" & duedate & "', 'mm/dd/yyyy') and bp.billing_period = " & bp & " " & vbNewLine _
                     & "and tacs.stl_run = '" & stlRun & "' and tacs.group_id = '" & groupID & "' and tacs.region_group = 'LUZON_VISAYAS' " & vbNewLine _
                     & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run, tacs.group_id"
-            Else
+            ElseIf AMModule.RegionType = "M" Then
                 SQL = "SELECT tacs.summary_id, bp.billing_period, tacs.stl_run, tacs.group_id, tacs.billing_id, tacs.trading_participant_settlement_id, tacs.invoice_id, " & vbNewLine _
                     & "tacs.net_seller_buyer_tag, tacs.transaction_number, tacs.due_date, tacs.date, tacs.non_vatable, tacs.zero_rated, " & vbNewLine _
                     & "tacs.vatable_sales, tacs.vatable_purchases, tacs.zero_rated_sales, tacs.zero_rated_ecozone_sales, tacs.zero_rated_purchases, tacs.zero_rated_ecozone_purchases, " & vbNewLine _
@@ -135,6 +136,18 @@ Public Class ImportWTAFromCRSSDBHelper
                     & "And bp.end_date = tacs.billing_period_end " & vbNewLine _
                     & "WHERE tacs.due_date = to_date('" & duedate & "', 'mm/dd/yyyy') and bp.billing_period = " & bp & " " & vbNewLine _
                     & "and tacs.stl_run = '" & stlRun & "' and tacs.group_id = '" & groupID & "' and tacs.region_group = 'MINDANAO' " & vbNewLine _
+                    & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run, tacs.group_id"
+            Else
+                SQL = "SELECT tacs.summary_id, bp.billing_period, tacs.stl_run, tacs.group_id, tacs.billing_id, tacs.trading_participant_settlement_id, tacs.invoice_id, " & vbNewLine _
+                    & "tacs.net_seller_buyer_tag, tacs.transaction_number, tacs.due_date, tacs.date, tacs.non_vatable, tacs.zero_rated, " & vbNewLine _
+                    & "tacs.vatable_sales, tacs.vatable_purchases, tacs.zero_rated_sales, tacs.zero_rated_ecozone_sales, tacs.zero_rated_purchases, tacs.zero_rated_ecozone_purchases, " & vbNewLine _
+                    & "tacs.vat_on_sales, tacs.vat_on_purchases, tacs.tta, tacs.nss_flowback, tacs.energy_witholding_tax_sales, tacs.energy_witholding_tax_purchases, " & vbNewLine _
+                    & "tacs.net_energy_qty, tacs.gmr, tacs.market_fees_rate, tacs.wht, tacs.ith, tacs.region_group, tacs.remarks, tacs.genx_flowback " & vbNewLine _
+                    & "FROM settlement.txn_alloc_cover_summary tacs " & vbNewLine _
+                    & "JOIN meterprocess.txn_billing_period bp ON bp.start_date = tacs.billing_period_start " & vbNewLine _
+                    & "And bp.end_date = tacs.billing_period_end " & vbNewLine _
+                    & "WHERE tacs.due_date = to_date('" & duedate & "', 'mm/dd/yyyy') and bp.billing_period = " & bp & " " & vbNewLine _
+                    & "and tacs.stl_run = '" & stlRun & "' and tacs.group_id = '" & groupID & "' " & vbNewLine _
                     & "ORDER BY tacs.due_date, bp.billing_period, tacs.stl_run, tacs.group_id"
             End If
 
@@ -898,10 +911,12 @@ Public Class ImportWTAFromCRSSDBHelper
                           "       AND STL_RUN = '" & stlRun & "'"
                     listSQL.Add(SQL)
 
-                    SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
-                        & "WHERE SUMMARY_ID >= (SELECT MIN(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "') " & vbNewLine _
-                        & "AND SUMMARY_ID <= (SELECT MAX(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "')"
-                    listSQL.Add(SQL)
+                    Dim getListofSummaryIDForDeletion As List(Of Long) = Me._WBillHelper.GetListSummaryIDForDeletion(calendarBP.BillingPeriod, stlRun)
+                    For Each item In getListofSummaryIDForDeletion
+                        SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
+                                & "WHERE SUMMARY_ID = " & item
+                        listSQL.Add(SQL)
+                    Next
 
                     SQL = "DELETE FROM AM_WESM_ALLOC_COVER_SUMMARY " & vbNewLine _
                          & "WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " " & vbNewLine _

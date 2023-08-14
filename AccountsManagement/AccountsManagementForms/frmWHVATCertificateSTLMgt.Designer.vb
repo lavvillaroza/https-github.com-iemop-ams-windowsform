@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmWHVatCertificatesSTLMgt
+Partial Class frmWHVATCertificateSTLMgt
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,8 +23,8 @@ Partial Class frmWHVatCertificatesSTLMgt
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.tsslbl_Msg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
@@ -321,20 +321,20 @@ Partial Class frmWHVatCertificatesSTLMgt
         'DGridViewCollection
         '
         Me.DGridViewCollection.AllowUserToAddRows = False
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGridViewCollection.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridViewCollection.BackgroundColor = System.Drawing.SystemColors.ButtonShadow
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.DimGray
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DGridViewCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewCollection.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCertificateNo, Me.colRemittanceDate, Me.ColBillingIDNo, Me.colCollectedAmount, Me.colAllocatedToAP, Me.colUntag})
         Me.DGridViewCollection.Location = New System.Drawing.Point(9, 19)
@@ -381,12 +381,12 @@ Partial Class frmWHVatCertificatesSTLMgt
         '
         'colUntag
         '
-        Me.colUntag.HeaderText = "Untag EWV"
+        Me.colUntag.HeaderText = "Untag WVAT"
         Me.colUntag.Name = "colUntag"
         Me.colUntag.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.colUntag.Width = 80
         '
-        'frmWHVatCertificatesSTLMgt
+        'frmWHVATCertificateSTLMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -396,7 +396,7 @@ Partial Class frmWHVatCertificatesSTLMgt
         Me.Controls.Add(Me.MainPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
-        Me.Name = "frmWHVatCertificatesSTLMgt"
+        Me.Name = "frmWHVATCertificateSTLMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Withholding VAT Certificate Management"
         Me.ctrl_statusStrip.ResumeLayout(False)

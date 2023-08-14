@@ -186,11 +186,11 @@ Partial Class frmPrudentialInterest
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(805, 38)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(82, 14)
+        Me.Label5.Size = New System.Drawing.Size(81, 14)
         Me.Label5.TabIndex = 52
         Me.Label5.Text = "Participant ID:"
         '
@@ -216,7 +216,7 @@ Partial Class frmPrudentialInterest
         Me.DGridViewPrudential.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DGridViewPrudential.Name = "DGridViewPrudential"
         Me.DGridViewPrudential.RowHeadersWidth = 20
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGridViewPrudential.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DGridViewPrudential.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewPrudential.Size = New System.Drawing.Size(1060, 382)
@@ -282,19 +282,20 @@ Partial Class frmPrudentialInterest
         Me.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSearch.Location = New System.Drawing.Point(1044, 30)
+        Me.btnSearch.Location = New System.Drawing.Point(1044, 34)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(35, 30)
+        Me.btnSearch.Size = New System.Drawing.Size(26, 24)
         Me.btnSearch.TabIndex = 51
         Me.btnSearch.UseVisualStyleBackColor = True
         '
         'frmPrudentialInterest
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1094, 512)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnSummaryReport)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.btnSearch)
@@ -307,7 +308,7 @@ Partial Class frmPrudentialInterest
         Me.Controls.Add(Me.DGridViewPrudential)
         Me.Controls.Add(Me.btnInterest)
         Me.Controls.Add(Me.btnSave)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmPrudentialInterest"

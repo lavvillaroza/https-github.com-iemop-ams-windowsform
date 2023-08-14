@@ -49,7 +49,7 @@ Partial Class frmCollectionPost
         'lblTransactionDate
         '
         Me.lblTransactionDate.AutoSize = True
-        Me.lblTransactionDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTransactionDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTransactionDate.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblTransactionDate.Location = New System.Drawing.Point(20, 17)
         Me.lblTransactionDate.Name = "lblTransactionDate"
@@ -60,11 +60,11 @@ Partial Class frmCollectionPost
         '
         'dtTransactionDate
         '
-        Me.dtTransactionDate.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtTransactionDate.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtTransactionDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtTransactionDate.Location = New System.Drawing.Point(116, 12)
         Me.dtTransactionDate.Name = "dtTransactionDate"
-        Me.dtTransactionDate.Size = New System.Drawing.Size(147, 23)
+        Me.dtTransactionDate.Size = New System.Drawing.Size(147, 22)
         Me.dtTransactionDate.TabIndex = 8
         '
         'DGridViewCollection
@@ -78,7 +78,7 @@ Partial Class frmCollectionPost
         Me.DGridViewCollection.MultiSelect = False
         Me.DGridViewCollection.Name = "DGridViewCollection"
         Me.DGridViewCollection.RowHeadersWidth = 20
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGridViewCollection.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DGridViewCollection.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewCollection.Size = New System.Drawing.Size(809, 355)
@@ -243,7 +243,7 @@ Partial Class frmCollectionPost
         '
         'frmCollectionPost
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(841, 461)
@@ -255,12 +255,12 @@ Partial Class frmCollectionPost
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnPost)
         Me.Controls.Add(Me.btnViewJV)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmCollectionPost"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = ";"
+        Me.Text = "Collection Posting"
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

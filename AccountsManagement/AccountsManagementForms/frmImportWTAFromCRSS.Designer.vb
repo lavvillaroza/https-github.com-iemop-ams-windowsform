@@ -28,6 +28,7 @@ Partial Class frmImportWTAFromCRSS
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Panel_Head = New System.Windows.Forms.Panel()
+        Me.btn_Close = New System.Windows.Forms.Button()
         Me.btnRefresh = New System.Windows.Forms.Button()
         Me.btnImport = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -95,6 +96,7 @@ Partial Class frmImportWTAFromCRSS
         Me.Panel_Head.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel_Head.Controls.Add(Me.btn_Close)
         Me.Panel_Head.Controls.Add(Me.btnRefresh)
         Me.Panel_Head.Controls.Add(Me.btnImport)
         Me.Panel_Head.Controls.Add(Me.Label2)
@@ -103,6 +105,25 @@ Partial Class frmImportWTAFromCRSS
         Me.Panel_Head.Name = "Panel_Head"
         Me.Panel_Head.Size = New System.Drawing.Size(1065, 54)
         Me.Panel_Head.TabIndex = 12
+        '
+        'btn_Close
+        '
+        Me.btn_Close.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_Close.BackColor = System.Drawing.Color.White
+        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.ForeColor = System.Drawing.Color.Black
+        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
+        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Close.Location = New System.Drawing.Point(905, 7)
+        Me.btn_Close.Name = "btn_Close"
+        Me.btn_Close.Size = New System.Drawing.Size(140, 39)
+        Me.btn_Close.TabIndex = 20
+        Me.btn_Close.Text = "&Close"
+        Me.btn_Close.UseVisualStyleBackColor = False
         '
         'btnRefresh
         '
@@ -130,9 +151,9 @@ Partial Class frmImportWTAFromCRSS
         Me.btnImport.ForeColor = System.Drawing.Color.Black
         Me.btnImport.Image = Global.AccountsManagementForms.My.Resources.Resources.Upload2Icon22x22
         Me.btnImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnImport.Location = New System.Drawing.Point(897, 7)
+        Me.btnImport.Location = New System.Drawing.Point(759, 8)
         Me.btnImport.Name = "btnImport"
-        Me.btnImport.Size = New System.Drawing.Size(159, 39)
+        Me.btnImport.Size = New System.Drawing.Size(140, 39)
         Me.btnImport.TabIndex = 18
         Me.btnImport.Text = "   &Upload File"
         Me.btnImport.UseVisualStyleBackColor = False
@@ -338,6 +359,7 @@ Partial Class frmImportWTAFromCRSS
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1080, 520)
+        Me.ControlBox = False
         Me.Controls.Add(Me.TLP_Main)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmImportWTAFromCRSS"
@@ -383,4 +405,5 @@ Partial Class frmImportWTAFromCRSS
     Friend WithEvents colTotalNetPurchases As DataGridViewTextBoxColumn
     Friend WithEvents TotalEWTPurchases As DataGridViewTextBoxColumn
     Friend WithEvents colRemarks As DataGridViewTextBoxColumn
+    Friend WithEvents btn_Close As Button
 End Class

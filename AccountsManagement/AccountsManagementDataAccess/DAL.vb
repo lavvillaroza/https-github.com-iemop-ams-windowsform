@@ -26,6 +26,7 @@ Imports System.Configuration
 Imports AccountsManagementObjects
 Imports Oracle.ManagedDataAccess.Client
 Imports System.Threading
+Imports System.Threading.Tasks
 
 Public Class DAL
 
@@ -138,6 +139,31 @@ Public Class DAL
 #End Region
 
 #Region "ExecuteSelectQueryReturningDataReader"
+    Public Function ExecuteSelectQueryReturningDataReaderAsync(ByVal _SQL As String) As Task(Of DataReport)
+        Dim report As New DataReport
+        Me._myReader = Nothing
+        Try
+            Me.OpenConnection()
+            Try
+                Me._myCommand = New OracleCommand(_SQL, _conn)
+                Me._myReader = Me._myCommand.ExecuteReader(CommandBehavior.CloseConnection)
+                report.ReturnedIDatareader = Me._myReader
+            Catch ex As Exception
+                report.ErrorMessage = ex.Message
+                If Me._conn.State <> ConnectionState.Closed Then
+                    Me._conn.Close()
+                End If
+                Me._myCommand.Dispose()
+            End Try
+        Catch ex As Exception
+            report.ErrorMessage = ex.Message
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+        End Try
+        Return Task.FromResult(report)
+    End Function
+
     Public Function ExecuteSelectQueryReturningDataReader(ByVal _SQL As String) As DataReport
         Dim report As New DataReport
         Me._myReader = Nothing
@@ -454,6 +480,69 @@ Public Class DAL
         Return report
     End Function
 
+    Public Function ExecuteSaveQueryAsync(ByVal _ListSQL As List(Of String), ByVal progress As IProgress(Of ProgressClass),
+                                   ByVal ct As CancellationToken) As Task(Of DataReport)
+        Dim savetransaction As OracleTransaction = Nothing
+        Dim report As New DataReport
+        Dim errMsg As String = ""
+        Dim newProgress As ProgressClass = New ProgressClass
+        Try
+            Me.OpenConnection()
+        Catch ex As Exception
+            report.ErrorMessage = ex.Message
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+            Me._conn.Dispose()
+            Return Task.FromResult(report)
+        End Try
+
+        Try
+            savetransaction = Me._conn.BeginTransaction()
+            Dim cnt As Integer = 0
+            For Each _SQL As String In _ListSQL
+                If ct.IsCancellationRequested Then
+                    Throw New OperationCanceledException
+                End If
+                cnt += 1
+                errMsg = cnt.ToString & " " & _SQL
+                Me._myCommand = New OracleCommand()
+                Me._myCommand.Connection = Me._conn
+                Me._myCommand.CommandText = _SQL
+                Me._myCommand.Transaction = savetransaction
+                Me._myCommand.ExecuteNonQueryAsync()
+                'Debug.Print(_SQL)
+                newProgress.ProgressMsg = "Executing SQL scripts for saving: " & cnt.ToString("N0") & "/" & _ListSQL.Count.ToString("N0")
+                progress.Report(newProgress)
+            Next
+            savetransaction.Commit()
+        Catch ex As ApplicationException
+            savetransaction.Rollback()
+            report.ErrorMessage = ex.Message & vbNewLine & errMsg
+        Catch ex1 As OracleException
+            If ex1.Number = 1756 Then
+                report.ErrorMessage = "Single quote is not allowed. Please remove all single quote in all fields"
+            Else
+                report.ErrorMessage = ex1.Message & vbNewLine & errMsg
+            End If
+            savetransaction.Rollback()
+        Catch exCancel As OperationCanceledException
+            savetransaction.Rollback()
+            report.ErrorMessage = "Saving in db is requested to cancel!"
+        Catch ex2 As Exception
+            savetransaction.Rollback()
+            report.ErrorMessage = ex2.Message & vbNewLine & errMsg
+        Finally
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+            _ListSQL = Nothing
+            savetransaction.Dispose()
+            Me._myCommand.Dispose()
+            Me._conn.Dispose()
+        End Try
+        Return Task.FromResult(report)
+    End Function
 #End Region
 
 #Region "ExecuteSaveQuery"

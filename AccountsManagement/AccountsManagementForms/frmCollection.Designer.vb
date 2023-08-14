@@ -23,19 +23,37 @@ Partial Class frmCollection
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DGridViewCollection = New System.Windows.Forms.DataGridView()
+        Me.colID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colORNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDMCMNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCreatedDocumentMain = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.colCollectionDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colIDNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colParticipantID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCollected = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colPrudentialReplenishment = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colHeld = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAmountForAllocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colType = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAllocationType = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAllocate = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colIsPosted = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDateAllocated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDailyBatchCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.gpFake = New System.Windows.Forms.GroupBox()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.chckAll = New System.Windows.Forms.CheckBox()
@@ -85,24 +103,6 @@ Partial Class frmCollection
         Me.txtTotalVatEnergy = New System.Windows.Forms.TextBox()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
-        Me.colID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colORNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDMCMNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCreatedDocumentMain = New System.Windows.Forms.DataGridViewLinkColumn()
-        Me.colCollectionDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIDNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colParticipantID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCollected = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPrudentialReplenishment = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colHeld = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAmountForAllocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAllocationType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAllocate = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colIsPosted = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDateAllocated = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDailyBatchCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox9.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
@@ -114,20 +114,20 @@ Partial Class frmCollection
         'DGridViewCollection
         '
         Me.DGridViewCollection.AllowUserToAddRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
         Me.DGridViewCollection.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridViewCollection.BackgroundColor = System.Drawing.SystemColors.ButtonShadow
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
         Me.DGridViewCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewCollection.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colID, Me.colORNo, Me.colDMCMNo, Me.colCreatedDocumentMain, Me.colCollectionDate, Me.colIDNumber, Me.colParticipantID, Me.colCollected, Me.colPrudentialReplenishment, Me.colHeld, Me.colAmountForAllocation, Me.colType, Me.colAllocationType, Me.colStatus, Me.colAllocate, Me.colIsPosted, Me.colDateAllocated, Me.colDailyBatchCode})
         Me.DGridViewCollection.Location = New System.Drawing.Point(9, 19)
@@ -136,6 +136,144 @@ Partial Class frmCollection
         Me.DGridViewCollection.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGridViewCollection.Size = New System.Drawing.Size(1226, 202)
         Me.DGridViewCollection.TabIndex = 0
+        '
+        'colID
+        '
+        Me.colID.HeaderText = "ID"
+        Me.colID.Name = "colID"
+        Me.colID.ReadOnly = True
+        Me.colID.Visible = False
+        '
+        'colORNo
+        '
+        Me.colORNo.HeaderText = "ORNo"
+        Me.colORNo.Name = "colORNo"
+        Me.colORNo.ReadOnly = True
+        Me.colORNo.Visible = False
+        Me.colORNo.Width = 70
+        '
+        'colDMCMNo
+        '
+        Me.colDMCMNo.HeaderText = "DMCMNo"
+        Me.colDMCMNo.Name = "colDMCMNo"
+        Me.colDMCMNo.ReadOnly = True
+        Me.colDMCMNo.Visible = False
+        '
+        'colCreatedDocumentMain
+        '
+        Me.colCreatedDocumentMain.ActiveLinkColor = System.Drawing.Color.White
+        Me.colCreatedDocumentMain.HeaderText = "CreatedDocument"
+        Me.colCreatedDocumentMain.Name = "colCreatedDocumentMain"
+        Me.colCreatedDocumentMain.ReadOnly = True
+        Me.colCreatedDocumentMain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colCreatedDocumentMain.VisitedLinkColor = System.Drawing.Color.Blue
+        '
+        'colCollectionDate
+        '
+        Me.colCollectionDate.HeaderText = "CollectionDate"
+        Me.colCollectionDate.Name = "colCollectionDate"
+        Me.colCollectionDate.ReadOnly = True
+        Me.colCollectionDate.Width = 90
+        '
+        'colIDNumber
+        '
+        Me.colIDNumber.HeaderText = "IDNumber"
+        Me.colIDNumber.Name = "colIDNumber"
+        Me.colIDNumber.ReadOnly = True
+        Me.colIDNumber.Visible = False
+        '
+        'colParticipantID
+        '
+        Me.colParticipantID.HeaderText = "ParticipantID"
+        Me.colParticipantID.Name = "colParticipantID"
+        Me.colParticipantID.ReadOnly = True
+        Me.colParticipantID.Width = 90
+        '
+        'colCollected
+        '
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle15.Format = "N2"
+        DataGridViewCellStyle15.NullValue = Nothing
+        Me.colCollected.DefaultCellStyle = DataGridViewCellStyle15
+        Me.colCollected.HeaderText = "CollectedAmount"
+        Me.colCollected.Name = "colCollected"
+        Me.colCollected.ReadOnly = True
+        '
+        'colPrudentialReplenishment
+        '
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle16.Format = "N2"
+        DataGridViewCellStyle16.NullValue = Nothing
+        Me.colPrudentialReplenishment.DefaultCellStyle = DataGridViewCellStyle16
+        Me.colPrudentialReplenishment.HeaderText = "Replenishment"
+        Me.colPrudentialReplenishment.Name = "colPrudentialReplenishment"
+        Me.colPrudentialReplenishment.ReadOnly = True
+        '
+        'colHeld
+        '
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle17.Format = "N2"
+        DataGridViewCellStyle17.NullValue = Nothing
+        Me.colHeld.DefaultCellStyle = DataGridViewCellStyle17
+        Me.colHeld.HeaderText = "HeldCollection"
+        Me.colHeld.Name = "colHeld"
+        Me.colHeld.ReadOnly = True
+        '
+        'colAmountForAllocation
+        '
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle18.Format = "N2"
+        DataGridViewCellStyle18.NullValue = Nothing
+        Me.colAmountForAllocation.DefaultCellStyle = DataGridViewCellStyle18
+        Me.colAmountForAllocation.HeaderText = "AmountForApplication"
+        Me.colAmountForAllocation.Name = "colAmountForAllocation"
+        Me.colAmountForAllocation.ReadOnly = True
+        Me.colAmountForAllocation.Width = 120
+        '
+        'colType
+        '
+        Me.colType.HeaderText = "Type"
+        Me.colType.Name = "colType"
+        Me.colType.ReadOnly = True
+        Me.colType.Width = 80
+        '
+        'colAllocationType
+        '
+        Me.colAllocationType.HeaderText = "AllocationType"
+        Me.colAllocationType.Name = "colAllocationType"
+        Me.colAllocationType.ReadOnly = True
+        '
+        'colStatus
+        '
+        Me.colStatus.HeaderText = "Status"
+        Me.colStatus.Name = "colStatus"
+        Me.colStatus.ReadOnly = True
+        '
+        'colAllocate
+        '
+        Me.colAllocate.HeaderText = "Allocate"
+        Me.colAllocate.Name = "colAllocate"
+        Me.colAllocate.ReadOnly = True
+        Me.colAllocate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'colIsPosted
+        '
+        Me.colIsPosted.HeaderText = "IsPosted"
+        Me.colIsPosted.Name = "colIsPosted"
+        Me.colIsPosted.ReadOnly = True
+        '
+        'colDateAllocated
+        '
+        Me.colDateAllocated.HeaderText = "AllocationDate"
+        Me.colDateAllocated.Name = "colDateAllocated"
+        Me.colDateAllocated.ReadOnly = True
+        '
+        'colDailyBatchCode
+        '
+        Me.colDailyBatchCode.HeaderText = "DailyBatchCode"
+        Me.colDailyBatchCode.Name = "colDailyBatchCode"
+        Me.colDailyBatchCode.ReadOnly = True
+        Me.colDailyBatchCode.Visible = False
         '
         'gpFake
         '
@@ -162,11 +300,11 @@ Partial Class frmCollection
         'chckAll
         '
         Me.chckAll.AutoSize = True
-        Me.chckAll.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckAll.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckAll.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.chckAll.Location = New System.Drawing.Point(6, 18)
         Me.chckAll.Name = "chckAll"
-        Me.chckAll.Size = New System.Drawing.Size(70, 16)
+        Me.chckAll.Size = New System.Drawing.Size(70, 18)
         Me.chckAll.TabIndex = 12
         Me.chckAll.Text = "&Check All"
         Me.chckAll.UseVisualStyleBackColor = True
@@ -178,7 +316,7 @@ Partial Class frmCollection
         Me.btnAllocate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnAllocate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnAllocate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAllocate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAllocate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAllocate.ForeColor = System.Drawing.Color.Black
         Me.btnAllocate.Image = Global.AccountsManagementForms.My.Resources.Resources.ProcessDataIcon22x22
         Me.btnAllocate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -196,7 +334,7 @@ Partial Class frmCollection
         Me.btnJV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnJV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnJV.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnJV.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnJV.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnJV.ForeColor = System.Drawing.Color.Black
         Me.btnJV.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnJV.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -214,7 +352,7 @@ Partial Class frmCollection
         Me.btnPrintSummary.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnPrintSummary.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnPrintSummary.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPrintSummary.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintSummary.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPrintSummary.ForeColor = System.Drawing.Color.Black
         Me.btnPrintSummary.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnPrintSummary.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -232,7 +370,7 @@ Partial Class frmCollection
         Me.btnRollBack.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRollBack.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnRollBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRollBack.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRollBack.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRollBack.ForeColor = System.Drawing.Color.Black
         Me.btnRollBack.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btnRollBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -366,11 +504,11 @@ Partial Class frmCollection
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(12, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(71, 14)
+        Me.Label3.Size = New System.Drawing.Size(72, 14)
         Me.Label3.TabIndex = 24
         Me.Label3.Text = "Collections:"
         '
@@ -389,8 +527,8 @@ Partial Class frmCollection
         'DGridViewAllocCollections
         '
         Me.DGridViewAllocCollections.AllowUserToAddRows = False
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewAllocCollections.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewAllocCollections.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle19
         Me.DGridViewAllocCollections.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -406,8 +544,8 @@ Partial Class frmCollection
         '
         'colCreatedDocument
         '
-        DataGridViewCellStyle8.NullValue = Nothing
-        Me.colCreatedDocument.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle20.NullValue = Nothing
+        Me.colCreatedDocument.DefaultCellStyle = DataGridViewCellStyle20
         Me.colCreatedDocument.HeaderText = "CreatedDocument"
         Me.colCreatedDocument.Name = "colCreatedDocument"
         Me.colCreatedDocument.Visible = False
@@ -415,8 +553,8 @@ Partial Class frmCollection
         'colCreatedDocumentValue
         '
         Me.colCreatedDocumentValue.ActiveLinkColor = System.Drawing.Color.White
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colCreatedDocumentValue.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colCreatedDocumentValue.DefaultCellStyle = DataGridViewCellStyle21
         Me.colCreatedDocumentValue.HeaderText = "CreatedDocument"
         Me.colCreatedDocumentValue.Name = "colCreatedDocumentValue"
         Me.colCreatedDocumentValue.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -476,8 +614,8 @@ Partial Class frmCollection
         'colInvDMCMValue
         '
         Me.colInvDMCMValue.ActiveLinkColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colInvDMCMValue.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colInvDMCMValue.DefaultCellStyle = DataGridViewCellStyle22
         Me.colInvDMCMValue.HeaderText = "ReferenceDocument"
         Me.colInvDMCMValue.Name = "colInvDMCMValue"
         Me.colInvDMCMValue.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -487,20 +625,20 @@ Partial Class frmCollection
         '
         'colBeginningBalance
         '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle11.Format = "N2"
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.colBeginningBalance.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle23.Format = "N2"
+        DataGridViewCellStyle23.NullValue = Nothing
+        Me.colBeginningBalance.DefaultCellStyle = DataGridViewCellStyle23
         Me.colBeginningBalance.HeaderText = "OutstandingAmount"
         Me.colBeginningBalance.Name = "colBeginningBalance"
         Me.colBeginningBalance.Width = 120
         '
         'colAmount
         '
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle12.Format = "N2"
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.colAmount.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle24.Format = "N2"
+        DataGridViewCellStyle24.NullValue = Nothing
+        Me.colAmount.DefaultCellStyle = DataGridViewCellStyle24
         Me.colAmount.HeaderText = "AppliedAmount"
         Me.colAmount.Name = "colAmount"
         Me.colAmount.Width = 120
@@ -514,11 +652,11 @@ Partial Class frmCollection
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label2.Location = New System.Drawing.Point(6, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(124, 14)
+        Me.Label2.Size = New System.Drawing.Size(126, 14)
         Me.Label2.TabIndex = 25
         Me.Label2.Text = "Allocated Collections:"
         '
@@ -526,11 +664,11 @@ Partial Class frmCollection
         '
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Black
         Me.Label10.Location = New System.Drawing.Point(231, 524)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(158, 14)
+        Me.Label10.Size = New System.Drawing.Size(160, 14)
         Me.Label10.TabIndex = 23
         Me.Label10.Text = "Total Default Interest on MF:"
         '
@@ -538,13 +676,13 @@ Partial Class frmCollection
         '
         Me.txtTotalDIMF.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalDIMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalDIMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalDIMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalDIMF.ForeColor = System.Drawing.Color.Black
         Me.txtTotalDIMF.Location = New System.Drawing.Point(395, 521)
         Me.txtTotalDIMF.MaxLength = 26
         Me.txtTotalDIMF.Name = "txtTotalDIMF"
         Me.txtTotalDIMF.ReadOnly = True
-        Me.txtTotalDIMF.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalDIMF.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalDIMF.TabIndex = 24
         Me.txtTotalDIMF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -552,11 +690,11 @@ Partial Class frmCollection
         '
         Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Black
         Me.Label11.Location = New System.Drawing.Point(241, 546)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(147, 14)
+        Me.Label11.Size = New System.Drawing.Size(148, 14)
         Me.Label11.TabIndex = 25
         Me.Label11.Text = "Total VAT Default Interest:"
         '
@@ -564,11 +702,11 @@ Partial Class frmCollection
         '
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.ForeColor = System.Drawing.Color.Black
         Me.Label12.Location = New System.Drawing.Point(604, 524)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(104, 14)
+        Me.Label12.Size = New System.Drawing.Size(108, 14)
         Me.Label12.TabIndex = 26
         Me.Label12.Text = "Total Market Fees:"
         '
@@ -576,11 +714,11 @@ Partial Class frmCollection
         '
         Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.ForeColor = System.Drawing.Color.Black
         Me.Label13.Location = New System.Drawing.Point(567, 548)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(141, 14)
+        Me.Label13.Size = New System.Drawing.Size(145, 14)
         Me.Label13.TabIndex = 27
         Me.Label13.Text = "Total Vat on Market Fees:"
         '
@@ -588,11 +726,11 @@ Partial Class frmCollection
         '
         Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.ForeColor = System.Drawing.Color.Black
         Me.Label14.Location = New System.Drawing.Point(892, 525)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(179, 14)
+        Me.Label14.Size = New System.Drawing.Size(182, 14)
         Me.Label14.TabIndex = 28
         Me.Label14.Text = "Total Default Interest on Energy:"
         '
@@ -600,11 +738,11 @@ Partial Class frmCollection
         '
         Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.ForeColor = System.Drawing.Color.Black
         Me.Label16.Location = New System.Drawing.Point(993, 550)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(78, 14)
+        Me.Label16.Size = New System.Drawing.Size(77, 14)
         Me.Label16.TabIndex = 30
         Me.Label16.Text = "Total Energy:"
         '
@@ -612,11 +750,11 @@ Partial Class frmCollection
         '
         Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.ForeColor = System.Drawing.Color.Black
         Me.Label15.Location = New System.Drawing.Point(956, 571)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(115, 14)
+        Me.Label15.Size = New System.Drawing.Size(114, 14)
         Me.Label15.TabIndex = 31
         Me.Label15.Text = "Total Vat on Energy:"
         '
@@ -624,13 +762,13 @@ Partial Class frmCollection
         '
         Me.txtTotalDIVatMF.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalDIVatMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalDIVatMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalDIVatMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalDIVatMF.ForeColor = System.Drawing.Color.Black
         Me.txtTotalDIVatMF.Location = New System.Drawing.Point(394, 543)
         Me.txtTotalDIVatMF.MaxLength = 26
         Me.txtTotalDIVatMF.Name = "txtTotalDIVatMF"
         Me.txtTotalDIVatMF.ReadOnly = True
-        Me.txtTotalDIVatMF.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalDIVatMF.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalDIVatMF.TabIndex = 33
         Me.txtTotalDIVatMF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -638,13 +776,13 @@ Partial Class frmCollection
         '
         Me.txtTotalMF.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalMF.ForeColor = System.Drawing.Color.Black
         Me.txtTotalMF.Location = New System.Drawing.Point(714, 522)
         Me.txtTotalMF.MaxLength = 26
         Me.txtTotalMF.Name = "txtTotalMF"
         Me.txtTotalMF.ReadOnly = True
-        Me.txtTotalMF.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalMF.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalMF.TabIndex = 34
         Me.txtTotalMF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -652,13 +790,13 @@ Partial Class frmCollection
         '
         Me.txtTotalVatMF.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalVatMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalVatMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalVatMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalVatMF.ForeColor = System.Drawing.Color.Black
         Me.txtTotalVatMF.Location = New System.Drawing.Point(714, 545)
         Me.txtTotalVatMF.MaxLength = 26
         Me.txtTotalVatMF.Name = "txtTotalVatMF"
         Me.txtTotalVatMF.ReadOnly = True
-        Me.txtTotalVatMF.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalVatMF.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalVatMF.TabIndex = 35
         Me.txtTotalVatMF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -666,13 +804,13 @@ Partial Class frmCollection
         '
         Me.txtTotalDIEnergy.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalDIEnergy.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalDIEnergy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalDIEnergy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalDIEnergy.ForeColor = System.Drawing.Color.Black
         Me.txtTotalDIEnergy.Location = New System.Drawing.Point(1077, 522)
         Me.txtTotalDIEnergy.MaxLength = 26
         Me.txtTotalDIEnergy.Name = "txtTotalDIEnergy"
         Me.txtTotalDIEnergy.ReadOnly = True
-        Me.txtTotalDIEnergy.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalDIEnergy.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalDIEnergy.TabIndex = 36
         Me.txtTotalDIEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -680,13 +818,13 @@ Partial Class frmCollection
         '
         Me.txtTotalEnergy.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalEnergy.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalEnergy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalEnergy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalEnergy.ForeColor = System.Drawing.Color.Black
         Me.txtTotalEnergy.Location = New System.Drawing.Point(1077, 545)
         Me.txtTotalEnergy.MaxLength = 26
         Me.txtTotalEnergy.Name = "txtTotalEnergy"
         Me.txtTotalEnergy.ReadOnly = True
-        Me.txtTotalEnergy.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalEnergy.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalEnergy.TabIndex = 37
         Me.txtTotalEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -694,13 +832,13 @@ Partial Class frmCollection
         '
         Me.txtTotalVatEnergy.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalVatEnergy.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtTotalVatEnergy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalVatEnergy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalVatEnergy.ForeColor = System.Drawing.Color.Black
         Me.txtTotalVatEnergy.Location = New System.Drawing.Point(1077, 568)
         Me.txtTotalVatEnergy.MaxLength = 26
         Me.txtTotalVatEnergy.Name = "txtTotalVatEnergy"
         Me.txtTotalVatEnergy.ReadOnly = True
-        Me.txtTotalVatEnergy.Size = New System.Drawing.Size(167, 21)
+        Me.txtTotalVatEnergy.Size = New System.Drawing.Size(167, 20)
         Me.txtTotalVatEnergy.TabIndex = 38
         Me.txtTotalVatEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -712,7 +850,7 @@ Partial Class frmCollection
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.Black
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -731,7 +869,7 @@ Partial Class frmCollection
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -742,150 +880,13 @@ Partial Class frmCollection
         Me.btnClose.Text = "&Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
-        'colID
-        '
-        Me.colID.HeaderText = "ID"
-        Me.colID.Name = "colID"
-        Me.colID.ReadOnly = True
-        Me.colID.Visible = False
-        '
-        'colORNo
-        '
-        Me.colORNo.HeaderText = "ORNo"
-        Me.colORNo.Name = "colORNo"
-        Me.colORNo.ReadOnly = True
-        Me.colORNo.Visible = False
-        Me.colORNo.Width = 70
-        '
-        'colDMCMNo
-        '
-        Me.colDMCMNo.HeaderText = "DMCMNo"
-        Me.colDMCMNo.Name = "colDMCMNo"
-        Me.colDMCMNo.ReadOnly = True
-        Me.colDMCMNo.Visible = False
-        '
-        'colCreatedDocumentMain
-        '
-        Me.colCreatedDocumentMain.ActiveLinkColor = System.Drawing.Color.White
-        Me.colCreatedDocumentMain.HeaderText = "CreatedDocument"
-        Me.colCreatedDocumentMain.Name = "colCreatedDocumentMain"
-        Me.colCreatedDocumentMain.ReadOnly = True
-        Me.colCreatedDocumentMain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.colCreatedDocumentMain.VisitedLinkColor = System.Drawing.Color.Blue
-        '
-        'colCollectionDate
-        '
-        Me.colCollectionDate.HeaderText = "CollectionDate"
-        Me.colCollectionDate.Name = "colCollectionDate"
-        Me.colCollectionDate.ReadOnly = True
-        Me.colCollectionDate.Width = 90
-        '
-        'colIDNumber
-        '
-        Me.colIDNumber.HeaderText = "IDNumber"
-        Me.colIDNumber.Name = "colIDNumber"
-        Me.colIDNumber.ReadOnly = True
-        Me.colIDNumber.Visible = False
-        '
-        'colParticipantID
-        '
-        Me.colParticipantID.HeaderText = "ParticipantID"
-        Me.colParticipantID.Name = "colParticipantID"
-        Me.colParticipantID.ReadOnly = True
-        Me.colParticipantID.Width = 90
-        '
-        'colCollected
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.colCollected.DefaultCellStyle = DataGridViewCellStyle3
-        Me.colCollected.HeaderText = "CollectedAmount"
-        Me.colCollected.Name = "colCollected"
-        Me.colCollected.ReadOnly = True
-        '
-        'colPrudentialReplenishment
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.Format = "N2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.colPrudentialReplenishment.DefaultCellStyle = DataGridViewCellStyle4
-        Me.colPrudentialReplenishment.HeaderText = "Replenishment"
-        Me.colPrudentialReplenishment.Name = "colPrudentialReplenishment"
-        Me.colPrudentialReplenishment.ReadOnly = True
-        '
-        'colHeld
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.colHeld.DefaultCellStyle = DataGridViewCellStyle5
-        Me.colHeld.HeaderText = "HeldCollection"
-        Me.colHeld.Name = "colHeld"
-        Me.colHeld.ReadOnly = True
-        '
-        'colAmountForAllocation
-        '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.colAmountForAllocation.DefaultCellStyle = DataGridViewCellStyle6
-        Me.colAmountForAllocation.HeaderText = "AmountForApplication"
-        Me.colAmountForAllocation.Name = "colAmountForAllocation"
-        Me.colAmountForAllocation.ReadOnly = True
-        Me.colAmountForAllocation.Width = 120
-        '
-        'colType
-        '
-        Me.colType.HeaderText = "Type"
-        Me.colType.Name = "colType"
-        Me.colType.ReadOnly = True
-        Me.colType.Width = 80
-        '
-        'colAllocationType
-        '
-        Me.colAllocationType.HeaderText = "AllocationType"
-        Me.colAllocationType.Name = "colAllocationType"
-        Me.colAllocationType.ReadOnly = True
-        '
-        'colStatus
-        '
-        Me.colStatus.HeaderText = "Status"
-        Me.colStatus.Name = "colStatus"
-        Me.colStatus.ReadOnly = True
-        '
-        'colAllocate
-        '
-        Me.colAllocate.HeaderText = "Allocate"
-        Me.colAllocate.Name = "colAllocate"
-        Me.colAllocate.ReadOnly = True
-        Me.colAllocate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'colIsPosted
-        '
-        Me.colIsPosted.HeaderText = "IsPosted"
-        Me.colIsPosted.Name = "colIsPosted"
-        Me.colIsPosted.ReadOnly = True
-        '
-        'colDateAllocated
-        '
-        Me.colDateAllocated.HeaderText = "AllocationDate"
-        Me.colDateAllocated.Name = "colDateAllocated"
-        Me.colDateAllocated.ReadOnly = True
-        '
-        'colDailyBatchCode
-        '
-        Me.colDailyBatchCode.HeaderText = "DailyBatchCode"
-        Me.colDailyBatchCode.Name = "colDailyBatchCode"
-        Me.colDailyBatchCode.ReadOnly = True
-        Me.colDailyBatchCode.Visible = False
-        '
         'frmCollection
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1262, 644)
+        Me.ControlBox = False
         Me.Controls.Add(Me.gpFake)
         Me.Controls.Add(Me.GroupBox9)
         Me.Controls.Add(Me.txtTotalVatEnergy)
@@ -907,12 +908,12 @@ Partial Class frmCollection
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmCollection"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Collection"
+        Me.Text = "Collection Management"
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox9.PerformLayout()

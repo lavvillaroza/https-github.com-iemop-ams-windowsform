@@ -22,14 +22,23 @@ Partial Class frmPaymentTaggingDetails
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.txtTotalAllocAmount = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.dgAllocation = New System.Windows.Forms.DataGridView()
+        Me.colWBSummaryNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBatchNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBillingPeriodAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colIDNumberAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTransctionNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colChargeTypeAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colOrigDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNewDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAllocAmountAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.dtRemittanceDate = New System.Windows.Forms.DateTimePicker()
         Me.btn_Allocate = New System.Windows.Forms.Button()
@@ -46,9 +55,6 @@ Partial Class frmPaymentTaggingDetails
         Me.txtTotalTaggedAmount = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.dgTagging = New System.Windows.Forms.DataGridView()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.colWBSummaryNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colBatchNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colBillingNoAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -61,15 +67,9 @@ Partial Class frmPaymentTaggingDetails
         Me.colFullyPaid = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.colTagAmountAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colNewEndingBalanceAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colWBSummaryNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBatchNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBillingPeriodAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIDNumberAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colTransctionNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colChargeTypeAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colOrigDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNewDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAllocAmountAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dgAllocation, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -140,8 +140,8 @@ Partial Class frmPaymentTaggingDetails
         Me.dgAllocation.AllowUserToDeleteRows = False
         Me.dgAllocation.AllowUserToResizeColumns = False
         Me.dgAllocation.AllowUserToResizeRows = False
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgAllocation.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.dgAllocation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgAllocation.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAR, Me.colBatchNoAR, Me.colBillingPeriodAR, Me.colIDNumberAR, Me.colTransctionNoAR, Me.colChargeTypeAR, Me.colOrigDueDateAR, Me.colNewDueDateAR, Me.colAllocAmountAR})
         Me.dgAllocation.Dock = System.Windows.Forms.DockStyle.Left
@@ -152,6 +152,74 @@ Partial Class frmPaymentTaggingDetails
         Me.dgAllocation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgAllocation.Size = New System.Drawing.Size(1157, 463)
         Me.dgAllocation.TabIndex = 27
+        '
+        'colWBSummaryNoAR
+        '
+        Me.colWBSummaryNoAR.Frozen = True
+        Me.colWBSummaryNoAR.HeaderText = "WBSummaryNo"
+        Me.colWBSummaryNoAR.Name = "colWBSummaryNoAR"
+        Me.colWBSummaryNoAR.ReadOnly = True
+        Me.colWBSummaryNoAR.Visible = False
+        '
+        'colBatchNoAR
+        '
+        Me.colBatchNoAR.Frozen = True
+        Me.colBatchNoAR.HeaderText = "Batch No"
+        Me.colBatchNoAR.Name = "colBatchNoAR"
+        Me.colBatchNoAR.ReadOnly = True
+        Me.colBatchNoAR.Width = 75
+        '
+        'colBillingPeriodAR
+        '
+        Me.colBillingPeriodAR.Frozen = True
+        Me.colBillingPeriodAR.HeaderText = "Billing Period"
+        Me.colBillingPeriodAR.Name = "colBillingPeriodAR"
+        Me.colBillingPeriodAR.ReadOnly = True
+        Me.colBillingPeriodAR.Width = 90
+        '
+        'colIDNumberAR
+        '
+        Me.colIDNumberAR.Frozen = True
+        Me.colIDNumberAR.HeaderText = "ID Number"
+        Me.colIDNumberAR.Name = "colIDNumberAR"
+        Me.colIDNumberAR.ReadOnly = True
+        Me.colIDNumberAR.Width = 120
+        '
+        'colTransctionNoAR
+        '
+        Me.colTransctionNoAR.Frozen = True
+        Me.colTransctionNoAR.HeaderText = "Transaction No"
+        Me.colTransctionNoAR.Name = "colTransctionNoAR"
+        Me.colTransctionNoAR.ReadOnly = True
+        Me.colTransctionNoAR.Width = 115
+        '
+        'colChargeTypeAR
+        '
+        Me.colChargeTypeAR.Frozen = True
+        Me.colChargeTypeAR.HeaderText = "ChargeType"
+        Me.colChargeTypeAR.Name = "colChargeTypeAR"
+        '
+        'colOrigDueDateAR
+        '
+        Me.colOrigDueDateAR.Frozen = True
+        Me.colOrigDueDateAR.HeaderText = "Orig Due Date"
+        Me.colOrigDueDateAR.Name = "colOrigDueDateAR"
+        Me.colOrigDueDateAR.ReadOnly = True
+        '
+        'colNewDueDateAR
+        '
+        Me.colNewDueDateAR.Frozen = True
+        Me.colNewDueDateAR.HeaderText = "New Due Date"
+        Me.colNewDueDateAR.Name = "colNewDueDateAR"
+        Me.colNewDueDateAR.ReadOnly = True
+        Me.colNewDueDateAR.Width = 110
+        '
+        'colAllocAmountAR
+        '
+        Me.colAllocAmountAR.HeaderText = "Allocated Amount"
+        Me.colAllocAmountAR.Name = "colAllocAmountAR"
+        Me.colAllocAmountAR.ReadOnly = True
+        Me.colAllocAmountAR.Width = 140
         '
         'GroupBox1
         '
@@ -362,8 +430,8 @@ Partial Class frmPaymentTaggingDetails
         Me.dgTagging.AllowUserToDeleteRows = False
         Me.dgTagging.AllowUserToResizeColumns = False
         Me.dgTagging.AllowUserToResizeRows = False
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgTagging.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.dgTagging.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgTagging.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNoAP, Me.colBatchNoAP, Me.colBillingNoAP, Me.colIDNumberAP, Me.colTransactionNoAP, Me.colChargeTypeAP, Me.colOrigDueDateAP, Me.colNewDueDateAP, Me.colEndingBalanceAP, Me.colFullyPaid, Me.colTagAmountAP, Me.colNewEndingBalanceAP})
         Me.dgTagging.Dock = System.Windows.Forms.DockStyle.Left
@@ -375,42 +443,6 @@ Partial Class frmPaymentTaggingDetails
         Me.dgTagging.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.dgTagging.Size = New System.Drawing.Size(1157, 463)
         Me.dgTagging.TabIndex = 27
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.TableLayoutPanel3)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1169, 555)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "AR Allocation"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.ColumnCount = 1
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.TabControl1, 0, 1)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 2
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1183, 667)
-        Me.TableLayoutPanel1.TabIndex = 1
-        '
-        'TabControl1
-        '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(3, 83)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1177, 581)
-        Me.TabControl1.TabIndex = 0
         '
         'colWBSummaryNoAP
         '
@@ -475,10 +507,10 @@ Partial Class frmPaymentTaggingDetails
         '
         'colEndingBalanceAP
         '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle9.Format = "N2"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.colEndingBalanceAP.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.colEndingBalanceAP.DefaultCellStyle = DataGridViewCellStyle3
         Me.colEndingBalanceAP.Frozen = True
         Me.colEndingBalanceAP.HeaderText = "Ending Balance"
         Me.colEndingBalanceAP.Name = "colEndingBalanceAP"
@@ -508,79 +540,48 @@ Partial Class frmPaymentTaggingDetails
         Me.colNewEndingBalanceAP.ReadOnly = True
         Me.colNewEndingBalanceAP.Width = 130
         '
-        'colWBSummaryNoAR
+        'TabPage2
         '
-        Me.colWBSummaryNoAR.Frozen = True
-        Me.colWBSummaryNoAR.HeaderText = "WBSummaryNo"
-        Me.colWBSummaryNoAR.Name = "colWBSummaryNoAR"
-        Me.colWBSummaryNoAR.ReadOnly = True
-        Me.colWBSummaryNoAR.Visible = False
+        Me.TabPage2.Controls.Add(Me.TableLayoutPanel3)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(1169, 555)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "AR Allocation"
+        Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'colBatchNoAR
+        'TableLayoutPanel1
         '
-        Me.colBatchNoAR.Frozen = True
-        Me.colBatchNoAR.HeaderText = "Batch No"
-        Me.colBatchNoAR.Name = "colBatchNoAR"
-        Me.colBatchNoAR.ReadOnly = True
-        Me.colBatchNoAR.Width = 75
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.TabControl1, 0, 1)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1183, 667)
+        Me.TableLayoutPanel1.TabIndex = 1
         '
-        'colBillingPeriodAR
+        'TabControl1
         '
-        Me.colBillingPeriodAR.Frozen = True
-        Me.colBillingPeriodAR.HeaderText = "Billing Period"
-        Me.colBillingPeriodAR.Name = "colBillingPeriodAR"
-        Me.colBillingPeriodAR.ReadOnly = True
-        Me.colBillingPeriodAR.Width = 90
-        '
-        'colIDNumberAR
-        '
-        Me.colIDNumberAR.Frozen = True
-        Me.colIDNumberAR.HeaderText = "ID Number"
-        Me.colIDNumberAR.Name = "colIDNumberAR"
-        Me.colIDNumberAR.ReadOnly = True
-        Me.colIDNumberAR.Width = 120
-        '
-        'colTransctionNoAR
-        '
-        Me.colTransctionNoAR.Frozen = True
-        Me.colTransctionNoAR.HeaderText = "Transaction No"
-        Me.colTransctionNoAR.Name = "colTransctionNoAR"
-        Me.colTransctionNoAR.ReadOnly = True
-        Me.colTransctionNoAR.Width = 115
-        '
-        'colChargeTypeAR
-        '
-        Me.colChargeTypeAR.Frozen = True
-        Me.colChargeTypeAR.HeaderText = "ChargeType"
-        Me.colChargeTypeAR.Name = "colChargeTypeAR"
-        '
-        'colOrigDueDateAR
-        '
-        Me.colOrigDueDateAR.Frozen = True
-        Me.colOrigDueDateAR.HeaderText = "Orig Due Date"
-        Me.colOrigDueDateAR.Name = "colOrigDueDateAR"
-        Me.colOrigDueDateAR.ReadOnly = True
-        '
-        'colNewDueDateAR
-        '
-        Me.colNewDueDateAR.Frozen = True
-        Me.colNewDueDateAR.HeaderText = "New Due Date"
-        Me.colNewDueDateAR.Name = "colNewDueDateAR"
-        Me.colNewDueDateAR.ReadOnly = True
-        Me.colNewDueDateAR.Width = 110
-        '
-        'colAllocAmountAR
-        '
-        Me.colAllocAmountAR.HeaderText = "Allocated Amount"
-        Me.colAllocAmountAR.Name = "colAllocAmountAR"
-        Me.colAllocAmountAR.ReadOnly = True
-        Me.colAllocAmountAR.Width = 140
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Location = New System.Drawing.Point(3, 83)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(1177, 581)
+        Me.TabControl1.TabIndex = 0
         '
         'frmPaymentTaggingDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1189, 673)
+        Me.ControlBox = False
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False

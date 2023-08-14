@@ -2280,9 +2280,21 @@ Public Class WESMBillHelper
         Dim SQL As String
 
         Try
-            SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE_LVM_VIEW " &
+
+            'REGION TYPE LV = LUZON_VISAYAS, M = MINDANAO, A = ALL REGION
+            If AMModule.RegionType = "LV" Then
+                SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE_LVM_VIEW " &
+                  "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " &
+                  "OR stl_run <> '" & SettlementRun & "' OR region_type <> 'LUZON_VISAYAS'"
+            ElseIf AMModule.RegionType = "M" Then
+                SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE_LVM_VIEW " &
+                  "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " &
+                  "OR stl_run <> '" & SettlementRun & "' OR region_type <> 'MINDANAO'"
+            Else
+                SQL = "SELECT NVL(MAX(invoice_code),0) as MaxInvoiceNo FROM AM_WESM_INVOICE_LVM_VIEW " &
                   "WHERE billing_period <> " & BillingPeriod & " OR FILE_TYPE  <> " & FileType & " " &
                   "OR stl_run <> '" & SettlementRun & "'"
+            End If
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -13880,118 +13892,130 @@ Public Class WESMBillHelper
                 Dim row As DataRow
                 row = dtWESMBill.NewRow()
 
-                With item
-                    'Get the unique key to set invoice no
-                    Dim UniqueKey = .IDNumber & .RegistrationID
+                Dim getTotalInvoiceAmount As Decimal = (From x In listAggregatedWESMBills
+                                                        Where x.IDNumber = item.IDNumber And x.RegistrationID = item.RegistrationID
+                                                        Select x.Amount).Sum()
+                If getTotalInvoiceAmount <> 0 Then
+                    With item
+                        'Get the unique key to set invoice no
+                        Dim UniqueKey = .IDNumber & .RegistrationID
 
-                    Dim getParentID As String = (From x In wbschangeparentidlist
-                                                 Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
-                                                 Select x.NewParentParticipants.IDNumber).FirstOrDefault
-                    Dim parentID As String = ""
-                    If getParentID IsNot Nothing Then
-                        parentID = getParentID
-                    Else
-                        parentID = .IDNumber
-                    End If
-                    'Get the final invoice no
-                    If Not dicInvRef.ContainsKey(UniqueKey) Then
-                        InvoiceNo += 1
-                        dicInvRef.Add(UniqueKey, InvoiceNo)
-                    End If
-
-                    row("BATCH_CODE") = batchCode
-                    row("AM_CODE") = amcode
-                    row("BILLING_PERIOD") = .BillingPeriod
-                    row("STL_RUN") = .SettlementRun
-                    row("ID_NUMBER") = parentID
-                    row("REG_ID") = .RegistrationID
-                    row("FOR_ACCOUNT_OF") = .ForTheAccountOf
-                    row("FULL_NAME") = .FullName
-                    If .BillingPeriod = AMModule.BRImplementedBPNo Then
-                        row("INVOICE_NO") = .InvoiceNumber
-                    Else
-                        row("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
-                    End If
-                    row("INVOICE_DATE") = .InvoiceDate
-                    row("AMOUNT") = .Amount
-                    row("CHARGE_TYPE") = .ChargeType
-                    row("DUE_DATE") = .DueDate
-                    row("MARKET_FEES_RATE") = .MarketFeesRate
-                    row("REMARKS") = .Remarks
-                    row("UPDATED_BY") = AMModule.UserName
-                End With
-
-                dtWESMBill.Rows.Add(row)
-            Next
-            dtWESMBill.AcceptChanges()
-
-            For Each item In listAggregatedWESMInvoices
-                Dim row As DataRow, rowP As DataRow
-                row = dtWESMInvoice.NewRow()
-                rowP = dtWESMInvoicePrinting.NewRow()
-                With item
-                    Dim UniqueKey = .IDNumber & .RegistrationID
-                    Dim getParentID As String = (From x In wbschangeparentidlist
-                                                 Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
-                                                 Select x.NewParentParticipants.IDNumber).FirstOrDefault
-                    Dim parentID As String = ""
-                    If getParentID IsNot Nothing Then
-                        If Not getParentID.Contains(AMModule.FITParticipantCode.ToString) Then
+                        Dim getParentID As String = (From x In wbschangeparentidlist
+                                                     Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
+                                                     Select x.NewParentParticipants.IDNumber).FirstOrDefault
+                        Dim parentID As String = ""
+                        If getParentID IsNot Nothing Then
                             parentID = getParentID
                         Else
                             parentID = .IDNumber
                         End If
-                    Else
-                        parentID = .IDNumber
-                    End If
-                    row("FILE_TYPE") = CInt(.FileType)
-                    row("BILLING_PERIOD") = .BillingPeriod
-                    row("STL_RUN") = .SettlementRun
-                    row("ID_NUMBER") = parentID
-                    row("REG_ID") = .RegistrationID
-                    row("FOR_ACCOUNT_OF") = .ForTheAccountOf
-                    row("FULL_NAME") = .FullName
-                    If .BillingPeriod = AMModule.BRImplementedBPNo Then
-                        row("INVOICE_NO") = .InvoiceNumber
-                    Else
-                        row("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
-                    End If
 
-                    row("INVOICE_DATE") = .InvoiceDate
-                    row("AMOUNT") = .Amount
-                    row("QUANTITY") = .Quantity
-                    row("CHARGE_ID") = .ChargeID
-                    row("DUE_DATE") = .DueDate
-                    row("MARKET_FEES_RATE") = .MarketFeesRate
-                    row("REMARKS") = .Remarks
-                    row("UPDATED_BY") = AMModule.UserName
-                    row("INVOICE_CODE") = dicInvRef(UniqueKey)
+                        'Get the final invoice no
+                        If Not dicInvRef.ContainsKey(UniqueKey) Then
+                            InvoiceNo += 1
+                            dicInvRef.Add(UniqueKey, InvoiceNo)
+                        End If
 
-                    'For Printing
-                    rowP("FILE_TYPE") = CInt(.FileType)
-                    rowP("BILLING_PERIOD") = .BillingPeriod
-                    rowP("STL_RUN") = .SettlementRun
-                    rowP("ID_NUMBER") = .IDNumber
-                    rowP("REG_ID") = .RegistrationID
-                    rowP("FOR_ACCOUNT_OF") = .ForTheAccountOf
-                    rowP("FULL_NAME") = .FullName
-                    If .BillingPeriod = AMModule.BRImplementedBPNo Then
-                        rowP("INVOICE_NO") = .InvoiceNumber
-                    Else
-                        rowP("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
-                    End If
-                    rowP("INVOICE_DATE") = .InvoiceDate
-                    rowP("AMOUNT") = .Amount
-                    rowP("QUANTITY") = .Quantity
-                    rowP("CHARGE_ID") = .ChargeID
-                    rowP("DUE_DATE") = .DueDate
-                    rowP("MARKET_FEES_RATE") = .MarketFeesRate
-                    rowP("REMARKS") = .Remarks
-                    rowP("UPDATED_BY") = AMModule.UserName
-                    rowP("INVOICE_CODE") = dicInvRef(UniqueKey)
-                End With
-                dtWESMInvoice.Rows.Add(row)
-                dtWESMInvoicePrinting.Rows.Add(rowP)
+                        row("BATCH_CODE") = batchCode
+                        row("AM_CODE") = amcode
+                        row("BILLING_PERIOD") = .BillingPeriod
+                        row("STL_RUN") = .SettlementRun
+                        row("ID_NUMBER") = parentID
+                        row("REG_ID") = .RegistrationID
+                        row("FOR_ACCOUNT_OF") = .ForTheAccountOf
+                        row("FULL_NAME") = .FullName
+                        If .BillingPeriod = AMModule.BRImplementedBPNo Then
+                            row("INVOICE_NO") = .InvoiceNumber
+                        Else
+                            row("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
+                        End If
+                        row("INVOICE_DATE") = .InvoiceDate
+                        row("AMOUNT") = .Amount
+                        row("CHARGE_TYPE") = .ChargeType
+                        row("DUE_DATE") = .DueDate
+                        row("MARKET_FEES_RATE") = .MarketFeesRate
+                        row("REMARKS") = .Remarks
+                        row("UPDATED_BY") = AMModule.UserName
+                    End With
+
+                    dtWESMBill.Rows.Add(row)
+                End If
+            Next
+            dtWESMBill.AcceptChanges()
+
+            For Each item In listAggregatedWESMInvoices
+                Dim getTotalInvoiceAmount As Decimal = (From x In listAggregatedWESMInvoices
+                                                        Where x.IDNumber = item.IDNumber And x.RegistrationID = item.RegistrationID
+                                                        Select x.Amount).Sum()
+                If getTotalInvoiceAmount <> 0 Then
+                    Dim row As DataRow, rowP As DataRow
+                    row = dtWESMInvoice.NewRow()
+                    rowP = dtWESMInvoicePrinting.NewRow()
+
+                    With item
+                        Dim UniqueKey = .IDNumber & .RegistrationID
+                        Dim getParentID As String = (From x In wbschangeparentidlist
+                                                     Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
+                                                     Select x.NewParentParticipants.IDNumber).FirstOrDefault
+                        Dim parentID As String = ""
+                        If getParentID IsNot Nothing Then
+                            If Not getParentID.Contains(AMModule.FITParticipantCode.ToString) Then
+                                parentID = getParentID
+                            Else
+                                parentID = .IDNumber
+                            End If
+                        Else
+                            parentID = .IDNumber
+                        End If
+                        row("FILE_TYPE") = CInt(.FileType)
+                        row("BILLING_PERIOD") = .BillingPeriod
+                        row("STL_RUN") = .SettlementRun
+                        row("ID_NUMBER") = parentID
+                        row("REG_ID") = .RegistrationID
+                        row("FOR_ACCOUNT_OF") = .ForTheAccountOf
+                        row("FULL_NAME") = .FullName
+                        If .BillingPeriod = AMModule.BRImplementedBPNo Then
+                            row("INVOICE_NO") = .InvoiceNumber
+                        Else
+                            row("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
+                        End If
+
+                        row("INVOICE_DATE") = .InvoiceDate
+                        row("AMOUNT") = .Amount
+                        row("QUANTITY") = .Quantity
+                        row("CHARGE_ID") = .ChargeID
+                        row("DUE_DATE") = .DueDate
+                        row("MARKET_FEES_RATE") = .MarketFeesRate
+                        row("REMARKS") = .Remarks
+                        row("UPDATED_BY") = AMModule.UserName
+                        row("INVOICE_CODE") = dicInvRef(UniqueKey)
+
+                        'For Printing
+                        rowP("FILE_TYPE") = CInt(.FileType)
+                        rowP("BILLING_PERIOD") = .BillingPeriod
+                        rowP("STL_RUN") = .SettlementRun
+                        rowP("ID_NUMBER") = .IDNumber
+                        rowP("REG_ID") = .RegistrationID
+                        rowP("FOR_ACCOUNT_OF") = .ForTheAccountOf
+                        rowP("FULL_NAME") = .FullName
+                        If .BillingPeriod = AMModule.BRImplementedBPNo Then
+                            rowP("INVOICE_NO") = .InvoiceNumber
+                        Else
+                            rowP("INVOICE_NO") = BFactory.GenerateBIRDocumentNumber(dicInvRef(UniqueKey), BIRDocumentsType.FinalStatement)
+                        End If
+                        rowP("INVOICE_DATE") = .InvoiceDate
+                        rowP("AMOUNT") = .Amount
+                        rowP("QUANTITY") = .Quantity
+                        rowP("CHARGE_ID") = .ChargeID
+                        rowP("DUE_DATE") = .DueDate
+                        rowP("MARKET_FEES_RATE") = .MarketFeesRate
+                        rowP("REMARKS") = .Remarks
+                        rowP("UPDATED_BY") = AMModule.UserName
+                        rowP("INVOICE_CODE") = dicInvRef(UniqueKey)
+                    End With
+                    dtWESMInvoice.Rows.Add(row)
+                    dtWESMInvoicePrinting.Rows.Add(rowP)
+                End If
             Next
             dtWESMInvoice.AcceptChanges()
             dtWESMInvoicePrinting.AcceptChanges()
@@ -14173,6 +14197,7 @@ Public Class WESMBillHelper
                     .Add("TRANSACTION_TYPE", GetType(Integer))
                     .Add("UPDATED_BY", GetType(String))
                 End With
+
                 dtWESMSAPPrinting.AcceptChanges()
                 For Each item In listAggregatedWESMSalesAndPurchases
                     With item
@@ -29353,8 +29378,8 @@ Public Class WESMBillHelper
             Dim getpreviousDate As Date = New Date(previousDate.Year, previousDate.Month, 1).AddDays(-1)
 
 
-            Dim SQL As String = "SELECT DISTINCT A.ID_NUMBER " &
-                               "FROM AM_PARTICIPANTS A WHERE STATUS = 1"
+            Dim SQL As String = "SELECT DISTINCT A.PARTICIPANT_ID " &
+                               "FROM AM_PARTICIPANTS A WHERE STATUS = 1 AND MEMBERSHIP_TYPE = 'DIRECT' ORDER BY A.PARTICIPANT_ID"
 
             Report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If Report.ErrorMessage.Length <> 0 Then
@@ -32896,4 +32921,118 @@ Public Class WESMBillHelper
             Throw New ApplicationException(ex.Message)
         End Try
     End Sub
+
+#Region "Get MAX AND MIN SummaryID for WTA"
+    Public Function GetMaxSummaryID(ByVal bp As Integer, ByVal stlRun As String) As Long
+        Dim maxSummaryId As Long
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT MAX(SUMMARY_ID) AS MAX_SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "'"
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            maxSummaryId = Me.GetMaxSummaryID(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return maxSummaryId
+    End Function
+
+    Private Function GetMaxSummaryID(ByVal dr As IDataReader) As Long
+        Dim result As Long
+        Try
+            While dr.Read()
+                With dr
+                    result = CLng(.Item("MAX_SUMMARY_ID"))
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+
+    Public Function GetMinSummaryID(ByVal bp As Integer, ByVal stlRun As String) As Long
+        Dim maxSummaryId As Long
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT MIN(SUMMARY_ID) AS MIN_SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "'"
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            maxSummaryId = Me.GetMinSummaryID(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return maxSummaryId
+    End Function
+
+    Private Function GetMinSummaryID(ByVal dr As IDataReader) As Long
+        Dim result As Long
+        Try
+            While dr.Read()
+                With dr
+                    result = CLng(.Item("MIN_SUMMARY_ID"))
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+
+    Public Function GetListSummaryIDForDeletion(ByVal bp As Integer, ByVal stlRun As String) As List(Of Long)
+        Dim listofSummaryId As List(Of Long)
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "' ORDER BY SUMMARY_ID"
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            listofSummaryId = Me.GetListSummaryIDForDeletion(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return listofSummaryId
+    End Function
+
+    Private Function GetListSummaryIDForDeletion(ByVal dr As IDataReader) As List(Of Long)
+        Dim result As List(Of Long) = New List(Of Long)
+        Try
+            While dr.Read()
+                With dr
+                    result.Add(CLng(.Item("SUMMARY_ID")))
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
 End Class

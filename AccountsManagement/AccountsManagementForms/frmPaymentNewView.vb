@@ -16,6 +16,8 @@ Public Class frmPaymentNewView
     Private PaymntHelper As New PaymentHelper
     Private PaymentAllocationDateList As New List(Of AllocationDate)
     Private StopWatch As New Diagnostics.Stopwatch
+    Private PayAllocationDate As AllocationDate = New AllocationDate
+    Private newProgress As New ProgressClass
 
     Private Sub frmPaymentNewView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
@@ -30,12 +32,12 @@ Public Class frmPaymentNewView
 
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.GB_CntButton.Enabled = False
-            Me.ts_StatusDesc.Text = "Ready"
+            Me.GB_CntButton.Enabled = True
+            Me.ToolStripStatus_LabelMsg.Text = "Ready"
 
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)           
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -49,7 +51,7 @@ Public Class frmPaymentNewView
         Me.PaymentAllocationDateList = Me.WBillHelper.GetPayAllocDate()
 
         If PaymentAllocationDateList.Count = 0 Then
-            MsgBox("No history of payment data was found.", CType(MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, MsgBoxStyle), "No Collection Data")
+            MessageBox.Show("No history of payment data was found.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Exit Sub
         End If
 
@@ -59,14 +61,17 @@ Public Class frmPaymentNewView
 
     End Sub
 
-    Dim PayAllocationDate As AllocationDate = New AllocationDate
+    Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
+        ToolStripStatus_LabelMsg.Text = _ProgressMsg.ProgressMsg
+        ctrl_statusStrip.Refresh()
+    End Sub
 
     Private Async Sub cbo_CollectionAllocDate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_CollectionAllocDate.SelectedIndexChanged
         Try
             Me.ClearControls()
             Dim SelectedDate As Date = CDate(FormatDateTime(CDate(cbo_CollectionAllocDate.SelectedItem), DateFormat.ShortDate))
-            Dim SelectedPayAllocDateItem As AllocationDate = (From x In Me.PaymentAllocationDateList _
-                                                              Where x.CollAllocationDate = SelectedDate _
+            Dim SelectedPayAllocDateItem As AllocationDate = (From x In Me.PaymentAllocationDateList
+                                                              Where x.CollAllocationDate = SelectedDate
                                                               Select x).First()
             PayAllocationDate = SelectedPayAllocDateItem
 
@@ -74,7 +79,9 @@ Public Class frmPaymentNewView
             Dim _ARAlloc As New List(Of DataTable)
             Dim _PaymentProformaEntries As New PaymentProformaEntries
 
-            Me.ts_StatusDesc.Text = "Please wait while fetching payment history."
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while laoding payment history."}
+            UpdateProgress(newProgress)
+
             Me.Timer1.Start()
             Me.StopWatch.Start()
 
@@ -83,18 +90,23 @@ Public Class frmPaymentNewView
 
             Await Task.Run(Sub() PaymntHelper.GetCollections())
 
-            Me.ts_StatusDesc.Text = "Please select 'View Payment' to fetch payment history."
-            Await Task.Delay(1000)
+            MessageBox.Show("Please select View Payment button!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
 
             btn_Calculate.Enabled = True
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.GB_CntButton.Enabled = False
+            Me.GB_CntButton.Enabled = True
 
         Catch ex As Exception
+            Me.Timer1.Stop()
+            Me.StopWatch.Stop()
+            Me.StopWatch.Reset()
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
-            'ProgressThread.Close()
+
         End Try
     End Sub
 
@@ -220,15 +232,15 @@ Public Class frmPaymentNewView
 
         'Get Total AR Draw Down on Energy Per Billing Period
         Dim ARCollDDonEnergy = (From x In Collections Where x.CollectionType = EnumCollectionType.Energy And x.CollectionCategory = EnumCollectionCategory.Drawdown
-                                     Select x).ToList()
+                                Select x).ToList()
 
         'Get Total AR Draw Down on Default Interest of Energy
         Dim TotalARCollDDonEnergyDI = (From x In Collections Where x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy And x.CollectionCategory = EnumCollectionCategory.Drawdown
-                                     Select x.AllocationAmount).ToList()
+                                       Select x.AllocationAmount).ToList()
 
         'Get AR Draw Down on Default Interest of Energy Per Billing Period
         Dim ARCollDDonEnergyDI = (From x In Collections Where x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy And x.CollectionCategory = EnumCollectionCategory.Drawdown
-                                     Select x).ToList()
+                                  Select x).ToList()
 
 
         'Me.Txtbox_TotalCollOnEnergy.Text = FormatNumber(TotalARCollonEnergy.Sum(), 2, , TriState.True).ToString()
@@ -399,8 +411,10 @@ Public Class frmPaymentNewView
         Try
             'ProgressThread.Show("Please wait while preparing payment view.")
             Me.GB_Allocation.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing payment history."
-            Await Task.Delay(1000)
+
+            ProgressThread.Show("Please wait while loading.")
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while loading payment history."}
+            UpdateProgress(newProgress)
 
             'Allocation       
             Await Task.Run(Sub() PaymntHelper.GetPayments())
@@ -459,14 +473,21 @@ Public Class frmPaymentNewView
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Finally
             Me.Timer1.Stop()
             Me.StopWatch.Stop()
             Me.StopWatch.Reset()
-            Me.ts_StatusDesc.Text = "Ready for viewing"
-            Me.ts_LabelName.Text = Me.dgv_PaymentTransToPR.RowCount.ToString("N0") & " records"
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready for viewing."}
+            UpdateProgress(newProgress)
+
+            Me.tsslbl_timer.Text = Me.dgv_PaymentTransToPR.RowCount.ToString("N0") & " records"
+            ProgressThread.Close()
+        Catch ex As Exception
+            ProgressThread.Close()
+            Me.Timer1.Stop()
+            Me.StopWatch.Stop()
+            Me.StopWatch.Reset()
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 #End Region
@@ -476,36 +497,36 @@ Public Class frmPaymentNewView
 
         'Get Total AP Collections on Energy
         Dim TotalAPonEnergy = (From x In Payments Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Cash And x.ChargeType = EnumChargeType.E
-                                   Select x.AllocationAmount Order By AllocationAmount).ToList()
+                               Select x.AllocationAmount Order By AllocationAmount).ToList()
 
 
         'Get AR Collections on Energy Per Billing Period
         Dim APOnEnergyPerBP = (From x In Payments Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                   Select x).ToList()
+                               Select x).ToList()
 
         'Get Total AR Collections on Default Interest of Energy
         Dim TotalAPonEnergyDI = (From x In Payments Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                     Select x.AllocationAmount).ToList()
+                                 Select x.AllocationAmount).ToList()
 
         'Get AR Collections on Default Interest of Energy Per Billing Period
         Dim APOnEnergyDIPerBP = (From x In Payments Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                     Select x).ToList()
+                                 Select x).ToList()
 
         'Get Total AR Draw Down on Energy
         Dim TotalAPDDonEnergy = (From x In Payments Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                     Select x.AllocationAmount).ToList()
+                                 Select x.AllocationAmount).ToList()
 
         'Get Total AR Draw Down on Energy Per Billing Period
         Dim APDDonEnergy = (From x In Payments Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                     Select x).ToList()
+                            Select x).ToList()
 
         'Get Total AR Draw Down on Default Interest of Energy
         Dim TotalAPDDonEnergyDI = (From x In Payments Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                     Select x.AllocationAmount).ToList()
+                                   Select x.AllocationAmount).ToList()
 
         'Get AR Draw Down on Default Interest of Energy Per Billing Period
         Dim APDDonEnergyDI = (From x In Payments Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                     Select x).ToList()
+                              Select x).ToList()
 
 
         'Me.Txtbox_TotalPayOnEnergy.Text = FormatNumber(TotalAPonEnergy.Sum(), 2, , TriState.True).ToString()
@@ -846,31 +867,32 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing JV Payment Report."
-            Await Task.Delay(1000)
 
+            ProgressThread.Show("Please wait while preparing JV Payment Report.")
             DS = Await Task.Run(Function() PaymntHelper.GenerateJVReport(EnumPostedType.P))
-
             If DS.Tables.Count > 0 Then
-                Me.ts_StatusDesc.Text = "..."
+                ProgressThread.Close()
+                Me.ToolStripStatus_LabelMsg.Text = "..."
                 Dim frmReport As New frmReportViewer
                 With frmReport
-                    .LoadJournalVoucher(DS)                    
+                    .LoadJournalVoucher(DS)
                     .ShowDialog()
                 End With
-            Else                
+            Else
+                ProgressThread.Close()
                 MessageBox.Show("No available JV Payment, no movement on settlement invoices.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
             DS = Nothing
-           
-        Catch ex As Exception            
+
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
+            Me.ToolStripStatus_LabelMsg.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -881,29 +903,30 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing JV Payment Allcoation Report."
-            Await Task.Delay(1000)
 
-            DS = Await Task.Run(Function() PaymntHelper.GenerateJVReport(EnumPostedType.PA))            
-
+            ProgressThread.Show("Please wait while preparing JV Payment Report.")
+            DS = Await Task.Run(Function() PaymntHelper.GenerateJVReport(EnumPostedType.PA))
             If DS.Tables.Count > 0 Then
-                Me.ts_StatusDesc.Text = "..."
+                ProgressThread.Close()
+                Me.ToolStripStatus_LabelMsg.Text = "..."
                 Dim frmReport As New frmReportViewer
                 With frmReport
                     .LoadJournalVoucher(DS)
                     .ShowDialog()
                 End With
             Else
+                ProgressThread.Close()
                 MessageBox.Show("No available JV Payment Allocation, no movement on settlement invoices.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
             DS = Nothing
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
+            Me.ToolStripStatus_LabelMsg.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -913,28 +936,30 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing JV Payment EFT and Check Report."
-            Await Task.Delay(1000)
 
-            DS = Await Task.Run(Function() PaymntHelper.GenerateJVReport(EnumPostedType.PEFT))            
+            ProgressThread.Show("Please wait while preparing JV Payment EFT and Check Report.")
+            DS = Await Task.Run(Function() PaymntHelper.GenerateJVReport(EnumPostedType.PEFT))
             If DS.Tables.Count > 0 Then
-                Me.ts_StatusDesc.Text = "..."
+                ProgressThread.Close()
+                Me.ToolStripStatus_LabelMsg.Text = "..."
                 Dim frmReport As New frmReportViewer
                 With frmReport
                     .LoadJournalVoucher(DS)
                     .ShowDialog()
                 End With
             Else
+                ProgressThread.Close()
                 MessageBox.Show("No available JV Payment EFT And Check, no movement on settlement invoices.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
             DS = Nothing
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
+            Me.ToolStripStatus_LabelMsg.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -954,21 +979,23 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing DMCM Summary Report."
-            Await Task.Delay(1000)
 
+            ProgressThread.Show("Please wait while preparing DMCM Summary Report.")
             Await Task.Run(Sub() PaymntHelper.CreateDMCMSummaryDoc(FilePath))
 
-            Me.ts_StatusDesc.Text = "..."
-            Await Task.Delay(1000)
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
+
+            ProgressThread.Close()
             MessageBox.Show("Successfully exported please see in targeted path.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
+            Me.ToolStripStatus_LabelMsg.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -988,23 +1015,22 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing CAP Summary Report."
-            Await Task.Delay(1000)
 
+            ProgressThread.Show("Please wait while preparing CAP Summary Report.")
             Await Task.Run(Sub() PaymntHelper.CreateCollAndPaySummReport(FilePath))
 
-            Me.ts_StatusDesc.Text = "..."
-            Await Task.Delay(1000)
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
 
+            ProgressThread.Close()
             MessageBox.Show("Successfully exported please see in targeted path.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -1018,25 +1044,22 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing OR Sumary Report."
-            Await Task.Delay(1000)
 
             ORDT = Await Task.Run(Function() CType(PaymntHelper.GenerateORSummary(_DT), DSReport.CollectionDataTable))
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
 
-            Me.ts_StatusDesc.Text = "..."
-            Await Task.Delay(1000)
             With ViewReport
                 .LoadPaymentORSummary(ORDT, SelectedAllocationDate.CollAllocationDate, SelectedAllocationDate.CollAllocationDate)
                 .Show()
             End With
             ORDT = Nothing
-        Catch ex As Exception            
+        Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."        
         End Try
     End Sub
 
@@ -1050,31 +1073,31 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing RFP Summary Report."
-            Await Task.Delay(1000)
 
-            DS = Await Task.Run(Function() PaymntHelper.GenerateRFP(tblRFPMain, tblRFPColl, tblRFPPay))            
+            ProgressThread.Show("Please wait while preparing RFP Summary Report.")
+            DS = Await Task.Run(Function() PaymntHelper.GenerateRFP(tblRFPMain, tblRFPColl, tblRFPPay))
+            ProgressThread.Close()
 
-            Me.ts_StatusDesc.Text = "..."
-            Await Task.Delay(1000)
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
 
             Dim RPTViewer As New frmReportViewer
             With RPTViewer
-                .LoadRFP(DS)                
+                .LoadRFP(DS)
                 .ShowDialog()
             End With
             DS = Nothing
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
         End Try
     End Sub
 
-    Private Async Sub btn_FTFReport_Click(sender As Object, e As EventArgs) Handles btn_FTFReport.Click
+    Private Sub btn_FTFReport_Click(sender As Object, e As EventArgs) Handles btn_FTFReport.Click
         Try
             Dim _frmPaymentNewFTF As New frmPaymentNewFTF
             Dim Signatory = WBillHelper.GetSignatories("FTF").First()
@@ -1083,22 +1106,22 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Extracting Payment FTF report."
-            Await Task.Delay(1000)
-
             With _frmPaymentNewFTF
                 ._PymtHelper = PaymntHelper
                 ._Signatory = Signatory
                 ._Signatory2 = Signatory2
                 .ShowDialog()
             End With
+
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
         Catch ex As Exception
+
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -1111,26 +1134,25 @@ Public Class frmPaymentNewView
             Me.GB_Allocation.Enabled = False
             Me.GB_ProformaEntries.Enabled = False
             Me.GB_ProformaEntriesDetails.Enabled = False
-            Me.ts_StatusDesc.Text = "Please wait while preparing Deferred Payment Report."
-            Await Task.Delay(1000)
 
+            ProgressThread.Show("Please wait while preparing Deferred Payment Report.")
             DT = Await Task.Run(Function() CType(PaymntHelper.GenerateDeferredPaymentsDT(DSReprotDT), DSReport.DeferredMonitoringDataTable))
 
-            Me.ts_StatusDesc.Text = "..."
-            Await Task.Delay(1000)
-
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready..."}
+            UpdateProgress(newProgress)
+            ProgressThread.Close()
             With RPTViewer
-                .LoadDeferredMonitoringReport(DT)                
+                .LoadDeferredMonitoringReport(DT)
                 .ShowDialog()
             End With
             DT = Nothing
-        Catch ex As Exception            
+        Catch ex As Exception
+            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.GB_Allocation.Enabled = True
             Me.GB_ProformaEntries.Enabled = True
             Me.GB_ProformaEntriesDetails.Enabled = True
-            Me.ts_StatusDesc.Text = "Ready for viewing."
         End Try
     End Sub
 
@@ -1358,9 +1380,10 @@ Public Class frmPaymentNewView
                 Dim frmViewer As New frmReportViewer()
                 Dim IDNumber As String = dgv_PaymentTransToPR.Item(0, r).Value.ToString
 
-                ProgressThread.Show("Please wait while processing OR Report.")
-                Dim result = PaymntHelper.GenerateORFinPenReport(New DSReport.OfficialReceiptMainNewDataTable, IDNumber)
+                newProgress = New ProgressClass With {.ProgressMsg = "Please wait while processing OR Report."}
+                UpdateProgress(newProgress)
 
+                Dim result = PaymntHelper.GenerateORFinPenReport(New DSReport.OfficialReceiptMainNewDataTable, IDNumber)
                 If result.Rows.Count = 0 Then
                     Exit Sub
                 End If
@@ -1371,15 +1394,13 @@ Public Class frmPaymentNewView
                 End With
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)        
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        ProgressThread.Close()
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
+        Me.tsslbl_timer.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
     End Sub
 
-    Private Sub Timer1_Tick_1(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
-        Me.ts_LabelName.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
-    End Sub
 End Class

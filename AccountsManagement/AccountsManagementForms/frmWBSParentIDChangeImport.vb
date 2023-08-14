@@ -66,7 +66,7 @@ Public Class frmWBSParentIDChangeImport
             msgAns = MsgBox("Do you really want to save?", CType(MsgBoxStyle.YesNo + MsgBoxStyle.Question, MsgBoxStyle), "System Message")
             If msgAns = MsgBoxResult.Yes Then
                 ProgressThread.Show("Please wait while saving...")
-                WBSChangeParentIdHelper.ImportSave(SelectedBillingPeriod, CInt(Me.cmb_BillingPeriodNo.SelectedItem))
+                WBSChangeParentIdHelper.ImportSave(CInt(Me.cmb_BillingPeriodNo.SelectedItem), SelectedBillingPeriod)
                 ProgressThread.Close()
                 MessageBox.Show("The processed data have been successfully saved.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.LibWESMBillChangeParentIDWindow.ToString,

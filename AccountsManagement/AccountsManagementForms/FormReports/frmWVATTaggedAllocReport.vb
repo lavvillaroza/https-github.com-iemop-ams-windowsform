@@ -4,11 +4,12 @@ Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 Imports Excel = Microsoft.Office.Interop.Excel
 
-Public Class frmEWTTaggedAllocReport
-    Private _EWTTagAllocHelper As New EWTTaggedAllocReportHelper
-    Private Sub frmEWTTaggedAllocReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+Public Class frmWVATTaggedAllocReport
+    Private _WVATTagAllocHelper As New WVATTaggedAllocReportHelper
+    Private Sub frmWVATTaggedAllocReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
     End Sub
+
     Private Sub btnExportToExcel_Click(sender As Object, e As EventArgs) Handles btnExportToExcel.Click
         Dim sFolderDialog As New FolderBrowserDialog
         Dim TargetPath As String = ""
@@ -31,7 +32,7 @@ Public Class frmEWTTaggedAllocReport
                 Exit Sub
             End If
             ProgressThread.Show("Please wait while generating.")
-            _EWTTagAllocHelper.GetEWTTaggedAllocatedList(dateFrom, dateTo)
+            _WVATTagAllocHelper.GetWVATTaggedAllocatedList(dateFrom, dateTo)
             CreateOutstandingSummaryReport(TargetPath)
             ProgressThread.Close()
             MessageBox.Show("Successfully exported in Excel!", "System Sucess Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -47,7 +48,7 @@ Public Class frmEWTTaggedAllocReport
         Dim xlWorkSheet1 As Excel.Worksheet
         Dim xlRowRange1 As Excel.Range
         Dim xlRowRange2 As Excel.Range
-        Dim xlEWTTaggedAllocated As Excel.Range
+        Dim xlWVATTaggedAllocated As Excel.Range
 
         Dim getDateTo As Date = CDate(dtTo.Value)
         Dim getDateFrom As Date = CDate(dtFrom.Value)
@@ -58,39 +59,37 @@ Public Class frmEWTTaggedAllocReport
         xlApp = New Excel.Application
         xlWorkBook = xlApp.Workbooks.Add()
 
-        Dim EWTTaggedAllocatedHeadr As Object(,) = New Object(,) {}
+        Dim WVATTaggedAllocatedHeadr As Object(,) = New Object(,) {}
 
-        ReDim EWTTaggedAllocatedHeadr(1, 8)
-        EWTTaggedAllocatedHeadr(1, 0) = "CERTIFICATE_NO"
-        EWTTaggedAllocatedHeadr(1, 1) = "ID_NUMBER"
-        EWTTaggedAllocatedHeadr(1, 2) = "INV_DM_CM"
-        EWTTaggedAllocatedHeadr(1, 3) = "REMITTANCE_DATE"
-        EWTTaggedAllocatedHeadr(1, 4) = "EWT_ORIG_AMOUNT"
-        EWTTaggedAllocatedHeadr(1, 5) = "EWT_ENDING_BALANCE"
-        EWTTaggedAllocatedHeadr(1, 6) = "AMOUNT_TAGGED_ALLOC"
-        EWTTaggedAllocatedHeadr(1, 7) = "BALANCE_TYPE"
-        EWTTaggedAllocatedHeadr(1, 8) = "ALLOCATED_TO_AP"
+        ReDim WVATTaggedAllocatedHeadr(1, 6)
+        WVATTaggedAllocatedHeadr(1, 0) = "CERTIFICATE_NO"
+        WVATTaggedAllocatedHeadr(1, 1) = "ID_NUMBER"
+        WVATTaggedAllocatedHeadr(1, 2) = "INV_DM_CM"
+        WVATTaggedAllocatedHeadr(1, 3) = "REMITTANCE_DATE"
+        WVATTaggedAllocatedHeadr(1, 4) = "AMOUNT_TAGGED_ALLOC"
+        WVATTaggedAllocatedHeadr(1, 5) = "BALANCE_TYPE"
+        WVATTaggedAllocatedHeadr(1, 6) = "ALLOCATED_TO_AP"
 
         'WESM Bill Summary Table sheets
         xlWorkSheet1 = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
-        xlWorkSheet1.Name = "EWT_ALLOCATION"
+        xlWorkSheet1.Name = "WVAT_ALLOCATION"
         xlRowRange1 = DirectCast(xlWorkSheet1.Cells(1, 1), Excel.Range)
-        xlRowRange2 = DirectCast(xlWorkSheet1.Cells(2, UBound(EWTTaggedAllocatedHeadr, 2) + 1), Excel.Range)
-        xlEWTTaggedAllocated = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
-        xlEWTTaggedAllocated.Value = EWTTaggedAllocatedHeadr
+        xlRowRange2 = DirectCast(xlWorkSheet1.Cells(2, UBound(WVATTaggedAllocatedHeadr, 2) + 1), Excel.Range)
+        xlWVATTaggedAllocated = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
+        xlWVATTaggedAllocated.Value = WVATTaggedAllocatedHeadr
         Dim lrow1 As Integer = xlWorkSheet1.Range("A" & xlWorkSheet1.Rows.Count).End(Excel.XlDirection.xlUp).Row + 1
-        If _EWTTagAllocHelper.EWTTaggedAllocatedList.Count <> 0 Then
-            Dim EWTTaggedAllocatedArr As Object(,) = Me.GenerateEWTTaggedAllocatedArray()
+        If _WVATTagAllocHelper.WVATTaggedAllocatedList.Count <> 0 Then
+            Dim WVATTaggedAllocatedArr As Object(,) = Me.GenerateWVATTaggedAllocatedArray()
             xlRowRange1 = DirectCast(xlWorkSheet1.Cells(lrow1, 1), Excel.Range)
-            xlRowRange2 = DirectCast(xlWorkSheet1.Cells(lrow1 + UBound(EWTTaggedAllocatedArr, 1), UBound(EWTTaggedAllocatedHeadr, 2) + 1), Excel.Range)
-            xlEWTTaggedAllocated = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
-            xlEWTTaggedAllocated.Value = EWTTaggedAllocatedArr
+            xlRowRange2 = DirectCast(xlWorkSheet1.Cells(lrow1 + UBound(WVATTaggedAllocatedArr, 1), UBound(WVATTaggedAllocatedHeadr, 2) + 1), Excel.Range)
+            xlWVATTaggedAllocated = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
+            xlWVATTaggedAllocated.Value = WVATTaggedAllocatedArr
         End If
         'End  ****************************************************************************************************************************************************
 
         Dim FileName As String
 
-        FileName = "EWT_TAGALLOC_REPORT_" & getDateFrom.ToString("yyyyMMMdd") & "-" & getDateTo.ToString("yyyyMMMdd") & ".xlsx"
+        FileName = "WVAT_TAGALLOC_REPORT_" & getDateFrom.ToString("yyyyMMMdd") & "-" & getDateTo.ToString("yyyyMMMdd") & ".xlsx"
 
         xlApp.AlertBeforeOverwriting = False
         xlApp.DisplayAlerts = False
@@ -102,7 +101,7 @@ Public Class frmEWTTaggedAllocReport
         xlApp.DisplayAlerts = True
         xlApp.Quit()
 
-        releaseObject(xlEWTTaggedAllocated)
+        releaseObject(xlWVATTaggedAllocated)
         releaseObject(xlRowRange2)
         releaseObject(xlRowRange1)
         releaseObject(xlWorkSheet1)
@@ -110,26 +109,24 @@ Public Class frmEWTTaggedAllocReport
         releaseObject(xlApp)
     End Sub
 
-    Private Function GenerateEWTTaggedAllocatedArray() As Object(,)
+    Private Function GenerateWVATTaggedAllocatedArray() As Object(,)
         Dim ret As Object(,) = New Object(,) {}
         Dim ObjDicInvNo As New Dictionary(Of String, Integer)
         Dim ObjDicSeq As New Dictionary(Of Integer, Integer)
         Dim RowIndex As Integer = 0
-        Dim RowCount As Integer = _EWTTagAllocHelper.EWTTaggedAllocatedList.Count
+        Dim RowCount As Integer = _WVATTagAllocHelper.WVATTaggedAllocatedList.Count
 
         Dim EWTTAArr As Object(,) = New Object(,) {}
         ReDim EWTTAArr(RowCount, 8)
 
-        For Each item In _EWTTagAllocHelper.EWTTaggedAllocatedList
+        For Each item In _WVATTagAllocHelper.WVATTaggedAllocatedList
             EWTTAArr(RowIndex, 0) = item.CertificateNo
             EWTTAArr(RowIndex, 1) = item.BillingIDNumber
             EWTTAArr(RowIndex, 2) = item.WESMTransNumber
             EWTTAArr(RowIndex, 3) = item.RemittanceDate.ToShortDateString
-            EWTTAArr(RowIndex, 4) = item.WithholdingTaxAmount
-            EWTTAArr(RowIndex, 5) = item.EWTEndingBalance
-            EWTTAArr(RowIndex, 6) = item.AmountTaggedAlloc
-            EWTTAArr(RowIndex, 7) = item.BalanceType.ToString
-            EWTTAArr(RowIndex, 8) = item.AllocatedToAP.ToString
+            EWTTAArr(RowIndex, 4) = item.AmountTaggedAlloc
+            EWTTAArr(RowIndex, 5) = item.BalanceType.ToString
+            EWTTAArr(RowIndex, 6) = item.AllocatedToAP.ToString
             RowIndex += 1
         Next
 
@@ -148,6 +145,7 @@ Public Class frmEWTTaggedAllocReport
             GC.Collect()
         End Try
     End Sub
+
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
     End Sub
@@ -166,6 +164,4 @@ Public Class frmEWTTaggedAllocReport
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
-
 End Class

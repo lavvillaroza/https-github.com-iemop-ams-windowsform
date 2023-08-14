@@ -23,8 +23,8 @@ Partial Class frmWHTaxCertificateSTLDetails
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.mainTLP = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ddlRemittanceDate = New System.Windows.Forms.ComboBox()
@@ -45,18 +45,6 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.txtTotalTaggedAmount = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.dgTagging = New System.Windows.Forms.DataGridView()
-        Me.colWBSummaryNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBatchNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBillingNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIDNumberAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colTransactionNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colOrigDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNewDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colWithholdingTaxAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colFullyPaid = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colTagAmountAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNewEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -74,6 +62,18 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.colAllocAmountAP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.colWBSummaryNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBatchNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colBillingNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colIDNumberAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTransactionNoAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colOrigDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNewDueDateAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colWithholdingTaxAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colFullyPaid = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colTagAmountAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNewEndingBalanceAR = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.mainTLP.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -357,94 +357,6 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.dgTagging.Size = New System.Drawing.Size(1151, 360)
         Me.dgTagging.TabIndex = 27
         '
-        'colWBSummaryNoAR
-        '
-        Me.colWBSummaryNoAR.Frozen = True
-        Me.colWBSummaryNoAR.HeaderText = "WBSummaryNo"
-        Me.colWBSummaryNoAR.Name = "colWBSummaryNoAR"
-        Me.colWBSummaryNoAR.Visible = False
-        '
-        'colBatchNoAR
-        '
-        Me.colBatchNoAR.Frozen = True
-        Me.colBatchNoAR.HeaderText = "Batch No"
-        Me.colBatchNoAR.Name = "colBatchNoAR"
-        Me.colBatchNoAR.Width = 75
-        '
-        'colBillingNoAR
-        '
-        Me.colBillingNoAR.Frozen = True
-        Me.colBillingNoAR.HeaderText = "Billing Period"
-        Me.colBillingNoAR.Name = "colBillingNoAR"
-        Me.colBillingNoAR.Width = 90
-        '
-        'colIDNumberAR
-        '
-        Me.colIDNumberAR.Frozen = True
-        Me.colIDNumberAR.HeaderText = "ID Number"
-        Me.colIDNumberAR.Name = "colIDNumberAR"
-        Me.colIDNumberAR.Width = 120
-        '
-        'colTransactionNoAR
-        '
-        Me.colTransactionNoAR.Frozen = True
-        Me.colTransactionNoAR.HeaderText = "Transaction No"
-        Me.colTransactionNoAR.Name = "colTransactionNoAR"
-        Me.colTransactionNoAR.Width = 150
-        '
-        'colOrigDueDateAR
-        '
-        Me.colOrigDueDateAR.Frozen = True
-        Me.colOrigDueDateAR.HeaderText = "Orig Due Date"
-        Me.colOrigDueDateAR.Name = "colOrigDueDateAR"
-        '
-        'colNewDueDateAR
-        '
-        Me.colNewDueDateAR.Frozen = True
-        Me.colNewDueDateAR.HeaderText = "New Due Date"
-        Me.colNewDueDateAR.Name = "colNewDueDateAR"
-        Me.colNewDueDateAR.Width = 110
-        '
-        'colEndingBalanceAR
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle2
-        Me.colEndingBalanceAR.Frozen = True
-        Me.colEndingBalanceAR.HeaderText = "Ending Balance"
-        Me.colEndingBalanceAR.Name = "colEndingBalanceAR"
-        Me.colEndingBalanceAR.Width = 110
-        '
-        'colWithholdingTaxAR
-        '
-        Me.colWithholdingTaxAR.Frozen = True
-        Me.colWithholdingTaxAR.HeaderText = "Withholding Tax"
-        Me.colWithholdingTaxAR.Name = "colWithholdingTaxAR"
-        Me.colWithholdingTaxAR.Width = 110
-        '
-        'colFullyPaid
-        '
-        Me.colFullyPaid.Frozen = True
-        Me.colFullyPaid.HeaderText = "Fully Paid"
-        Me.colFullyPaid.Name = "colFullyPaid"
-        Me.colFullyPaid.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.colFullyPaid.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.colFullyPaid.Width = 75
-        '
-        'colTagAmountAR
-        '
-        Me.colTagAmountAR.Frozen = True
-        Me.colTagAmountAR.HeaderText = "Tag Amount"
-        Me.colTagAmountAR.Name = "colTagAmountAR"
-        Me.colTagAmountAR.Width = 120
-        '
-        'colNewEndingBalanceAR
-        '
-        Me.colNewEndingBalanceAR.HeaderText = "New Ending Balance"
-        Me.colNewEndingBalanceAR.Name = "colNewEndingBalanceAR"
-        Me.colNewEndingBalanceAR.Width = 130
-        '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.TableLayoutPanel3)
@@ -615,6 +527,94 @@ Partial Class frmWHTaxCertificateSTLDetails
         Me.ToolStripStatus_LabelMsg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ToolStripStatus_LabelMsg.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
+        'colWBSummaryNoAR
+        '
+        Me.colWBSummaryNoAR.Frozen = True
+        Me.colWBSummaryNoAR.HeaderText = "WBSummaryNo"
+        Me.colWBSummaryNoAR.Name = "colWBSummaryNoAR"
+        Me.colWBSummaryNoAR.Visible = False
+        '
+        'colBatchNoAR
+        '
+        Me.colBatchNoAR.Frozen = True
+        Me.colBatchNoAR.HeaderText = "Batch No"
+        Me.colBatchNoAR.Name = "colBatchNoAR"
+        Me.colBatchNoAR.Width = 75
+        '
+        'colBillingNoAR
+        '
+        Me.colBillingNoAR.Frozen = True
+        Me.colBillingNoAR.HeaderText = "Billing Period"
+        Me.colBillingNoAR.Name = "colBillingNoAR"
+        Me.colBillingNoAR.Width = 90
+        '
+        'colIDNumberAR
+        '
+        Me.colIDNumberAR.Frozen = True
+        Me.colIDNumberAR.HeaderText = "ID Number"
+        Me.colIDNumberAR.Name = "colIDNumberAR"
+        Me.colIDNumberAR.Width = 120
+        '
+        'colTransactionNoAR
+        '
+        Me.colTransactionNoAR.Frozen = True
+        Me.colTransactionNoAR.HeaderText = "Transaction No"
+        Me.colTransactionNoAR.Name = "colTransactionNoAR"
+        Me.colTransactionNoAR.Width = 150
+        '
+        'colOrigDueDateAR
+        '
+        Me.colOrigDueDateAR.Frozen = True
+        Me.colOrigDueDateAR.HeaderText = "Orig Due Date"
+        Me.colOrigDueDateAR.Name = "colOrigDueDateAR"
+        '
+        'colNewDueDateAR
+        '
+        Me.colNewDueDateAR.Frozen = True
+        Me.colNewDueDateAR.HeaderText = "New Due Date"
+        Me.colNewDueDateAR.Name = "colNewDueDateAR"
+        Me.colNewDueDateAR.Width = 110
+        '
+        'colEndingBalanceAR
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colEndingBalanceAR.DefaultCellStyle = DataGridViewCellStyle2
+        Me.colEndingBalanceAR.Frozen = True
+        Me.colEndingBalanceAR.HeaderText = "Ending Balance"
+        Me.colEndingBalanceAR.Name = "colEndingBalanceAR"
+        Me.colEndingBalanceAR.Width = 110
+        '
+        'colWithholdingTaxAR
+        '
+        Me.colWithholdingTaxAR.Frozen = True
+        Me.colWithholdingTaxAR.HeaderText = "Withholding Tax"
+        Me.colWithholdingTaxAR.Name = "colWithholdingTaxAR"
+        Me.colWithholdingTaxAR.Width = 110
+        '
+        'colFullyPaid
+        '
+        Me.colFullyPaid.Frozen = True
+        Me.colFullyPaid.HeaderText = "Fully Paid"
+        Me.colFullyPaid.Name = "colFullyPaid"
+        Me.colFullyPaid.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.colFullyPaid.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colFullyPaid.Width = 75
+        '
+        'colTagAmountAR
+        '
+        Me.colTagAmountAR.Frozen = True
+        Me.colTagAmountAR.HeaderText = "Amount"
+        Me.colTagAmountAR.Name = "colTagAmountAR"
+        Me.colTagAmountAR.Width = 120
+        '
+        'colNewEndingBalanceAR
+        '
+        Me.colNewEndingBalanceAR.HeaderText = "New Ending Balance"
+        Me.colNewEndingBalanceAR.Name = "colNewEndingBalanceAR"
+        Me.colNewEndingBalanceAR.Width = 130
+        '
         'frmWHTaxCertificateSTLDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -676,6 +676,17 @@ Partial Class frmWHTaxCertificateSTLDetails
     Friend WithEvents ddlRemittanceDate As ComboBox
     Friend WithEvents Panel3 As Panel
     Friend WithEvents checkBoxAll As CheckBox
+    Friend WithEvents colWBSummaryNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colBatchNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colBillingPeriodAP As DataGridViewTextBoxColumn
+    Friend WithEvents colIDNumberAP As DataGridViewTextBoxColumn
+    Friend WithEvents colTransctionNoAP As DataGridViewTextBoxColumn
+    Friend WithEvents colOrigDueDateAP As DataGridViewTextBoxColumn
+    Friend WithEvents colNewDueDateAP As DataGridViewTextBoxColumn
+    Friend WithEvents colWithholdingTaxAP As DataGridViewTextBoxColumn
+    Friend WithEvents colAllocAmountAP As DataGridViewTextBoxColumn
+    Friend WithEvents ctrl_statusStrip As StatusStrip
+    Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
     Friend WithEvents colWBSummaryNoAR As DataGridViewTextBoxColumn
     Friend WithEvents colBatchNoAR As DataGridViewTextBoxColumn
     Friend WithEvents colBillingNoAR As DataGridViewTextBoxColumn
@@ -688,15 +699,4 @@ Partial Class frmWHTaxCertificateSTLDetails
     Friend WithEvents colFullyPaid As DataGridViewCheckBoxColumn
     Friend WithEvents colTagAmountAR As DataGridViewTextBoxColumn
     Friend WithEvents colNewEndingBalanceAR As DataGridViewTextBoxColumn
-    Friend WithEvents colWBSummaryNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colBatchNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colBillingPeriodAP As DataGridViewTextBoxColumn
-    Friend WithEvents colIDNumberAP As DataGridViewTextBoxColumn
-    Friend WithEvents colTransctionNoAP As DataGridViewTextBoxColumn
-    Friend WithEvents colOrigDueDateAP As DataGridViewTextBoxColumn
-    Friend WithEvents colNewDueDateAP As DataGridViewTextBoxColumn
-    Friend WithEvents colWithholdingTaxAP As DataGridViewTextBoxColumn
-    Friend WithEvents colAllocAmountAP As DataGridViewTextBoxColumn
-    Friend WithEvents ctrl_statusStrip As StatusStrip
-    Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
 End Class

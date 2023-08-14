@@ -182,6 +182,7 @@
     <Compile Include="WESMBillTransSummaryPrintHelper.vb" />
     <Compile Include="WHTaxCertificateSTLHelper.vb" />
     <Compile Include="WHVATCertificateSTLHelper.vb" />
+    <Compile Include="WVATTaggedAllocReportHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -62,7 +62,7 @@ Partial Class frmWBSParentIDChangeImport
         Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Controls.Add(Me.dtp_DateTo)
         Me.GroupBox2.Controls.Add(Me.dtp_DateFrom)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(233, 3)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(368, 51)
@@ -73,10 +73,10 @@ Partial Class frmWBSParentIDChangeImport
         '
         Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(213, 21)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(25, 15)
+        Me.Label3.Size = New System.Drawing.Size(23, 15)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "To:"
         '
@@ -84,10 +84,10 @@ Partial Class frmWBSParentIDChangeImport
         '
         Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(6, -2)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(78, 15)
+        Me.Label5.Size = New System.Drawing.Size(75, 15)
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "Date Range:"
         '
@@ -95,17 +95,17 @@ Partial Class frmWBSParentIDChangeImport
         '
         Me.Label4.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(39, 21)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(41, 15)
+        Me.Label4.Size = New System.Drawing.Size(39, 15)
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "From:"
         '
         'dtp_DateTo
         '
         Me.dtp_DateTo.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.dtp_DateTo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_DateTo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_DateTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_DateTo.Location = New System.Drawing.Point(244, 19)
         Me.dtp_DateTo.Name = "dtp_DateTo"
@@ -115,7 +115,7 @@ Partial Class frmWBSParentIDChangeImport
         'dtp_DateFrom
         '
         Me.dtp_DateFrom.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.dtp_DateFrom.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_DateFrom.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_DateFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_DateFrom.Location = New System.Drawing.Point(84, 19)
         Me.dtp_DateFrom.Name = "dtp_DateFrom"
@@ -127,7 +127,7 @@ Partial Class frmWBSParentIDChangeImport
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.cmb_BillingPeriodNo)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(219, 51)
@@ -138,10 +138,10 @@ Partial Class frmWBSParentIDChangeImport
         '
         Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(6, -2)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(86, 15)
+        Me.Label2.Size = New System.Drawing.Size(84, 15)
         Me.Label2.TabIndex = 12
         Me.Label2.Text = "Billing Period:"
         '
@@ -151,22 +151,22 @@ Partial Class frmWBSParentIDChangeImport
         Me.cmb_BillingPeriodNo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.cmb_BillingPeriodNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_BillingPeriodNo.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_BillingPeriodNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_BillingPeriodNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_BillingPeriodNo.ForeColor = System.Drawing.Color.Black
         Me.cmb_BillingPeriodNo.FormattingEnabled = True
         Me.cmb_BillingPeriodNo.Location = New System.Drawing.Point(78, 19)
         Me.cmb_BillingPeriodNo.Name = "cmb_BillingPeriodNo"
-        Me.cmb_BillingPeriodNo.Size = New System.Drawing.Size(126, 20)
+        Me.cmb_BillingPeriodNo.Size = New System.Drawing.Size(126, 22)
         Me.cmb_BillingPeriodNo.TabIndex = 2
         '
         'Label1
         '
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(46, 21)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(27, 15)
+        Me.Label1.Size = New System.Drawing.Size(25, 15)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "No:"
         '
@@ -178,11 +178,11 @@ Partial Class frmWBSParentIDChangeImport
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Close.Location = New System.Drawing.Point(498, 76)
+        Me.btn_Close.Location = New System.Drawing.Point(497, 75)
         Me.btn_Close.Name = "btn_Close"
         Me.btn_Close.Size = New System.Drawing.Size(129, 42)
         Me.btn_Close.TabIndex = 15
@@ -196,30 +196,30 @@ Partial Class frmWBSParentIDChangeImport
         Me.btn_Save.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Save.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Save.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Save.ForeColor = System.Drawing.Color.Black
         Me.btn_Save.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btn_Save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Save.Location = New System.Drawing.Point(363, 76)
+        Me.btn_Save.Location = New System.Drawing.Point(362, 75)
         Me.btn_Save.Name = "btn_Save"
         Me.btn_Save.Size = New System.Drawing.Size(129, 42)
         Me.btn_Save.TabIndex = 14
         Me.btn_Save.Text = "Save"
         Me.btn_Save.UseVisualStyleBackColor = False
         '
-        'frmWESMBillSummaryParentIDChangeImport
+        'frmWBSParentIDChangeImport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(640, 130)
+        Me.ClientSize = New System.Drawing.Size(640, 129)
         Me.Controls.Add(Me.btn_Close)
         Me.Controls.Add(Me.btn_Save)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.Name = "frmWESMBillSummaryParentIDChangeImport"
+        Me.Name = "frmWBSParentIDChangeImport"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "WESM Bills - Change Parent ID (Import To)"
+        Me.Text = "WESM Bills - Change Parent ID (Import From)"
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()

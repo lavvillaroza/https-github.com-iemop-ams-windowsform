@@ -48,11 +48,11 @@ Partial Class frmPrudentialTransferInterest
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(820, 45)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(82, 14)
+        Me.Label5.Size = New System.Drawing.Size(81, 14)
         Me.Label5.TabIndex = 52
         Me.Label5.Text = "Participant ID:"
         '
@@ -277,10 +277,11 @@ Partial Class frmPrudentialTransferInterest
         '
         'frmPrudentialTransferInterest
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1102, 484)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnPostToGP)
         Me.Controls.Add(Me.btnSummaryReport)
         Me.Controls.Add(Me.btnSearchReplenishment)
@@ -293,7 +294,7 @@ Partial Class frmPrudentialTransferInterest
         Me.Controls.Add(Me.btnSearch)
         Me.Controls.Add(Me.txtSearch)
         Me.Controls.Add(Me.DGridViewPrudential)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmPrudentialTransferInterest"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

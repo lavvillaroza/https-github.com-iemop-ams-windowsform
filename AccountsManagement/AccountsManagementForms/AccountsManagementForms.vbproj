@@ -117,7 +117,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ams_logo_2.ico</ApplicationIcon>
+    <ApplicationIcon>accounting.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>63EA7B9B9F46AA279BBE7D7D344FA0E1683B511D</ManifestCertificateThumbprint>
@@ -403,6 +403,12 @@
       <DependentUpon>frmExportWTASummary.vb</DependentUpon>
     </Compile>
     <Compile Include="FormReports\frmExportWTASummary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReports\frmWVATTaggedAllocReport.Designer.vb">
+      <DependentUpon>frmWVATTaggedAllocReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReports\frmWVATTaggedAllocReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frm1stOffsettingExemptMgt.Designer.vb">
@@ -940,10 +946,10 @@
     <Compile Include="frmWHTaxCertificateSTLDetails.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmWHVatCertificatesSTLMgt.Designer.vb">
-      <DependentUpon>frmWHVatCertificatesSTLMgt.vb</DependentUpon>
+    <Compile Include="frmWHVATCertificateSTLMgt.Designer.vb">
+      <DependentUpon>frmWHVATCertificateSTLMgt.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmWHVatCertificatesSTLMgt.vb">
+    <Compile Include="frmWHVATCertificateSTLMgt.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmWHVATCertificateSTLDetails.Designer.vb">
@@ -1570,6 +1576,9 @@
     <EmbeddedResource Include="FormReports\frmExportWTASummary.resx">
       <DependentUpon>frmExportWTASummary.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReports\frmWVATTaggedAllocReport.resx">
+      <DependentUpon>frmWVATTaggedAllocReport.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm1stOffsettingExemptMgt.resx">
       <DependentUpon>frm1stOffsettingExemptMgt.vb</DependentUpon>
     </EmbeddedResource>
@@ -1876,8 +1885,8 @@
     <EmbeddedResource Include="frmWHTaxCertificateSTLDetails.resx">
       <DependentUpon>frmWHTaxCertificateSTLDetails.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmWHVatCertificatesSTLMgt.resx">
-      <DependentUpon>frmWHVatCertificatesSTLMgt.vb</DependentUpon>
+    <EmbeddedResource Include="frmWHVATCertificateSTLMgt.resx">
+      <DependentUpon>frmWHVATCertificateSTLMgt.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWHVATCertificateSTLDetails.resx">
       <DependentUpon>frmWHVATCertificateSTLDetails.vb</DependentUpon>
@@ -2299,6 +2308,7 @@
     <None Include="Resources\Add-icon-24x24.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="accounting.ico" />
     <Content Include="ams_logo_2.ico" />
     <Content Include="Resources\Add.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

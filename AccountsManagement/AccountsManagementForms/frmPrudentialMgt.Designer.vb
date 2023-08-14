@@ -49,7 +49,7 @@ Partial Class frmPrudentialMgt
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(65, 419)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(70, 12)
+        Me.Label1.Size = New System.Drawing.Size(69, 14)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "ParticipantID:"
         '
@@ -59,7 +59,7 @@ Partial Class frmPrudentialMgt
         Me.ddlParticipantID.FormattingEnabled = True
         Me.ddlParticipantID.Location = New System.Drawing.Point(141, 416)
         Me.ddlParticipantID.Name = "ddlParticipantID"
-        Me.ddlParticipantID.Size = New System.Drawing.Size(184, 20)
+        Me.ddlParticipantID.Size = New System.Drawing.Size(184, 22)
         Me.ddlParticipantID.TabIndex = 1
         '
         'Label2
@@ -67,7 +67,7 @@ Partial Class frmPrudentialMgt
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(15, 441)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(120, 12)
+        Me.Label2.Size = New System.Drawing.Size(119, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Replenishment Amount:"
         '
@@ -90,7 +90,7 @@ Partial Class frmPrudentialMgt
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(55, 461)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(85, 12)
+        Me.Label3.Size = New System.Drawing.Size(85, 14)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Interest Amount:"
         '
@@ -139,7 +139,7 @@ Partial Class frmPrudentialMgt
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(10, 18)
         Me.Label4.Name = "Label4"
@@ -149,7 +149,7 @@ Partial Class frmPrudentialMgt
         '
         'dtTransDate
         '
-        Me.dtTransDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtTransDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtTransDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtTransDate.Location = New System.Drawing.Point(117, 14)
         Me.dtTransDate.Name = "dtTransDate"
@@ -159,11 +159,11 @@ Partial Class frmPrudentialMgt
         'chckAll
         '
         Me.chckAll.AutoSize = True
-        Me.chckAll.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckAll.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckAll.ForeColor = System.Drawing.Color.Black
         Me.chckAll.Location = New System.Drawing.Point(475, 18)
         Me.chckAll.Name = "chckAll"
-        Me.chckAll.Size = New System.Drawing.Size(70, 16)
+        Me.chckAll.Size = New System.Drawing.Size(70, 18)
         Me.chckAll.TabIndex = 16
         Me.chckAll.Text = "Check All"
         Me.chckAll.UseVisualStyleBackColor = True
@@ -222,10 +222,11 @@ Partial Class frmPrudentialMgt
         'frmPrudentialMgt
         '
         Me.AccessibleDescription = " "
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(557, 601)
+        Me.ControlBox = False
         Me.Controls.Add(Me.chckAll)
         Me.Controls.Add(Me.dtTransDate)
         Me.Controls.Add(Me.Label4)
@@ -239,7 +240,7 @@ Partial Class frmPrudentialMgt
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ddlParticipantID)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmPrudentialMgt"

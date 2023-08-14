@@ -15,6 +15,8 @@ Public Class frmImportWTAFromCRSS
     Private TotalCheckBoxes As Integer = 0
     Private TotalCheckedCheckBoxes As Integer = 0
     Private cts As CancellationTokenSource
+    Private newProgress As New ProgressClass
+
     Private Async Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
         Dim CountWESMBillExist As Integer = 0
         Dim ans As MsgBoxResult
@@ -79,7 +81,9 @@ Public Class frmImportWTAFromCRSS
                 Exit Sub
             End If
 
-            ProgressThread.Show("Please wait while processing.")
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while uploading..."}
+            Me.UpdateProgress(newProgress)
+
             Me.ListOfSignatories = impWTACRSSHelper._WBillHelper.GetSignatories()
             cts = New CancellationTokenSource
             For index As Integer = 0 To Me.dgv_WTAList.RowCount - 1
@@ -108,14 +112,14 @@ Public Class frmImportWTAFromCRSS
             Next
 
             cts = Nothing
-            ProgressThread.Close()
-            MsgBox("Successfully uploaded to Database", MsgBoxStyle.Information, "Success!")
+            MessageBox.Show("Successfully uploaded to Database", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             cts = Nothing
-            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString, ex.Message, "Uploading WESM Bills from CRSS DB", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.ErrorInSaving.ToString, AMModule.UserName)
         Finally
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Ready..."}
+            Me.UpdateProgress(newProgress)
             Panel_Head.Enabled = True
             tc_Viewer.Enabled = True
         End Try
@@ -284,17 +288,20 @@ Public Class frmImportWTAFromCRSS
     Private Sub cmb_DueDate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmb_DueDate.SelectedIndexChanged
         Try
             Dim getSelectedDueDate As Date = CDate(Me.cmb_DueDate.SelectedItem)
-            ProgressThread.Show("Please wait while fetching...")
+
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while fetching..."}
+            Me.UpdateProgress(newProgress)
 
             impWTACRSSHelper.FillTheDGV(getSelectedDueDate)
             Me.dgv_WTAList.Rows.Clear()
             For Each item In impWTACRSSHelper.newImportWTAFromCRSSList
                 Me.dgv_WTAList.Rows.Add(False, item.BillingPeriod, item.SettlementRun, item.GroupID, FormatNumber(item.TotalNetSales, 2, , TriState.True).ToString(), FormatNumber(item.TotalEWTSales, 2, , TriState.True).ToString(), FormatNumber(item.TotalNetPurchases, 2, , TriState.True).ToString(), FormatNumber(item.TotalEWTPurchases, 2, , TriState.True).ToString(), item.Remarks)
             Next
-            ProgressThread.Close()
         Catch ex As Exception
-            ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Ready..."}
+            Me.UpdateProgress(newProgress)
         End Try
     End Sub
 
@@ -310,7 +317,8 @@ Public Class frmImportWTAFromCRSS
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                     End If
                 Else
-                    ProgressThread.Show("Please wait while fetching...")
+                    newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while fetching..."}
+                    Me.UpdateProgress(newProgress)
 
                     dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = True
                     Dim rowBP As Integer = CInt(dgv_WTAList(1, e.RowIndex).Value)
@@ -325,14 +333,12 @@ Public Class frmImportWTAFromCRSS
 
                     Dim diffTotal1 As Decimal = totalNetSales + totalNetPurchases
                     If Not totalNetSales = Math.Abs(totalNetPurchases) Then
-                        ProgressThread.Close()
                         MessageBox.Show("There is difference between the Total Net Sales and Total Net Purchases!" & vbNewLine & "Difference: " & FormatNumber(diffTotal1, 2, , TriState.True).ToString(), "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                         Exit Sub
                     End If
                     Dim diffTotal2 As Decimal = totalNetSales + totalNetPurchases
                     If Not Math.Abs(totalEWTSales) = totalEWTPurchases Then
-                        ProgressThread.Close()
                         MessageBox.Show("There is difference between the Total EWT Sales and Total EWT Purchases!" & vbNewLine & "Difference: " & FormatNumber(diffTotal2, 2, , TriState.True).ToString(), "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                         Exit Sub
@@ -341,7 +347,6 @@ Public Class frmImportWTAFromCRSS
                     Me.impWTACRSSHelper.FetchSelectedData(rowBP, rowSTLRun, getSelectedDueDate, rowGroupID)
                     Dim getSelectedWTAItem As ImportWTAFromCRSS = Me.impWTACRSSHelper.newImportWTAFromCRSSList.Where(Function(x) x.BillingPeriod = rowBP And x.SettlementRun = rowSTLRun And x.GroupID = rowGroupID).FirstOrDefault
 
-                    ProgressThread.Close()
                     If getSelectedWTAItem.ListOfError.Count <> 0 Then
                         MessageBox.Show("Error found in uploaded data.", "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         frmViewDetails.ShowListOfErrorsForUploadingInCRSSDB(getSelectedWTAItem.ListOfError.Distinct.ToList)
@@ -351,25 +356,23 @@ Public Class frmImportWTAFromCRSS
                     End If
                 End If
             Catch ex As Exception
-                ProgressThread.Close()
                 MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Finally
+                newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Ready..."}
+                Me.UpdateProgress(newProgress)
             End Try
         End If
     End Sub
 #End Region
-    Private Sub frmImportWTAFromCRSS_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+    Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
         If cts IsNot Nothing Then
-            ProgressThread.Close()
-            If MessageBox.Show("Are you sure to cancel this process?", "Close",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                cts.Cancel()
-                e.Cancel = True
-                MessageBox.Show("Please try to close again!", "Close", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                ProgressThread.Show("Please wait while continuing the process.")
-                e.Cancel = True
-                Me.Show()
-            End If
+            cts.Cancel()
+            newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Please wait while canceling..."}
+            Me.UpdateProgress(newProgress)
+            btn_Close.Enabled = False
+        Else
+            Me.Close()
         End If
     End Sub
 End Class

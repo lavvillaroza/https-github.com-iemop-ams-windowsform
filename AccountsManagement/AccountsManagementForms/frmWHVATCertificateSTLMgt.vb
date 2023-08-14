@@ -9,7 +9,7 @@ Imports System.Threading.Tasks
 Imports System.Threading
 
 
-Public Class frmWHVatCertificatesSTLMgt
+Public Class frmWHVATCertificateSTLMgt
     Private _WHVatCertSTLHelper As New WHVATCertificateSTLHelper
     Private cts As CancellationTokenSource
     Private stopWatch As New Diagnostics.Stopwatch
@@ -51,10 +51,11 @@ Public Class frmWHVatCertificatesSTLMgt
             End If
 
             With DGridViewCollection
-                .Rows.Add(_WHVatCertSTLHelper.NewWHVatCertSTL.CertificateNo.ToString("d7"),
-                          _WHVatCertSTLHelper.NewWHVatCertSTL.RemittanceDate.ToString("MM/dd/yyyy"),
-                          _WHVatCertSTLHelper.NewWHVatCertSTL.BillingIDNumber.IDNumber,
-                          FormatNumber(_WHVatCertSTLHelper.NewWHVatCertSTL.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
+                .Rows.Add(_WHVatCertSTLHelper.NewWHVATCertSTL.CertificateNo.ToString("d7"),
+                          _WHVatCertSTLHelper.NewWHVATCertSTL.RemittanceDate.ToString("MM/dd/yyyy"),
+                          _WHVatCertSTLHelper.NewWHVATCertSTL.BillingIDNumber.IDNumber,
+                          FormatNumber(_WHVatCertSTLHelper.NewWHVATCertSTL.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
+                .RowsDefaultCellStyle.ForeColor = Drawing.Color.Black
             End With
             _WHVatCertSTLHelper.NewWHVatCertSTL = New WHVATCertificateSTL
         Catch ex As Exception
@@ -138,8 +139,10 @@ Public Class frmWHVatCertificatesSTLMgt
 
                     newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
                     UpdateProgress(newProgress)
-
-                    Await Task.Run(Sub() _WHVatCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))
+                    Dim isSave As Boolean = Await _WHVatCertSTLHelper.SaveAllocatedToAPAsync(certifNo, progressIndicator, cts.Token)
+                    If isSave = False Then
+                        Throw New Exception("Error encountered for Certificate No:" & certifNo.ToString("D7"))
+                    End If
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If
@@ -178,8 +181,58 @@ Public Class frmWHVatCertificatesSTLMgt
         End Try
     End Sub
 
-    Private Sub btnUntag_Click(sender As Object, e As EventArgs) Handles btnUntag.Click
+    Private Async Sub btnUntag_Click(sender As Object, e As EventArgs) Handles btnUntag.Click
+        Try
+            Me.gbMenu1.Enabled = False
+            Me.gbMenu2.Enabled = False
+            Me.chkbox_SelectAll.Enabled = False
 
+            Dim rowCounter As Integer = 0
+            cts = New CancellationTokenSource
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colUntag").Value) = True Then
+                    rowCounter += 1
+                End If
+            Next
+
+            If rowCounter = 0 Then
+                MessageBox.Show("No selected row to execute untagging.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            Dim ask = MessageBox.Show("Do you really want to untag the selected rows?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If ask = DialogResult.No Then
+                Exit Sub
+            End If
+
+            ProgressThread.Show("Please wait while untagging...")
+            Dim getListOfRemittanceDate As New Date
+            Dim getTimeStart As New DateTime
+            Dim getTimeEnd As New DateTime
+            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colUntag").Value) = True Then
+                    Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
+                    getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
+                    Dim isUntag As Boolean = Await _WHVatCertSTLHelper.UntagEWTSelectedAsync(certifNo, progressIndicator, cts.Token)
+                    If isUntag = False Then
+                        Throw New Exception("Error encountered during untagging!")
+                    End If
+                    row.DefaultCellStyle.ForeColor = Drawing.Color.Red
+                    row.ReadOnly = True
+                End If
+            Next
+            cts = Nothing
+            ProgressThread.Close()
+            MessageBox.Show("Untagging successfully executed.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            ProgressThread.Close()
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.gbMenu1.Enabled = True
+            Me.gbMenu2.Enabled = True
+            Me.chkbox_SelectAll.Enabled = True
+        End Try
     End Sub
 
     Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
@@ -192,4 +245,56 @@ Public Class frmWHVatCertificatesSTLMgt
             Me.Close()
         End If
     End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Try
+            MainPanel.Enabled = False
+            newProgress = New ProgressClass With {.ProgressMsg = "Please wait while searching..."}
+            UpdateProgress(newProgress)
+            Dim dateFrom As Date = CDate(FormatDateTime(Me.dtFrom.Value, DateFormat.ShortDate))
+            Dim dateTo As Date = CDate(FormatDateTime(Me.dtTo.Value, DateFormat.ShortDate))
+            Dim notAllocated As Boolean = CBool(chkbox_Allocated.Checked)
+            Dim notUntagged As Boolean = CBool(chkbox_Untagged.Checked)
+
+            _WHVatCertSTLHelper.SearchByDateRangeForWHVATCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
+            If _WHVatCertSTLHelper.ViewListOfWHVATCertSTL.Count <> 0 Then
+                PutDataInDisplayGrid(_WHVatCertSTLHelper.ViewListOfWHVATCertSTL)
+            Else
+                MessageBox.Show("No available data found!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+            chkbox_SelectAll.Checked = False
+        Catch ex As Exception
+            MainPanel.Enabled = True
+            MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            MainPanel.Enabled = True
+            newProgress = New ProgressClass With {.ProgressMsg = "Ready"}
+            UpdateProgress(newProgress)
+        End Try
+    End Sub
+
+    Private Sub PutDataInDisplayGrid(ByVal whTaxCertifCollectionList As List(Of WHVATCertificateSTL))
+        DGridViewCollection.Rows.Clear()
+        For Each item In whTaxCertifCollectionList
+            With DGridViewCollection
+                .Rows.Add(item.CertificateNo.ToString("d7"), item.RemittanceDate.ToString("MM/dd/yyyy"), item.BillingIDNumber.IDNumber,
+                          FormatNumber(item.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True),
+                          If(item.AllocatedToAP.ToUpper.Equals("YES"), True, False), If(item.UntagWVAT.ToUpper.Equals("YES"), True, False))
+            End With
+        Next
+        Me.PutColorRedInAllocatedToAPRow()
+    End Sub
+
+    Private Sub PutColorRedInAllocatedToAPRow()
+        For Each row As DataGridViewRow In DGridViewCollection.Rows
+            If CBool(row.Cells("colAllocatedToAP").Value) = True Or CBool(row.Cells("colUntag").Value) = True Then
+                row.DefaultCellStyle.ForeColor = Drawing.Color.Red
+                row.ReadOnly = True
+            Else
+                row.DefaultCellStyle.ForeColor = Drawing.Color.Black
+                row.Cells("colUntag").ReadOnly = True
+            End If
+        Next
+    End Sub
+
 End Class

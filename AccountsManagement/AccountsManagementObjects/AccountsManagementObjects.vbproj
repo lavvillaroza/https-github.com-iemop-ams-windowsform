@@ -284,6 +284,7 @@
     <Compile Include="WESMLogsTransaction.vb" />
     <Compile Include="WHVATCertificateDetails.vb" />
     <Compile Include="WHVATCertificateSTL.vb" />
+    <Compile Include="WVATTaggedAllocated.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

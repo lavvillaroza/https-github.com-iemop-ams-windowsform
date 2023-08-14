@@ -50,6 +50,7 @@ Public Class frmWHTaxCertificateSTLMgt
                           _WHTaxCertSTLHelper.NewWHTaxCertSTL.RemittanceDate.ToString("MM/dd/yyyy"),
                           _WHTaxCertSTLHelper.NewWHTaxCertSTL.BillingIDNumber.IDNumber,
                           FormatNumber(_WHTaxCertSTLHelper.NewWHTaxCertSTL.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
+                .RowsDefaultCellStyle.ForeColor = Drawing.Color.Black
             End With
             _WHTaxCertSTLHelper.NewWHTaxCertSTL = New WHTaxCertificateSTL
         Catch ex As Exception
@@ -72,7 +73,7 @@ Public Class frmWHTaxCertificateSTLMgt
 
             _WHTaxCertSTLHelper.SearchByDateRangeForWTCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
             If _WHTaxCertSTLHelper.ViewListOfWHTCertSTL.Count <> 0 Then
-                PutDataInDisplayGrid(_WHTaxCertSTLHelper.ViewListOfWHTCertSTL)
+                PutDataInDisplayGrid(_WHTaxCertSTLHelper.ViewListOfWHTCertSTL.OrderBy(Function(x) x.CertificateNo).ToList())
             Else
                 MessageBox.Show("No available data found!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -184,16 +185,19 @@ Public Class frmWHTaxCertificateSTLMgt
                     Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
                     getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
 
-                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
+                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No: " & certifNo}
                     UpdateProgress(newProgress)
-
-                    Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))
+                    Dim isSave As Boolean = Await _WHTaxCertSTLHelper.SaveAllocatedToAPAsync(certifNo, progressIndicator, cts.Token)
+                    If isSave = False Then
+                        Throw New Exception("Error encountered for Certificate No:" & certifNo.ToString("D7"))
+                    End If
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If
             Next
 
-            Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveSTLNoticeNew(getListOfRemittanceDate, progressIndicator, cts.Token))
+            Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveSTLNoticeNewAsync(getListOfRemittanceDate, progressIndicator, cts.Token))
+
             getTimeEnd = DateTime.Now()
             cts = Nothing
 

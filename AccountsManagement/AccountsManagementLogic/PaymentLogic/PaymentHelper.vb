@@ -22,8 +22,8 @@ Option Strict On
 Imports AccountsManagementObjects
 Imports AccountsManagementDataAccess
 Imports Excel = Microsoft.Office.Interop.Excel
-Imports System.Reflection
 Imports System.Threading
+Imports System.Threading.Tasks
 
 Public Class PaymentHelper
     Implements IDisposable
@@ -1364,6 +1364,7 @@ Public Class PaymentHelper
                 Me.progress.Report(newProgress)
 
                 Me.CreateWESMBillSummaryBalance()
+
                 Me.AdjustWESMBillSummaryForWHTAXADJ2()
 
                 newProgress = New ProgressClass
@@ -1585,6 +1586,10 @@ Public Class PaymentHelper
         Dim newProgress As ProgressClass
 
         For Each item In WESMBillSummaryReceivablesList
+            If cts.IsCancellationRequested Then
+                Throw New OperationCanceledException
+            End If
+
             counter += 1
             newProgress = New ProgressClass
             newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AR " & counter.ToString("N0") & "/" & WESMBillSummaryReceivablesList.Count.ToString("N0")
@@ -1595,6 +1600,7 @@ Public Class PaymentHelper
                                  & item.OrigDueDate.ToShortDateString & "|" _
                                  & item.ChargeType.ToString & "|" _
                                  & item.IDNumber.IDNumber.ToString
+
             If Not ObjARDictionary.ContainsKey(DicKey) Then
                 ObjARDictionary.Add(DicKey, "NOTHING")
                 Dim GetTotalBill = (From x In TotalAmountPerWESMBillAR
@@ -1659,9 +1665,13 @@ Public Class PaymentHelper
         Dim ObjAPDictionary As New Dictionary(Of String, String)
         counter = 0
         For Each item In WESMBillSummaryPayablesList
+            If cts.IsCancellationRequested Then
+                Throw New OperationCanceledException
+            End If
+
             counter += 1
             newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AP " & counter.ToString("N0") & "/" & WESMBillSummaryReceivablesList.Count.ToString("N0")
+            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AP " & counter.ToString("N0") & "/" & WESMBillSummaryPayablesList.Count.ToString("N0")
             Me.progress.Report(newProgress)
             Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
                                    & item.BillingPeriod.ToString & "|" _
@@ -2310,7 +2320,7 @@ Public Class PaymentHelper
                             .DMCMSummaryType = EnumDMCMSummaryType.TotalDefIntAPV
                             .DMCMAmount = (From x In _DMCM.DMCMDetails Select x.Debit).Sum()
                         Case Else
-                            Dim x = 0
+
                     End Select
                 End With
                 DMCMSummaryNewList.Add(_DMCMSummaryNewItem)

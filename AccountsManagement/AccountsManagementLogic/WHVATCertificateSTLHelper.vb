@@ -4,6 +4,7 @@ Imports AccountsManagementDataAccess
 Imports System.ComponentModel
 Imports Microsoft.Office.Interop
 Imports System.Threading
+Imports System.Threading.Tasks
 
 Public Class WHVATCertificateSTLHelper
     Public Sub New()
@@ -30,33 +31,33 @@ Public Class WHVATCertificateSTLHelper
     End Property
 #End Region
 
-    Private _ViewListOfWHVCertSTL As List(Of WHVATCertificateSTL)
-    Public Property ViewListOfWHVCertSTL() As List(Of WHVATCertificateSTL)
+    Private _ViewListOfWHVATCertSTL As List(Of WHVATCertificateSTL)
+    Public Property ViewListOfWHVATCertSTL() As List(Of WHVATCertificateSTL)
         Get
-            Return _ViewListOfWHVCertSTL
+            Return _ViewListOfWHVATCertSTL
         End Get
         Set(ByVal value As List(Of WHVATCertificateSTL))
-            _ViewListOfWHVCertSTL = value
+            _ViewListOfWHVATCertSTL = value
         End Set
     End Property
 
-    Private _NewWHVatCertSTL As WHVATCertificateSTL
-    Public Property NewWHVatCertSTL() As WHVATCertificateSTL
+    Private _NewWHVATCertSTL As WHVATCertificateSTL
+    Public Property NewWHVATCertSTL() As WHVATCertificateSTL
         Get
-            Return _NewWHVatCertSTL
+            Return _NewWHVATCertSTL
         End Get
         Set(ByVal value As WHVATCertificateSTL)
-            _NewWHVatCertSTL = value
+            _NewWHVATCertSTL = value
         End Set
     End Property
 
-    Private _FetchListWHVCertDetails As List(Of WHVATCertificateDetails)
-    Public Property FetchListWHVCertDetails() As List(Of WHVATCertificateDetails)
+    Private _FetchListWHVATCertDetails As List(Of WHVATCertificateDetails)
+    Public Property FetchListWHVATCertDetails() As List(Of WHVATCertificateDetails)
         Get
-            Return _FetchListWHVCertDetails
+            Return _FetchListWHVATCertDetails
         End Get
         Set(ByVal value As List(Of WHVATCertificateDetails))
-            _FetchListWHVCertDetails = value
+            _FetchListWHVATCertDetails = value
         End Set
     End Property
 
@@ -81,6 +82,7 @@ Public Class WHVATCertificateSTLHelper
 
 #Region "Property of WESM Transaction Details Summary List"
     Private _WESMTransDetailsSummaryList As New List(Of WESMTransDetailsSummary)
+    Private _WTADSummaryDic As New Dictionary(Of String, List(Of WESMTransDetailsSummary))
     Public Property WESMTransDetailsSummaryList() As List(Of WESMTransDetailsSummary)
         Get
             Return _WESMTransDetailsSummaryList
@@ -92,6 +94,7 @@ Public Class WHVATCertificateSTLHelper
 #End Region
 
 #Region "Property of WESM Transaction Details Summary History List"
+    Private _WTADSummaryHistoryDic As New Dictionary(Of String, List(Of WESMTransDetailsSummaryHistory))
     Private _WESMTransDetailsSummaryHistoryList As New List(Of WESMTransDetailsSummaryHistory)
     Public Property WESMTransDetailsSummaryHistoryList() As List(Of WESMTransDetailsSummaryHistory)
         Get
@@ -116,10 +119,10 @@ Public Class WHVATCertificateSTLHelper
 #End Region
 
 #Region "Search By Date"
-    Public Sub SearchByDateRangeForWTCertCollection(ByVal dFrom As Date, ByVal dTo As Date, ByVal notAllocated As Boolean, ByVal notUntagged As Boolean)
-        Me._ViewListOfWHVCertSTL = GetListOfWHVCertStl(dFrom, dTo, notAllocated, notUntagged)
+    Public Sub SearchByDateRangeForWHVATCertCollection(ByVal dFrom As Date, ByVal dTo As Date, ByVal notAllocated As Boolean, ByVal notUntagged As Boolean)
+        Me._ViewListOfWHVATCertSTL = GetListOfWHVATCertStl(dFrom, dTo, notAllocated, notUntagged)
     End Sub
-    Private Function GetListOfWHVCertStl(ByVal dateFrom As Date, ByVal dateTo As Date, ByVal notAllocated As Boolean, ByVal notUntagged As Boolean) As List(Of WHVATCertificateSTL)
+    Private Function GetListOfWHVATCertStl(ByVal dateFrom As Date, ByVal dateTo As Date, ByVal notAllocated As Boolean, ByVal notUntagged As Boolean) As List(Of WHVATCertificateSTL)
         Dim ret As New List(Of WHVATCertificateSTL)
         Dim report As New DataReport
 
@@ -128,20 +131,20 @@ Public Class WHVATCertificateSTLHelper
                                & "LEFT JOIN AM_PARTICIPANTS B ON B.ID_NUMBER = A.BILLING_IDNUMBER " & vbNewLine _
                               & "WHERE A.REMITTANCE_DATE >= TO_DATE('" & dateFrom.ToShortDateString & "','MM/DD/YYYY') " & vbNewLine _
                               & "AND A.REMITTANCE_DATE <= TO_DATE('" & dateTo & "','MM/DD/YYYY') " & vbNewLine _
-                              & "AND A.ALLOCATED_TO_AP = " & If(notAllocated = False, 0, 1) & " AND UNTAG_EWT = " & If(notUntagged = False, 0, 1) & " " & vbNewLine _
+                              & "AND A.ALLOCATED_TO_AP = " & If(notAllocated = False, 0, 1) & " AND UNTAG_WVAT = " & If(notUntagged = False, 0, 1) & " " & vbNewLine _
                               & "ORDER BY A.REMITTANCE_DATE, A.CERTIFICATE_NO, A.BILLING_IDNUMBER"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetListOfWTCertStl(report.ReturnedIDatareader)
+            ret = Me.GetListOfWVATCertStl(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
-    Private Function GetListOfWTCertStl(ByVal dr As IDataReader) As List(Of WHVATCertificateSTL)
+    Private Function GetListOfWVATCertStl(ByVal dr As IDataReader) As List(Of WHVATCertificateSTL)
         Dim result As New List(Of WHVATCertificateSTL)
 
         Try
@@ -154,7 +157,7 @@ Public Class WHVATCertificateSTLHelper
                     item.BillingIDNumber = New AMParticipants(CStr(.Item("BILLING_IDNUMBER")), CStr(.Item("PARTICIPANT_ID")), CStr(.Item("FULL_NAME")))
                     item.CollectedAmount = CDec(.Item("COLLECTED_AMOUNT"))
                     item.AllocatedToAP = If(CInt(.Item("ALLOCATED_TO_AP")) = 0, "NO", "YES")
-                    item.UntagEWT = If(CInt(.Item("UNTAG_EWV")) = 0, "NO", "YES")
+                    item.UntagWVAT = If(CInt(.Item("UNTAG_WVAT")) = 0, "NO", "YES")
                     result.Add(item)
                 End With
             End While
@@ -229,7 +232,7 @@ Public Class WHVATCertificateSTLHelper
 #End Region
 
 #Region "View Certificate"
-    Public Function GetWHVATCertStl(ByVal certifNo As Long) As WHVATCertificateSTL
+    Public Async Function GetWHVATCertStlAsync(ByVal certifNo As Long) As Task(Of WHVATCertificateSTL)
         Dim ret As New WHVATCertificateSTL
         Dim report As New DataReport
 
@@ -242,14 +245,13 @@ Public Class WHVATCertificateSTLHelper
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetWHVATCertStl(report.ReturnedIDatareader)
+            ret = Await Me.GetWHVATCertStl(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
-
-    Private Function GetWHVATCertStl(ByVal dr As IDataReader) As WHVATCertificateSTL
+    Private Function GetWHVATCertStl(ByVal dr As IDataReader) As Task(Of WHVATCertificateSTL)
         Dim result As New WHVATCertificateSTL
 
         Try
@@ -275,7 +277,7 @@ Public Class WHVATCertificateSTLHelper
             End If
         End Try
 
-        Return result
+        Return Task.FromResult(result)
     End Function
 #End Region
 
@@ -338,30 +340,30 @@ Public Class WHVATCertificateSTLHelper
 #End Region
 
 #Region "Get WESM BILLS with Outstanding Balance for Withholding Tax"
-    Public Sub GetWESMBillSummaryWithWTAX(ByVal idNumber As String, ByVal remittance As Date)
-        Me._FetchListWHVCertDetails = GetWESMBillSummaryForTaggingEWT(idNumber, remittance)
+    Public Sub GetWESMBillSummaryWHVAT(ByVal idNumber As String, ByVal remittance As Date)
+        Me._FetchListWHVATCertDetails = GetWESMBillSummaryForTaggingWHVAT(idNumber, remittance)
     End Sub
 
-    Public Function GetListWESMTransDetailsSummaryBuyer(ByVal transNo As String) As List(Of WESMTransDetailsSummary)
+    Public Async Function GetWTADSummaryFromBuyerAsync(ByVal transNo As String) As Task(Of List(Of WESMTransDetailsSummary))
         Dim ret As New List(Of WESMTransDetailsSummary)
         Dim report As New DataReport
 
         Try
             Dim SQL As String = "SELECT A.* FROM AM_WESM_TRANS_DETAILS_SUMMARY A " & vbNewLine _
-                              & "WHERE A.BUYER_TRANS_NO = '" & transNo & "' AND A.ORIG_AMOUNT_EWT <= 0"
+                              & "WHERE A.BUYER_TRANS_NO = '" & transNo & "' AND A.ORIG_AMOUNT_ENERGY < 0"
 
-            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetListWESMTransDetailsSummary(report.ReturnedIDatareader)
+            ret = Await Me.GetTaskWTADSummary(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
 
-    Public Function GetListWESMTransDetailsSummarySeller(ByVal transNo As String) As List(Of WESMTransDetailsSummary)
+    Public Function GetTaskWTADSummaryFromSeller(ByVal transNo As String) As Task(Of List(Of WESMTransDetailsSummary))
         Dim ret As New List(Of WESMTransDetailsSummary)
         Dim report As New DataReport
 
@@ -373,14 +375,13 @@ Public Class WHVATCertificateSTLHelper
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetListWESMTransDetailsSummary(report.ReturnedIDatareader)
+            ret = Me.GetTaskWTADSummary(report.ReturnedIDatareader).Result
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
-        Return ret
+        Return Task.FromResult(ret)
     End Function
-
-    Private Function GetListWESMTransDetailsSummary(ByVal dr As IDataReader) As List(Of WESMTransDetailsSummary)
+    Private Function GetTaskWTADSummary(ByVal dr As IDataReader) As Task(Of List(Of WESMTransDetailsSummary))
         Dim result As New List(Of WESMTransDetailsSummary)
         Dim index As Integer = 0
         Try
@@ -411,10 +412,10 @@ Public Class WHVATCertificateSTLHelper
                 dr.Close()
             End If
         End Try
-        Return result
+        Return Task.FromResult(result)
     End Function
 
-    Public Function GetListOfParticipantsForAdvanceEWV() As List(Of String)
+    Public Function GetListOfParticipantsForAdvanceWVAT() As List(Of String)
         Dim ret As New List(Of String)
         Dim report As New DataReport
 
@@ -473,7 +474,7 @@ Public Class WHVATCertificateSTLHelper
 
         Return result
     End Function
-    Private Function GetWESMBillSummaryForAllocEWV(ByVal wesmBillBatchNo As Long) As List(Of WHVATCertificateDetails)
+    Private Function GetWESMBillSummaryForAllocWHVAT(ByVal wesmBillBatchNo As Long) As Task(Of List(Of WHVATCertificateDetails))
         Dim ret As New List(Of WHVATCertificateDetails)
         Dim report As New DataReport
 
@@ -487,14 +488,14 @@ Public Class WHVATCertificateSTLHelper
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetWESMBillSummaryForAllocEWV(report.ReturnedIDatareader)
+            ret = Me.GetWESMBillSummaryForAllocEWV(report.ReturnedIDatareader).Result
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
-        Return ret
+        Return Task.FromResult(ret)
     End Function
 
-    Private Function GetWESMBillSummaryForAllocEWV(ByVal dr As IDataReader) As List(Of WHVATCertificateDetails)
+    Private Function GetWESMBillSummaryForAllocEWV(ByVal dr As IDataReader) As Task(Of List(Of WHVATCertificateDetails))
         Dim result As New List(Of WHVATCertificateDetails)
         Dim index As Integer = 0
         Try
@@ -548,10 +549,10 @@ Public Class WHVATCertificateSTLHelper
             End If
         End Try
 
-        Return result
+        Return Task.FromResult(result)
     End Function
 
-    Private Function GetWESMBillSummaryForAdvanceTaggingEWV(ByVal idNumber As String, ByVal remittance As Date) As List(Of WHVATCertificateDetails)
+    Private Function GetWESMBillSummaryForAdvanceTaggingWHVAT(ByVal idNumber As String, ByVal remittance As Date) As List(Of WHVATCertificateDetails)
         Dim ret As New List(Of WHVATCertificateDetails)
         Dim report As New DataReport
 
@@ -559,20 +560,20 @@ Public Class WHVATCertificateSTLHelper
             Dim SQL As String = "SELECT DISTINCT A.*, B.PARTICIPANT_ID, B.FULL_NAME, B.PARTICIPANT_ADDRESS, A.ENERGY_WITHHOLD, TO_DATE('" & remittance.ToShortDateString & "','MM/DD/yyyy') AS ALLOCATION_DATE " & vbNewLine _
                                & "FROM AM_WESM_BILL_SUMMARY A " & vbNewLine _
                                & "INNER JOIN AM_PARTICIPANTS B ON B.ID_NUMBER = A.ID_NUMBER " & vbNewLine _
-                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'E' AND A.ID_NUMBER = '" & idNumber & "' AND INV_DM_CM LIKE 'TS-W%' AND NOT INV_DM_CM LIKE '%ADJ%'"
+                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'EV' AND A.ID_NUMBER = '" & idNumber & "' AND INV_DM_CM LIKE 'TS-W%' AND NOT INV_DM_CM LIKE '%ADJ%'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetWESMBillsSummaryForTaggingEWV(report.ReturnedIDatareader)
+            ret = Me.GetWESMBillsSummaryForTaggingWHVAT(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
 
-    Private Function GetWESMBillSummaryForTaggingEWT(ByVal idNumber As String, ByVal remittanceDate As Date) As List(Of WHVATCertificateDetails)
+    Private Function GetWESMBillSummaryForTaggingWHVAT(ByVal idNumber As String, ByVal remittanceDate As Date) As List(Of WHVATCertificateDetails)
         Dim ret As New List(Of WHVATCertificateDetails)
         Dim report As New DataReport
 
@@ -582,21 +583,21 @@ Public Class WHVATCertificateSTLHelper
                                & "INNER JOIN AM_PARTICIPANTS B ON B.ID_NUMBER = A.ID_NUMBER " & vbNewLine _
                                & "INNER JOIN AM_COLLECTION_ALLOCATION D ON D.AM_REF_NO = A.INV_DM_CM AND D.WESMBILL_SUMMARY_NO = A.WESMBILL_SUMMARY_NO " & vbNewLine _
                                & "INNER JOIN AM_PAYMENT_NEW E ON E.ALLOCATION_DATE = D.ALLOCATION_DATE " & vbNewLine _
-                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'E' AND A.ID_NUMBER = '" & idNumber & "' " & vbNewLine _
+                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'EV' AND A.ID_NUMBER = '" & idNumber & "' " & vbNewLine _
                                & "AND E.REMITTANCE_DATE = TO_DATE('" & remittanceDate & "', 'mm/dd/yyyy') AND INV_DM_CM LIKE 'TS-W%' AND NOT INV_DM_CM LIKE '%ADJ%'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetWESMBillsSummaryForTaggingEWV(report.ReturnedIDatareader)
+            ret = Me.GetWESMBillsSummaryForTaggingWHVAT(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
 
-    Private Function GetWESMBillsSummaryForTaggingEWV(ByVal dr As IDataReader) As List(Of WHVATCertificateDetails)
+    Private Function GetWESMBillsSummaryForTaggingWHVAT(ByVal dr As IDataReader) As List(Of WHVATCertificateDetails)
         Dim result As New List(Of WHVATCertificateDetails)
         Dim index As Integer = 0
         Try
@@ -742,24 +743,24 @@ Public Class WHVATCertificateSTLHelper
 #End Region
 
 #Region "Get WESM Transaction Details Summary History"
-    Private Function GetListWESMTransDetailsSummaryHistory(ByVal buyerTransNo As String, ByVal remittanceDate As Date) As List(Of WESMTransDetailsSummaryHistory)
+    Private Async Function GetListWTADSummaryHistoryAsync(ByVal buyerTransNo As String, ByVal remittanceDate As Date) As Task(Of List(Of WESMTransDetailsSummaryHistory))
         Dim ret As New List(Of WESMTransDetailsSummaryHistory)
         Dim report As New DataReport
 
         Try
             Dim SQL As String = "SELECT A.* FROM AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY A " & vbNewLine _
                               & "WHERE A.BUYER_TRANS_NO = '" & buyerTransNo & "' AND REMITTANCE_DATE = TO_DATE('" & remittanceDate.ToShortDateString & "','MM/DD/YYYY')"
-            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
             End If
-            ret = Me.GetListWESMTransDetailsSummaryHistory(report.ReturnedIDatareader)
+            ret = Await Me.GetListWTADSummaryHistory(report.ReturnedIDatareader)
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)
         End Try
         Return ret
     End Function
-    Private Function GetListWESMTransDetailsSummaryHistory(ByVal dr As IDataReader) As List(Of WESMTransDetailsSummaryHistory)
+    Private Function GetListWTADSummaryHistory(ByVal dr As IDataReader) As Task(Of List(Of WESMTransDetailsSummaryHistory))
         Dim result As New List(Of WESMTransDetailsSummaryHistory)
         Dim index As Integer = 0
         Try
@@ -777,6 +778,7 @@ Public Class WHVATCertificateSTLHelper
                     item.AllocatedInEnergy = CDec(.Item("ALLOCATED_IN_ENERGY"))
                     item.AllocatedInVAT = CDec(.Item("ALLOCATED_IN_VAT"))
                     item.AllocatedInEWT = CDec(.Item("ALLOCATED_IN_EWT"))
+                    item.AllocatedInWVAT = CDec(.Item("ALLOCATED_IN_WVAT"))
                     item.Status = EnumWESMTransDetailsSummaryStatus.CURRENT.ToString
                     result.Add(item)
                 End With
@@ -788,7 +790,7 @@ Public Class WHVATCertificateSTLHelper
                 dr.Close()
             End If
         End Try
-        Return result
+        Return Task.FromResult(result)
     End Function
 #End Region
 
@@ -805,48 +807,27 @@ Public Class WHVATCertificateSTLHelper
             .TagDetails = listOfWHVatCertCollectionTag
             .AllocationDetails = New List(Of WHVATCertificateDetails)
         End With
-        Me._NewWHVatCertSTL = newWHVatCertColl
+        Me._NewWHVATCertSTL = newWHVatCertColl
     End Sub
 
-    Private Function AllocateTaggedWHTaxCert(ByRef listOfWHVatCertSTL As WHVATCertificateSTL, ByVal remittanceDate As Date) As List(Of WHVATCertificateDetails)
-        Dim ret As New List(Of WHVATCertificateDetails)
+    Private Async Function AllocateTaggedWHVATCert(ByVal listOfWHVatCertSTL As WHVATCertificateSTL, ByVal remittanceDate As Date) As Task(Of List(Of WHVATCertificateDetails))
+        Dim result As New List(Of WHVATCertificateDetails)
         Dim getListWESMBillBatchNo As List(Of Long) = (From x In listOfWHVatCertSTL.TagDetails Select x.WESMBillSummary.WESMBillBatchNo Distinct).ToList
         For Each item In getListWESMBillBatchNo
             Dim getListOfWHVCertCollTag As List(Of WHVATCertificateDetails) = (From x In listOfWHVatCertSTL.TagDetails Where x.WESMBillSummary.WESMBillBatchNo = item Select x).ToList
-            Dim getListOfWHVCertAlloc As List(Of WHVATCertificateDetails) = Me.GetWESMBillSummaryForAllocEWV(item)
+            Dim getListOfWHVCertAlloc As List(Of WHVATCertificateDetails) = Me.GetWESMBillSummaryForAllocWHVAT(item).Result
             If getListOfWHVCertAlloc.Count = 0 Then
                 Throw New Exception("No AP found for WESMBillBatchNo: " & item)
             End If
-            For Each i In AllocateTaggedWHTaxCertPerBatchNew(remittanceDate, listOfWHVatCertSTL, getListOfWHVCertCollTag, getListOfWHVCertAlloc)
-                ret.Add(i)
+            Dim getWHTaxCertificateDetails As List(Of WHVATCertificateDetails) = Await AllocateTaggedWHVATCertPerBatchAsync(remittanceDate, listOfWHVatCertSTL, getListOfWHVCertCollTag, getListOfWHVCertAlloc)
+            For Each i In getWHTaxCertificateDetails
+                result.Add(i)
             Next
         Next
-        Return ret
+        Return result
     End Function
 
-    'Private Function AllocateTaggedWHTaxCertPerBatch(ByVal listOfWHTCertCollTag As List(Of WHVATCertificateDetails), ByRef listOfWHTCertAlloc As List(Of WHVATCertificateDetails)) As List(Of WHVATCertificateDetails)
-    '    Dim ret As New List(Of WHTaxCertificateDetails)
-    '    Dim getTotalCollectedAmount As Decimal = (From x In listOfWHTCertCollTag Select x.AmountTagged).Sum()
-    '    Dim getTotalSalesWHTax As Decimal = (From x In listOfWHTCertAlloc Select x.WithholdingTaxAmount).Sum()
-
-    '    For Each item In listOfWHTCertAlloc
-    '        Dim shareAmount As Decimal = Math.Round(getTotalCollectedAmount * (item.WithholdingTaxAmount / getTotalSalesWHTax), 2, MidpointRounding.AwayFromZero)
-    '        item.AmountTagged = shareAmount * -1
-    '    Next
-
-    '    Dim getTotalAllocatedAmount As Decimal = (From x In listOfWHTCertAlloc Select x.AmountTagged).Sum
-
-    '    If getTotalCollectedAmount <> Math.Abs(getTotalAllocatedAmount) Then
-    '        Dim getDiff As Decimal = Math.Round(getTotalCollectedAmount - Math.Abs(getTotalAllocatedAmount), 2)
-    '        Dim getMaxWHTaxAmount As WHTaxCertificateDetails = (From x In listOfWHTCertAlloc Select x Order By x.AmountTagged Ascending).First
-    '        getMaxWHTaxAmount.AmountTagged -= getDiff
-    '    End If
-
-    '    ret = listOfWHTCertAlloc
-    '    Return ret
-    'End Function
-
-    Private Function AllocateTaggedWHTaxCertPerBatchNew(ByVal remittanceDate As Date, ByRef listOfWHVatCertSTL As WHVATCertificateSTL, ByVal listOfWHVCertCollTag As List(Of WHVATCertificateDetails), ByRef listOfWHVCertAlloc As List(Of WHVATCertificateDetails)) As List(Of WHVATCertificateDetails)
+    Private Async Function AllocateTaggedWHVATCertPerBatchAsync(ByVal remittanceDate As Date, ByVal listOfWHVatCertSTL As WHVATCertificateSTL, ByVal listOfWHVCertCollTag As List(Of WHVATCertificateDetails), ByVal listOfWHVCertAlloc As List(Of WHVATCertificateDetails)) As Task(Of List(Of WHVATCertificateDetails))
         Dim ret As New List(Of WHVATCertificateDetails)
         Dim listWTDSummaryHistory As New List(Of WESMTransDetailsSummaryHistory)
         Dim AllocRemittanceDate As AllocationDate = GetAllocRemittanceDate(remittanceDate).FirstOrDefault
@@ -856,17 +837,14 @@ Public Class WHVATCertificateSTLHelper
         End If
 
         For Each itemAR In listOfWHVCertCollTag
-
-            Dim getWTDSummary As List(Of WESMTransDetailsSummary) = GetListWESMTransDetailsSummaryBuyer(itemAR.WESMBillSummary.INVDMCMNo).ToList
-            Dim getWTDSummaryHistory As List(Of WESMTransDetailsSummaryHistory) = GetListWESMTransDetailsSummaryHistory(itemAR.WESMBillSummary.INVDMCMNo, remittanceDate).ToList
-            Dim getWTCSummaryAR As WESMBillAllocCoverSummary = Me.WBillHelper.GetListWESMTransCoverSummaryPerTransNo(itemAR.WESMBillSummary.INVDMCMNo).FirstOrDefault
-
+            Dim getWTDSummary As List(Of WESMTransDetailsSummary) = Await GetWTADSummaryFromBuyerAsync(itemAR.WESMBillSummary.INVDMCMNo)
+            Dim getWTDSummaryHistory As List(Of WESMTransDetailsSummaryHistory) = Await GetListWTADSummaryHistoryAsync(itemAR.WESMBillSummary.INVDMCMNo, remittanceDate)
             Dim iniWTDSummaryHistory As New List(Of WESMTransDetailsSummaryHistory)
             For Each itemAP In listOfWHVCertAlloc
-                Dim shareEWTAmount As Decimal = 0D
+                Dim shareWVATAmount As Decimal = 0D
                 Dim getWTDSummaryAP As WESMTransDetailsSummary = getWTDSummary.Where(Function(x) x.SellerTransNo = itemAP.WESMBillSummary.INVDMCMNo).FirstOrDefault
                 If Not getWTDSummaryAP Is Nothing Then
-                    shareEWTAmount = ComputeAllocation(Math.Abs(getWTDSummaryAP.OutstandingBalanceInEWT), Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEWT).Sum()), itemAR.AmountTagged)
+                    shareWVATAmount = ComputeAllocation(Math.Abs(getWTDSummaryAP.OutstandingBalanceInVAT), Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum()), itemAR.AmountTagged)
                     Using itemWTDSummaryHistory As New WESMTransDetailsSummaryHistory
                         With itemWTDSummaryHistory
                             .BuyerTransNo = getWTDSummaryAP.BuyerTransNo
@@ -876,45 +854,19 @@ Public Class WHVATCertificateSTLHelper
                             .DueDate = getWTDSummaryAP.DueDate
                             .AllocationDate = AllocRemittanceDate.CollAllocationDate
                             .RemittanceDate = remittanceDate
-                            .AllocatedInEWT = shareEWTAmount
-                            .Status = EnumWESMTransDetailsSummaryStatus.ADDED.ToString
-                        End With
-                        iniWTDSummaryHistory.Add(itemWTDSummaryHistory)
-                    End Using
-                Else
-                    If getWTCSummaryAR Is Nothing Then
-                        Throw New Exception("No available WESM Transaction Details Summary for SellerTransNo:" & itemAP.WESMBillSummary.INVDMCMNo)
-                    End If
-
-                    Dim getWTCSummaryAP As WESMBillAllocCoverSummary = Me.WBillHelper.GetListWESMTransCoverSummaryPerTransNo(itemAP.WESMBillSummary.INVDMCMNo).FirstOrDefault
-                    Dim getEWTAmountAP As Decimal = getWTCSummaryAR.ListWBAllocDisDetails.Where(Function(x) x.BillingID = getWTCSummaryAP.BillingID).Select(Function(x) x.EWT).FirstOrDefault
-                    Dim totalEWTofAR As Decimal = getWTCSummaryAR.EWTPurchases
-                    Dim getEWTAmountAPTotal As Decimal = getWTCSummaryAR.ListWBAllocDisDetails.Select(Function(x) x.EWT).Sum
-                    shareEWTAmount = ComputeAllocation(Math.Abs(getEWTAmountAP), Math.Abs(totalEWTofAR), itemAR.AmountTagged)
-
-                    Using itemWTDSummaryHistory As New WESMTransDetailsSummaryHistory
-                        With itemWTDSummaryHistory
-                            .BuyerTransNo = getWTCSummaryAR.TransactionNo
-                            .BuyerBillingID = getWTCSummaryAR.BillingID
-                            .SellerTransNo = getWTCSummaryAP.TransactionNo
-                            .SellerBillingID = getWTCSummaryAP.BillingID
-                            .DueDate = getWTCSummaryAP.DueDate
-                            .AllocationDate = AllocRemittanceDate.CollAllocationDate
-                            .RemittanceDate = remittanceDate
-                            .AllocatedInEWT = shareEWTAmount
+                            .AllocatedInWVAT = shareWVATAmount
                             .Status = EnumWESMTransDetailsSummaryStatus.ADDED.ToString
                         End With
                         iniWTDSummaryHistory.Add(itemWTDSummaryHistory)
                     End Using
                 End If
             Next
-            Dim totalAllocatedEWTAP As Decimal = Math.Abs(iniWTDSummaryHistory.Select(Function(x) x.AllocatedInEWT).Sum())
-            If itemAR.AmountTagged <> totalAllocatedEWTAP Then
-                Dim getDiff As Decimal = itemAR.AmountTagged - totalAllocatedEWTAP
+
+            Dim totalAllocatedWVATAP As Decimal = Math.Abs(iniWTDSummaryHistory.Select(Function(x) x.AllocatedInWVAT).Sum())
+            If itemAR.AmountTagged <> totalAllocatedWVATAP Then
+                Dim getDiff As Decimal = itemAR.AmountTagged - totalAllocatedWVATAP
                 Me.AdjustComputedAllocation(getWTDSummary, iniWTDSummaryHistory, getDiff)
             End If
-
-            Dim checktotalAllocatedEWTAP As Decimal = Math.Abs(iniWTDSummaryHistory.Select(Function(x) x.AllocatedInEWT).Sum())
 
             For Each itemAP In listOfWHVCertAlloc
                 Dim getiniWTDSummaryHistory = iniWTDSummaryHistory.
@@ -924,9 +876,9 @@ Public Class WHVATCertificateSTLHelper
                                        FirstOrDefault
 
                 If Not getIniWTDSummary Is Nothing Then
-                    If getiniWTDSummaryHistory.AllocatedInEWT <> 0 Then
+                    If getiniWTDSummaryHistory.AllocatedInWVAT <> 0 Then
                         With getIniWTDSummary
-                            .OutstandingBalanceInEWT += getiniWTDSummaryHistory.AllocatedInEWT
+                            .OutstandingBalanceInVAT += getiniWTDSummaryHistory.AllocatedInWVAT
                             .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
                         End With
                         Me._WESMTransDetailsSummaryList.Add(getIniWTDSummary)
@@ -937,20 +889,24 @@ Public Class WHVATCertificateSTLHelper
                                                 Where(Function(x) x.BuyerTransNo = getiniWTDSummaryHistory.BuyerTransNo And x.SellerTransNo = getiniWTDSummaryHistory.SellerTransNo).
                                                 FirstOrDefault
                 If Not getExistWTDSummaryHistory Is Nothing Then
-                    If getiniWTDSummaryHistory.AllocatedInEWT <> 0 Then
+                    If getiniWTDSummaryHistory.AllocatedInWVAT <> 0 Then
                         With getExistWTDSummaryHistory
-                            .AllocatedInEWT = getiniWTDSummaryHistory.AllocatedInEWT
+                            .AllocatedInWVAT = getiniWTDSummaryHistory.AllocatedInWVAT
                             .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
                         End With
                         Me._WESMTransDetailsSummaryHistoryList.Add(getExistWTDSummaryHistory)
                     End If
                 Else
-                    If getiniWTDSummaryHistory.AllocatedInEWT <> 0 Then
+                    If getiniWTDSummaryHistory.AllocatedInWVAT <> 0 Then
                         Me._WESMTransDetailsSummaryHistoryList.Add(getiniWTDSummaryHistory)
                     End If
                 End If
-                itemAP.AmountTagged += (getiniWTDSummaryHistory.AllocatedInEWT * -1)
+                itemAP.AmountTagged += (getiniWTDSummaryHistory.AllocatedInWVAT * -1) 'need to validate the result                
             Next
+
+            getWTDSummary = Nothing
+            getWTDSummaryHistory = Nothing
+            iniWTDSummaryHistory = Nothing
         Next
 
         For Each item In listOfWHVCertAlloc
@@ -980,9 +936,9 @@ Public Class WHVATCertificateSTLHelper
         Dim totalAllocDiffAmount As Decimal = 0D
         Do While totalAllocDiffAmount <> AmountDiff
             If listOfWTDSummary.Count <> 0 Then
-                Dim GetListOfInvoiceWithEOAmount = (From x In listOfWTDSummary Select x Where x.OutstandingBalanceInEWT < 0 Order By x.OutstandingBalanceInEWT Ascending).ToList
+                Dim GetListOfInvoiceWithEOAmount = (From x In listOfWTDSummary Select x Where x.OutstandingBalanceInEnergy < 0 Order By x.OutstandingBalanceInEnergy Ascending).ToList
                 If GetListOfInvoiceWithEOAmount.Count = 0 And AmountDiff <> 0 Then
-                    GetListOfInvoiceWithEOAmount = (From x In listOfWTDSummary Select x Where x.OrigBalanceInEWT < 0 Order By x.OutstandingBalanceInEWT Ascending).ToList
+                    GetListOfInvoiceWithEOAmount = (From x In listOfWTDSummary Select x Where x.OrigBalanceInEnergy < 0 Order By x.OutstandingBalanceInEnergy Ascending).ToList
                 End If
                 For Each item In GetListOfInvoiceWithEOAmount
                     Dim computedShareDiffAmount As Decimal = If(AmountDiff > 0D, 0.01D, -0.01D)
@@ -990,10 +946,10 @@ Public Class WHVATCertificateSTLHelper
                         Dim UpdateWTDSummaryHistory As WESMTransDetailsSummaryHistory = (From x In listWTDSummaryHistory
                                                                                          Where x.BuyerTransNo = item.BuyerTransNo And x.SellerTransNo = item.SellerTransNo
                                                                                          Select x).FirstOrDefault
-                        Dim AmountChecker As Decimal = item.OutstandingBalanceInEWT + (UpdateWTDSummaryHistory.AllocatedInEWT + computedShareDiffAmount)
+                        Dim AmountChecker As Decimal = item.OutstandingBalanceInEnergy + (UpdateWTDSummaryHistory.AllocatedInWVAT + computedShareDiffAmount)
                         If Not AmountChecker > 0 Then
                             With UpdateWTDSummaryHistory
-                                .AllocatedInEWT += computedShareDiffAmount
+                                .AllocatedInWVAT += computedShareDiffAmount
                             End With
                             totalAllocDiffAmount += computedShareDiffAmount
                         End If
@@ -1002,10 +958,10 @@ Public Class WHVATCertificateSTLHelper
                     End If
                 Next
             Else
-                For Each item In listWTDSummaryHistory.OrderByDescending(Function(x) x.AllocatedInEWT).ToList
+                For Each item In listWTDSummaryHistory.OrderByDescending(Function(x) x.AllocatedInWVAT).ToList
                     Dim computedShareDiffAmount As Decimal = If(AmountDiff > 0D, 0.01D, -0.01D)
                     If totalAllocDiffAmount <> AmountDiff Then
-                        item.AllocatedInEWT += computedShareDiffAmount
+                        item.AllocatedInWVAT += computedShareDiffAmount
                     Else
                         Exit For
                     End If
@@ -1046,7 +1002,7 @@ Public Class WHVATCertificateSTLHelper
         Me.SaveToDB(listSQL, progress, ct)
 
     End Sub
-    Public Sub SaveAllocatedToAp(ByVal certificateNo As Long, ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken)
+    Public Async Function SaveAllocatedToAPAsync(ByVal certificateNo As Long, ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken) As Task(Of Boolean)
         Dim listSQL As New List(Of String)
         Dim SysDateTime As Date = WBillHelper.GetSystemDateTime()
         Dim SQL As String = ""
@@ -1056,7 +1012,7 @@ Public Class WHVATCertificateSTLHelper
         newProgress.ProgressMsg = "Fetching the EWT AR Tagged for CertificateNo: " & certificateNo.ToString("N0")
         progress.Report(newProgress)
 
-        Dim getSelectedCertificate As WHVATCertificateSTL = Me.GetWHVATCertStl(certificateNo)
+        Dim getSelectedCertificate As WHVATCertificateSTL = Await Me.GetWHVATCertStlAsync(certificateNo)
 
         Me._WESMTransCoverSummaryList = New List(Of WESMBillAllocCoverSummary)
         Me._WESMTransDetailsSummaryList = New List(Of WESMTransDetailsSummary)
@@ -1064,15 +1020,15 @@ Public Class WHVATCertificateSTLHelper
 
         newProgress = New ProgressClass
         newProgress.ProgressIndicator = 0
-        newProgress.ProgressMsg = "Allocating to EWT AP for CertificateNo: " & certificateNo.ToString("N0")
+        newProgress.ProgressMsg = "Allocating to WHVAT AP for CertificateNo: " & certificateNo.ToString("N0")
         progress.Report(newProgress)
 
-        Me.AllocateTaggedWHTaxCert(getSelectedCertificate, getSelectedCertificate.RemittanceDate)
+        Dim listWHVatCertifDetails As List(Of WHVATCertificateDetails) = Await Me.AllocateTaggedWHVATCert(getSelectedCertificate, getSelectedCertificate.RemittanceDate)
 
         SQL = "UPDATE AM_CERTIFICATE_WHVAT_STL SET ALLOCATED_TO_AP = 1 WHERE CERTIFICATE_NO = " & certificateNo & " AND ALLOCATED_TO_AP = 0"
         listSQL.Add(SQL)
 
-        For Each item In getSelectedCertificate.AllocationDetails
+        For Each item In listWHVatCertifDetails
             SQL = "INSERT INTO AM_CERTIFICATE_WHVAT_DETAILS (CERTIFICATE_NO,WESMBILL_SUMMARY_NO,ENDING_BALANCE,AMOUNT_TAGGED,NEW_ENDING_BALANCE,NEW_DUE_DATE)" & vbNewLine _
                     & "SELECT " & getSelectedCertificate.CertificateNo & ", " & item.WESMBillSummary.WESMBillSummaryNo & ", " & item.EndingBalance & ", " & item.AmountTagged & ", " & item.NewEndingBalance & ", TO_DATE('" & item.NewDueDate & "', 'MM/dd/yyyy') FROM DUAL"
             listSQL.Add(SQL)
@@ -1087,28 +1043,28 @@ Public Class WHVATCertificateSTLHelper
                 'Add AM_WESM_BILL_SUMMARY_HISTORY
                 SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, PAYMENT_TYPE, WHVAT_NO) " &
                     "SELECT '" & item.WESMBillSummary.WESMBillSummaryNo & "', TO_DATE('" & getSelectedCertificate.RemittanceDate & "','MM/DD/YYYY'), " & item.AmountTagged * -1 & ", '" &
-                    AMModule.UserName & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumPaymentNewType.Energy & "', " & getSelectedCertificate.CertificateNo & " FROM DUAL"
+                    AMModule.UserName & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumPaymentNewType.VatOnEnergy & "', " & getSelectedCertificate.CertificateNo & " FROM DUAL"
                 listSQL.Add(SQL)
             End If
         Next
 
         For Each item In Me.WESMTransDetailsSummaryList.Where(Function(x) x.Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString).ToList
-            SQL = "UPDATE AM_WESM_TRANS_DETAILS_SUMMARY SET OBIN_ENERGY = " & item.OutstandingBalanceInEWT & vbNewLine _
+            SQL = "UPDATE AM_WESM_TRANS_DETAILS_SUMMARY SET OBIN_VAT = " & item.OutstandingBalanceInVAT & vbNewLine _
                & " WHERE BUYER_TRANS_NO = '" & item.BuyerTransNo & "' AND SELLER_TRANS_NO = '" & item.SellerTransNo & "'"
             listSQL.Add(SQL)
         Next
 
         Dim getWTDSHisListAdded As List(Of WESMTransDetailsSummaryHistory) = Me.WESMTransDetailsSummaryHistoryList.Where(Function(x) x.Status = EnumWESMTransDetailsSummaryStatus.ADDED.ToString).ToList()
         For Each wItem In getWTDSHisListAdded
-            SQL = "INSERT INTO AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY(BUYER_TRANS_NO,BUYER_BILLING_ID,SELLER_TRANS_NO,SELLER_BILLING_ID,DUE_DATE,ALLOCATION_DATE,REMITTANCE_DATE,ALLOCATED_IN_ENERGY,ALLOCATED_IN_EWT,ALLOCATED_IN_DEFINT,ALLOCATED_IN_VAT,PROCESED_BY) " & vbNewLine _
+            SQL = "INSERT INTO AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY(BUYER_TRANS_NO,BUYER_BILLING_ID,SELLER_TRANS_NO,SELLER_BILLING_ID,DUE_DATE,ALLOCATION_DATE,REMITTANCE_DATE,ALLOCATED_IN_ENERGY,ALLOCATED_IN_EWT,ALLOCATED_IN_DEFINT,ALLOCATED_IN_VAT,PROCESED_BY,ALLOCATED_IN_WVAT) " & vbNewLine _
                 & "SELECT '" & wItem.BuyerTransNo & "', '" & wItem.BuyerBillingID & "', '" & wItem.SellerTransNo & "', '" & wItem.SellerBillingID & "', TO_DATE('" & wItem.DueDate.ToShortDateString & "', 'MM/DD/YYYY'), TO_DATE('" & wItem.AllocationDate.ToShortDateString & "','MM/DD/YYYY'), " & vbNewLine _
-                       & "TO_DATE('" & wItem.RemittanceDate.ToShortDateString & "','MM/DD/YYYY'), 0, " & wItem.AllocatedInEWT & ", 0, 0, '" & AMModule.UserName & "' FROM DUAL"
+                       & "TO_DATE('" & wItem.RemittanceDate.ToShortDateString & "','MM/DD/YYYY'), 0, 0, 0, 0, '" & AMModule.UserName & "', " & wItem.AllocatedInWVAT & " FROM DUAL"
             listSQL.Add(SQL)
         Next
 
         Dim getWTDSHisListUpdated As List(Of WESMTransDetailsSummaryHistory) = Me.WESMTransDetailsSummaryHistoryList.Where(Function(x) x.Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString).ToList()
         For Each wItem In getWTDSHisListUpdated
-            SQL = "UPDATE AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY SET ALLOCATED_IN_EWT = ALLOCATED_IN_EWT +" & wItem.AllocatedInEWT & ", PROCESSED_DATE = SYSDATE, PROCESED_BY = '" & AMModule.UserName & "' " & vbNewLine _
+            SQL = "UPDATE AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY SET ALLOCATED_IN_WVAT = ALLOCATED_IN_WVAT +" & wItem.AllocatedInWVAT & ", PROCESSED_DATE = SYSDATE, PROCESED_BY = '" & AMModule.UserName & "' " & vbNewLine _
                 & "WHERE BUYER_TRANS_NO = '" & wItem.BuyerTransNo & "' AND SELLER_TRANS_NO = '" & wItem.SellerTransNo & "' " & vbNewLine _
                 & "AND REMITTANCE_DATE = TO_DATE('" & wItem.RemittanceDate.ToShortDateString & "', 'MM/DD/YYYY') "
             listSQL.Add(SQL)
@@ -1119,15 +1075,16 @@ Public Class WHVATCertificateSTLHelper
         End If
 
         Me.SaveToDB(listSQL, progress, ct)
-    End Sub
+        Return True
+    End Function
 #End Region
 
 #Region "Untag"
-    Public Sub UntagEWTSelected(ByVal certificateNo As Long, ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken)
+    Public Async Function UntagEWTSelectedAsync(ByVal certificateNo As Long, ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken) As Task(Of Boolean)
         Dim listSQL As New List(Of String)
         Dim SysDateTime As Date = WBillHelper.GetSystemDateTime()
         Dim SQL As String = ""
-        Dim getSelectedCertificate As WHVATCertificateSTL = Me.GetWHVATCertStl(certificateNo)
+        Dim getSelectedCertificate As WHVATCertificateSTL = Await Me.GetWHVATCertStlAsync(certificateNo)
 
         SQL = "UPDATE AM_CERTIFICATE_WHTAX_STL SET UNTAG_EWT = 1, UPDATED_DATE = TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), UPDATED_BY = '" & AMModule.UserName & "' WHERE CERTIFICATE_NO = " & certificateNo & " AND UNTAG_EWT = 0"
         listSQL.Add(SQL)
@@ -1135,7 +1092,7 @@ Public Class WHVATCertificateSTLHelper
         For Each item In getSelectedCertificate.TagDetails
             If item.AmountTagged <> 0 Then
                 'Updating AM_WESM_BILL_SUMMARY
-                SQL = "UPDATE AM_WESM_BILL_SUMMARY SET ENDING_BALANCE = ENDING_BALANCE + " & (item.AmountTagged * -1) & ", ENERGY_WITHHOLD = ENERGY_WITHHOLD + " & (item.AmountTagged * -1) & ", " & vbNewLine _
+                SQL = "UPDATE AM_WESM_BILL_SUMMARY SET ENDING_BALANCE = ENDING_BALANCE + " & (item.AmountTagged * -1) & ", " & vbNewLine _
                                                         & "UPDATED_DATE = TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), UPDATED_BY = '" & AMModule.UserName & "'" & vbNewLine _
                                                         & "WHERE WESMBILL_SUMMARY_NO = " & item.WESMBillSummary.WESMBillSummaryNo
 
@@ -1143,13 +1100,13 @@ Public Class WHVATCertificateSTLHelper
                 'Delete AM_WESM_BILL_SUMMARY_HISTORY               
                 SQL = "DELETE FROM AM_WESM_BILL_SUMMARY_HISTORY" & vbNewLine _
                    & " WHERE WESMBILL_SUMMARY_NO = " & item.WESMBillSummary.WESMBillSummaryNo & vbNewLine _
-                   & " AND PAYMENT_TYPE = " & EnumPaymentNewType.Energy & " AND CERTIFICATE_NO = " & getSelectedCertificate.CertificateNo
+                   & " AND PAYMENT_TYPE = " & EnumPaymentNewType.Energy & " AND WHVAT_NO = " & getSelectedCertificate.CertificateNo
                 listSQL.Add(SQL)
             End If
         Next
-
         Me.SaveToDB(listSQL, progress, ct)
-    End Sub
+        Return True
+    End Function
 #End Region
 
 #Region "Save"
@@ -1158,7 +1115,7 @@ Public Class WHVATCertificateSTLHelper
         Dim SysDateTime As Date = WBillHelper.GetSystemDateTime()
         Dim SQL As String = ""
         Dim newCertNo As Long = GetNextValSequence("SEQ_AM_CERTIF_NO_WHV")
-        With Me.NewWHVatCertSTL
+        With Me.NewWHVATCertSTL
             .CertificateNo = newCertNo
             SQL = "INSERT INTO AM_CERTIFICATE_WHVAT_STL (CERTIFICATE_NO,REMITTANCE_DATE,BILLING_IDNUMBER,COLLECTED_AMOUNT,UPDATED_BY,UPDATED_DATE) " & vbNewLine _
                 & "SELECT " & newCertNo & ", TO_DATE('" & .RemittanceDate & "','MM/DD/YYYY'), '" & .BillingIDNumber.IDNumber & "', " & .CollectedAmount & vbNewLine _
@@ -1172,14 +1129,14 @@ Public Class WHVATCertificateSTLHelper
 
                 'Updating AM_WESM_BILL_SUMMARY
                 SQL = "UPDATE AM_WESM_BILL_SUMMARY SET ENDING_BALANCE = ENDING_BALANCE + " & item.AmountTagged & " " & vbNewLine _
-                                                    & "UPDATED_DATE = TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), UPDATED_BY = '" & AMModule.UserName & "'" & vbNewLine _
+                                                    & ", UPDATED_DATE = TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), UPDATED_BY = '" & AMModule.UserName & "'" & vbNewLine _
                                                     & "WHERE WESMBILL_SUMMARY_NO = '" & item.WESMBillSummary.WESMBillSummaryNo & "'"
                 listSQL.Add(SQL)
 
                 'Add AM_WESM_BILL_SUMMARY_HISTORY
                 SQL = "INSERT INTO AM_WESM_BILL_SUMMARY_HISTORY (WESMBILL_SUMMARY_NO, DUE_DATE, AMOUNT, UPDATED_BY, UPDATED_DATE, COLLECTION_TYPE, WHVAT_NO) " &
                     "SELECT '" & item.WESMBillSummary.WESMBillSummaryNo & "', TO_DATE('" & .RemittanceDate & "','MM/DD/YYYY'), " & item.AmountTagged & ", '" &
-                    AMModule.UserName & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumCollectionType.Energy & "', '" & newCertNo & "' FROM DUAL"
+                    AMModule.UserName & "', TO_DATE('" & SysDateTime.ToString("MM/dd/yyyy HH:mm:ss") & "','mm/dd/yyyy hh24:mi:ss'), '" & EnumCollectionType.VatOnEnergy & "', '" & newCertNo & "' FROM DUAL"
                 listSQL.Add(SQL)
 
             Next

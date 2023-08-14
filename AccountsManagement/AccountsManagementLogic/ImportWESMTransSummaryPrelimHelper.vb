@@ -736,10 +736,12 @@ Public Class ImportWESMTransSummaryPrelimHelper
                           "       AND STL_RUN = '" & stlRun & "'"
                         listSQL.Add(SQL)
 
-                        SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
-                        & "WHERE SUMMARY_ID >= (SELECT MIN(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "') " & vbNewLine _
-                        & "AND SUMMARY_ID <= (SELECT MAX(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "')"
-                        listSQL.Add(SQL)
+                        Dim getListofSummaryIDForDeletion As List(Of Long) = Me.WBillHelper.GetListSummaryIDForDeletion(calendarBP.BillingPeriod, stlRun)
+                        For Each item In getListofSummaryIDForDeletion
+                            SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
+                                & "WHERE SUMMARY_ID = " & item
+                            listSQL.Add(SQL)
+                        Next
 
                         SQL = "DELETE FROM AM_WESM_ALLOC_COVER_SUMMARY " & vbNewLine _
                          & "WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " " & vbNewLine _

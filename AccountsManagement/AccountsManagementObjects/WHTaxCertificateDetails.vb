@@ -29,13 +29,13 @@
         End Set
     End Property
 
-    Private _AmountTagged As Decimal
-    Public Property AmountTagged() As Decimal
+    Private _Amount As Decimal
+    Public Property Amount() As Decimal
         Get
-            Return _AmountTagged
+            Return _Amount
         End Get
         Set(ByVal value As Decimal)
-            _AmountTagged = value
+            _Amount = value
         End Set
     End Property
 

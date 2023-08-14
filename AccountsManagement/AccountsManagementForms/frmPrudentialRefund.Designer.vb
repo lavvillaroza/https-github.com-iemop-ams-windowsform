@@ -236,6 +236,7 @@ Partial Class frmPrudentialRefund
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = New System.Drawing.Size(1105, 351)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnGenerateFTF)
         Me.Controls.Add(Me.BtnJVEFT)
         Me.Controls.Add(Me.BtnJVClosing)
