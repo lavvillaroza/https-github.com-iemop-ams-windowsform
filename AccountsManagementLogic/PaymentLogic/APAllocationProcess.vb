@@ -1,8 +1,10 @@
-﻿Imports System.Linq
+﻿Imports System.Data.Linq.SqlClient
 Imports AccountsManagementObjects
 Imports AccountsManagementDataAccess
-
+Imports System.Threading
 Public Class APAllocationProcess
+    Dim newProgress As ProgressClass
+
     Public Sub New()
         Me._WBillHelper = WESMBillHelper.GetInstance
     End Sub
@@ -56,29 +58,11 @@ Public Class APAllocationProcess
     End Property
 #End Region
 
-#Region "Property of EnergyAllocationListDT"
-    Private _EnergyAPAllocationListDT As New DataTable
-    Public ReadOnly Property EnergyAPAllocationListDT() As DataTable
-        Get
-            Return _EnergyAPAllocationListDT
-        End Get
-    End Property
-#End Region
-
 #Region "Property of VATonEnergyAllocationList"
     Private _VATonEnergyAPAllocationList As New List(Of APAllocation)
     Public ReadOnly Property VATonEnergyAPAllocationList() As List(Of APAllocation)
         Get
             Return _VATonEnergyAPAllocationList
-        End Get
-    End Property
-#End Region
-
-#Region "Property of EnergyAllocationListDT"
-    Private _VATonEnergyAPAllocationListDT As New DataTable
-    Public ReadOnly Property VATonEnergyAPAllocationListDT() As DataTable
-        Get
-            Return _VATonEnergyAPAllocationListDT
         End Get
     End Property
 #End Region
@@ -92,6 +76,35 @@ Public Class APAllocationProcess
         Set(value As List(Of DebitCreditMemoSummaryNew))
             _ListOfDMCMSummary = value
         End Set
+    End Property
+#End Region
+
+#Region "Property of WESM Transaction Cover Summary"
+    Private _WESMTransCoverSummaryList As New List(Of WESMBillAllocCoverSummary)
+    Public ReadOnly Property WESMTransCoverSummaryList() As List(Of WESMBillAllocCoverSummary)
+        Get
+            Return _WESMTransCoverSummaryList
+        End Get
+    End Property
+#End Region
+
+#Region "Property of WESM Transaction Details Summary"
+    Private _WESMTransDetailsSummaryList As New List(Of WESMTransDetailsSummary)
+    Public ReadOnly Property WESMTransDetailsSummaryList() As List(Of WESMTransDetailsSummary)
+        Get
+            Return _WESMTransDetailsSummaryList
+        End Get
+    End Property
+#End Region
+
+#Region "Property of WESM Transaction Details Summary"
+    'added by lance to speed up the process as of 07/28/2023
+    Private _WESMTransDetailsSummaryHistoryDic As New Dictionary(Of String, WESMTransDetailsSummaryHistory)
+    Private _WESMTransDetailsSummaryHistoryList As New List(Of WESMTransDetailsSummaryHistory)
+    Public ReadOnly Property WESMTransDetailsSummaryHistoryList() As List(Of WESMTransDetailsSummaryHistory)
+        Get
+            Return _WESMTransDetailsSummaryHistoryList
+        End Get
     End Property
 #End Region
 
@@ -158,36 +171,38 @@ Public Class APAllocationProcess
 #Region "AP Allocation On MF"
     Public Sub ComputeMFAPAllocationList(ByVal AllocationDate As Date,
                                         ByRef WESMBillSummaryList As List(Of WESMBillSummary),
-                                        ByVal TotalAPEnergyPerBP As List(Of ARCollectionPerBP))
-        Dim WESMBillSummaryListOnMFMFV = (From x In WESMBillSummaryList
-                                          Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
-                                          And x.EndingBalance > 0 And x.DueDate <= AllocationDate Select x).ToList()
+                                        ByVal progress As IProgress(Of ProgressClass))
+        'Dim WESMBillSummaryListOnMFMFV = (From x In WESMBillSummaryList
+        '                                  Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
+        '                                  And x.EndingBalance > 0 And x.DueDate <= AllocationDate Select x).ToList()
 
-        Me._APAllocationDate = AllocationDate
-        Me.APMFAllocationProc(WESMBillSummaryListOnMFMFV, TotalAPEnergyPerBP)
+        'Me._APAllocationDate = AllocationDate
+        'Me.APMFAllocationProc(WESMBillSummaryListOnMFMFV, progress)
     End Sub
 #End Region
 
 #Region "AP Allocation On Energy"
-    Public Sub ComputeEnergyAPAllocationList(ByVal allocationDate As Date,
-                                             ByRef _WESMBillSummaryList As List(Of WESMBillSummary),
-                                             ByVal TotalAPEnergyPerBP As List(Of ARCollectionPerBP))
-        Dim WESMBillSummaryListOnEnergy = (From x In _WESMBillSummaryList
-                                           Where x.ChargeType = EnumChargeType.E And x.DueDate <= allocationDate
+    Public Sub ComputeEnergyAPAllocationList(ByVal AllocationDate As Date,
+                                             ByRef WESMBillSummaryList As List(Of WESMBillSummary),
+                                             ByVal listARCollectionEnergy As List(Of ARCollection),
+                                             ByVal progress As IProgress(Of ProgressClass))
+        Dim WESMBillSummaryListOnEnergy = (From x In WESMBillSummaryList
+                                           Where x.ChargeType = EnumChargeType.E And x.DueDate <= AllocationDate
                                            Select x).ToList()
-        Me._APAllocationDate = allocationDate
-        Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, TotalAPEnergyPerBP, New List(Of WESMBillSalesAndPurchasedForWT))
+        Me._APAllocationDate = AllocationDate
+        Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, listARCollectionEnergy, progress)
     End Sub
 #End Region
 
 #Region "AP Allocation On Energy VAT"
     Public Sub ComputeVATAPAllocationList(ByVal AllocationDate As Date,
                                           ByRef WESMBillSummaryList As List(Of WESMBillSummary),
-                                          ByVal TotalAPVATPerBP As List(Of ARCollectionPerBP))
+                                          ByVal listARCollectionVAT As List(Of ARCollection),
+                                          ByVal progress As IProgress(Of ProgressClass))
 
         Dim WESMBillSummaryListOnVAT = (From x In WESMBillSummaryList Where x.ChargeType = EnumChargeType.EV And x.EndingBalance > 0 Select x).ToList()
         Me._APAllocationDate = AllocationDate
-        Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, TotalAPVATPerBP)
+        Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, listARCollectionVAT, progress)
     End Sub
 #End Region
 
@@ -195,9 +210,10 @@ Public Class APAllocationProcess
     Public Sub GetAPAllocationList(ByVal AllocationDate As Date,
                                    ByRef WESMBillSummaryList As List(Of WESMBillSummary),
                                    ByVal WESMBillSalesAndPurchasesList As List(Of WESMBillSalesAndPurchasedForWT),
-                                   ByVal TotalAPEnergyPerBP As List(Of ARCollectionPerBP),
-                                   ByVal TotalAPVATPerBP As List(Of ARCollectionPerBP),
-                                   ByVal TotalAPMFPerBP As List(Of ARCollectionPerBP))
+                                   ByVal listARCollectionEnergy As List(Of ARCollection),
+                                   ByVal listARCollectionVAT As List(Of ARCollection),
+                                   ByVal listARCollectionMF As List(Of ARCollection),
+                                   ByVal progress As IProgress(Of ProgressClass))
 
         Dim WESMBillSummaryListOnEnergy = (From x In WESMBillSummaryList Where x.ChargeType = EnumChargeType.E And x.DueDate <= AllocationDate Select x).ToList()
         Dim WESMBillSummaryListOnVAT = (From x In WESMBillSummaryList Where x.ChargeType = EnumChargeType.EV And x.DueDate <= AllocationDate Select x).ToList()
@@ -205,43 +221,34 @@ Public Class APAllocationProcess
                                          Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
                                          And x.EndingBalance <> 0 And x.DueDate <= AllocationDate Select x).ToList()
 
+        Dim getWBSForBRuling As List(Of Date) = WESMBillSummaryList.
+                                                Where(Function(a) a.INVDMCMNo.StartsWith(AMModule.BIRRulingPrefix.ToString) And Not a.INVDMCMNo.EndsWith("-ADJ")).
+                                                Select(Function(x) x.DueDate).Distinct.OrderBy(Function(y) y).ToList
 
+        Dim getListOfWESMTransNoList As List(Of String) = listARCollectionEnergy.Select(Function(x) x.InvoiceNumber).
+                                                          Distinct.Union(listARCollectionVAT.Select(Function(y) y.InvoiceNumber).Distinct.ToList).ToList
+
+        newProgress = New ProgressClass
+        newProgress.ProgressMsg = "Preparing to fetch the WESM Transactions Allocation list For Payment Allocation..."
+        progress.Report(newProgress)
+
+        Dim cnt As Integer = 0
+        For Each item In getListOfWESMTransNoList.OrderBy(Function(x) x).ToList
+            cnt += 1
+            newProgress = New ProgressClass
+            newProgress.ProgressMsg = "Fetching the WESM Transactions Summary for Accounts Receivables " & cnt & "/" & getListOfWESMTransNoList.Count & "."
+            progress.Report(newProgress)
+            Me._WESMTransDetailsSummaryList.AddRange(Me.WBillHelper.GetListWESMTransDetailsSummary(item))
+        Next
+
+        Me._WESMTransCoverSummaryList.TrimExcess()
+        Me._WESMTransDetailsSummaryList.TrimExcess()
         _APAllocationDate = AllocationDate
 
-        Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, TotalAPEnergyPerBP, WESMBillSalesAndPurchasesList)
-        Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, TotalAPVATPerBP)
-        Me.APMFAllocationProc(WESMBillSummaryListOnMFMF, TotalAPMFPerBP)
-
-        'Me._MFWithVATAPAllocationListDT = Me.CreateAPMFDT(Me.MFWithVATAPAllocationList)
-        'Me._EnergyAPAllocationListDT = Me.CreateAPEnergyDT(Me.EnergyAPAllocationList)
-        'Me._VATonEnergyAPAllocationListDT = Me.CreateAPVATDT(Me.VATonEnergyAPAllocationList)
-
-    End Sub
-
-    Public Sub GetAPAllocationList2(ByVal AllocationDate As Date,
-                                   ByRef WESMBillSummaryList As List(Of WESMBillSummary),
-                                   ByVal WESMBillSalesAndPurchasesList As List(Of WESMBillSalesAndPurchasedForWT),
-                                   ByVal TotalAPEnergyPerBP As List(Of ARCollectionPerBP),
-                                   ByVal TotalAPVATPerBP As List(Of ARCollectionPerBP),
-                                   ByVal TotalAPMFPerBP As List(Of ARCollectionPerBP))
-
-        Dim WESMBillSummaryListOnEnergy = (From x In WESMBillSummaryList Where x.ChargeType = EnumChargeType.E And x.DueDate <= AllocationDate Select x).ToList()
-        Dim WESMBillSummaryListOnVAT = (From x In WESMBillSummaryList Where x.ChargeType = EnumChargeType.EV And x.DueDate <= AllocationDate Select x).ToList()
-        Dim WESMBillSummaryListOnMFMF = (From x In WESMBillSummaryList
-                                         Where (x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV) _
-                                         And x.EndingBalance <> 0 And x.DueDate <= AllocationDate Select x).ToList()
-
-
-        _APAllocationDate = AllocationDate
-
-        Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, TotalAPEnergyPerBP, WESMBillSalesAndPurchasesList)
-        Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, TotalAPVATPerBP)
-        Me.APMFAllocationProc(WESMBillSummaryListOnMFMF, TotalAPMFPerBP)
-
-        'Me._MFWithVATAPAllocationListDT = Me.CreateAPMFDT(Me.MFWithVATAPAllocationList)
-        'Me._EnergyAPAllocationListDT = Me.CreateAPEnergyDT(Me.EnergyAPAllocationList)
-        'Me._VATonEnergyAPAllocationListDT = Me.CreateAPVATDT(Me.VATonEnergyAPAllocationList)
-
+        Me.APEnergyAllocationProcess(WESMBillSummaryListOnEnergy, listARCollectionEnergy, progress)
+        Me.APVATAllocationProcess(WESMBillSummaryListOnVAT, listARCollectionVAT, progress)
+        Me.APMFAllocationProc(WESMBillSummaryListOnMFMF, listARCollectionMF, progress)
+        Me._WESMTransDetailsSummaryHistoryList = _WESMTransDetailsSummaryHistoryDic.Select(Function(x) x.Value).ToList()
     End Sub
 #End Region
 
@@ -259,23 +266,35 @@ Public Class APAllocationProcess
         Me._EnergyAPAllocationList = APAllocationListonEnergy
         Me._VATonEnergyAPAllocationList = APAllocationListonVATonEnergy
         Me._MFWithVATAPAllocationList = APAllocationListonMFWithVAT
-
-        'Me._EnergyAPAllocationListDT = Me.CreateAPEnergyDT(Me.EnergyAPAllocationList)
-        'Me._VATonEnergyAPAllocationListDT = Me.CreateAPVATDT(Me.VATonEnergyAPAllocationList)
-        'Me._MFWithVATAPAllocationListDT = Me.CreateAPMFDT(Me.MFWithVATAPAllocationList)
     End Sub
 #End Region
 
 #Region "Method Step 1 for AP Allocation on MF"
     Private Sub APMFAllocationProc(ByRef WESMBillSummaryListOnMFMFV As List(Of WESMBillSummary),
-                                   ByVal TotalARMFAmountCollectedPerBP As List(Of ARCollectionPerBP))
+                                   ByVal listARCollection As List(Of ARCollection),
+                                   ByVal progress As IProgress(Of ProgressClass))
 
         Dim GetWESMBillSUmmaryListOnMFMFVAP As List(Of WESMBillSummary) = (From x In WESMBillSummaryListOnMFMFV
                                                                            Where x.EndingBalance > 0
                                                                            Select x).ToList
-        If GetWESMBillSUmmaryListOnMFMFVAP.Count > 0 Then
+
+        Dim getTotalCollectedInARAmountDefInt As Decimal = listARCollection.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.DefaultInterestOnMF).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
+
+        Dim getTotalCollectedInARAmountMF As Decimal = listARCollection.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.MarketFees).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
+
+        Dim getTotalEndingBalance As Decimal = GetWESMBillSUmmaryListOnMFMFVAP.Select(Function(x) x.EndingBalance).Sum()
+
+        If Math.Abs(getTotalCollectedInARAmountMF + getTotalCollectedInARAmountDefInt) >= Math.Abs(getTotalEndingBalance) And GetWESMBillSUmmaryListOnMFMFVAP.Count > 0 Then
+            newProgress = New ProgressClass
+            newProgress.ProgressMsg = "Processing Market Fees AP offsetting paid by IEMOP..."
+            progress.Report(newProgress)
             Me.APPaidByPEMCAccProcess(GetWESMBillSUmmaryListOnMFMFVAP)
         End If
+
     End Sub
 
     Private Sub APPaidByPEMCAccProcess(ByRef WESMBillSummaryListOnMFMFV As List(Of WESMBillSummary))
@@ -340,7 +359,7 @@ Public Class APAllocationProcess
     End Sub
 #End Region
 
-#Region "Method Step 2 for AP Allocation On MF"
+#Region "Method Step 2 for AP Allocation on MF"
     Private Sub AllocatePaymentOnMF(ByRef WESMBillSummaryListPerBP As List(Of WESMBillSummary),
                                     ByVal TotalARAmountCollectedPerBP As ARCollectionPerBP)
         Dim BPTotalBalance As Decimal = (From x In WESMBillSummaryListPerBP Select x.EndingBalance).Sum() 'Total of Outstanding Balances per BillingPeriod based on WESMBillSummaryList
@@ -683,409 +702,401 @@ Public Class APAllocationProcess
 
 #Region "Method Step 1 for AP Allocation on Energy"
     Private Sub APEnergyAllocationProcess(ByRef WESMBillSummaryListOnEnergy As List(Of WESMBillSummary),
-                                          ByVal TotalAPEnergyPerBP As List(Of ARCollectionPerBP),
-                                          Optional ByVal WESMBillSalesAndPuchasesList As List(Of WESMBillSalesAndPurchasedForWT) = Nothing)
-
-        For Each BPItem As ARCollectionPerBP In TotalAPEnergyPerBP
-
-            Dim getWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = (From x In Me.WBillHelper.GetListWESMTransCoverSummaryPerWBatch(BPItem.WESMBillBatchNo) Select x).ToList
-
-
-            Dim getWESMBillSummaryListPerBP = (From x In WESMBillSummaryListOnEnergy
-                                               Where x.WESMBillBatchNo = BPItem.WESMBillBatchNo _
-                                               And x.DueDate = BPItem.OrigDueDate _
-                                               And x.EndingBalance >= 0
-                                               Select x).ToList()
-            Dim getTotalWithHoldingTax As Decimal = 0D
-            If WESMBillSalesAndPuchasesList.Count > 0 Then
-                getTotalWithHoldingTax = (From x In WESMBillSalesAndPuchasesList Where x.BillingBatchNo = BPItem.WESMBillBatchNo Select x.WithholdingTAX).Sum()
-            End If
-
-            Me.AllocatePaymentOnEnergy(getWESMBillSummaryListPerBP, BPItem, getTotalWithHoldingTax, getWESMTransCoverSummaryList)
-        Next
+                                          ByVal listARCollection As List(Of ARCollection),
+                                          ByVal progress As IProgress(Of ProgressClass))
+        Try
+            Dim getDistinctWBatch As List(Of Long) = listARCollection.Select(Function(x) x.WESMBillBatchNo).OrderBy(Function(y) y).Distinct.ToList()
+            Dim cnt As Integer = 0
+            For Each wBatch In getDistinctWBatch
+                newProgress = New ProgressClass
+                newProgress.ProgressMsg = "Processing Payment Allocation in Energy with WESM Batch No " & cnt + 1 & "/" & getDistinctWBatch.Count & "..."
+                progress.Report(newProgress)
+                Dim itemListARColl As List(Of ARCollection) = listARCollection.Where(Function(x) x.WESMBillBatchNo = wBatch).ToList()
+                Dim listWESMBillSummaryPerWBatch = WESMBillSummaryListOnEnergy.
+                                                      Where(Function(x) x.WESMBillBatchNo = wBatch _
+                                                                        And x.EndingBalance >= 0 _
+                                                                        And x.BalanceType = EnumBalanceType.AP).ToList()
+                Me.AllocatePaymentOnEnergy(listWESMBillSummaryPerWBatch, itemListARColl)
+                cnt += 1
+            Next
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        End Try
     End Sub
 #End Region
 
 #Region "Method Step 2 for AP Allocation on Energy"
-    Private Sub AllocatePaymentOnEnergy(ByRef WESMBillSummaryListPerBP As List(Of WESMBillSummary),
-                                        ByVal TotalARAmountCollectedPerBP As ARCollectionPerBP,
-                                        ByVal totalWithholdingTax As Decimal,
-                                        ByVal listWESMTransCoverSummary As List(Of WESMBillAllocCoverSummary))
+    Private Sub AllocatePaymentOnEnergy(ByRef listWESMBillSummaryPerWBatch As List(Of WESMBillSummary),
+                                        ByVal listARCollection As List(Of ARCollection))
 
-        Dim APAllocationListPerBP As New List(Of APAllocation)
+        Dim APAllocationListPerBPFinal As New List(Of APAllocation)
+        Dim getDueDate As Date = listWESMBillSummaryPerWBatch.Select(Function(x) x.DueDate).Distinct.FirstOrDefault
+        Dim getBPNo As Integer = listWESMBillSummaryPerWBatch.Select(Function(x) x.BillPeriod).Distinct.FirstOrDefault
 
-        Dim BPTotalBalance As Decimal = (From x In WESMBillSummaryListPerBP Where x.EndingBalance > 0 Select x.EndingBalance).Sum() 'Total of Outstanding Balances per BillingPeriod based on WESMBillSummaryList
-        Dim BPTotalBalance2 As Decimal = listWESMTransCoverSummary.Where(Function(y) y.NetSale > 0).Select(Function(x) x.NetSale).Sum()
+        Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
 
-        'Deleted due to duplicate allocation
-        TotalARAmountCollectedPerBP.CashAmount += totalWithholdingTax
-        For Each WESMBillSummaryItem In WESMBillSummaryListPerBP
-            'Allocate AP on Energy that came from Cash  and Add to List of APAllocation
-            If TotalARAmountCollectedPerBP.CashAmount <> 0 Then
-                'Dim CashShareOnEnergy = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.CashAmount)
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") _
+                                                                                      And Not x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                      .OrderByDescending(Function(x) x.AllocationAmount) _
+                                                                                      .OrderBy(Function(x) x.InvoiceNumber) _
+                                                                                      .ThenBy(Function(x) x.CollectionType) _
+                                                                                      .ToList
 
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        'Get the WTA Details Summary for current AR List
+        Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)
+        For Each itemAR In getBIRRulingInvoiceList
+            Dim APAllocationListPerBP As New List(Of APAllocation)
+            getWTDSummary = Me._WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
+            For Each itemAP In listWESMBillSummaryPerWBatch
                 Dim CashShareOnEnergy As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    CashShareOnEnergy = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.CashAmount)
+                If getWTDSummary.Count > 0 Then
+                    Dim originalTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OrigBalanceInEnergy).Sum)
+                    Dim getWTDSummaryItemAP = getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                              And x.SellerTransNo = itemAP.INVDMCMNo).FirstOrDefault
+                    If Not getWTDSummaryItemAP Is Nothing Then
+                        If itemAR.CollectionType = EnumCollectionType.Energy Then
+                            Dim sumofTotalOBinEnergy As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum())
+                            If Math.Abs(itemAR.AllocationAmount) = sumofTotalOBinEnergy Then
+                                Dim outstandingBalanceOfAP As Decimal = Math.Abs(getWTDSummary.
+                                                             Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                             And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                             Select(Function(y) y.OutstandingBalanceInEnergy).FirstOrDefault)
+                                CashShareOnEnergy = outstandingBalanceOfAP
+                            Else
+                                CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInEnergy), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
+                                If CashShareOnEnergy > Math.Abs(getWTDSummaryItemAP.OutstandingBalanceInEnergy) Then
+                                    Dim amountChecker As Decimal = itemAP.EndingBalance - CashShareOnEnergy
+                                    If amountChecker < 0 And Math.Abs(amountChecker) > AmountDiffValue Then
+                                        Throw New Exception("Allocated share on energy is greater than the outstanding balance of InvoiceNo: " & itemAR.InvoiceNumber & "!" & vbNewLine & "Please contact the administrator.")
+                                    Else
+                                        Dim adjCashShareOnEnergy = Math.Abs(getWTDSummaryItemAP.OutstandingBalanceInEnergy) - CashShareOnEnergy
+                                        If Math.Abs(adjCashShareOnEnergy) > AMModule.AmountDiffValue Then
+                                            Throw New Exception("Adjusted Cash Share On Energy is greater than the amount that should be adjusted!" & vbNewLine _
+                                                                & " BuyerInvoiceNo: " & itemAR.InvoiceNumber & ", SellerInvoiceNo: " & itemAP.INVDMCMNo & vbNewLine & "Please contact the administrator.")
+                                        Else
+                                            CashShareOnEnergy += adjCashShareOnEnergy
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
+                            CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInEnergy), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
+                        End If
+                    Else
+                        CashShareOnEnergy = 0
+                    End If
                 Else
-                    CashShareOnEnergy = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.CashAmount)
+                    Throw New Exception("No available WTA Summary Details for InvoiceNo: " & itemAR.InvoiceNumber & "!" & vbNewLine & "Please contact the administrator.")
                 End If
-
                 Dim CreatedItem_Energy As New APAllocation
-                CreatedItem_Energy = Me.CreateAPAllocationItem(WESMBillSummaryItem, CashShareOnEnergy,
-                                                            EnumPaymentNewType.Energy, EnumCollectionCategory.Cash)
+                Select Case itemAR.CollectionType
+                    Case EnumCollectionType.Energy
+                        CreatedItem_Energy = Me.CreateAPAllocationItem(itemAP, CashShareOnEnergy,
+                                                            EnumPaymentNewType.Energy, itemAR.CollectionCategory)
+                    Case EnumCollectionType.DefaultInterestOnEnergy
+                        CreatedItem_Energy = Me.CreateAPAllocationItem(itemAP, CashShareOnEnergy,
+                                                            EnumPaymentNewType.DefaultInterestOnEnergy, itemAR.CollectionCategory)
+                End Select
                 APAllocationListPerBP.Add(CreatedItem_Energy)
-
-            End If
-
-            'Allocate AP on Energy Default Interest that came from Cash and Add to List of APAllocation
-            If TotalARAmountCollectedPerBP.CashAmountDI <> 0 Then
-
-                Dim CashShareOnEnergyDI As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    CashShareOnEnergyDI = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.CashAmountDI)
-                Else
-                    CashShareOnEnergyDI = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.CashAmountDI)
+            Next
+            Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            If Math.Abs(itemAR.AllocationAmount) <> totalAPAllocationAmount Then
+                Dim getDiff As Decimal = Math.Abs(itemAR.AllocationAmount) - totalAPAllocationAmount
+                If getDiff >= AMModule.AmountDiffValue Then
+                    Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
                 End If
-
-                Dim CreatedItem_EnergyDefault As New APAllocation
-                CreatedItem_EnergyDefault = Me.CreateAPAllocationItem(WESMBillSummaryItem, CashShareOnEnergyDI,
-                                                                           EnumPaymentNewType.DefaultInterestOnEnergy, EnumCollectionCategory.Cash)
-                APAllocationListPerBP.Add(CreatedItem_EnergyDefault)
+                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff)
+                'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
 
-            'Allocate AP on Energy that came from DrawDownand Add to List of APAllocation
-            If TotalARAmountCollectedPerBP.DrawDownAmount <> 0 Then
-
-                Dim DrawDownShareOnEnergy As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    DrawDownShareOnEnergy = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.DrawDownAmount)
-                Else
-                    DrawDownShareOnEnergy = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.DrawDownAmount)
+            For Each itemAP In APAllocationListPerBP
+                Dim getWTDSummaryItem As WESMTransDetailsSummary = getWTDSummary.
+                                                                   FirstOrDefault(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber And x.SellerTransNo = itemAP.InvoiceNumber)
+                If Not getWTDSummaryItem Is Nothing Then
+                    Dim keyHis As String = itemAR.InvoiceNumber & "|" & itemAP.InvoiceNumber
+                    With getWTDSummaryItem
+                        Select Case itemAR.CollectionType
+                            Case EnumCollectionType.Energy
+                                If (.OutstandingBalanceInEnergy + itemAP.AllocationAmount) > 0 Then
+                                    Throw New Exception("The allocated amount for " & itemAP.InvoiceNumber & " collected from " & itemAR.InvoiceNumber &
+                                                         vbNewLine & " is greater than the outstanding balance of AP! Please contact the administrator.")
+                                    '.OutstandingBalanceInEnergy = 0
+                                Else
+                                    .OutstandingBalanceInEnergy = .OutstandingBalanceInEnergy + itemAP.AllocationAmount
+                                End If
+                                If Not Me._WESMTransDetailsSummaryHistoryDic.ContainsKey(keyHis) Then
+                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                        With WTDSummaryHistory
+                                            .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                            .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                            .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                            .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                            .DueDate = getWTDSummaryItem.DueDate
+                                            .AllocationDate = itemAP.AllocationDate
+                                            .AllocatedInEnergy = itemAP.AllocationAmount
+                                        End With
+                                        Me._WESMTransDetailsSummaryHistoryDic.Add(keyHis, WTDSummaryHistory)
+                                    End Using
+                                Else
+                                    Me._WESMTransDetailsSummaryHistoryDic(keyHis).AllocatedInEnergy += itemAP.AllocationAmount
+                                End If
+                            Case EnumCollectionType.DefaultInterestOnEnergy
+                                If Not Me._WESMTransDetailsSummaryHistoryDic.ContainsKey(keyHis) Then
+                                    Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                        With WTDSummaryHistory
+                                            .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                            .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                            .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                            .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                            .DueDate = getWTDSummaryItem.DueDate
+                                            .AllocationDate = itemAP.AllocationDate
+                                            .AllocatedInDefInt = itemAP.AllocationAmount
+                                        End With
+                                        Me._WESMTransDetailsSummaryHistoryDic.Add(keyHis, WTDSummaryHistory)
+                                    End Using
+                                Else
+                                    Me._WESMTransDetailsSummaryHistoryDic(keyHis).AllocatedInDefInt += itemAP.AllocationAmount
+                                End If
+                        End Select
+                        If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
+                            .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
+                        End If
+                    End With
+                    APAllocationListPerBPFinal.Add(itemAP)
                 End If
-
-                Dim CreatedItem_DDEnergy = Me.CreateAPAllocationItem(WESMBillSummaryItem, DrawDownShareOnEnergy,
-                                                                     EnumPaymentNewType.Energy, EnumCollectionCategory.Drawdown)
-                APAllocationListPerBP.Add(CreatedItem_DDEnergy)
-            End If
-
-            'Allocate AP on Energy that came from DrawDown Defaul interest
-            If TotalARAmountCollectedPerBP.DrawDownAmountDI <> 0 Then
-                Dim DrawDownShareOnEnergyDI As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    DrawDownShareOnEnergyDI = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.DrawDownAmountDI)
-                Else
-                    DrawDownShareOnEnergyDI = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.DrawDownAmountDI)
-                End If
-
-                Dim CreatedItem_DDEnergyDefault = Me.CreateAPAllocationItem(WESMBillSummaryItem, DrawDownShareOnEnergyDI,
-                                                                               EnumPaymentNewType.DefaultInterestOnEnergy, EnumCollectionCategory.Drawdown)
-                APAllocationListPerBP.Add(CreatedItem_DDEnergyDefault)
-            End If
-
-            'Allocate AP on Energy that came from offset Energy
-            If TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-                Dim OffsetShareOnEnergy As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    OffsetShareOnEnergy = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.OffsetAmount)
-                Else
-                    OffsetShareOnEnergy = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.OffsetAmount)
-                End If
-
-                Dim CreatedItem_OffsetEnergy = Me.CreateAPAllocationItem(WESMBillSummaryItem, OffsetShareOnEnergy,
-                                                                               EnumPaymentNewType.Energy, EnumCollectionCategory.Offset)
-                APAllocationListPerBP.Add(CreatedItem_OffsetEnergy)
-            End If
-
-            'Allocate AP on Energy that came from offset Energy Default Interest
-            'If TotalARAmountCollectedPerBP.OffsetAmountDI <> 0 Then
-            If TotalARAmountCollectedPerBP.OffsetAmount = 0 Then
-                'If invoice had a default interest but no base amount in energy the system shall force to create DMCM for energy even if is 0. added on 9/14/2017 by lance due to error in JV Payment Alloc
-                Dim CreatedItem_OffsetEnergy = Me.CreateAPAllocationItem(WESMBillSummaryItem, 0,
-                                                                         EnumPaymentNewType.Energy, EnumCollectionCategory.Offset,
-                                                                         True)
-                APAllocationListPerBP.Add(CreatedItem_OffsetEnergy)
-
-                Dim OffsetShareOnEnergyDI As Decimal = 0D
-
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    OffsetShareOnEnergyDI = Me.ComputeAllocation(getWESMTransCoverSummaryItem.NetSale, BPTotalBalance2, TotalARAmountCollectedPerBP.OffsetAmountDI)
-                Else
-                    OffsetShareOnEnergyDI = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.OffsetAmountDI)
-                End If
-
-                Dim CreatedItem_OffsetEnergyDefault = Me.CreateAPAllocationItem(WESMBillSummaryItem, OffsetShareOnEnergyDI,
-                                                                               EnumPaymentNewType.DefaultInterestOnEnergy, EnumCollectionCategory.Offset)
-                APAllocationListPerBP.Add(CreatedItem_OffsetEnergyDefault)
-
-            End If
+            Next
+            getWTDSummary = New List(Of WESMTransDetailsSummary)
         Next
+        getWTDSummary = Nothing
 
-        'Dim TotalAmountAllocatedCashEnergy = (From x In APAllocationListPerBP _
-        '                                      Where x.PaymentType = EnumPaymentNewType.Energy _
-        '                                      And x.PaymentCategory = EnumCollectionCategory.Cash _
-        '                                      Select x.AllocationAmount).Sum()
+        Dim getTotalCollectedInARAmountDefInt As Decimal = getNonBIRRulingInvoiceList.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.DefaultInterestOnEnergy).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
 
-        Dim TotalAmountAllocatedCashEnergy = (From x In APAllocationListPerBP
-                                              Where x.PaymentType = EnumPaymentNewType.Energy _
-                                              And x.PaymentCategory = EnumCollectionCategory.Cash _
-                                              And x.PaymentType <> EnumPaymentNewType.WithholdingTaxOnEnergy
-                                              Select x.AllocationAmount).Sum()
+        Dim getTotalCollectedInARAmountEnergy As Decimal = getNonBIRRulingInvoiceList.
+                                                           Where(Function(y) y.CollectionType = EnumCollectionType.Energy).
+                                                           Select(Function(x) x.AllocationAmount).Sum()
 
-        Dim TotalAmountAllocatedCashEnergyDI = (From x In APAllocationListPerBP
-                                                Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy _
-                                                And x.PaymentCategory = EnumCollectionCategory.Cash
-                                                Select x.AllocationAmount).Sum()
+        If getTotalCollectedInARAmountEnergy <> 0 Then
+            Dim APAllocationListPerBP As New List(Of APAllocation)
+            Dim getCollectionType As EnumCollectionType = getNonBIRRulingInvoiceList.Select(Function(x) x.CollectionType).First
+            Dim getCollectionCategory As EnumCollectionCategory = getNonBIRRulingInvoiceList.Select(Function(x) x.CollectionCategory).First
+            For Each itemAP In listWESMBillSummaryPerWBatch
+                Dim CashShareOnEnergy As Decimal = Me.ComputeAllocation(itemAP.EndingBalance, getTotalEndingBalance, Math.Abs(getTotalCollectedInARAmountEnergy))
+                Dim CreatedItem_Energy As New APAllocation
 
-
-        Dim TotalAmountAllocatedDrawDownEnergy = (From x In APAllocationListPerBP
-                                                  Where x.PaymentType = EnumPaymentNewType.Energy _
-                                                  And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                                  Select x.AllocationAmount).Sum()
-
-        Dim TotalAmountAllocatedDrawDownEnergyDI = (From x In APAllocationListPerBP
-                                                    Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy _
-                                                    And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                                    Select x.AllocationAmount).Sum()
-
-        Dim TotalAmountAllocatedOffsetEnergy = (From x In APAllocationListPerBP
-                                                Where x.PaymentType = EnumPaymentNewType.Energy _
-                                                  And x.PaymentCategory = EnumCollectionCategory.Offset
-                                                Select x.AllocationAmount).Sum()
-
-        Dim TotalAmountAllocatedOffsetEnergyDI = (From x In APAllocationListPerBP
-                                                  Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy _
-                                                    And x.PaymentCategory = EnumCollectionCategory.Offset
-                                                  Select x.AllocationAmount).Sum()
-
-
-        Dim GetAmountDiffCashEnergy As Decimal = TotalARAmountCollectedPerBP.CashAmount - TotalAmountAllocatedCashEnergy
-        Dim GetAmountDiffCashEnergyDI As Decimal = TotalARAmountCollectedPerBP.CashAmountDI - TotalAmountAllocatedCashEnergyDI
-        Dim GetAmountDiffDrawDownEnergy As Decimal = TotalARAmountCollectedPerBP.DrawDownAmount - TotalAmountAllocatedDrawDownEnergy
-        Dim GetAmountDiffDrawDownEnergyDI As Decimal = TotalARAmountCollectedPerBP.DrawDownAmountDI - TotalAmountAllocatedDrawDownEnergyDI
-        Dim GetAmountDiffOffsetEnergy As Decimal = TotalARAmountCollectedPerBP.OffsetAmount - TotalAmountAllocatedOffsetEnergy
-        Dim GetAmountDiffOffsetEnergyDI As Decimal = TotalARAmountCollectedPerBP.OffsetAmountDI - TotalAmountAllocatedOffsetEnergyDI
-
-        If GetAmountDiffCashEnergy <> 0 And TotalARAmountCollectedPerBP.CashAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                          Select x).ToList()
-
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffCashEnergy) 'Function that will adjust the Allocated amount per 
-
-            'remove due to withholding Tax agent
-            'Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(_APAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffCashEnergy = 0 And TotalARAmountCollectedPerBP.CashAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                          Select x).ToList()
-
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
+                CreatedItem_Energy = Me.CreateAPAllocationItem(itemAP, CashShareOnEnergy,
+                                                            EnumPaymentNewType.Energy, getCollectionCategory)
+                APAllocationListPerBP.Add(CreatedItem_Energy)
+            Next
+            Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            If Math.Abs(getTotalCollectedInARAmountEnergy) <> totalAPAllocationAmount Then
+                Dim getDiff As Decimal = Math.Abs(getTotalCollectedInARAmountEnergy) - totalAPAllocationAmount
+                If getDiff >= AMModule.AmountDiffValue Then
+                    Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value of PHP " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
+                End If
+                Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
+            End If
+            Dim adjtotalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            For Each itemAP In APAllocationListPerBP
+                APAllocationListPerBPFinal.Add(itemAP)
+            Next
         End If
 
-        If GetAmountDiffCashEnergyDI <> 0 And TotalARAmountCollectedPerBP.CashAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                          Select x).ToList()
+        If getTotalCollectedInARAmountDefInt <> 0 Then
+            Dim APAllocationListPerBP As New List(Of APAllocation)
+            Dim getCollectionType As EnumCollectionType = getNonBIRRulingInvoiceList.Select(Function(x) x.CollectionType).First
+            Dim getCollectionCategory As EnumCollectionType = getNonBIRRulingInvoiceList.Select(Function(x) x.CollectionCategory).First
 
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffCashEnergyDI) 'Function that will adjust the Allocated amount per invoice
+            For Each itemAP In listWESMBillSummaryPerWBatch
+                Dim CashShareOnEnergy As Decimal = Me.ComputeAllocation(itemAP.EndingBalance, getTotalEndingBalance, Math.Abs(getTotalCollectedInARAmountDefInt))
+                Dim CreatedItem_Energy As New APAllocation
 
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffCashEnergyDI = 0 And TotalARAmountCollectedPerBP.CashAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                          Select x).ToList()
-
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
+                CreatedItem_Energy = Me.CreateAPAllocationItem(itemAP, CashShareOnEnergy,
+                                                            EnumPaymentNewType.DefaultInterestOnEnergy, getCollectionCategory)
+                APAllocationListPerBP.Add(CreatedItem_Energy)
+            Next
+            Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            If Math.Abs(getTotalCollectedInARAmountDefInt) <> totalAPAllocationAmount Then
+                Dim getDiff As Decimal = Math.Abs(getTotalCollectedInARAmountDefInt) - totalAPAllocationAmount
+                If getDiff >= AMModule.AmountDiffValue Then
+                    Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value PHP " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
+                End If
+                Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
+            End If
+            For Each itemAP In APAllocationListPerBP
+                APAllocationListPerBPFinal.Add(itemAP)
+            Next
         End If
 
-        If GetAmountDiffDrawDownEnergy <> 0 And TotalARAmountCollectedPerBP.DrawDownAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                          Select x).ToList()
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffDrawDownEnergy) 'Function that will adjust the Allocated amount per invoice
-
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffDrawDownEnergy = 0 And TotalARAmountCollectedPerBP.DrawDownAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                          Select x).ToList()
-
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        End If
-
-        If GetAmountDiffDrawDownEnergyDI <> 0 And TotalARAmountCollectedPerBP.DrawDownAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                          Select x).ToList()
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffDrawDownEnergyDI) 'Function that will adjust the Allocated amount per invoice
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffDrawDownEnergyDI = 0 And TotalARAmountCollectedPerBP.DrawDownAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Drawdown
-                                          Select x).ToList()
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        End If
-
-
-        If GetAmountDiffOffsetEnergy <> 0 And TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                          Select x).ToList()
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffOffsetEnergy) 'Function that will adjust the Allocated amount per invoice
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffOffsetEnergy = 0 And TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.Energy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                          Select x).ToList()
-
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        End If
-
-
-        If GetAmountDiffOffsetEnergyDI <> 0 And TotalARAmountCollectedPerBP.OffsetAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                          Select x).ToList()
-            Me.AdjustComputedAllocation(_APAllocationListPerBP, GetAmountDiffOffsetEnergyDI) 'Function that will adjust the Allocated amount per invoice
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-
-        ElseIf GetAmountDiffOffsetEnergyDI = 0 And TotalARAmountCollectedPerBP.OffsetAmountDI <> 0 Then
-            Dim _APAllocationListPerBP = (From x In APAllocationListPerBP
-                                          Where x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                          Select x).ToList()
-            Dim UpdatedAPAllocationListPerBP As List(Of APAllocation) = (From x In _APAllocationListPerBP Where x.AllocationAmount <> 0 Select x).ToList
-            Me.AddAdjustedAPAllocationList(UpdatedAPAllocationListPerBP) 'Method that will add new Item for APAllocationList Property
-        End If
-
-        Me.UpdateWESMBillSummary(WESMBillSummaryListPerBP, EnumPaymentNewType.Energy)
-
+        Me.AddAdjustedAPAllocationList(APAllocationListPerBPFinal) 'Method that will add new Item for APAllocationList Property
+        Me.UpdateWESMBillSummary(listWESMBillSummaryPerWBatch, EnumPaymentNewType.Energy)
     End Sub
 #End Region
 
 #Region "Method Step 1 for AP Allocation on Energy VAT"
     Private Sub APVATAllocationProcess(ByVal WESMBillSummaryListOnVAT As List(Of WESMBillSummary),
-                                  ByVal TotalAPVATPerBP As List(Of ARCollectionPerBP))
-
-        For Each Item As ARCollectionPerBP In TotalAPVATPerBP
-            'Added By LAVV 2022
-            Dim getWESMTransCoverSummaryList As List(Of WESMBillAllocCoverSummary) = (From x In Me.WBillHelper.GetListWESMTransCoverSummaryPerWBatch(Item.WESMBillBatchNo) Select x).ToList
-
-            Dim APAllocationListperBP = (From x In WESMBillSummaryListOnVAT
-                                         Where x.WESMBillBatchNo = Item.WESMBillBatchNo _
-                                         And x.DueDate = Item.OrigDueDate
-                                         Select x).ToList()
-            Me.AllocatePaymentOnVAT(APAllocationListperBP, Item, getWESMTransCoverSummaryList)
+                                       ByVal listARCollection As List(Of ARCollection),
+                                       ByVal progress As IProgress(Of ProgressClass))
+        Dim getDistinctWBatch As List(Of Long) = listARCollection.Select(Function(x) x.WESMBillBatchNo).OrderBy(Function(y) y).Distinct.ToList()
+        Dim cnt As Integer = 0
+        For Each wBatch In getDistinctWBatch
+            newProgress = New ProgressClass
+            newProgress.ProgressMsg = "Processing Payment Allocation in VAT On Energy with WESM Batch No " & cnt + 1 & "/" & getDistinctWBatch.Count & "..."
+            progress.Report(newProgress)
+            Dim itemListARColl As List(Of ARCollection) = listARCollection.Where(Function(x) x.WESMBillBatchNo = wBatch).ToList()
+            Dim listWESMBillSummaryPerWBatch = WESMBillSummaryListOnVAT.
+                                                  Where(Function(x) x.WESMBillBatchNo = wBatch _
+                                                                    And x.EndingBalance >= 0 _
+                                                                    And x.BalanceType = EnumBalanceType.AP).ToList()
+            Me.AllocatePaymentOnVAT(listWESMBillSummaryPerWBatch, itemListARColl)
+            cnt += 1
         Next
-
     End Sub
 #End Region
 
 #Region "Method Step 2 for AP Allocation On Energy VAT"
-    Private Sub AllocatePaymentOnVAT(ByRef WESMBillSummaryListPerBP As List(Of WESMBillSummary),
-                                     ByVal TotalARAmountCollectedPerBP As ARCollectionPerBP,
-                                     ByVal listWESMTransCoverSummary As List(Of WESMBillAllocCoverSummary))
+    Private Sub AllocatePaymentOnVAT(ByRef listWESMBillSummaryPerWBatch As List(Of WESMBillSummary),
+                                     ByVal listARCollection As List(Of ARCollection))
 
-        Dim APAllocationListPerBP As New List(Of APAllocation)
+        Dim APAllocationListPerBPFinal As New List(Of APAllocation)
+        Dim getDueDate As Date = listWESMBillSummaryPerWBatch.Select(Function(x) x.DueDate).Distinct.FirstOrDefault
+        Dim getBPNo As Integer = listWESMBillSummaryPerWBatch.Select(Function(x) x.BillPeriod).Distinct.FirstOrDefault
 
-        Dim BPTotalBalance As Decimal = (From x In WESMBillSummaryListPerBP Where x.EndingBalance > 0 Select x.EndingBalance).Sum() 'Total of Outstanding Balances per BillingPeriod based on WESMBillSummaryList        
-        Dim BPTotalBalance2 As Decimal = listWESMTransCoverSummary.Where(Function(y) y.VatOnSales > 0).Select(Function(x) x.VatOnSales).Sum()
+        Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        Dim cListWESMBillSummaryPerWBatch As List(Of WESMBillSummary) = listWESMBillSummaryPerWBatch
 
-        For Each WESMBillSummaryItem In WESMBillSummaryListPerBP
-            'Allocate AP on VAT that came from Cash
-            If TotalARAmountCollectedPerBP.CashAmount <> 0 Then
+        Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)
+        For Each itemAR In getBIRRulingInvoiceList
+            Dim APAllocationListPerBP As New List(Of APAllocation)
+            getWTDSummary = Me._WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
+            For Each itemAP In cListWESMBillSummaryPerWBatch
                 Dim CashShareOnVAT As Decimal = 0D
+                If getWTDSummary.Count > 0 Then
+                    Dim originalTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OrigBalanceInVAT).Sum)
+                    Dim getWTDSummaryItemAP = getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                                              And x.SellerTransNo = itemAP.INVDMCMNo).FirstOrDefault
+                    If Not getWTDSummaryItemAP Is Nothing Then
+                        If Math.Abs(itemAR.AllocationAmount) = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInVAT).Sum()) Then
+                            Dim outstandingBalanceOfAP As Decimal = Math.Abs(getWTDSummary.
+                                                         Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
+                                                         And x.SellerTransNo = itemAP.INVDMCMNo).
+                                                         Select(Function(y) y.OutstandingBalanceInVAT).FirstOrDefault)
+                            CashShareOnVAT = outstandingBalanceOfAP
+                        Else
+                            CashShareOnVAT = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInVAT), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
+                            If CashShareOnVAT > Math.Abs(getWTDSummaryItemAP.OutstandingBalanceInVAT) Then
+                                Dim amountChecker As Decimal = itemAP.EndingBalance - CashShareOnVAT
+                                If amountChecker < 0 And Math.Abs(amountChecker) > AmountDiffValue Then
+                                    Throw New Exception("Allocated share on vat is greater than the outstanding balance of InvoiceNo: " & itemAR.InvoiceNumber & "!" & vbNewLine & "Please contact the administrator.")
+                                Else
+                                    Dim adjCashShareOnVat = Math.Abs(getWTDSummaryItemAP.OutstandingBalanceInVAT) - CashShareOnVAT
 
-                If BPTotalBalance2 <> 0 Then
-                    Dim getWESMTransCoverSummaryItem As WESMBillAllocCoverSummary = listWESMTransCoverSummary.Where(Function(x) x.TransactionNo = WESMBillSummaryItem.INVDMCMNo).First
-                    CashShareOnVAT = Me.ComputeAllocation(getWESMTransCoverSummaryItem.VatOnSales, BPTotalBalance2, TotalARAmountCollectedPerBP.CashAmount)
+                                    If Math.Abs(adjCashShareOnVat) > AMModule.AmountDiffValue Then
+                                        Throw New Exception("Adjusted Cash Share On VAT is greater than the amount that should be adjusted!" & vbNewLine _
+                                                                & " BuyerInvoiceNo: " & itemAR.InvoiceNumber & ", SellerInvoiceNo: " & itemAP.INVDMCMNo & vbNewLine & "Please contact the administrator.")
+                                    Else
+                                        CashShareOnVAT += adjCashShareOnVat
+                                    End If
+                                End If
+                            End If
+                        End If
+                    Else
+                        CashShareOnVAT = 0
+                    End If
                 Else
-                    CashShareOnVAT = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.CashAmount)
+                    Throw New Exception("No available WTA Summary Details for InvoiceNo: " & itemAR.InvoiceNumber & "!" & vbNewLine & "Please contact the administrator.")
                 End If
 
-                Dim APAllocationOnCashAmount = Me.CreateAPAllocationItem(WESMBillSummaryItem, CashShareOnVAT,
-                                                                         EnumPaymentNewType.VatOnEnergy, EnumCollectionCategory.Cash)
-                APAllocationListPerBP.Add(APAllocationOnCashAmount)
+                Dim CreatedItem_Energy As New APAllocation
+                CreatedItem_Energy = Me.CreateAPAllocationItem(itemAP, CashShareOnVAT, EnumPaymentNewType.VatOnEnergy, itemAR.CollectionCategory)
+                APAllocationListPerBP.Add(CreatedItem_Energy)
+            Next
+
+            Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            If Math.Abs(itemAR.AllocationAmount) <> totalAPAllocationAmount Then
+                Dim getDiff As Decimal = Math.Abs(itemAR.AllocationAmount) - totalAPAllocationAmount
+                If getDiff >= AMModule.AmountDiffValue Then
+                    Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
+                End If
+                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff)
+                'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
-            'Allocate AP on Energy that came from offset Energy
-            If TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-                Dim OffsetShareOnVAT = Me.ComputeAllocation(WESMBillSummaryItem.EndingBalance, BPTotalBalance, TotalARAmountCollectedPerBP.OffsetAmount)
-                Dim CreatedItem_OffsetVAT = Me.CreateAPAllocationItem(WESMBillSummaryItem, OffsetShareOnVAT,
-                                                                      EnumPaymentNewType.VatOnEnergy, EnumCollectionCategory.Offset)
-                APAllocationListPerBP.Add(CreatedItem_OffsetVAT)
-            End If
+
+            For Each itemAP In APAllocationListPerBP
+                Dim getWTDSummaryItem As WESMTransDetailsSummary = getWTDSummary.
+                                                                   Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber And x.SellerTransNo = itemAP.InvoiceNumber).FirstOrDefault
+                If Not getWTDSummaryItem Is Nothing Then
+                    Dim keyHis As String = itemAR.InvoiceNumber & "|" & itemAP.InvoiceNumber
+                    With getWTDSummaryItem
+                        If (.OutstandingBalanceInVAT + itemAP.AllocationAmount) > 0 Then
+                            Throw New Exception("The allocated amount for " & itemAP.InvoiceNumber & " collected from " & itemAR.InvoiceNumber & "!" &
+                                                         vbNewLine & " is greater than the outstanding balance of AP! Please contact the administrator.")
+                            .OutstandingBalanceInVAT = 0
+                        Else
+                            .OutstandingBalanceInVAT = .OutstandingBalanceInVAT + itemAP.AllocationAmount
+                        End If
+                        If Not Me._WESMTransDetailsSummaryHistoryDic.ContainsKey(keyHis) Then
+                            Using WTDSummaryHistory As New WESMTransDetailsSummaryHistory
+                                With WTDSummaryHistory
+                                    .BuyerTransNo = getWTDSummaryItem.BuyerTransNo
+                                    .BuyerBillingID = getWTDSummaryItem.BuyerBillingID
+                                    .SellerTransNo = getWTDSummaryItem.SellerTransNo
+                                    .SellerBillingID = getWTDSummaryItem.SellerBillingID
+                                    .DueDate = getWTDSummaryItem.DueDate
+                                    .AllocationDate = itemAP.AllocationDate
+                                    .AllocatedInVAT = itemAP.AllocationAmount
+                                    Me._WESMTransDetailsSummaryHistoryDic.Add(keyHis, WTDSummaryHistory)
+                                End With
+                            End Using
+                        Else
+                            Me._WESMTransDetailsSummaryHistoryDic(keyHis).AllocatedInVAT += itemAP.AllocationAmount
+                        End If
+                        If .Status.Equals(EnumWESMTransDetailsSummaryStatus.CURRENT.ToString) Then
+                            .Status = EnumWESMTransDetailsSummaryStatus.UPDATED.ToString
+                        End If
+                    End With
+                    APAllocationListPerBPFinal.Add(itemAP)
+                End If
+            Next
         Next
-        Dim TotalAmountAllocatedCashEnergyVAT = (From x In APAllocationListPerBP
-                                                 Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                                 Select x.AllocationAmount).Sum()
-        Dim GetAmountDiffCashEnergyVAT As Decimal = TotalARAmountCollectedPerBP.CashAmount - TotalAmountAllocatedCashEnergyVAT
 
-        Dim TotalAmountAllocatedOffsetEnergyVAT = (From x In APAllocationListPerBP
-                                                   Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                                   Select x.AllocationAmount).Sum()
-        Dim GetAmountDiffOffsetEnergyVAT As Decimal = TotalARAmountCollectedPerBP.OffsetAmount - TotalAmountAllocatedOffsetEnergyVAT
+        Dim getTotalCollectedInARAmount As Decimal = getNonBIRRulingInvoiceList.Select(Function(x) x.AllocationAmount).Sum()
+        If getTotalCollectedInARAmount <> 0 Then
+            Dim APAllocationListPerBP As New List(Of APAllocation)
+            Dim getCollectionCategory As EnumCollectionType = getNonBIRRulingInvoiceList.Select(Function(x) x.CollectionCategory).First
+            Dim cListWESMBillSummaryPerWBatchNonBIR_EV As List(Of WESMBillSummary) = listWESMBillSummaryPerWBatch
 
-        If GetAmountDiffCashEnergyVAT <> 0 And TotalARAmountCollectedPerBP.CashAmount <> 0 Then
-            Dim _iAPAllocationList = (From x In APAllocationListPerBP
-                                      Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                      Select x).ToList()
-            Me.AdjustComputedAllocation(_iAPAllocationList, GetAmountDiffCashEnergyVAT) 'Function that will adjust the Allocated amount per invoice
-            Me.AddAdjustedAPAllocationList(_iAPAllocationList) 'Method that will add new Item for APAllocationList Property
+            For Each itemAP In cListWESMBillSummaryPerWBatchNonBIR_EV
+                Dim CashShareOnVAT As Decimal = 0D
+                CashShareOnVAT = Me.ComputeAllocation(itemAP.EndingBalance, getTotalEndingBalance, Math.Abs(getTotalCollectedInARAmount))
 
-        ElseIf GetAmountDiffCashEnergyVAT = 0 And TotalARAmountCollectedPerBP.CashAmount <> 0 Then
-            Dim _iAPAllocationList = (From x In APAllocationListPerBP
-                                      Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Cash
-                                      Select x).ToList()
-            Me.AddAdjustedAPAllocationList(_iAPAllocationList) 'Method that will add new Item for APAllocationList Property
+                Dim CreatedItem_VAT As New APAllocation
+                CreatedItem_VAT = Me.CreateAPAllocationItem(itemAP, CashShareOnVAT, EnumPaymentNewType.VatOnEnergy, getCollectionCategory)
+                APAllocationListPerBP.Add(CreatedItem_VAT)
+            Next
+
+            Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
+            If Math.Abs(getTotalCollectedInARAmount) <> totalAPAllocationAmount Then
+                Dim getDiff As Decimal = Math.Abs(getTotalCollectedInARAmount) - totalAPAllocationAmount
+                If getDiff >= AMModule.AmountDiffValue Then
+                    Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
+                End If
+                Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
+            End If
+
+            For Each itemAP In APAllocationListPerBP
+                APAllocationListPerBPFinal.Add(itemAP)
+            Next
         End If
 
-        If GetAmountDiffOffsetEnergyVAT <> 0 And TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-            Dim _iAPAllocationList = (From x In APAllocationListPerBP
-                                      Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                      Select x).ToList()
-            Me.AdjustComputedAllocation(_iAPAllocationList, GetAmountDiffOffsetEnergyVAT) 'Function that will adjust the Allocated amount per invoice
-            Me.AddAdjustedAPAllocationList(_iAPAllocationList) 'Method that will add new Item for APAllocationList Property
+        Me.AddAdjustedAPAllocationList(APAllocationListPerBPFinal) 'Method that will add new Item for APAllocationList Property
+        Me.UpdateWESMBillSummary(listWESMBillSummaryPerWBatch, EnumPaymentNewType.VatOnEnergy)
 
-        ElseIf GetAmountDiffOffsetEnergyVAT = 0 And TotalARAmountCollectedPerBP.OffsetAmount <> 0 Then
-            Dim _iAPAllocationList = (From x In APAllocationListPerBP
-                                      Where x.PaymentType = EnumPaymentNewType.VatOnEnergy And x.PaymentCategory = EnumCollectionCategory.Offset
-                                      Select x).ToList()
-            Me.AddAdjustedAPAllocationList(_iAPAllocationList) 'Method that will add new Item for APAllocationList Property
-        End If
-
-        Me.UpdateWESMBillSummary(WESMBillSummaryListPerBP, EnumPaymentNewType.VatOnEnergy)
     End Sub
 #End Region
 
@@ -1245,134 +1256,225 @@ Public Class APAllocationProcess
     Private Function ComputeAllocation(ByVal InvOutstandingBalance As Decimal, ByVal CurrentBP_TotalBalance As Decimal, ByVal TotalPaymentForBP As Decimal) As Decimal
         Dim returnAmntAlloc As Decimal
         If InvOutstandingBalance <> 0 Then
-            returnAmntAlloc = (InvOutstandingBalance / CurrentBP_TotalBalance) * TotalPaymentForBP
+            returnAmntAlloc = CDec(InvOutstandingBalance / CurrentBP_TotalBalance) * TotalPaymentForBP
         Else
             returnAmntAlloc = 0
         End If
-        returnAmntAlloc = Math.Round(returnAmntAlloc, 2)
+        returnAmntAlloc = Math.Round(returnAmntAlloc, 2, MidpointRounding.AwayFromZero)
         Return returnAmntAlloc
     End Function
 
-    Private Sub AdjustComputedAllocation(ByRef UpdateAPAllocationList As List(Of APAllocation),
-                                              ByVal AmountDiff As Decimal)
-        Dim GetHighiestAmount = (From x In UpdateAPAllocationList Select x Order By x.AllocationAmount Descending, x.EndingBalance Descending).FirstOrDefault
+    Private Sub AdjustComputedAllocationForWTA(ByRef UpdateAPAllocationList As List(Of APAllocation),
+                                               ByVal WTDSummaryList As List(Of WESMTransDetailsSummary),
+                                               ByVal AmountDiff As Decimal)
+
         Dim UpdatedAPAllocationListPerBP As New List(Of APAllocation)
+        Dim totalAllocDiffAmount As Decimal = 0D
+        Do While totalAllocDiffAmount <> AmountDiff
+            Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+            If GetListOfInvoiceWithEOAmount.Count = 0 And AmountDiff < 0 Then
+                GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.EndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+            ElseIf GetListOfInvoiceWithEOAmount.Count = 0 Then
+                Exit Do
+            End If
+            For Each item In GetListOfInvoiceWithEOAmount
+                Dim computedShareDiffAmount As Decimal = If(AmountDiff > 0D, 0.01D, -0.01D)
+                If totalAllocDiffAmount <> AmountDiff Then
+                    Dim getWTDSummary = WTDSummaryList.FirstOrDefault(Function(x) x.SellerTransNo = item.InvoiceNumber)
+                    Dim getOutstandingWTD As Decimal = 0
+                    If item.PaymentType = EnumPaymentNewType.Energy Then
+                        getOutstandingWTD = Math.Abs(getWTDSummary.OutstandingBalanceInEnergy)
+                        Dim negativeAmountChecker As Decimal = getOutstandingWTD - (item.AllocationAmount + computedShareDiffAmount)
+                        If Not negativeAmountChecker < 0 Then
+                            Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = item.WESMBillSummaryNo Select x).FirstOrDefault
+                            With UpdateAPAllocation
+                                Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
+                                If Not DMCMItem Is Nothing Then
+                                    DMCMItem.VATExempt += computedShareDiffAmount
+                                    DMCMItem.TotalAmountDue += computedShareDiffAmount
+                                    For Each ItemDetail In DMCMItem.DMCMDetails
+                                        If ItemDetail.Credit = 0 Then
+                                            ItemDetail.Debit += computedShareDiffAmount
+                                        Else
+                                            ItemDetail.Credit += computedShareDiffAmount
+                                        End If
+                                    Next
+                                    .AllocationAmount += computedShareDiffAmount
+                                Else
+                                    If .AllocationAmount = 0 Then
+                                        Dim _DMCM As New DebitCreditMemo
+                                        Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
+                                        UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
+                                        _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
+                                        If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
+                                            Me.ListofDMCMAP.Add(_DMCM)
+                                            .GeneratedDMCM = _DMCM.DMCMNumber
+                                        End If
+                                    Else
+                                        .AllocationAmount += computedShareDiffAmount
+                                    End If
+                                End If
+                                .NewEndingBalance = .EndingBalance - .AllocationAmount
+                            End With
+                            totalAllocDiffAmount += computedShareDiffAmount
+                        End If
+                    ElseIf item.PaymentType = EnumPaymentNewType.VatOnEnergy Then
+                        getOutstandingWTD = Math.Abs(getWTDSummary.OutstandingBalanceInVAT)
+                        Dim negativeAmountChecker As Decimal = getOutstandingWTD - (item.AllocationAmount + computedShareDiffAmount)
+                        If Not negativeAmountChecker < 0 Then
+                            Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = item.WESMBillSummaryNo Select x).FirstOrDefault
+                            With UpdateAPAllocation
+                                Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
+                                If Not DMCMItem Is Nothing Then
+                                    DMCMItem.VATExempt += computedShareDiffAmount
+                                    DMCMItem.TotalAmountDue += computedShareDiffAmount
+                                    For Each ItemDetail In DMCMItem.DMCMDetails
+                                        If ItemDetail.Credit = 0 Then
+                                            ItemDetail.Debit += computedShareDiffAmount
+                                        Else
+                                            ItemDetail.Credit += computedShareDiffAmount
+                                        End If
+                                    Next
+                                    .AllocationAmount += computedShareDiffAmount
+                                Else
+                                    If .AllocationAmount = 0 Then
+                                        Dim _DMCM As New DebitCreditMemo
+                                        Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
+                                        UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
+                                        _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
+                                        If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
+                                            Me.ListofDMCMAP.Add(_DMCM)
+                                            .GeneratedDMCM = _DMCM.DMCMNumber
+                                        End If
+                                    Else
+                                        .AllocationAmount += computedShareDiffAmount
+                                    End If
+                                End If
+                                .NewEndingBalance = .EndingBalance - .AllocationAmount
+                            End With
+                            totalAllocDiffAmount += computedShareDiffAmount
+                        End If
+                    ElseIf item.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy Then
+                        Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = item.WESMBillSummaryNo Select x).FirstOrDefault
+                        With UpdateAPAllocation
+                            Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
+                            If Not DMCMItem Is Nothing Then
+                                DMCMItem.VATExempt += computedShareDiffAmount
+                                DMCMItem.TotalAmountDue += computedShareDiffAmount
+                                For Each ItemDetail In DMCMItem.DMCMDetails
+                                    If ItemDetail.Credit = 0 Then
+                                        ItemDetail.Debit += computedShareDiffAmount
+                                    Else
+                                        ItemDetail.Credit += computedShareDiffAmount
+                                    End If
+                                Next
+                                .AllocationAmount += computedShareDiffAmount
+                            Else
+                                If .AllocationAmount = 0 Then
+                                    Dim _DMCM As New DebitCreditMemo
+                                    Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
+                                    UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
+                                    _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
+                                    If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
+                                        Me.ListofDMCMAP.Add(_DMCM)
+                                        .GeneratedDMCM = _DMCM.DMCMNumber
+                                    End If
+                                Else
+                                    .AllocationAmount += computedShareDiffAmount
+                                End If
+                            End If
+                            totalAllocDiffAmount += computedShareDiffAmount
+                        End With
+                    End If
+                Else
+                    Exit For
+                End If
+            Next
+        Loop
+    End Sub
 
-        If Not GetHighiestAmount Is Nothing Then
-            If (GetHighiestAmount.NewEndingBalance = 0 And AmountDiff > 0) Or (GetHighiestAmount.NewEndingBalance < AmountDiff And AmountDiff > 0) Then
-                Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
-                Dim multiplyBy As Integer = AmountDiff * 100
-                Dim totalAllocDiffAmount As Decimal = 0D
-
-                For Each item In GetListOfInvoiceWithEOAmount
-                    Dim computedRatio As Decimal = item.NewEndingBalance / GetListOfInvoiceWithEOAmount.Select(Function(x) x.NewEndingBalance).Sum
-                    Dim computedShareDiffAmount As Decimal = Math.Round((multiplyBy * computedRatio) / 100, 2)
-                    totalAllocDiffAmount += computedShareDiffAmount
-
+    Private Sub AdjustComputedAllocation(ByRef UpdateAPAllocationList As List(Of APAllocation),
+                                         ByVal AmountDiff As Decimal)
+        Dim UpdatedAPAllocationListPerBP As New List(Of APAllocation)
+        Dim totalAllocDiffAmount As Decimal = 0D
+        Do While totalAllocDiffAmount <> AmountDiff
+            Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+            If GetListOfInvoiceWithEOAmount.Count = 0 And AmountDiff < 0 Then
+                GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.EndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+            ElseIf GetListOfInvoiceWithEOAmount.Count = 0 Then
+                Exit Do
+            End If
+            For Each item In GetListOfInvoiceWithEOAmount
+                Dim computedShareDiffAmount As Decimal = If(AmountDiff > 0D, 0.01D, -0.01D)
+                If totalAllocDiffAmount <> AmountDiff Then
                     Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = item.WESMBillSummaryNo Select x).FirstOrDefault
                     With UpdateAPAllocation
-                        Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
-                        If Not DMCMItem Is Nothing Then
-                            DMCMItem.VATExempt += computedShareDiffAmount
-                            DMCMItem.TotalAmountDue += computedShareDiffAmount
-                            For Each ItemDetail In DMCMItem.DMCMDetails
-                                If ItemDetail.Credit = 0 Then
-                                    ItemDetail.Debit += computedShareDiffAmount
+                        If Not .PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy Then
+                            Dim negativeAmountChecker As Decimal = item.EndingBalance - (item.AllocationAmount + computedShareDiffAmount)
+                            If Not negativeAmountChecker < 0 Then
+                                Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
+                                If Not DMCMItem Is Nothing Then
+                                    DMCMItem.VATExempt += computedShareDiffAmount
+                                    DMCMItem.TotalAmountDue += computedShareDiffAmount
+                                    For Each ItemDetail In DMCMItem.DMCMDetails
+                                        If ItemDetail.Credit = 0 Then
+                                            ItemDetail.Debit += computedShareDiffAmount
+                                        Else
+                                            ItemDetail.Credit += computedShareDiffAmount
+                                        End If
+                                    Next
+                                    .AllocationAmount += computedShareDiffAmount
                                 Else
-                                    ItemDetail.Credit += computedShareDiffAmount
+                                    If .AllocationAmount = 0 Then
+                                        Dim _DMCM As New DebitCreditMemo
+                                        Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
+                                        UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
+                                        _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
+                                        If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
+                                            Me.ListofDMCMAP.Add(_DMCM)
+                                            .GeneratedDMCM = _DMCM.DMCMNumber
+                                        End If
+                                    Else
+                                        .AllocationAmount += computedShareDiffAmount
+                                    End If
                                 End If
-                            Next
-                            .AllocationAmount += computedShareDiffAmount
+                                .NewEndingBalance = .EndingBalance - .AllocationAmount
+                            End If
                         Else
-                            'lance
-                            If AmountDiff <> 0 And .AllocationAmount = 0 Then
-                                Dim _DMCM As New DebitCreditMemo
-                                Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
-                                UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
-                                _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
-                                If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
-                                    Me.ListofDMCMAP.Add(_DMCM)
-                                    .GeneratedDMCM = _DMCM.DMCMNumber
-                                End If
-                            Else
+                            Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
+                            If Not DMCMItem Is Nothing Then
+                                DMCMItem.VATExempt += computedShareDiffAmount
+                                DMCMItem.TotalAmountDue += computedShareDiffAmount
+                                For Each ItemDetail In DMCMItem.DMCMDetails
+                                    If ItemDetail.Credit = 0 Then
+                                        ItemDetail.Debit += computedShareDiffAmount
+                                    Else
+                                        ItemDetail.Credit += computedShareDiffAmount
+                                    End If
+                                Next
                                 .AllocationAmount += computedShareDiffAmount
-                            End If
-                        End If
-                        .NewEndingBalance = .EndingBalance - .AllocationAmount
-                    End With
-                Next
-                If AmountDiff <> totalAllocDiffAmount Then
-                    Dim getAmountDiff As Decimal = AmountDiff - totalAllocDiffAmount
-                    Dim getHighestValue = (From x In GetListOfInvoiceWithEOAmount Select x Order By x.NewEndingBalance Descending).FirstOrDefault
-                    If getHighestValue Is Nothing Then
-                        getHighestValue = (From x In GetListOfInvoiceWithEOAmount Select x Order By x.EndingBalance Descending).FirstOrDefault
-                    End If
-                    Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = getHighestValue.WESMBillSummaryNo Select x).FirstOrDefault
-                    With UpdateAPAllocation
-                        Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
-                        If Not DMCMItem Is Nothing Then
-                            DMCMItem.VATExempt += getAmountDiff
-                            DMCMItem.TotalAmountDue += getAmountDiff
-                            For Each ItemDetail In DMCMItem.DMCMDetails
-                                If ItemDetail.Credit = 0 Then
-                                    ItemDetail.Debit += getAmountDiff
+                            Else
+                                If .AllocationAmount = 0 Then
+                                    Dim _DMCM As New DebitCreditMemo
+                                    Dim MustBeAllocationAmount As Decimal = .AllocationAmount + computedShareDiffAmount
+                                    UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
+                                    _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
+                                    If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
+                                        Me.ListofDMCMAP.Add(_DMCM)
+                                        .GeneratedDMCM = _DMCM.DMCMNumber
+                                    End If
                                 Else
-                                    ItemDetail.Credit += getAmountDiff
+                                    .AllocationAmount += computedShareDiffAmount
                                 End If
-                            Next
-                            .AllocationAmount += getAmountDiff
-                        Else
-                            'lance
-                            If getAmountDiff <> 0 And .AllocationAmount = 0 Then
-                                Dim _DMCM As New DebitCreditMemo
-                                Dim MustBeAllocationAmount As Decimal = .AllocationAmount + getAmountDiff
-                                UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
-                                _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
-                                If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
-                                    Me.ListofDMCMAP.Add(_DMCM)
-                                    .GeneratedDMCM = _DMCM.DMCMNumber
-                                End If
-                            Else
-                                .AllocationAmount += getAmountDiff
                             End If
                         End If
-                        .NewEndingBalance = .EndingBalance - .AllocationAmount
                     End With
+                Else
+                    Exit For
                 End If
-            Else
-                Dim UpdateAPAllocation As APAllocation = (From x In UpdateAPAllocationList Where x.WESMBillSummaryNo = GetHighiestAmount.WESMBillSummaryNo Select x).FirstOrDefault
-                With UpdateAPAllocation
-                    Dim DMCMItem = (From x In Me.ListofDMCMAP Where x.DMCMNumber = .GeneratedDMCM Select x).FirstOrDefault
-                    If Not DMCMItem Is Nothing Then
-                        DMCMItem.VATExempt += AmountDiff
-                        DMCMItem.TotalAmountDue += AmountDiff
-                        For Each ItemDetail In DMCMItem.DMCMDetails
-                            If ItemDetail.Credit = 0 Then
-                                ItemDetail.Debit += AmountDiff
-                            Else
-                                ItemDetail.Credit += AmountDiff
-                            End If
-                        Next
-                        .AllocationAmount += AmountDiff
-                    Else
-                        'lance
-                        If AmountDiff <> 0 And .AllocationAmount = 0 Then
-                            Dim _DMCM As New DebitCreditMemo
-                            Dim MustBeAllocationAmount As Decimal = .AllocationAmount + AmountDiff
-                            UpdateAPAllocation.AllocationAmount = MustBeAllocationAmount
-                            _DMCM = Me.PaymentProformaEntries.CreateDMCM_AP(UpdateAPAllocation, .AllocationDate, DailyInterestRate, Me.AMParticipantsList)
-                            If Not _DMCM Is Nothing And _DMCM.DMCMNumber > 0 Then
-                                Me.ListofDMCMAP.Add(_DMCM)
-                                .GeneratedDMCM = _DMCM.DMCMNumber
-                            End If
-                        Else
-                            .AllocationAmount += AmountDiff
-                        End If
-                    End If
-                    .NewEndingBalance = .EndingBalance - .AllocationAmount
-                End With
-            End If
-        End If
+                totalAllocDiffAmount += computedShareDiffAmount
+            Next
+        Loop
     End Sub
 
     Private Sub AddAdjustedAPAllocationList(ByRef AdjustedAPAllocationList As List(Of APAllocation))
@@ -1401,9 +1503,40 @@ Public Class APAllocationProcess
                             Next
                         End If
                     End If
-                    Me._EnergyAPAllocationList.Add(AdjustedAPAllocation)
+                    Dim getItemInEnergyAPAllocationList = Me._EnergyAPAllocationList.
+                                                            Where(Function(x) x.InvoiceNumber = AdjustedAPAllocation.InvoiceNumber _
+                                                                          And x.PaymentType = AdjustedAPAllocation.PaymentType _
+                                                                          And x.PaymentCategory = AdjustedAPAllocation.PaymentCategory _
+                                                                          And x.OffsettingSequence = AdjustedAPAllocation.OffsettingSequence).FirstOrDefault
+
+                    If getItemInEnergyAPAllocationList Is Nothing Then
+                        Me._EnergyAPAllocationList.Add(AdjustedAPAllocation)
+                    Else
+                        With getItemInEnergyAPAllocationList
+                            .AllocationAmount += AdjustedAPAllocation.AllocationAmount
+                            If .PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy Then
+                                .NewEndingBalance = .EndingBalance
+                            Else
+                                .NewEndingBalance = .EndingBalance - .AllocationAmount
+                            End If
+                        End With
+                    End If
                 Case EnumChargeType.EV
-                    Me._VATonEnergyAPAllocationList.Add(AdjustedAPAllocation)
+
+                    Dim getItemInVATAPAllocationList = Me._VATonEnergyAPAllocationList.
+                                                            Where(Function(x) x.InvoiceNumber = AdjustedAPAllocation.InvoiceNumber _
+                                                                          And x.PaymentType = AdjustedAPAllocation.PaymentType _
+                                                                          And x.PaymentCategory = AdjustedAPAllocation.PaymentCategory _
+                                                                          And x.OffsettingSequence = AdjustedAPAllocation.OffsettingSequence).FirstOrDefault
+
+                    If getItemInVATAPAllocationList Is Nothing Then
+                        Me._VATonEnergyAPAllocationList.Add(AdjustedAPAllocation)
+                    Else
+                        With getItemInVATAPAllocationList
+                            .AllocationAmount += AdjustedAPAllocation.AllocationAmount
+                            .NewEndingBalance = .EndingBalance - .AllocationAmount
+                        End With
+                    End If
                 Case EnumChargeType.MF, EnumChargeType.MFV
                     Me._MFWithVATAPAllocationList.Add(AdjustedAPAllocation)
             End Select

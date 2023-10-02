@@ -32921,4 +32921,41 @@ Public Class WESMBillHelper
             Throw New ApplicationException(ex.Message)
         End Try
     End Sub
+
+    Public Function GetListSummaryIDForDeletion(ByVal bp As Integer, ByVal stlRun As String) As List(Of Long)
+        Dim listofSummaryId As List(Of Long)
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "' ORDER BY SUMMARY_ID"
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            listofSummaryId = Me.GetListSummaryIDForDeletion(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return listofSummaryId
+    End Function
+
+    Private Function GetListSummaryIDForDeletion(ByVal dr As IDataReader) As List(Of Long)
+        Dim result As List(Of Long) = New List(Of Long)
+        Try
+            While dr.Read()
+                With dr
+                    result.Add(CLng(.Item("SUMMARY_ID")))
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
 End Class

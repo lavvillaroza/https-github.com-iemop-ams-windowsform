@@ -307,10 +307,12 @@ Public Class frmImportWTAFromCRSS
 
     Private Sub dgv_WTAList_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_WTAList.CellContentClick
         If (e.ColumnIndex = 0 AndAlso e.RowIndex >= 0) Then
+            ProgressThread.Show("Please wait while processing.")
             Try
                 Dim value = DirectCast(dgv_WTAList(e.ColumnIndex, e.RowIndex).FormattedValue,
                                        Nullable(Of Boolean))
                 If (value.HasValue AndAlso value = True) Then
+                    ProgressThread.Close()
                     Dim result = MessageBox.Show("Are you sure to uncheck item?", "",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (result = System.Windows.Forms.DialogResult.Yes) Then
@@ -333,12 +335,14 @@ Public Class frmImportWTAFromCRSS
 
                     Dim diffTotal1 As Decimal = totalNetSales + totalNetPurchases
                     If Not totalNetSales = Math.Abs(totalNetPurchases) Then
+                        ProgressThread.Close()
                         MessageBox.Show("There is difference between the Total Net Sales and Total Net Purchases!" & vbNewLine & "Difference: " & FormatNumber(diffTotal1, 2, , TriState.True).ToString(), "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                         Exit Sub
                     End If
                     Dim diffTotal2 As Decimal = totalNetSales + totalNetPurchases
                     If Not Math.Abs(totalEWTSales) = totalEWTPurchases Then
+                        ProgressThread.Close()
                         MessageBox.Show("There is difference between the Total EWT Sales and Total EWT Purchases!" & vbNewLine & "Difference: " & FormatNumber(diffTotal2, 2, , TriState.True).ToString(), "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                         Exit Sub
@@ -348,14 +352,17 @@ Public Class frmImportWTAFromCRSS
                     Dim getSelectedWTAItem As ImportWTAFromCRSS = Me.impWTACRSSHelper.newImportWTAFromCRSSList.Where(Function(x) x.BillingPeriod = rowBP And x.SettlementRun = rowSTLRun And x.GroupID = rowGroupID).FirstOrDefault
 
                     If getSelectedWTAItem.ListOfError.Count <> 0 Then
+                        ProgressThread.Close()
                         MessageBox.Show("Error found in uploaded data.", "Uploading Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         frmViewDetails.ShowListOfErrorsForUploadingInCRSSDB(getSelectedWTAItem.ListOfError.Distinct.ToList)
                         frmViewDetails.gb_totalColl.Hide()
                         frmViewDetails.ShowDialog()
                         dgv_WTAList(e.ColumnIndex, e.RowIndex).Value = False
                     End If
+                    ProgressThread.Close()
                 End If
             Catch ex As Exception
+                ProgressThread.Close()
                 MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Finally
                 newProgress = New ProgressClass With {.ProgressIndicator = 0, .ProgressMsg = "Ready..."}

@@ -117,7 +117,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ams_logo_2.ico</ApplicationIcon>
+    <ApplicationIcon>accounting2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>63EA7B9B9F46AA279BBE7D7D344FA0E1683B511D</ManifestCertificateThumbprint>
@@ -2308,6 +2308,7 @@
     <None Include="Resources\Add-icon-24x24.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="accounting2.ico" />
     <Content Include="ams_logo_2.ico" />
     <Content Include="Resources\Add.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

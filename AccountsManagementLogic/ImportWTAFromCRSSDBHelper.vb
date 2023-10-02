@@ -797,8 +797,12 @@ Public Class ImportWTAFromCRSSDBHelper
         Dim ret As New List(Of WESMBill)
         For Each item In newWTACoverSummaryList
             Dim changeSTLID As String = Me.ParentChangeID.
-                                        Where(Function(x) x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.StlID And x.ChildParticipants.IDNumber = item.BillingID).
+                                        Where(Function(x) x.BillingPeriod = item.BillingPeriod _
+                                                        And x.ParentParticipants.IDNumber = item.StlID _
+                                                        And x.ChildParticipants.IDNumber = item.BillingID _
+                                                        And x.Status = EnumStatus.Active).
                                         Select(Function(y) y.NewParentParticipants.IDNumber).FirstOrDefault
+
             Dim wesmBillItemEnergy As New WESMBill
             With wesmBillItemEnergy
                 .BillingPeriod = item.BillingPeriod
@@ -911,10 +915,12 @@ Public Class ImportWTAFromCRSSDBHelper
                           "       AND STL_RUN = '" & stlRun & "'"
                     listSQL.Add(SQL)
 
-                    SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
-                        & "WHERE SUMMARY_ID >= (SELECT MIN(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "') " & vbNewLine _
-                        & "AND SUMMARY_ID <= (SELECT MAX(SUMMARY_ID) FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " AND STL_RUN = '" & stlRun & "')"
-                    listSQL.Add(SQL)
+                    Dim getListofSummaryIDForDeletion As List(Of Long) = Me._WBillHelper.GetListSummaryIDForDeletion(calendarBP.BillingPeriod, stlRun)
+                    For Each item In getListofSummaryIDForDeletion
+                        SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
+                                & "WHERE SUMMARY_ID = " & item
+                        listSQL.Add(SQL)
+                    Next
 
                     SQL = "DELETE FROM AM_WESM_ALLOC_COVER_SUMMARY " & vbNewLine _
                          & "WHERE BILLING_PERIOD = " & calendarBP.BillingPeriod & " " & vbNewLine _
@@ -949,19 +955,9 @@ Public Class ImportWTAFromCRSSDBHelper
             With item
                 'Get the unique key to set invoice no
                 Dim UniqueKey = .IDNumber & .RegistrationID & .InvoiceDate.ToString("MMddyyyy") & .DueDate.ToString("MMddyyyy")
-
-                Dim getParentID As String = (From x In getWBSChangeParentList
-                                             Where x.BillingPeriod = item.BillingPeriod And x.ParentParticipants.IDNumber = item.IDNumber And x.ChildParticipants.IDNumber = item.RegistrationID
-                                             Select x.NewParentParticipants.IDNumber).FirstOrDefault
-                Dim parentID As String = ""
-                If Not getParentID Is Nothing Then
-                    parentID = getParentID
-                Else
-                    parentID = .IDNumber
-                End If
                 'Get the final invoice no
                 SQL = "INSERT INTO AM_WESM_BILL(BATCH_CODE,AM_CODE,BILLING_PERIOD,STL_RUN,ID_NUMBER,REG_ID,INVOICE_NO,INVOICE_DATE,AMOUNT,CHARGE_TYPE,DUE_DATE,MARKET_FEES_RATE,REMARKS,UPDATED_BY)" & vbNewLine _
-                        & "SELECT '" & batchCode & "', '" & amcode & "'," & .BillingPeriod & ",'" & .SettlementRun & "', '" & parentID & "','" & .RegistrationID & "','" & .InvoiceNumber & "'," & vbNewLine _
+                        & "SELECT '" & batchCode & "', '" & amcode & "'," & .BillingPeriod & ",'" & .SettlementRun & "', '" & .IDNumber & "','" & .RegistrationID & "','" & .InvoiceNumber & "'," & vbNewLine _
                         & "TO_DATE('" & .InvoiceDate & "','MM/DD/yyyy')," & .Amount & ",'" & .ChargeType.ToString & "',TO_DATE('" & .DueDate & "','MM/DD/yyyy')," & .MarketFeesRate & ",'" & .Remarks & "','" & AMModule.UserName & "' FROM DUAL"
                 listSQL.Add(SQL)
             End With
@@ -1031,8 +1027,5 @@ Public Class ImportWTAFromCRSSDBHelper
         newProgress = New ProgressClass
         newProgress.ProgressMsg = "Successfully saved!"
         progress.Report(newProgress)
-
     End Sub
-
-
 End Class

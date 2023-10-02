@@ -248,10 +248,7 @@ Public Class APAllocationProcessNew
             'Next
 
             Dim oWESMTransSummaryList As List(Of WESMTransDetailsSummary) = Me.WBillHelper.GetListWESMTransDetailsSummary(item)
-            For Each iItem In oWESMTransSummaryList
-                Me._WESMTransDetailsSummaryList.Add(iItem)
-            Next
-
+            Me._WESMTransDetailsSummaryList.AddRange(oWESMTransSummaryList)
         Next
         cnt = 0
         'To get the WESM Transaction Cover Summary including Details for the computation of Details Net Ratio
