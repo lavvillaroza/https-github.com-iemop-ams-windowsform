@@ -31,7 +31,7 @@ Public Class frmWHVATCertificateSTLDetails
         Try
             ProgressThread.Show("Please wait while preparing the view of WESM Transaction.")
 
-            Dim getSelectedCertificateNo As WHVATCertificateSTL = _WHVatCertSTLHelper.GetWHVATCertStlAsync(_CertificateNo).Result
+            Dim getSelectedCertificateNo As WHVATCertificateSTL = _WHVatCertSTLHelper.GetWHVATCertStl(_CertificateNo)
 
             Me.ddlRemittanceDate.Items.Clear()
             Me.ddlRemittanceDate.Items.Add(getSelectedCertificateNo.RemittanceDate)

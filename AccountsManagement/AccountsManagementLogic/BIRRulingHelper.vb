@@ -220,8 +220,8 @@ Public Class BIRRulingHelper
 
                     Dim getDetails As List(Of WHTaxCertificateDetails) = GetListOfWHTAXCertDetails(CLng(.Item("CERTIFICATE_NO")))
 
-                    item.TagDetails = (From x In getDetails Where x.Amount > 0 Select x).ToList
-                    item.AllocationDetails = (From x In getDetails Where x.Amount < 0 Select x).ToList
+                    item.TagDetails = (From x In getDetails Where x.AmountTagged > 0 Select x).ToList
+                    item.AllocationDetails = (From x In getDetails Where x.AmountTagged < 0 Select x).ToList
                     result.Add(item)
                 End With
             End While
@@ -306,7 +306,7 @@ Public Class BIRRulingHelper
                     item.WESMBillSummary = itemWBS
                     item.NewDueDate = CDate(.Item("NEW_DUE_DATE").ToString())
                     item.EndingBalance = CDec(.Item("EB"))
-                    item.Amount = CDec(.Item("AMOUNT_TAGGED"))
+                    item.AmountTagged = CDec(.Item("AMOUNT_TAGGED"))
                     item.NewEndingBalance = CDec(.Item("NEB"))
                     item.WithholdingTaxAmount = CDec(.Item("WHTAX_AMOUNT"))
                     result.Add(item)
@@ -1559,7 +1559,7 @@ Public Class BIRRulingHelper
                         Dim getTotalEWTAP As Decimal = eWHTAX.AllocationDetails.Where(Function(y) y.WESMBillSummary.WESMBillBatchNo = wbBatchNo).Select(Function(x) x.WithholdingTaxAmount).Sum()
                         Dim getTotalEWTAPAlloc As Decimal = 0
                         Dim getEWHTaxTagDtlperWBBatch As List(Of WHTaxCertificateDetails) = eWHTAX.TagDetails.Where(Function(x) x.WESMBillSummary.WESMBillBatchNo = wbBatchNo).ToList
-                        Dim getTotalAmountTagged As Decimal = getEWHTaxTagDtlperWBBatch.Select(Function(x) x.Amount).Sum()
+                        Dim getTotalAmountTagged As Decimal = getEWHTaxTagDtlperWBBatch.Select(Function(x) x.AmountTagged).Sum()
                         Dim getEWHTaxTagAlloc As List(Of WHTaxCertificateDetails) = eWHTAX.AllocationDetails.Where(Function(x) x.WESMBillSummary.WESMBillBatchNo = wbBatchNo).ToList
                         For Each itemAlloc In getEWHTaxTagAlloc
                             For Each itemTagged In getEWHTaxTagDtlperWBBatch
@@ -1568,7 +1568,7 @@ Public Class BIRRulingHelper
                                                                                                                   And allParticulars.Contains(x.Particulars) _
                                                                                                                   And x.BuyerInvoiceNo = itemTagged.WESMBillSummary.INVDMCMNo _
                                                                                                                   And x.CollectionDate = eWHTAX.RemittanceDate).First
-                                Dim getEWTTaggedAmount As Decimal = Math.Round(itemAlloc.Amount * (itemTagged.Amount / getTotalAmountTagged), 2)
+                                Dim getEWTTaggedAmount As Decimal = Math.Round(itemAlloc.AmountTagged * (itemTagged.AmountTagged / getTotalAmountTagged), 2)
 
                                 With getListOfBIRRulingDetails
                                     If getListOfBIRRulingDetails.VatableSales <> 0 Then

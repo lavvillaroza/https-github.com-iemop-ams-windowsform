@@ -32922,81 +32922,6 @@ Public Class WESMBillHelper
         End Try
     End Sub
 
-#Region "Get MAX AND MIN SummaryID for WTA"
-    Public Function GetMaxSummaryID(ByVal bp As Integer, ByVal stlRun As String) As Long
-        Dim maxSummaryId As Long
-        Dim report As New DataReport
-        Dim SQL As String
-        Try
-            SQL = "SELECT MAX(SUMMARY_ID) AS MAX_SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "'"
-            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
-            If report.ErrorMessage.Length <> 0 Then
-                Throw New ApplicationException(report.ErrorMessage)
-            End If
-
-            maxSummaryId = Me.GetMaxSummaryID(report.ReturnedIDatareader)
-        Catch ex As Exception
-            Throw New ApplicationException(ex.Message)
-        End Try
-
-        Return maxSummaryId
-    End Function
-
-    Private Function GetMaxSummaryID(ByVal dr As IDataReader) As Long
-        Dim result As Long
-        Try
-            While dr.Read()
-                With dr
-                    result = CLng(.Item("MAX_SUMMARY_ID"))
-                End With
-            End While
-        Catch ex As ApplicationException
-            Throw New ApplicationException(ex.Message)
-        Finally
-            If Not dr.IsClosed Then
-                dr.Close()
-            End If
-        End Try
-        Return result
-    End Function
-
-    Public Function GetMinSummaryID(ByVal bp As Integer, ByVal stlRun As String) As Long
-        Dim maxSummaryId As Long
-        Dim report As New DataReport
-        Dim SQL As String
-        Try
-            SQL = "SELECT MIN(SUMMARY_ID) AS MIN_SUMMARY_ID FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD = " & bp & " AND STL_RUN = '" & stlRun & "'"
-            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
-            If report.ErrorMessage.Length <> 0 Then
-                Throw New ApplicationException(report.ErrorMessage)
-            End If
-
-            maxSummaryId = Me.GetMinSummaryID(report.ReturnedIDatareader)
-        Catch ex As Exception
-            Throw New ApplicationException(ex.Message)
-        End Try
-
-        Return maxSummaryId
-    End Function
-
-    Private Function GetMinSummaryID(ByVal dr As IDataReader) As Long
-        Dim result As Long
-        Try
-            While dr.Read()
-                With dr
-                    result = CLng(.Item("MIN_SUMMARY_ID"))
-                End With
-            End While
-        Catch ex As ApplicationException
-            Throw New ApplicationException(ex.Message)
-        Finally
-            If Not dr.IsClosed Then
-                dr.Close()
-            End If
-        End Try
-        Return result
-    End Function
-
     Public Function GetListSummaryIDForDeletion(ByVal bp As Integer, ByVal stlRun As String) As List(Of Long)
         Dim listofSummaryId As List(Of Long)
         Dim report As New DataReport
@@ -33033,6 +32958,4 @@ Public Class WESMBillHelper
         End Try
         Return result
     End Function
-#End Region
-
 End Class

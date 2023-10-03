@@ -573,6 +573,7 @@ Partial Class MainForm
         Me.BIRAccessToRecordToolStripMenuItem.Name = "BIRAccessToRecordToolStripMenuItem"
         Me.BIRAccessToRecordToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.BIRAccessToRecordToolStripMenuItem.Text = "BIR Access To Record"
+        Me.BIRAccessToRecordToolStripMenuItem.Visible = False
         '
         'BIRRulingToolStripMenuItem
         '
@@ -926,7 +927,7 @@ Partial Class MainForm
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Accounts Management System (LVM v4.1.20230525) "
+        Me.Text = "Accounts Management System (LUZVIS v4.1.20230925) "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()

@@ -1214,7 +1214,7 @@ Public Class PaymentHelper
 #Region "Methods For GetAPAllocations"
     Public Sub GetAPAllocations()
         Dim JVFromCollection As New JournalVoucher
-        Dim APAllocationProc As New APAllocationProcessNew 'APAllocationProcess
+        Dim APAllocationProc As New APAllocationProcess 'APAllocationProcessNew
         Dim WBillSummaryList As New List(Of WESMBillSummary)
 
         WBillSummaryList = (From x In Me.WESMBillSummaryList
@@ -5049,14 +5049,20 @@ Public Class PaymentHelper
         Dim DistinctListofMPwithShare = (From x In ListOfMPwithShare Select x Order By x).Distinct.ToList()
         Dim getListofPrudnetial As List(Of Prudential) = WBillHelper.GetParticipantsPrudential()
 
+        Dim getWESMBillsSummaryForEnergy As List(Of WESMBillSummary) = Me.WESMBillSummaryList.Where(Function(x) (x.EndingBalance - x.EnergyWithhold) < 0 _
+                                                                                                    And x.ChargeType = EnumChargeType.E _
+                                                                                                    And x.BalanceType = EnumBalanceType.AR _
+                                                                                                    And x.INVDMCMNo.StartsWith("TS-W") _
+                                                                                                    And Not x.INVDMCMNo.ToUpper Like "*-ADJ*").ToList()
         For Each MP In DistinctListofMPwithShare
             Dim getOffsetOnDeferredEnergy As Decimal = 0D
             Dim getOffsetOnDeferredVAT As Decimal = 0D
             Dim AMParticipantInfo = (From x In Me.AMParticipants Where x.IDNumber = MP.ToString Select x).FirstOrDefault
-            Dim GetDrawDownCollection As Decimal = (From x In Me._EnergyListCollection
+            Dim getDrawDownCollection As Decimal = (From x In Me._EnergyListCollection
                                                     Where x.CollectionCategory = EnumCollectionCategory.Drawdown _
                                                     And x.IDNumber = MP.ToString()
                                                     Select x.AllocationAmount).Sum()
+            Dim getMPAROutstandingBalances = getWESMBillsSummaryForEnergy.Where(Function(x) x.IDNumber.IDNumber.Equals(MP)).ToList()
             Dim getMPPrudential As Prudential = (From x In getListofPrudnetial Where x.IDNumber = MP Select x).FirstOrDefault
             If AMParticipantInfo Is Nothing Then
                 Continue For
@@ -5077,7 +5083,6 @@ Public Class PaymentHelper
             '                        Select x.OutstandingBalanceDeferredPayment).Sum() _
 
             'Additional code for Offsetting on deferred Energy as of 06052018 - added by LAVV 
-
             'validate 06/10/2018
             Dim MPDeferredEnergyList = (From x In Me.EnergyShare
                                         Where x.IDNumber = MP.ToString _
@@ -5148,32 +5153,33 @@ Public Class PaymentHelper
                     .PaymentOnMFWithVAT = MPMFShareBalance
                     .PaymentOnEnergy = MPEnergyShareBalance
                     .PaymentOnVATonEnergy = MPVATonEnergyShareBalance
-                    If GetDrawDownCollection = 0 Then
+                    If getDrawDownCollection = 0 Then
                         .FullyTransferToPR = False
                         .TransferToPrudential = 0
                     Else
-                        'Added by LAVV 03/26/2022 to ensure that no PR shall be False if the ID_Number does not exist to the Prudential Monitoring Table 
-                        If getMPPrudential Is Nothing Then
-                            .FullyTransferToPR = False
-                            .TransferToPrudential = 0
-                        Else
-                            If MPEnergyShareBalance > Math.Abs(GetDrawDownCollection) And MPEnergyShareBalance <> 0 Then
-                                .FullyTransferToPR = False
-                                .TransferToPrudential = Math.Abs(GetDrawDownCollection)
-                            ElseIf MPEnergyShareBalance <= Math.Abs(GetDrawDownCollection) And MPEnergyShareBalance <> 0 Then
-                                .FullyTransferToPR = True
-                                .TransferToPrudential = MPEnergyShareBalance
-                            Else
+                        'Added by LAVV 09/05/2023 to check if the current MP have AR outstanding balances if true no auto replenishment shall be allocated
+                        If getMPAROutstandingBalances.Count = 0 Then
+                            'Added by LAVV 03/26/2022 to ensure that no PR shall be False if the ID_Number does not exist to the Prudential Monitoring Table 
+                            If getMPPrudential Is Nothing Then
                                 .FullyTransferToPR = False
                                 .TransferToPrudential = 0
+                            ElseIf getMPPrudential.IDNumber.Contains("_FIT") Then
+                                .FullyTransferToPR = False
+                                .TransferToPrudential = 0
+                            Else
+                                If MPEnergyShareBalance > Math.Abs(getDrawDownCollection) And MPEnergyShareBalance <> 0 Then
+                                    .FullyTransferToPR = False
+                                    .TransferToPrudential = Math.Abs(getDrawDownCollection)
+                                ElseIf MPEnergyShareBalance <= Math.Abs(getDrawDownCollection) And MPEnergyShareBalance <> 0 Then
+                                    .FullyTransferToPR = True
+                                    .TransferToPrudential = MPEnergyShareBalance
+                                Else
+                                    .FullyTransferToPR = False
+                                    .TransferToPrudential = 0
+                                End If
                             End If
                         End If
-
-                        '---Disable the auto replenishment on 10/20/2022 as requested by Annsburg of AMU
-                        '.FullyTransferToPR = False
-                        '.TransferToPrudential = 0
                     End If
-
                     .FullyTransferToFinPen = False
                     .TransferToFinPen = 0
                     .TotalPaymentAllocated = TotalPaymentAlloc '- .TransferToPrudential

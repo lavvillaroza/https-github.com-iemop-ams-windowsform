@@ -100,7 +100,7 @@ Partial Class Login
         Me.lblVersion.Name = "lblVersion"
         Me.lblVersion.Size = New System.Drawing.Size(92, 14)
         Me.lblVersion.TabIndex = 4
-        Me.lblVersion.Text = "v4.0.20220731"
+        Me.lblVersion.Text = "v4.1.20230925"
         Me.lblVersion.Visible = False
         '
         'Label2

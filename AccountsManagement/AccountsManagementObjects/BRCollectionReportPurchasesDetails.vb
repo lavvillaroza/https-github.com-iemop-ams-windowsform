@@ -59,16 +59,6 @@
         End Set
     End Property
 
-    Private _SellerBillingID As String
-    Public Property SellerBillingID() As String
-        Get
-            Return _SellerBillingID
-        End Get
-        Set(ByVal value As String)
-            _SellerBillingID = value
-        End Set
-    End Property
-
     Private _InvoiceNo As String
     Public Property InvoiceNo() As String
         Get
@@ -139,16 +129,6 @@
         End Set
     End Property
 
-    Private _WithholdingVat As Decimal
-    Public Property WithholdingVat() As Decimal
-        Get
-            Return _WithholdingVat
-        End Get
-        Set(ByVal value As Decimal)
-            _WithholdingVat = value
-        End Set
-    End Property
-
     Public ReadOnly Property NetPurchase() As Decimal
         Get
             Return (_VatablePurchases + _ZeroRatedPurchases + _ZeroRatedEcoZonePurchases)
@@ -157,7 +137,7 @@
 
     Public ReadOnly Property Total() As Decimal
         Get
-            Return CDec(_VatablePurchases + _ZeroRatedPurchases + _ZeroRatedEcoZonePurchases + _VatOnPurchases + _WithholdingTax + _WithholdingVat)
+            Return CDec(_VatablePurchases + _ZeroRatedPurchases + _ZeroRatedEcoZonePurchases + _VatOnPurchases + _WithholdingTax)
         End Get
     End Property
 End Class

@@ -9,22 +9,13 @@
         End Set
     End Property
 
-    Private _SellerParticipantInfo As AMParticipants
-    Public Property SellerParticipantInfo() As AMParticipants
+    Private _Participant As AMParticipants
+    Public Property Participant() As AMParticipants
         Get
-            Return _SellerParticipantInfo
+            Return _Participant
         End Get
         Set(ByVal value As AMParticipants)
-            _SellerParticipantInfo = value
-        End Set
-    End Property
-    Private _SellerBillingID As String
-    Public Property SellerBillingID() As String
-        Get
-            Return _SellerBillingID
-        End Get
-        Set(ByVal value As String)
-            _SellerBillingID = value
+            _Participant = value
         End Set
     End Property
 

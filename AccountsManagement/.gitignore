@@ -259,6 +259,3 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/AMS LVM Installer Setup/AMS LVM 4.1.20230525_20230711.zip
-/AMS LVM Installer Setup/AMS LVM 4.1.20230525_20230711_2.zip
-*.zip

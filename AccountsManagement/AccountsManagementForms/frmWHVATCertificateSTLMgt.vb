@@ -139,10 +139,8 @@ Public Class frmWHVATCertificateSTLMgt
 
                     newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
                     UpdateProgress(newProgress)
-                    Dim isSave As Boolean = Await _WHVatCertSTLHelper.SaveAllocatedToAPAsync(certifNo, progressIndicator, cts.Token)
-                    If isSave = False Then
-                        Throw New Exception("Error encountered for Certificate No:" & certifNo.ToString("D7"))
-                    End If
+
+                    Await Task.Run(Sub() _WHVatCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If
@@ -214,10 +212,7 @@ Public Class frmWHVATCertificateSTLMgt
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colUntag").Value) = True Then
                     Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
                     getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
-                    Dim isUntag As Boolean = Await _WHVatCertSTLHelper.UntagEWTSelectedAsync(certifNo, progressIndicator, cts.Token)
-                    If isUntag = False Then
-                        Throw New Exception("Error encountered during untagging!")
-                    End If
+                    Await Task.Run(Sub() _WHVatCertSTLHelper.UntagEWTSelected(certifNo, progressIndicator, cts.Token))
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If

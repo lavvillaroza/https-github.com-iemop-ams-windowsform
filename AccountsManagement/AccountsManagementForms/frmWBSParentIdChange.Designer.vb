@@ -22,8 +22,8 @@ Partial Class frmWBSParentIdChange
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btn_Import = New System.Windows.Forms.Button()
@@ -53,7 +53,6 @@ Partial Class frmWBSParentIdChange
         Me.UpdatedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.UpdatedDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ViewColumn = New System.Windows.Forms.DataGridViewLinkColumn()
-        Me.btnRefresh = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
@@ -88,7 +87,6 @@ Partial Class frmWBSParentIdChange
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.Controls.Add(Me.btnRefresh)
         Me.Panel1.Controls.Add(Me.btn_Import)
         Me.Panel1.Controls.Add(Me.btn_Close)
         Me.Panel1.Controls.Add(Me.btn_Add)
@@ -113,7 +111,7 @@ Partial Class frmWBSParentIdChange
         Me.btn_Import.Name = "btn_Import"
         Me.btn_Import.Size = New System.Drawing.Size(129, 42)
         Me.btn_Import.TabIndex = 10
-        Me.btn_Import.Text = "&Import From"
+        Me.btn_Import.Text = "&Export To"
         Me.btn_Import.UseVisualStyleBackColor = False
         '
         'btn_Close
@@ -315,22 +313,22 @@ Partial Class frmWBSParentIdChange
         Me.dgv_wbsChangeParentId.AllowUserToDeleteRows = False
         Me.dgv_wbsChangeParentId.AllowUserToResizeColumns = False
         Me.dgv_wbsChangeParentId.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_wbsChangeParentId.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_wbsChangeParentId.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_wbsChangeParentId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_wbsChangeParentId.ColumnHeadersHeight = 30
         Me.dgv_wbsChangeParentId.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_wbsChangeParentId.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ParentIDNo, Me.ParentName, Me.ChildIDNo, Me.ChildName, Me.NewParentIdNo, Me.NewParentName, Me.Status, Me.UpdatedBy, Me.UpdatedDate, Me.ViewColumn})
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_wbsChangeParentId.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_wbsChangeParentId.DefaultCellStyle = DataGridViewCellStyle4
         Me.dgv_wbsChangeParentId.Location = New System.Drawing.Point(9, 17)
         Me.dgv_wbsChangeParentId.Name = "dgv_wbsChangeParentId"
         Me.dgv_wbsChangeParentId.ReadOnly = True
@@ -406,25 +404,6 @@ Partial Class frmWBSParentIdChange
         Me.ViewColumn.Name = "ViewColumn"
         Me.ViewColumn.ReadOnly = True
         '
-        'btnRefresh
-        '
-        Me.btnRefresh.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnRefresh.BackColor = System.Drawing.Color.White
-        Me.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRefresh.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRefresh.ForeColor = System.Drawing.Color.Black
-        Me.btnRefresh.Image = Global.AccountsManagementForms.My.Resources.Resources.RefreshGreenIcon22x22
-        Me.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnRefresh.Location = New System.Drawing.Point(597, 12)
-        Me.btnRefresh.Name = "btnRefresh"
-        Me.btnRefresh.Size = New System.Drawing.Size(129, 42)
-        Me.btnRefresh.TabIndex = 11
-        Me.btnRefresh.Text = "&Referesh"
-        Me.btnRefresh.UseVisualStyleBackColor = False
-        '
         'frmWBSParentIdChange
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -479,5 +458,4 @@ Partial Class frmWBSParentIdChange
     Friend WithEvents UpdatedDate As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ViewColumn As System.Windows.Forms.DataGridViewLinkColumn
     Friend WithEvents btn_Import As System.Windows.Forms.Button
-    Friend WithEvents btnRefresh As Button
 End Class

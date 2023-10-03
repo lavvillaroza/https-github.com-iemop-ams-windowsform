@@ -7,7 +7,6 @@ Imports System.Threading.Tasks
 Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 Imports CrystalDecisions.Shared
-Imports WESMLib.Auth.Lib
 Imports Excel = Microsoft.Office.Interop.Excel
 
 Public Class frmImportWESMAllocTransSummaryPrelim
@@ -347,14 +346,13 @@ Public Class frmImportWESMAllocTransSummaryPrelim
             'Check if there is existing records
             Dim CountWESMBillExist As Integer = _WBillHelper.GetWESMBillCount(fileBillingPd, fileSettlementRun, fileChargeType)
             Dim ans As DialogResult = New DialogResult
-            Dim reuploadBool As Boolean = False
+
             If CountWESMBillExist <> 0 Then
                 ans = MessageBox.Show("There are already existing records, " & vbNewLine _
                                     & "Do you want to replace the existing data?", "Please Confirm Saving", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 If ans = DialogResult.No Then
                     Exit Sub
                 End If
-                reuploadBool = True
             Else
                 ans = MessageBox.Show("Do you really want to save the records?", "Please Confirm Saving", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 If ans = DialogResult.No Then
@@ -377,11 +375,6 @@ Public Class frmImportWESMAllocTransSummaryPrelim
                 ProgressThread.Close()
                 MessageBox.Show("Successfully uploaded to Database", "System Sucess Message!", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                If reuploadBool = True Then
-                    _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", "WESMAllocTransSummaryUploadingFromFlatFile", "Successfully re-uploaded the flatfile", "BP: " & fileBillingPd & "; STLRun: " & fileSettlementRun, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccessfullyUploaded.ToString, AMModule.UserName)
-                Else
-                    _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", "WESMAllocTransSummaryUploadingFromFlatFile", "Successfully uploaded the flatfile", "BP: " & fileBillingPd & "; STLRun: " & fileSettlementRun, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccessfullyUploaded.ToString, AMModule.UserName)
-                End If
                 _WTSummaryHelper.NewListWBAllocCoverSummary = New List(Of WESMBillAllocCoverSummary)
                 _WTSummaryHelper.NewListWESMBill = New List(Of WESMBill)
                 listWESMBill = New List(Of WESMBill)

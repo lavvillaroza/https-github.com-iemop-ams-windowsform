@@ -52,7 +52,7 @@ Public Class frmWHTaxCertificateSTLDetails
                 Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.EndingBalance, UseParensForNegativeNumbers:=TriState.True),
-                                  FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True), False, FormatNumber(item.Amount, UseParensForNegativeNumbers:=TriState.True),
+                                  FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True), False, FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True),
                                   FormatNumber(item.NewEndingBalance, UseParensForNegativeNumbers:=TriState.True))
             Next
 
@@ -64,7 +64,7 @@ Public Class frmWHTaxCertificateSTLDetails
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"),
                                   FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True),
-                                  FormatNumber(item.Amount, UseParensForNegativeNumbers:=TriState.True))
+                                  FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True))
             Next
             ProgressThread.Close()
             Me.FormatTextBoxForDGVAllocation()
@@ -146,7 +146,7 @@ Public Class frmWHTaxCertificateSTLDetails
                 Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                           item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                           item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True),
-                                          FormatNumber(item.WithholdingTaxAmount, UseParensForNegativeNumbers:=TriState.True), False, "0.00", "0.00", FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True))
+                                          FormatNumber(item.WithholdingTaxAmount, UseParensForNegativeNumbers:=TriState.True), False, "0.00", FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True))
             Next
 
             Me.btn_Allocate.Enabled = True
@@ -164,11 +164,11 @@ Public Class frmWHTaxCertificateSTLDetails
             ProgressThread.Show("Please wait while processing the allocation...")
 
             For Each row As DataGridViewRow In dgTagging.Rows
-                If CDec(row.Cells("colTagAmountAR").Value) > 0 Or CDec(row.Cells("colTagAmountDIAR").Value) > 0 Then
+                If CDec(row.Cells("colTagAmountAR").Value) > 0 Then
                     Dim itemWHTCertCollectionTagged As New WHTaxCertificateDetails
                     Dim invoiceNo As String = CStr(row.Cells("colTransactionNoAR").Value)
                     itemWHTCertCollectionTagged = (From x In _WHTaxCertSTLHelper.FetchListWHTCertDetails Where x.WESMBillSummary.INVDMCMNo = invoiceNo Select x).First
-                    itemWHTCertCollectionTagged.Amount = CDec(row.Cells("colTagAmountAR").Value)
+                    itemWHTCertCollectionTagged.AmountTagged = CDec(row.Cells("colTagAmountAR").Value)
                     itemWHTCertCollectionTagged.NewEndingBalance = CDec(row.Cells("colNewEndingBalanceAR").Value)
                     ListWHTCertCollectionTagged.Add(itemWHTCertCollectionTagged)
                 End If
@@ -200,7 +200,7 @@ Public Class frmWHTaxCertificateSTLDetails
             Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True),
-                                  FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True), False, FormatNumber(item.Amount, UseParensForNegativeNumbers:=TriState.True),
+                                  FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True), False, FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True),
                                   FormatNumber(item.NewEndingBalance, UseParensForNegativeNumbers:=TriState.True))
         Next
 
@@ -212,7 +212,7 @@ Public Class frmWHTaxCertificateSTLDetails
             Me.dgAllocation.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WithholdingTaxAmount.ToString("N2"), UseParensForNegativeNumbers:=TriState.True),
-                                  FormatNumber(item.Amount, UseParensForNegativeNumbers:=TriState.True))
+                                  FormatNumber(item.AmountTagged, UseParensForNegativeNumbers:=TriState.True))
         Next
 
         Me.FormatTextBoxForDGVAllocation()
@@ -223,31 +223,14 @@ Public Class frmWHTaxCertificateSTLDetails
             Select Case e.ColumnIndex
                 Case 10
                     If Not IsNumeric(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) Then
-                        MessageBox.Show("Tagged Amount is not numeric.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show("Amount Tagged is not numeric.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
                     Else
                         If CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) <= 0 Then
-                            MessageBox.Show("Tagged Amount should not be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("Amount Tagged should not be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
                         ElseIf CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) > Math.Abs(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(8).Value)) Then
-                            MessageBox.Show("Tagged Amount should not be greater than EWT.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
-                        Else
-                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = FormatNumber(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value, UseParensForNegativeNumbers:=TriState.True)
-                            Me.dgTagging.Rows(e.RowIndex).Cells(11).Value = FormatNumber(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(7).Value) + CDec(Me.dgTagging.Rows(e.RowIndex).Cells(10).Value), UseParensForNegativeNumbers:=TriState.True)
-                        End If
-                        Me.FormatTextBoxForDGVTagging()
-                    End If
-                Case 11
-                    If Not IsNumeric(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) Then
-                        MessageBox.Show("Tagged Amount DI is not numeric.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
-                    Else
-                        If CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) <= 0 Then
-                            MessageBox.Show("Tagged Amount DI should not be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
-                        ElseIf CDec(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value) > Math.Abs(CDec(Me.dgTagging.Rows(e.RowIndex).Cells(8).Value)) Then
-                            MessageBox.Show("Tagged Amount DI should not be greater than EWT.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("Amount Tagged should not be greater than EWT.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
                         Else
                             Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = FormatNumber(Me.dgTagging.Rows(e.RowIndex).Cells(e.ColumnIndex).Value, UseParensForNegativeNumbers:=TriState.True)

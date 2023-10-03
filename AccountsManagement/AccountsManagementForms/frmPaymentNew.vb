@@ -1113,24 +1113,22 @@ Public Class frmPaymentNew
                         MessageBox.Show("Replenish Amount shall be positive or shall not be equal to 0.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
                     Else
-                        Dim InputtedPRAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(12).Value)
+                        Dim InputtedAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(12).Value)
                         Dim FinPenAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(14).Value)
                         Dim EnergyAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(8).Value)
                         Dim netofEnergyShare As Decimal = EnergyAmount - FinPenAmount
-                        If InputtedPRAmount = 0D Then
-                            Dim newTotalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - FinPenAmount
+                        If InputtedAmount = 0D Then
                             Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(12).Value = FormatNumber(0, 2, , TriState.True).ToString()
-                            Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(15).Value = FormatNumber(newTotalPaymentAllocated, 2, , TriState.True).ToString()
                             Exit Sub
                         End If
-                        If InputtedPRAmount > netofEnergyShare Then
+                        If InputtedAmount > netofEnergyShare Then
                             MessageBox.Show("The amount you entered is greater than the amount of Energy Share minus the Financial Penalty, please input the correct amount.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
-                        ElseIf InputtedPRAmount = netofEnergyShare Then
-                            Dim totalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (FinPenAmount + InputtedPRAmount)
+                        ElseIf InputtedAmount = netofEnergyShare Then
+                            Dim TotalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (FinPenAmount + InputtedAmount)
                             With Me.dgv_PaymentTransToPR.Rows(e.RowIndex)
                                 .Cells(11).Value = True
-                                .Cells(12).Value = FormatNumber(InputtedPRAmount, 2, , TriState.True).ToString()
+                                .Cells(12).Value = FormatNumber(InputtedAmount, 2, , TriState.True).ToString()
                                 .Cells(12).ReadOnly = True
                                 .Cells(15).Value = FormatNumber(TotalPaymentAllocated, 2, , TriState.True).ToString()
                                 Using _PaymentTranToPR As New PaymentTransferToPR
@@ -1146,17 +1144,17 @@ Public Class frmPaymentNew
                                     _PaymentTranToPR.PaymentOnVATonEnergy = CDec(.Cells(9).Value.ToString)
                                     _PaymentTranToPR.TotalPaymentAllocated = CDec(.Cells(10).Value.ToString)
                                     _PaymentTranToPR.FullyTransferToPR = CType(.Cells(11).Value.ToString, Boolean)
-                                    _PaymentTranToPR.TransferToPrudential = InputtedPRAmount
+                                    _PaymentTranToPR.TransferToPrudential = InputtedAmount
                                     _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
                                     _PaymentTranToPR.TransferToFinPen = CDec(.Cells(14).Value.ToString)
                                     _PaymentTranToPR.TotalAmountForRemittance = Math.Round(TotalPaymentAllocated, 2)
-                                    paymntHelper.UpdateTransferToPR(_PaymentTranToPR)
+                                    PaymntHelper.UpdateTransferToPR(_PaymentTranToPR)
                                 End Using
                             End With
                         Else
-                            Dim totalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (FinPenAmount + InputtedPRAmount)
+                            Dim TotalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (FinPenAmount + InputtedAmount)
                             With Me.dgv_PaymentTransToPR.Rows(e.RowIndex)
-                                .Cells(12).Value = FormatNumber(InputtedPRAmount, 2, , TriState.True).ToString()
+                                .Cells(12).Value = FormatNumber(InputtedAmount, 2, , TriState.True).ToString()
                                 .Cells(15).Value = FormatNumber(TotalPaymentAllocated, 2, , TriState.True).ToString()
                                 Using _PaymentTranToPR As New PaymentTransferToPR
                                     _PaymentTranToPR.IDNumber = .Cells(0).Value.ToString
@@ -1171,7 +1169,7 @@ Public Class frmPaymentNew
                                     _PaymentTranToPR.PaymentOnVATonEnergy = CDec(.Cells(9).Value.ToString)
                                     _PaymentTranToPR.TotalPaymentAllocated = CDec(.Cells(10).Value.ToString)
                                     _PaymentTranToPR.FullyTransferToPR = CType(.Cells(11).Value.ToString, Boolean)
-                                    _PaymentTranToPR.TransferToPrudential = InputtedPRAmount
+                                    _PaymentTranToPR.TransferToPrudential = InputtedAmount
                                     _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
                                     _PaymentTranToPR.TransferToFinPen = CDec(.Cells(14).Value.ToString)
                                     _PaymentTranToPR.TotalAmountForRemittance = Math.Round(TotalPaymentAllocated, 2)
@@ -1189,52 +1187,25 @@ Public Class frmPaymentNew
                         MessageBox.Show("Financial Penalty Amount shall be positive or shall not be equal to 0", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"                    
                     Else
-                        Dim InputtedFPAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(14).Value)
+                        Dim InputtedAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(14).Value)
                         Dim PRReplenishmentAmount As Decimal = CDec(CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(12).Value))
                         Dim EnergyAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(8).Value)
                         Dim netofEnergyShare As Decimal = EnergyAmount - PRReplenishmentAmount
 
-                        If InputtedFPAmount = 0D Then
-                            Dim newTotalRemittanceAmount As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - PRReplenishmentAmount
+                        If InputtedAmount = 0D Then
                             Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(14).Value = FormatNumber(0, 2, , TriState.True).ToString()
-                            Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(15).Value = FormatNumber(newTotalRemittanceAmount, 2, , TriState.True).ToString()
                             Exit Sub
                         End If
 
-                        If InputtedFPAmount > netofEnergyShare Then
+                        If InputtedAmount > netofEnergyShare Then
                             MessageBox.Show("The amount you entered is greater than the amount of the Energy Share minus the PR replineshment, please input the correct amount!", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                             Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "0.00"
-                        ElseIf InputtedFPAmount = netofEnergyShare Then
-                            Dim totalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (PRReplenishmentAmount + InputtedFPAmount)
+                        ElseIf InputtedAmount = netofEnergyShare Then
+                            Dim TotalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (PRReplenishmentAmount + InputtedAmount)
                             With Me.dgv_PaymentTransToPR.Rows(e.RowIndex)
                                 .Cells(13).Value = True
-                                .Cells(14).Value = FormatNumber(InputtedFPAmount, 2, , TriState.True).ToString()
+                                .Cells(14).Value = FormatNumber(InputtedAmount, 2, , TriState.True).ToString()
                                 .Cells(14).ReadOnly = True
-                                .Cells(15).Value = FormatNumber(totalPaymentAllocated, 2, , TriState.True).ToString()
-                                Using _PaymentTranToPR As New PaymentTransferToPR
-                                    _PaymentTranToPR.IDNumber = .Cells(0).Value.ToString
-                                    _PaymentTranToPR.ParticipantID = .Cells(1).Value.ToString
-                                    _PaymentTranToPR.PaymentOnExcessCollection = CDec(.Cells(2).Value.ToString)
-                                    _PaymentTranToPR.PaymentOnDeferredonEnergy = CDec(.Cells(3).Value.ToString)
-                                    _PaymentTranToPR.PaymentOnDeferredonVATonEnergy = CDec(.Cells(4).Value.ToString)
-                                    _PaymentTranToPR.OffsetOnOffsetDeferredonEnergy = CDec(.Cells(5).Value.ToString)
-                                    _PaymentTranToPR.OffsetOnOffsetDeferredonVATonEnergy = CDec(.Cells(6).Value.ToString)
-                                    _PaymentTranToPR.PaymentOnMFWithVAT = CDec(.Cells(7).Value.ToString)
-                                    _PaymentTranToPR.PaymentOnEnergy = CDec(.Cells(8).Value.ToString)
-                                    _PaymentTranToPR.PaymentOnVATonEnergy = CDec(.Cells(9).Value.ToString)
-                                    _PaymentTranToPR.TotalPaymentAllocated = CDec(.Cells(10).Value.ToString)
-                                    _PaymentTranToPR.FullyTransferToPR = CType(.Cells(11).Value.ToString, Boolean)
-                                    _PaymentTranToPR.TransferToPrudential = CDec(.Cells(12).Value.ToString)
-                                    _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
-                                    _PaymentTranToPR.TransferToFinPen = InputtedFPAmount
-                                    _PaymentTranToPR.TotalAmountForRemittance = Math.Round(totalPaymentAllocated, 2)
-                                    paymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
-                                End Using
-                            End With
-                        Else
-                            Dim totalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (PRReplenishmentAmount + InputtedFPAmount)
-                            With Me.dgv_PaymentTransToPR.Rows(e.RowIndex)
-                                .Cells(14).Value = FormatNumber(InputtedFPAmount, 2, , TriState.True).ToString()
                                 .Cells(15).Value = FormatNumber(TotalPaymentAllocated, 2, , TriState.True).ToString()
                                 Using _PaymentTranToPR As New PaymentTransferToPR
                                     _PaymentTranToPR.IDNumber = .Cells(0).Value.ToString
@@ -1251,7 +1222,32 @@ Public Class frmPaymentNew
                                     _PaymentTranToPR.FullyTransferToPR = CType(.Cells(11).Value.ToString, Boolean)
                                     _PaymentTranToPR.TransferToPrudential = CDec(.Cells(12).Value.ToString)
                                     _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
-                                    _PaymentTranToPR.TransferToFinPen = InputtedFPAmount
+                                    _PaymentTranToPR.TransferToFinPen = InputtedAmount
+                                    _PaymentTranToPR.TotalAmountForRemittance = Math.Round(TotalPaymentAllocated, 2)
+                                    PaymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
+                                End Using
+                            End With
+                        Else
+                            Dim TotalPaymentAllocated As Decimal = CDec(Me.dgv_PaymentTransToPR.Rows(e.RowIndex).Cells(10).Value.ToString) - (PRReplenishmentAmount + InputtedAmount)
+                            With Me.dgv_PaymentTransToPR.Rows(e.RowIndex)
+                                .Cells(14).Value = FormatNumber(InputtedAmount, 2, , TriState.True).ToString()
+                                .Cells(15).Value = FormatNumber(TotalPaymentAllocated, 2, , TriState.True).ToString()
+                                Using _PaymentTranToPR As New PaymentTransferToPR
+                                    _PaymentTranToPR.IDNumber = .Cells(0).Value.ToString
+                                    _PaymentTranToPR.ParticipantID = .Cells(1).Value.ToString
+                                    _PaymentTranToPR.PaymentOnExcessCollection = CDec(.Cells(2).Value.ToString)
+                                    _PaymentTranToPR.PaymentOnDeferredonEnergy = CDec(.Cells(3).Value.ToString)
+                                    _PaymentTranToPR.PaymentOnDeferredonVATonEnergy = CDec(.Cells(4).Value.ToString)
+                                    _PaymentTranToPR.OffsetOnOffsetDeferredonEnergy = CDec(.Cells(5).Value.ToString)
+                                    _PaymentTranToPR.OffsetOnOffsetDeferredonVATonEnergy = CDec(.Cells(6).Value.ToString)
+                                    _PaymentTranToPR.PaymentOnMFWithVAT = CDec(.Cells(7).Value.ToString)
+                                    _PaymentTranToPR.PaymentOnEnergy = CDec(.Cells(8).Value.ToString)
+                                    _PaymentTranToPR.PaymentOnVATonEnergy = CDec(.Cells(9).Value.ToString)
+                                    _PaymentTranToPR.TotalPaymentAllocated = CDec(.Cells(10).Value.ToString)
+                                    _PaymentTranToPR.FullyTransferToPR = CType(.Cells(11).Value.ToString, Boolean)
+                                    _PaymentTranToPR.TransferToPrudential = CDec(.Cells(12).Value.ToString)
+                                    _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
+                                    _PaymentTranToPR.TransferToFinPen = InputtedAmount
                                     _PaymentTranToPR.TotalAmountForRemittance = Math.Round(TotalPaymentAllocated, 2)
                                     PaymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
                                 End Using
@@ -1310,7 +1306,7 @@ Public Class frmPaymentNew
                                 _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
                                 _PaymentTranToPR.TransferToFinPen = CDec(.Cells(14).Value.ToString)
                                 _PaymentTranToPR.TotalAmountForRemittance = Math.Round(_PaymentTranToPR.TotalPaymentAllocated - _PaymentTranToPR.TransferToFinPen - _PaymentTranToPR.TransferToPrudential, 2)
-                                paymntHelper.UpdateTransferToPR(_PaymentTranToPR)
+                                PaymntHelper.UpdateTransferToPR(_PaymentTranToPR)
                             End Using
                         ElseIf CBool(.Cells(13).Value) = True And CBool(.Cells(11).Value) = True Then
                             MessageBox.Show("You have already transfered the amount in Financial Penalty!", "System Warning Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -1339,7 +1335,7 @@ Public Class frmPaymentNew
                                 _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
                                 _PaymentTranToPR.TransferToFinPen = CDec(.Cells(14).Value.ToString)
                                 _PaymentTranToPR.TotalAmountForRemittance = Math.Round(_PaymentTranToPR.TotalPaymentAllocated - _PaymentTranToPR.TransferToFinPen - _PaymentTranToPR.TransferToPrudential, 2)
-                                paymntHelper.UpdateTransferToPR(_PaymentTranToPR)
+                                PaymntHelper.UpdateTransferToPR(_PaymentTranToPR)
                             End Using
                         End If
                         Me.FormatTextBox()
@@ -1379,7 +1375,7 @@ Public Class frmPaymentNew
                                 _PaymentTranToPR.FullyTransferToFinPen = True
                                 _PaymentTranToPR.TransferToFinPen = _PaymentTranToPR.PaymentOnEnergy - CDec(.Cells(12).Value.ToString)
                                 _PaymentTranToPR.TotalAmountForRemittance = Math.Round(_PaymentTranToPR.TotalPaymentAllocated - _PaymentTranToPR.TransferToPrudential - _PaymentTranToPR.TransferToFinPen, 2)
-                                paymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
+                                PaymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
                             End Using
                         ElseIf CBool(.Cells(13).Value) = True And CBool(.Cells(11).Value) = True Then
                             MessageBox.Show("You have already transfered the amount in PR Replenishment!", "System Warning Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -1408,7 +1404,7 @@ Public Class frmPaymentNew
                                 _PaymentTranToPR.FullyTransferToFinPen = CType(.Cells(13).Value.ToString, Boolean)
                                 _PaymentTranToPR.TransferToFinPen = 0D
                                 _PaymentTranToPR.TotalAmountForRemittance = Math.Round(_PaymentTranToPR.TotalPaymentAllocated - _PaymentTranToPR.TransferToPrudential - _PaymentTranToPR.TransferToFinPen, 2)
-                                paymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
+                                PaymntHelper.UpdateTransferToFinPen(_PaymentTranToPR)
                             End Using
                         End If
                         Me.FormatTextBox()

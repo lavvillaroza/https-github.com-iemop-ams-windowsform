@@ -1,0 +1,2 @@
+added features where PR auto replenishment excluded MP with outstanding AR payables.
+removing validation for adjustment of AP Allocation due to rounding off.

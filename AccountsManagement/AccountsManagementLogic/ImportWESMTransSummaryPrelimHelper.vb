@@ -736,7 +736,7 @@ Public Class ImportWESMTransSummaryPrelimHelper
                           "       AND STL_RUN = '" & stlRun & "'"
                         listSQL.Add(SQL)
 
-                        Dim getListofSummaryIDForDeletion As List(Of Long) = Me.WBillHelper.GetListSummaryIDForDeletion(calendarBP.BillingPeriod, stlRun)
+                        Dim getListofSummaryIDForDeletion As List(Of Long) = Me._WBillHelper.GetListSummaryIDForDeletion(calendarBP.BillingPeriod, stlRun)
                         For Each item In getListofSummaryIDForDeletion
                             SQL = "DELETE FROM AM_WESM_ALLOC_DISAGG_DETAILS " & vbNewLine _
                                 & "WHERE SUMMARY_ID = " & item
