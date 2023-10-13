@@ -229,15 +229,10 @@ Public Class APAllocationProcess
                                                           Distinct.Union(listARCollectionVAT.Select(Function(y) y.InvoiceNumber).Distinct.ToList).ToList
 
         newProgress = New ProgressClass
-        newProgress.ProgressMsg = "Preparing to fetch the WESM Transactions Allocation list For Payment Allocation..."
+        newProgress.ProgressMsg = "Fetching WTA Summary Details for Payment Allocation..."
         progress.Report(newProgress)
 
-        Dim cnt As Integer = 0
         For Each item In getListOfWESMTransNoList.OrderBy(Function(x) x).ToList
-            cnt += 1
-            newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Fetching the WESM Transactions Summary for Accounts Receivables " & cnt & "/" & getListOfWESMTransNoList.Count & "."
-            progress.Report(newProgress)
             Me._WESMTransDetailsSummaryList.AddRange(Me.WBillHelper.GetListWESMTransDetailsSummary(item))
         Next
 
@@ -748,15 +743,18 @@ Public Class APAllocationProcess
         Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
+            Dim ExcludeAPAllocationListPerBP As New List(Of String)
             getWTDSummary = Me._WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
             For Each itemAP In listWESMBillSummaryPerWBatch
                 Dim CashShareOnEnergy As Decimal = 0D
                 If getWTDSummary.Count > 0 Then
                     Dim originalTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OrigBalanceInEnergy).Sum)
+                    Dim outstandingTotalAmountOfAP As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum)
                     Dim getWTDSummaryItemAP = getWTDSummary.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber _
                                                                               And x.SellerTransNo = itemAP.INVDMCMNo).FirstOrDefault
                     If Not getWTDSummaryItemAP Is Nothing Then
                         If itemAR.CollectionType = EnumCollectionType.Energy Then
+
                             Dim sumofTotalOBinEnergy As Decimal = Math.Abs(getWTDSummary.Select(Function(x) x.OutstandingBalanceInEnergy).Sum())
                             If Math.Abs(itemAR.AllocationAmount) = sumofTotalOBinEnergy Then
                                 Dim outstandingBalanceOfAP As Decimal = Math.Abs(getWTDSummary.
@@ -766,6 +764,7 @@ Public Class APAllocationProcess
                                 CashShareOnEnergy = outstandingBalanceOfAP
                             Else
                                 CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInEnergy), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
+                                Dim getAPAllocationItem As Decimal = APAllocationListPerBPFinal.Where(Function(x) x.InvoiceNumber.Equals(itemAP.INVDMCMNo) And x.PaymentType = EnumPaymentNewType.Energy).Select(Function(x) x.AllocationAmount).Sum()
                                 If CashShareOnEnergy > Math.Abs(getWTDSummaryItemAP.OutstandingBalanceInEnergy) Then
                                     Dim amountChecker As Decimal = itemAP.EndingBalance - CashShareOnEnergy
                                     If amountChecker < 0 And Math.Abs(amountChecker) > AmountDiffValue Then
@@ -778,6 +777,13 @@ Public Class APAllocationProcess
                                         Else
                                             CashShareOnEnergy += adjCashShareOnEnergy
                                         End If
+                                    End If
+                                End If
+                                If itemAR.DueDate <= CDate("04/25/2022") Then
+                                    If (CashShareOnEnergy + getAPAllocationItem) > itemAP.EndingBalance Then
+                                        ExcludeAPAllocationListPerBP.Add(itemAP.INVDMCMNo)
+                                        Dim getdiff As Decimal = itemAP.EndingBalance - (CashShareOnEnergy + getAPAllocationItem)
+                                        CashShareOnEnergy += getdiff
                                     End If
                                 End If
                             End If
@@ -807,7 +813,7 @@ Public Class APAllocationProcess
                 If getDiff >= AMModule.AmountDiffValue Then
                     Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
                 End If
-                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff)
+                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff, ExcludeAPAllocationListPerBP)
                 'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
 
@@ -973,6 +979,7 @@ Public Class APAllocationProcess
         Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
+            Dim ExcludeAPAllocationListPerBP As New List(Of String)
             getWTDSummary = Me._WESMTransDetailsSummaryList.Where(Function(x) x.BuyerTransNo = itemAR.InvoiceNumber).ToList
             For Each itemAP In cListWESMBillSummaryPerWBatch
                 Dim CashShareOnVAT As Decimal = 0D
@@ -1023,7 +1030,7 @@ Public Class APAllocationProcess
                 If getDiff >= AMModule.AmountDiffValue Then
                     Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
                 End If
-                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff)
+                Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff, ExcludeAPAllocationListPerBP)
                 'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
 
@@ -1266,14 +1273,15 @@ Public Class APAllocationProcess
 
     Private Sub AdjustComputedAllocationForWTA(ByRef UpdateAPAllocationList As List(Of APAllocation),
                                                ByVal WTDSummaryList As List(Of WESMTransDetailsSummary),
-                                               ByVal AmountDiff As Decimal)
+                                               ByVal AmountDiff As Decimal,
+                                               ByVal ExcludedAPAllocation As List(Of String))
 
         Dim UpdatedAPAllocationListPerBP As New List(Of APAllocation)
         Dim totalAllocDiffAmount As Decimal = 0D
         Do While totalAllocDiffAmount <> AmountDiff
-            Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+            Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where Not ExcludedAPAllocation.Contains(x.InvoiceNumber) And x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
             If GetListOfInvoiceWithEOAmount.Count = 0 And AmountDiff < 0 Then
-                GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where x.EndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
+                GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where Not ExcludedAPAllocation.Contains(x.InvoiceNumber) And x.EndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
             ElseIf GetListOfInvoiceWithEOAmount.Count = 0 Then
                 Exit Do
             End If

@@ -342,9 +342,10 @@ Public Class WESMBillTransSummaryPrintHelper
             rowMain("GENX_AMOUNT") = .GenXAmount
             dtableCover.Rows.Add(rowMain)
             dtableCover.AcceptChanges()
-
+            Dim counter As Integer = 0
             For Each dtl In .ListWBAllocDisDetails
                 Dim rowDtl = dtableDtl.NewRow()
+                counter += 1
                 rowDtl("SELLER_BUYER_ID") = .StlID
                 rowDtl("FULL_NAME") = participantInfo.FullName
                 rowDtl("BILLING_ID") = dtl.BillingID
@@ -373,8 +374,6 @@ Public Class WESMBillTransSummaryPrintHelper
                 dtableDtl.AcceptChanges()
             Next
         End With
-
-
         dtableCover.TableName = "WESMBillTransCoverSummary"
         dtableDtl.TableName = "WESMBillTransAllocDetails"
 

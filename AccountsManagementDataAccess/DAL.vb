@@ -421,9 +421,11 @@ Public Class DAL
                 Me._myCommand.CommandText = _SQL
                 Me._myCommand.Transaction = savetransaction
                 Me._myCommand.ExecuteNonQuery()
-                Debug.Print(_SQL)
-                newProgress.ProgressMsg = "Executing SQL scripts for saving: " & cnt.ToString("N0") & "/" & _ListSQL.Count.ToString("N0")
-                progress.Report(newProgress)
+                If (cnt Mod 1000) = 0 Then
+                    Dim percent As Decimal = Math.Round(CDec(cnt / _ListSQL.Count()), 2)
+                    newProgress.ProgressMsg = "Executing SQL scripts for saving: " & percent.ToString("P")
+                    progress.Report(newProgress)
+                End If
             Next
             savetransaction.Commit()
         Catch ex As ApplicationException

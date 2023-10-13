@@ -387,6 +387,7 @@ Public Class PaymentHelper
         Me.progress = progress
     End Sub
 #End Region
+
 #Region "Property of WESM Bill"
     Private _WESMBillList As New List(Of WESMBill)
     Private ReadOnly Property WESMBillList() As List(Of WESMBill)
@@ -1014,7 +1015,7 @@ Public Class PaymentHelper
     End Property
 #End Region
 
-#Region "Property of WESM Transaction Details Summary"
+#Region "Property of WESM Transaction Details Summary History"
     Private _WESMTransDetailsSummaryHistoryList As New List(Of WESMTransDetailsSummaryHistory)
     Public Property WESMTransDetailsSummaryHistoryList() As List(Of WESMTransDetailsSummaryHistory)
         Get
@@ -1221,22 +1222,11 @@ Public Class PaymentHelper
                             Where (x.EndingBalance > x.EnergyWithhold And x.EndingBalance > 0) _
                             Or (Math.Abs(x.BeginningBalance) = 0 And x.EnergyWithholdStatus = EnumEnergyWithholdStatus.UnpaidEWT And x.BalanceType = EnumBalanceType.AP)
                             Select x).ToList()
-
-        'Dim TotalWTAX = (From x In Me.WBillHelper.GetWESMBillSalesAndPurchasedForEWT(Me.PayAllocDate.CollAllocationDate) Select x.WithholdingTAX).Sum()
-        'getWESMBillSalesAndPurchases = (From x In Me.WBillHelper.GetWESMBillSalesAndPurchasedForEWT2(Me.PayAllocDate.CollAllocationDate) Select x).ToList
-
-
         With APAllocationProc
             .OffsettingSequence = 0
             ._PaymentProformaEntries = Me.PaymentProformaEntries
             ._DailyInterestRate = Me.DailyInterestRate
             ._AMParticipantsList = Me.AMParticipants
-            '.GetAPAllocationList(Me.PayAllocDate.CollAllocationDate,
-            '                    WBillSummaryList,
-            '                    getWESMBillSalesAndPurchases,
-            '                    Me.TotalEnergyCollectionperBP,
-            '                    Me.TotalVATCollectionPerBP,
-            '                    Me.TotalMFCollectionPerBP)
             .GetAPAllocationList(Me.PayAllocDate.CollAllocationDate,
                                 WBillSummaryList,
                                 getWESMBillSalesAndPurchases,
@@ -1255,7 +1245,6 @@ Public Class PaymentHelper
             Me._VATonEnergyAllocationList = .VATonEnergyAPAllocationList
             Me._MFwithVATAllocationList = .MFWithVATAPAllocationList
         End With
-
         'Dim SumOfEWT As Decimal = Math.Abs((From x In Me.EnergyAllocationList Where x.PaymentType = EnumPaymentNewType.WithholdingTaxOnEnergy Select x.AllocationAmount).Sum)
         Dim SumOfEWT As Decimal = Math.Abs((From x In getWESMBillSalesAndPurchases Select x.WithholdingTAX).Sum)
 
@@ -1591,10 +1580,12 @@ Public Class PaymentHelper
             End If
 
             counter += 1
-            newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AR " & counter.ToString("N0") & "/" & WESMBillSummaryReceivablesList.Count.ToString("N0")
-            Me.progress.Report(newProgress)
-
+            Dim _percent As Decimal = Math.Round(CDec(counter / WESMBillSummaryReceivablesList.Count), 2)
+            If (counter Mod 1000) = 0 Then
+                newProgress = New ProgressClass
+                newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AR " & _percent.ToString("P")
+                Me.progress.Report(newProgress)
+            End If
             Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
                                  & item.BillingPeriod.ToString & "|" _
                                  & item.OrigDueDate.ToShortDateString & "|" _
@@ -1670,9 +1661,12 @@ Public Class PaymentHelper
             End If
 
             counter += 1
-            newProgress = New ProgressClass
-            newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AP " & counter.ToString("N0") & "/" & WESMBillSummaryPayablesList.Count.ToString("N0")
-            Me.progress.Report(newProgress)
+            Dim _percent As Decimal = Math.Round(CDec(counter / WESMBillSummaryPayablesList.Count), 2)
+            If (counter Mod 1000) = 0 Then
+                newProgress = New ProgressClass
+                newProgress.ProgressMsg = "Creating WESMBillSummary History of Balances in AP " & _percent.ToString("P")
+                Me.progress.Report(newProgress)
+            End If
             Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
                                    & item.BillingPeriod.ToString & "|" _
                                    & item.OrigDueDate.ToShortDateString & "|" _
@@ -1732,163 +1726,6 @@ Public Class PaymentHelper
             Throw New OperationCanceledException
         End If
     End Sub
-
-    Private Sub CreateWESMBillSummaryBalanceNew()
-        Dim PaymentWBSHBalance As New List(Of PaymentWBSHistoryBalance)
-        Dim WESMBillSummaryReceivablesList = (From x In Me.WESMBillSummaryList
-                                              Where x.BeginningBalance < 0 Or x.EndingBalance < 0
-                                              Group By WESMBillBatchNo = x.WESMBillBatchNo,
-                                                       BillingPeriod = x.BillPeriod,
-                                                       OrigDueDate = x.DueDate,
-                                                       IDNumber = x.IDNumber,
-                                                       ChargeType = x.ChargeType,
-                                                       Remarks = x.BillingRemarks
-                                              Into AmountBalance = Sum(x.EndingBalance)
-                                              Order By WESMBillBatchNo).ToList()
-
-        Dim TotalAmountPerWESMBillAR = (From x In Me.WESMBillSummaryList
-                                        Where x.BeginningBalance < 0 Or x.EndingBalance < 0
-                                        Group By WESMBillBatchNo = x.WESMBillBatchNo,
-                                                BillingPeriod = x.BillPeriod,
-                                                OrigDueDate = x.DueDate,
-                                                ChargeType = x.ChargeType,
-                                                Remarks = x.BillingRemarks
-                                        Into TotalBillAmount = Sum(x.BeginningBalance)
-                                        Order By WESMBillBatchNo).ToList()
-
-        Dim ObjARDictionary As New Dictionary(Of String, String)
-        For Each item In WESMBillSummaryReceivablesList
-            Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
-                                 & item.BillingPeriod.ToString & "|" _
-                                 & item.OrigDueDate.ToShortDateString & "|" _
-                                 & item.ChargeType.ToString & "|" _
-                                 & item.IDNumber.IDNumber.ToString
-            If Not ObjARDictionary.ContainsKey(DicKey) Then
-                ObjARDictionary.Add(DicKey, "NOTHING")
-                Dim GetTotalBill = (From x In TotalAmountPerWESMBillAR
-                                    Where x.BillingPeriod = item.BillingPeriod _
-                                    And x.OrigDueDate = item.OrigDueDate _
-                                    And x.ChargeType = item.ChargeType _
-                                    And x.WESMBillBatchNo = item.WESMBillBatchNo
-                                    Select x.TotalBillAmount).Distinct().FirstOrDefault
-
-
-                Using _PymntWBSHistoryBalance As New PaymentWBSHistoryBalance
-                    With _PymntWBSHistoryBalance
-                        .WESMBillBatchNo = item.WESMBillBatchNo
-                        .BillingPeriod = item.BillingPeriod
-                        .BillingPeriodRemarks = item.Remarks
-                        .OriginalDueDate = item.OrigDueDate
-                        .TotalBillAmount = CDec(GetTotalBill)
-                        .IDNumber = New AMParticipants(item.IDNumber.IDNumber, item.IDNumber.ParticipantID)
-                        .AmountBalance = item.AmountBalance
-                        .ChargeType = item.ChargeType
-                        .BalanceType = EnumBalanceType.AR
-                    End With
-                    PaymentWBSHBalance.Add(_PymntWBSHistoryBalance)
-                End Using
-            Else
-                Dim EditPaymntWBSHBalance As PaymentWBSHistoryBalance = (From x In PaymentWBSHBalance
-                                                                         Where x.IDNumber.IDNumber = item.IDNumber.IDNumber _
-                                                                         And x.ChargeType = item.ChargeType And x.OriginalDueDate = item.OrigDueDate _
-                                                                         And x.BillingPeriod = item.BillingPeriod And x.BalanceType = EnumBalanceType.AR _
-                                                                         And x.WESMBillBatchNo = item.WESMBillBatchNo
-                                                                         Select x).FirstOrDefault
-                If Not EditPaymntWBSHBalance Is Nothing Then
-                    EditPaymntWBSHBalance.AmountBalance += item.AmountBalance
-                End If
-            End If
-        Next
-
-        Dim WESMBillSummaryPayablesList = (From x In Me.WESMBillSummaryList
-                                           Where x.BeginningBalance > 0
-                                           Group By WESMBillBatchNo = x.WESMBillBatchNo,
-                                                   BillingPeriod = x.BillPeriod,
-                                                   OrigDueDate = x.DueDate,
-                                                   IDNumber = x.IDNumber,
-                                                   ChargeType = x.ChargeType,
-                                                   Remarks = x.BillingRemarks
-                                           Into AmountBalance = Sum(x.EndingBalance)
-                                           Order By WESMBillBatchNo).ToList()
-
-        Dim TotalAmountPerWESMBillAP = (From x In Me.WESMBillSummaryList
-                                        Where x.BeginningBalance > 0
-                                        Group By WESMBillBatchNo = x.WESMBillBatchNo,
-                                                BillingPeriod = x.BillPeriod,
-                                                OrigDueDate = x.DueDate,
-                                                ChargeType = x.ChargeType,
-                                                Remarks = x.BillingRemarks
-                                        Into TotalBillAmount = Sum(x.BeginningBalance)
-                                        Order By WESMBillBatchNo).ToList()
-
-        Dim WESMBillSummaryPayablesListDistinct = (From x In WESMBillSummaryPayablesList Select x.WESMBillBatchNo, x.BillingPeriod, x.OrigDueDate, x.ChargeType).Distinct.ToList()
-        Dim ObjAPDictionary As New Dictionary(Of String, String)
-        For Each item In WESMBillSummaryPayablesList
-            Dim DicKey As String = item.WESMBillBatchNo.ToString & "|" _
-                                   & item.BillingPeriod.ToString & "|" _
-                                   & item.OrigDueDate.ToShortDateString & "|" _
-                                   & item.ChargeType.ToString & "|" _
-                                   & item.IDNumber.IDNumber.ToString
-
-            If Not ObjAPDictionary.ContainsKey(DicKey) Then
-                ObjAPDictionary.Add(DicKey, "NOTHING")
-                'Dim WESMBill = (From x In Me.WESMBillList _
-                '                Where x.BillingPeriod = item.BillingPeriod _
-                '                And x.DueDate = item.OrigDueDate _
-                '                Select x).FirstOrDefault
-                'If WESMBill Is Nothing Then
-                '    WESMBill = New WESMBill
-                '    'Throw New Exception("No WESMBILL found please check the table.")
-                'End If
-
-                Dim GetTotalBill = (From x In TotalAmountPerWESMBillAP
-                                    Where x.BillingPeriod = item.BillingPeriod _
-                                    And x.OrigDueDate = item.OrigDueDate _
-                                    And x.ChargeType = item.ChargeType _
-                                    And x.WESMBillBatchNo = item.WESMBillBatchNo
-                                    Select x.TotalBillAmount).Distinct().FirstOrDefault
-
-                Using _PymntWBSHistoryBalance As New PaymentWBSHistoryBalance
-                    With _PymntWBSHistoryBalance
-                        .WESMBillBatchNo = item.WESMBillBatchNo
-                        .BillingPeriod = item.BillingPeriod
-                        .BillingPeriodRemarks = item.Remarks
-                        .OriginalDueDate = item.OrigDueDate
-                        .TotalBillAmount = CDec(GetTotalBill)
-                        .IDNumber = New AMParticipants(item.IDNumber.IDNumber, item.IDNumber.ParticipantID)
-                        .AmountBalance = item.AmountBalance
-                        .ChargeType = item.ChargeType
-                        .BalanceType = EnumBalanceType.AP
-                    End With
-
-                    PaymentWBSHBalance.Add(_PymntWBSHistoryBalance)
-                End Using
-            Else
-                Dim EditPaymntWBSHBalance As PaymentWBSHistoryBalance = (From x In PaymentWBSHBalance
-                                                                         Where x.IDNumber.IDNumber = item.IDNumber.IDNumber _
-                                                                         And x.ChargeType = item.ChargeType And x.OriginalDueDate = item.OrigDueDate _
-                                                                         And x.WESMBillBatchNo = item.WESMBillBatchNo _
-                                                                         And x.BillingPeriod = item.BillingPeriod And x.BalanceType = EnumBalanceType.AP
-                                                                         Select x).FirstOrDefault
-
-                If Not EditPaymntWBSHBalance Is Nothing Then
-                    EditPaymntWBSHBalance.AmountBalance += item.AmountBalance
-                End If
-            End If
-
-        Next
-        Me.PymntWBSHistoryBalance = PaymentWBSHBalance
-        PaymentWBSHBalance = Nothing
-        WESMBillSummaryReceivablesList = Nothing
-        TotalAmountPerWESMBillAR = Nothing
-        ObjARDictionary = Nothing
-        WESMBillSummaryPayablesList = Nothing
-        TotalAmountPerWESMBillAP = Nothing
-        WESMBillSummaryPayablesListDistinct = Nothing
-        ObjAPDictionary = Nothing
-
-    End Sub
-
 #End Region
 
 #Region "Functions For Offsetting of AR and AP DataTable"
