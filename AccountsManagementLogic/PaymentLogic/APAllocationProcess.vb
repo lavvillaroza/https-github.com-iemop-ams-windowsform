@@ -4,7 +4,7 @@ Imports AccountsManagementDataAccess
 Imports System.Threading
 Public Class APAllocationProcess
     Dim newProgress As ProgressClass
-
+    Private boolAdjStatusFailed As Boolean
     Public Sub New()
         Me._WBillHelper = WESMBillHelper.GetInstance
     End Sub
@@ -779,13 +779,21 @@ Public Class APAllocationProcess
                                         End If
                                     End If
                                 End If
-                                If itemAR.DueDate <= CDate("04/25/2022") Then
-                                    If (CashShareOnEnergy + getAPAllocationItem) > itemAP.EndingBalance Then
-                                        ExcludeAPAllocationListPerBP.Add(itemAP.INVDMCMNo)
-                                        Dim getdiff As Decimal = itemAP.EndingBalance - (CashShareOnEnergy + getAPAllocationItem)
-                                        CashShareOnEnergy += getdiff
-                                    End If
+                                'If itemAR.DueDate <= CDate("04/25/2022") Then
+                                '    If (CashShareOnEnergy + getAPAllocationItem) > itemAP.EndingBalance Then
+                                '        ExcludeAPAllocationListPerBP.Add(itemAP.INVDMCMNo)
+                                '        Dim getdiff As Decimal = itemAP.EndingBalance - (CashShareOnEnergy + getAPAllocationItem)
+                                '        CashShareOnEnergy += getdiff
+                                '    End If
+                                'End If
+                                If (CashShareOnEnergy + getAPAllocationItem) > itemAP.EndingBalance Then
+                                    ExcludeAPAllocationListPerBP.Add(itemAP.INVDMCMNo)
+                                    Dim getdiff As Decimal = itemAP.EndingBalance - (CashShareOnEnergy + getAPAllocationItem)
+                                    CashShareOnEnergy += getdiff
                                 End If
+                            End If
+                            If itemAP.INVDMCMNo = "TS-WF-191F-0000343" Then
+                                Debug.Print(CashShareOnEnergy)
                             End If
                         ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
                             CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInEnergy), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
@@ -807,6 +815,9 @@ Public Class APAllocationProcess
                 End Select
                 APAllocationListPerBP.Add(CreatedItem_Energy)
             Next
+            If itemAR.InvoiceNumber = "TS-WF-188F-0182" Then
+                Dim x0 = 0
+            End If
             Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
             If Math.Abs(itemAR.AllocationAmount) <> totalAPAllocationAmount Then
                 Dim getDiff As Decimal = Math.Abs(itemAR.AllocationAmount) - totalAPAllocationAmount
@@ -814,6 +825,9 @@ Public Class APAllocationProcess
                     Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
                 End If
                 Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff, ExcludeAPAllocationListPerBP)
+                If boolAdjStatusFailed = True Then
+                    Throw New Exception("Cannot adjust the allocated amount from AR Inv: " & itemAR.InvoiceNumber & "! Please contact the administrator.")
+                End If
                 'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
 
@@ -1031,6 +1045,9 @@ Public Class APAllocationProcess
                     Throw New Exception("The amount difference between AR Tagged Amount and AP Allocated Amount is greater than the maximum value " & AMModule.AmountDiffValue.ToString("N2") & "!" & vbNewLine & "Please contact the administrator.")
                 End If
                 Me.AdjustComputedAllocationForWTA(APAllocationListPerBP, getWTDSummary, getDiff, ExcludeAPAllocationListPerBP)
+                If boolAdjStatusFailed = True Then
+                    Throw New Exception("Cannot adjust the allocated amount from AR Inv: " & itemAR.InvoiceNumber & "! Please contact the administrator.")
+                End If
                 'Me.AdjustComputedAllocation(APAllocationListPerBP, getDiff)
             End If
 
@@ -1278,6 +1295,7 @@ Public Class APAllocationProcess
 
         Dim UpdatedAPAllocationListPerBP As New List(Of APAllocation)
         Dim totalAllocDiffAmount As Decimal = 0D
+        Dim countofListOfInvoiceOB As Integer = 0
         Do While totalAllocDiffAmount <> AmountDiff
             Dim GetListOfInvoiceWithEOAmount = (From x In UpdateAPAllocationList Select x Where Not ExcludedAPAllocation.Contains(x.InvoiceNumber) And x.NewEndingBalance > 0 Order By x.AllocationAmount Descending, x.EndingBalance Descending).ToList
             If GetListOfInvoiceWithEOAmount.Count = 0 And AmountDiff < 0 Then
@@ -1285,7 +1303,12 @@ Public Class APAllocationProcess
             ElseIf GetListOfInvoiceWithEOAmount.Count = 0 Then
                 Exit Do
             End If
+            If countofListOfInvoiceOB = GetListOfInvoiceWithEOAmount.Count() And totalAllocDiffAmount = 0 Then
+                boolAdjStatusFailed = True
+                Exit Do
+            End If
             For Each item In GetListOfInvoiceWithEOAmount
+                countofListOfInvoiceOB += 1
                 Dim computedShareDiffAmount As Decimal = If(AmountDiff > 0D, 0.01D, -0.01D)
                 If totalAllocDiffAmount <> AmountDiff Then
                     Dim getWTDSummary = WTDSummaryList.FirstOrDefault(Function(x) x.SellerTransNo = item.InvoiceNumber)

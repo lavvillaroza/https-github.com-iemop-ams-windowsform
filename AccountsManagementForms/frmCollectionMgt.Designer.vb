@@ -103,6 +103,7 @@ Partial Class frmCollectionMgt
         Me.Label8 = New System.Windows.Forms.Label()
         Me.txtTotalAllocatedAmount = New System.Windows.Forms.TextBox()
         Me.gpManual = New System.Windows.Forms.GroupBox()
+        Me.cb_CheckAll = New System.Windows.Forms.CheckBox()
         Me.txtRemainingCash = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtTotalOutstandingBalance = New System.Windows.Forms.TextBox()
@@ -259,11 +260,11 @@ Partial Class frmCollectionMgt
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colWBSummaryNo1, Me.colWBSummaryNo2, Me.colBillingPeriod, Me.colIDNumber, Me.colParticipantID, Me.colSummaryType, Me.colInvDMCMNo, Me.colInvDMCMNoText, Me.colChargeType, Me.colChargeTypeValue, Me.colDueDate, Me.colNewDueDate, Me.colEndingBalance, Me.colDefaultInterest, Me.colTaxOrig, Me.colVatOrig, Me.colDefaultWithhold, Me.colTotalPayable, Me.colCash, Me.colChckPay, Me.colDrawdown, Me.colRemainingBalance, Me.colDefaultInterestOrig, Me.colMFOrig, Me.colMFVOrig, Me.colDefaultWithholdOrig, Me.colMF, Me.colMFV, Me.colTax, Me.colVat, Me.colDefaultMF, Me.colDefaultMFV, Me.colDefaultWithholdMFTax, Me.colDefaultWithholdMFVat, Me.colCashEnergyAndVAT, Me.colCashDefaultEnergy, Me.colDrawdownEnergy, Me.colDrawdownDefaultEnergy})
-        Me.DGridView.Location = New System.Drawing.Point(9, 13)
+        Me.DGridView.Location = New System.Drawing.Point(9, 39)
         Me.DGridView.MultiSelect = False
         Me.DGridView.Name = "DGridView"
         Me.DGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGridView.Size = New System.Drawing.Size(1184, 261)
+        Me.DGridView.Size = New System.Drawing.Size(1184, 273)
         Me.DGridView.TabIndex = 13
         '
         'colWBSummaryNo1
@@ -581,7 +582,7 @@ Partial Class frmCollectionMgt
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(892, 283)
+        Me.Label8.Location = New System.Drawing.Point(892, 321)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(128, 14)
         Me.Label8.TabIndex = 12
@@ -593,7 +594,7 @@ Partial Class frmCollectionMgt
         Me.txtTotalAllocatedAmount.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtTotalAllocatedAmount.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalAllocatedAmount.ForeColor = System.Drawing.Color.Black
-        Me.txtTotalAllocatedAmount.Location = New System.Drawing.Point(1026, 280)
+        Me.txtTotalAllocatedAmount.Location = New System.Drawing.Point(1026, 318)
         Me.txtTotalAllocatedAmount.MaxLength = 26
         Me.txtTotalAllocatedAmount.Name = "txtTotalAllocatedAmount"
         Me.txtTotalAllocatedAmount.ReadOnly = True
@@ -603,6 +604,7 @@ Partial Class frmCollectionMgt
         '
         'gpManual
         '
+        Me.gpManual.Controls.Add(Me.cb_CheckAll)
         Me.gpManual.Controls.Add(Me.DGridView)
         Me.gpManual.Controls.Add(Me.txtRemainingCash)
         Me.gpManual.Controls.Add(Me.Label3)
@@ -614,9 +616,19 @@ Partial Class frmCollectionMgt
         Me.gpManual.Controls.Add(Me.Label8)
         Me.gpManual.Location = New System.Drawing.Point(13, 160)
         Me.gpManual.Name = "gpManual"
-        Me.gpManual.Size = New System.Drawing.Size(1200, 335)
+        Me.gpManual.Size = New System.Drawing.Size(1200, 373)
         Me.gpManual.TabIndex = 20
         Me.gpManual.TabStop = False
+        '
+        'cb_CheckAll
+        '
+        Me.cb_CheckAll.AutoSize = True
+        Me.cb_CheckAll.Location = New System.Drawing.Point(1105, 15)
+        Me.cb_CheckAll.Name = "cb_CheckAll"
+        Me.cb_CheckAll.Size = New System.Drawing.Size(70, 18)
+        Me.cb_CheckAll.TabIndex = 42
+        Me.cb_CheckAll.Text = "Check All"
+        Me.cb_CheckAll.UseVisualStyleBackColor = True
         '
         'txtRemainingCash
         '
@@ -624,7 +636,7 @@ Partial Class frmCollectionMgt
         Me.txtRemainingCash.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRemainingCash.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRemainingCash.ForeColor = System.Drawing.Color.Black
-        Me.txtRemainingCash.Location = New System.Drawing.Point(663, 280)
+        Me.txtRemainingCash.Location = New System.Drawing.Point(663, 318)
         Me.txtRemainingCash.MaxLength = 26
         Me.txtRemainingCash.Name = "txtRemainingCash"
         Me.txtRemainingCash.ReadOnly = True
@@ -638,7 +650,7 @@ Partial Class frmCollectionMgt
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(559, 283)
+        Me.Label3.Location = New System.Drawing.Point(559, 321)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(99, 14)
         Me.Label3.TabIndex = 22
@@ -650,7 +662,7 @@ Partial Class frmCollectionMgt
         Me.txtTotalOutstandingBalance.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtTotalOutstandingBalance.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalOutstandingBalance.ForeColor = System.Drawing.Color.Black
-        Me.txtTotalOutstandingBalance.Location = New System.Drawing.Point(1027, 306)
+        Me.txtTotalOutstandingBalance.Location = New System.Drawing.Point(1027, 344)
         Me.txtTotalOutstandingBalance.MaxLength = 26
         Me.txtTotalOutstandingBalance.Name = "txtTotalOutstandingBalance"
         Me.txtTotalOutstandingBalance.ReadOnly = True
@@ -664,7 +676,7 @@ Partial Class frmCollectionMgt
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(868, 308)
+        Me.Label1.Location = New System.Drawing.Point(868, 346)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(151, 14)
         Me.Label1.TabIndex = 20
@@ -676,7 +688,7 @@ Partial Class frmCollectionMgt
         Me.txtRemainingPrudential.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRemainingPrudential.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRemainingPrudential.ForeColor = System.Drawing.Color.Black
-        Me.txtRemainingPrudential.Location = New System.Drawing.Point(663, 306)
+        Me.txtRemainingPrudential.Location = New System.Drawing.Point(663, 344)
         Me.txtRemainingPrudential.MaxLength = 26
         Me.txtRemainingPrudential.Name = "txtRemainingPrudential"
         Me.txtRemainingPrudential.ReadOnly = True
@@ -690,7 +702,7 @@ Partial Class frmCollectionMgt
         Me.lblRemainingPrudential.AutoSize = True
         Me.lblRemainingPrudential.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRemainingPrudential.ForeColor = System.Drawing.Color.Black
-        Me.lblRemainingPrudential.Location = New System.Drawing.Point(537, 309)
+        Me.lblRemainingPrudential.Location = New System.Drawing.Point(537, 347)
         Me.lblRemainingPrudential.Name = "lblRemainingPrudential"
         Me.lblRemainingPrudential.Size = New System.Drawing.Size(127, 14)
         Me.lblRemainingPrudential.TabIndex = 33
@@ -837,7 +849,7 @@ Partial Class frmCollectionMgt
         Me.btnSave.ForeColor = System.Drawing.Color.Black
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSave.Location = New System.Drawing.Point(944, 502)
+        Me.btnSave.Location = New System.Drawing.Point(944, 539)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(130, 39)
         Me.btnSave.TabIndex = 1
@@ -856,7 +868,7 @@ Partial Class frmCollectionMgt
         Me.btnCancel.ForeColor = System.Drawing.Color.Black
         Me.btnCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancel.Location = New System.Drawing.Point(1083, 502)
+        Me.btnCancel.Location = New System.Drawing.Point(1083, 539)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(130, 39)
         Me.btnCancel.TabIndex = 2
@@ -870,7 +882,7 @@ Partial Class frmCollectionMgt
         Me.AutoScroll = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1225, 548)
+        Me.ClientSize = New System.Drawing.Size(1225, 585)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.btnCancel)
@@ -987,4 +999,5 @@ Partial Class frmCollectionMgt
     Friend WithEvents colCashDefaultEnergy As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colDrawdownEnergy As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colDrawdownDefaultEnergy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents cb_CheckAll As CheckBox
 End Class
