@@ -528,7 +528,6 @@ Public Class frmCollectionMgt
     End Sub
 
     Private Sub DGridView_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles DGridView.CellBeginEdit
-
         Try
             Select Case e.ColumnIndex
                 Case 18 'For column Cash
@@ -542,26 +541,26 @@ Public Class frmCollectionMgt
                     Next
 
                     'Get the remaning cash
-                    Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) - _
+                    Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) -
                                                      CDec(Me.txtPrudentialReplenishment.Text) - subTotal
 
-                    Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) + _
+                    Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) +
                                                 CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
 
 
 
                     'It will disable cash column if the remaining cash is not already enough to pay the default interest for Market Fees
-                    If CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And _
-                       CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
+                    If CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And
+                       CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
                        (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
 
                         e.Cancel = True
 
                         'It will disable cash column if the remaining cash and prudential are not 
                         'already enough to pay the default interest for energy
-                    ElseIf CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And _
-                           CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
-                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > _
+                    ElseIf CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And
+                           CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) >
                             remainingAmount + CDec(Me.txtRemainingPrudential.Text)) Then
 
                         e.Cancel = True
@@ -581,6 +580,7 @@ Public Class frmCollectionMgt
 
                         Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) +
                                                     CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
+
                         If CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
                                CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And
                                (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
@@ -589,8 +589,7 @@ Public Class frmCollectionMgt
                                 CBool(Me.cb_CheckAll.Checked) = True Then
                             Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value = False
                             Me.ResetDatagridRow(e.RowIndex)
-                            'Compute the remaining cash, prudential and applied amount
-                            Me.ComputeRemainingCash()
+                            'Compute the remaining cash, prudential and applied amount                            
                             Me.ComputeRemainingPrudential()
                             Me.ComputeTotalAppliedAmount()
                         ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
@@ -609,7 +608,12 @@ Public Class frmCollectionMgt
                                     Else
                                         'Reset the datagrid row
                                         Me.ResetDatagridRow(Me.DGridView.Rows(e.RowIndex).Index)
-                                        Dim AmountToAllocate As Decimal = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                        Dim AmountToAllocate As Decimal = 0
+                                        If remainingAmount >= CDec(.Cells("colTotalPayable").Value) Then
+                                            AmountToAllocate = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                        Else
+                                            AmountToAllocate = remainingAmount
+                                        End If
                                         .Cells("colDrawdown").ReadOnly = True
                                         .Cells("colDrawdown").Value = AmountToAllocate
                                         Me.PREnergyApplication(e.RowIndex)
@@ -3694,7 +3698,7 @@ Public Class frmCollectionMgt
                 For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
-                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False Then
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
                         Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
@@ -3737,23 +3741,16 @@ Public Class frmCollectionMgt
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
                     If ChargeType = EnumChargeType.E Then
-                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False Then
+                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
                             Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                             Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
                             With Me.DGridView.Rows(i)
-                                'Enable/Disable AmoutToPay column
-                                If CBool(.Cells("colChckPay").Value) = False Then
-                                    .Cells("colDrawdown").ReadOnly = False
-                                    'Reset the datagrid row
-                                    Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
-                                Else
-                                    'Reset the datagrid row
-                                    Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
-                                    Dim AmountToAllocate As Decimal = Math.Abs(CDec(.Cells("colTotalPayable").Value))
-                                    .Cells("colDrawdown").ReadOnly = True
-                                    .Cells("colDrawdown").Value = AmountToAllocate
-                                    Me.PREnergyApplication(i)
-                                End If
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                                Dim AmountToAllocate As Decimal = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                .Cells("colDrawdown").ReadOnly = True
+                                .Cells("colDrawdown").Value = AmountToAllocate
+                                Me.PREnergyApplication(i)
                             End With
                             checkCounterPR += 1
                         End If
