@@ -58,6 +58,7 @@ Namespace Library.Core.LDAP
                 _ldapConn = New LdapConnection(New LdapDirectoryIdentifier(_connInfo.Server, _connInfo.Port))
                 _ldapConn.SessionOptions.SecureSocketLayer = False
                 _ldapConn.SessionOptions.ProtocolVersion = 3
+                Debug.Print(_connInfo.GetUserCn)
                 _ldapConn.Credential = New NetworkCredential(_connInfo.GetUserCn, _connInfo.Password)
                 _ldapConn.AuthType = AuthType.Basic
                 _ldapConn.Bind()

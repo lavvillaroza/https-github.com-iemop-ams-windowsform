@@ -465,6 +465,12 @@
     <Compile Include="FormReports\frmDefaultNotice.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmFlashScreen.Designer.vb">
+      <DependentUpon>frmFlashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmFlashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmImportCRSSMappingID.Designer.vb">
       <DependentUpon>frmImportCRSSMappingID.vb</DependentUpon>
     </Compile>
@@ -1604,6 +1610,9 @@
     <EmbeddedResource Include="frmCollectionPost.resx">
       <DependentUpon>frmCollectionPost.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFlashScreen.resx">
+      <DependentUpon>frmFlashScreen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportCRSSMappingID.resx">
       <DependentUpon>frmImportCRSSMappingID.vb</DependentUpon>

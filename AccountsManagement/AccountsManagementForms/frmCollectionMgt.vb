@@ -95,7 +95,7 @@ Public Class frmCollectionMgt
     Private ListHeldCollection As List(Of CollectionMonitoring)
     Private itemCollectionMonitoring As CollectionMonitoring
     Private panelHeight As Integer
-
+    Private checkAllBox As Boolean = False
     Private Enum EnumORRemarks
         Energy
         VATonEnergy
@@ -528,7 +528,6 @@ Public Class frmCollectionMgt
     End Sub
 
     Private Sub DGridView_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles DGridView.CellBeginEdit
-
         Try
             Select Case e.ColumnIndex
                 Case 18 'For column Cash
@@ -542,70 +541,133 @@ Public Class frmCollectionMgt
                     Next
 
                     'Get the remaning cash
-                    Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) - _
+                    Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) -
                                                      CDec(Me.txtPrudentialReplenishment.Text) - subTotal
 
-                    Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) + _
+                    Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) +
                                                 CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
 
 
 
                     'It will disable cash column if the remaining cash is not already enough to pay the default interest for Market Fees
-                    If CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And _
-                       CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
+                    If CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And
+                       CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
                        (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
 
                         e.Cancel = True
 
                         'It will disable cash column if the remaining cash and prudential are not 
                         'already enough to pay the default interest for energy
-                    ElseIf CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And _
-                           CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
-                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > _
+                    ElseIf CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And
+                           CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) >
                             remainingAmount + CDec(Me.txtRemainingPrudential.Text)) Then
 
                         e.Cancel = True
                     End If
 
                 Case 19 'This will not allowed the user to check the FullyPaid column if there is no more money to be allocated
+                    If Me.LoadType = CollectionLoadType.Add And CDec(Me.txtPrudentialAmount.Text) > 0 Then
+                        'Compute the amount allocated
+                        Dim subTotal As Decimal = 0
+                        For i As Integer = 0 To Me.DGridView.Rows.Count - 1
+                            If i <> e.RowIndex Then
+                                subTotal += CDec(Me.DGridView.Rows(i).Cells("colDrawdown").Value)
+                            End If
+                        Next
+                        'Get the remaning cash
+                        Dim remainingAmount As Decimal = CDec(Me.txtPrudentialAmount.Text) - subTotal
 
-                    'Compute the amount allocated
-                    Dim subTotal As Decimal = 0
-                    For i As Integer = 0 To Me.DGridView.Rows.Count - 1
-                        If i <> e.RowIndex Then
-                            subTotal += CDec(Me.DGridView.Rows(i).Cells("colCash").Value)
+                        Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) +
+                                                    CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
+
+                        If CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                               CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And
+                               (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
+                            e.Cancel = True
+                        ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = True And
+                                CBool(Me.cb_CheckAll.Checked) = True Then
+                            Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value = False
+                            Me.ResetDatagridRow(e.RowIndex)
+                            'Compute the remaining cash, prudential and applied amount                            
+                            Me.ComputeRemainingPrudential()
+                            Me.ComputeTotalAppliedAmount()
+                        ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                                CBool(Me.cb_CheckAll.Checked) = False Then
+                            Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
+                                                   CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value)), EnumChargeType)
+                            If ChargeType = EnumChargeType.E Then
+                                Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value = True
+                                Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                                With Me.DGridView.Rows(e.RowIndex)
+                                    'Enable/Disable AmoutToPay column
+                                    If CBool(.Cells("colChckPay").Value) = False Then
+                                        .Cells("colDrawdown").ReadOnly = False
+                                        'Reset the datagrid row
+                                        Me.ResetDatagridRow(Me.DGridView.Rows(e.RowIndex).Index)
+                                    Else
+                                        'Reset the datagrid row
+                                        Me.ResetDatagridRow(Me.DGridView.Rows(e.RowIndex).Index)
+                                        Dim AmountToAllocate As Decimal = 0
+                                        If remainingAmount >= CDec(.Cells("colTotalPayable").Value) Then
+                                            AmountToAllocate = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                        Else
+                                            AmountToAllocate = remainingAmount
+                                        End If
+                                        .Cells("colDrawdown").ReadOnly = True
+                                        .Cells("colDrawdown").Value = AmountToAllocate
+                                        Me.PREnergyApplication(e.RowIndex)
+                                    End If
+                                End With
+                            End If
+                            Me.ComputeRemainingPrudential()
                         End If
-                    Next
+                    ElseIf Me.LoadType = CollectionLoadType.Edit Then
+                        'Compute the amount allocated
+                        Dim subTotal As Decimal = 0
+                        For i As Integer = 0 To Me.DGridView.Rows.Count - 1
+                            If i <> e.RowIndex Then
+                                subTotal += CDec(Me.DGridView.Rows(i).Cells("colCash").Value)
+                            End If
+                        Next
 
-                    'Get the remaning cash
-                    Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) - _
-                                                     CDec(Me.txtPrudentialReplenishment.Text) - subTotal
+                        'Get the remaning cash
+                        Dim remainingAmount As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) -
+                                                         CDec(Me.txtPrudentialReplenishment.Text) - subTotal
 
-                    Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) + _
-                                                CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
+                        Dim DefaultInterestAmount = CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultInterest").Value) +
+                                                    CDec(Me.DGridView.Rows(e.RowIndex).Cells("colDefaultWithhold").Value)
 
-                    If CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
-                       CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And _
-                       (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
+                        If CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                           CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.MF.ToString() And
+                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > remainingAmount) Then
 
-                        e.Cancel = True
+                            e.Cancel = True
 
-                        'It will disable fully paid column if the remaining cash and prudential are not 
-                        'already enough to pay the default interest for energy
-                    ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
-                           CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And _
-                           (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) > _
-                            remainingAmount + CDec(Me.txtRemainingPrudential.Text)) Then
+                            'It will disable fully paid column if the remaining cash and prudential are not 
+                            'already enough to pay the default interest for energy
+                        ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                               CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.E.ToString() And
+                               (remainingAmount = 0 Or Math.Abs(DefaultInterestAmount) >
+                                remainingAmount + CDec(Me.txtRemainingPrudential.Text)) Then
 
-                        e.Cancel = True
+                            e.Cancel = True
 
-                    ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And _
-                           CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.EV.ToString() And _
-                           remainingAmount = 0 Then
+                        ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = False And
+                               CStr(Me.DGridView.Rows(e.RowIndex).Cells("colChargeType").Value) = EnumChargeType.EV.ToString() And
+                               remainingAmount = 0 Then
 
-                        e.Cancel = True
+                            e.Cancel = True
+                        ElseIf CBool(Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value) = True And
+                                CBool(Me.cb_CheckAll.Checked) = True Then
+                            Me.DGridView.Rows(e.RowIndex).Cells("colChckPay").Value = False
+                            Me.ResetDatagridRow(e.RowIndex)
+                            'Compute the remaining cash, prudential and applied amount
+                            Me.ComputeRemainingCash()
+                            Me.ComputeRemainingPrudential()
+                            Me.ComputeTotalAppliedAmount()
+                        End If
                     End If
-
             End Select
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
@@ -618,7 +680,6 @@ Public Class frmCollectionMgt
             If Me.DGridView.Rows.Count = 0 Then
                 Exit Sub
             End If
-
 
             Select Case e.ColumnIndex 'For Default Interest
                 Case 13
@@ -828,6 +889,7 @@ Public Class frmCollectionMgt
                             Exit Sub
                         End With
                     End If
+
 
             End Select
 
@@ -1149,79 +1211,131 @@ Public Class frmCollectionMgt
                     Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
                 Case 19 'For Check Fully Paid
-                    Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                    If Me.LoadType = CollectionLoadType.Add And Me.rbManual.Checked = True And ChargeType = EnumChargeType.E Then
+                        Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
-                    With Me.DGridView.CurrentRow
+                        With Me.DGridView.CurrentRow
 
-                        'Enable/Disable AmoutToPay column
-                        If CBool(.Cells("colChckPay").Value) = False Then
-                            .Cells("colCash").ReadOnly = False
+                            'Enable/Disable AmoutToPay column
+                            If CBool(.Cells("colChckPay").Value) = False Then
+                                .Cells("colDrawdown").ReadOnly = False
 
-                            'Reset the datagrid row
-                            Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
-                        Else
-                            'Reset the datagrid row
-                            Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                            Else
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
 
-                            'Compute the amount allocated
-                            Dim subTotal As Decimal = 0
-                            For i As Integer = 0 To Me.DGridView.Rows.Count - 1
-                                If i <> .Index Then
-                                    subTotal += CDec(Me.DGridView.Rows(i).Cells("colCash").Value)
+                                'Compute the amount allocated
+                                Dim subTotal As Decimal = 0
+                                For i As Integer = 0 To Me.DGridView.Rows.Count - 1
+                                    If i <> .Index Then
+                                        subTotal += CDec(Me.DGridView.Rows(i).Cells("colDrawdown").Value)
+                                    End If
+                                Next
+
+                                Dim AmountToAllocate As Decimal = CDec(Me.txtPrudentialAmount.Text) - subTotal
+
+                                'Check if the remaining amount is enough to pay the Total Payable
+                                If AmountToAllocate < Math.Abs(CDec(.Cells("colTotalPayable").Value)) Then
+                                    Dim defaultInterest As Decimal, defaultWithhold As Decimal
+
+                                    defaultInterest = CDec(.Cells("colDefaultInterest").Value)
+                                    defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
+
+                                    'Check if the remaining amount is enough for default interest
+                                    If AmountToAllocate < defaultInterest + defaultWithhold Then
+                                        Exit Sub
+                                    End If
+                                Else
+                                    AmountToAllocate = Math.Abs(CDec(.Cells("colTotalPayable").Value))
                                 End If
-                            Next
+                                .Cells("colDrawdown").ReadOnly = True
+                                .Cells("colDrawdown").Value = AmountToAllocate
+                                Select Case ChargeType
+                                    Case EnumChargeType.E
+                                        Me.DrawdownEnergy()
+                                End Select
+                            End If
+                            'Compute the remaining prudential
+                            Me.ComputeRemainingPrudential()
+                            Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                        End With
 
-                            Dim AmountToAllocate As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) - _
-                                                              CDec(Me.txtPrudentialReplenishment.Text) - subTotal
+                    ElseIf Me.LoadType = CollectionLoadType.Edit And Me.rbManual.Checked = True Then
+                        Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
-                            'Check if the remaining amount is enough to pay the Total Payable
-                            If AmountToAllocate < Math.Abs(CDec(.Cells("colTotalPayable").Value)) Then
-                                Dim defaultInterest As Decimal, defaultWithhold As Decimal
+                        With Me.DGridView.CurrentRow
 
-                                defaultInterest = CDec(.Cells("colDefaultInterest").Value)
-                                defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
+                            'Enable/Disable AmoutToPay column
+                            If CBool(.Cells("colChckPay").Value) = False Then
+                                .Cells("colCash").ReadOnly = False
 
-                                'Check if the remaining amount is enough for default interest
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                            Else
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+
+                                'Compute the amount allocated
+                                Dim subTotal As Decimal = 0
+                                For i As Integer = 0 To Me.DGridView.Rows.Count - 1
+                                    If i <> .Index Then
+                                        subTotal += CDec(Me.DGridView.Rows(i).Cells("colCash").Value)
+                                    End If
+                                Next
+
+                                Dim AmountToAllocate As Decimal = CDec(Me.txtAmountCollected.Text) + CDec(Me.txtHeldPayment.Text) -
+                                                                  CDec(Me.txtPrudentialReplenishment.Text) - subTotal
+
+                                'Check if the remaining amount is enough to pay the Total Payable
+                                If AmountToAllocate < Math.Abs(CDec(.Cells("colTotalPayable").Value)) Then
+                                    Dim defaultInterest As Decimal, defaultWithhold As Decimal
+
+                                    defaultInterest = CDec(.Cells("colDefaultInterest").Value)
+                                    defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
+
+                                    'Check if the remaining amount is enough for default interest
+                                    Select Case ChargeType
+                                        Case EnumChargeType.MF
+                                            If AmountToAllocate < defaultInterest + defaultWithhold Then
+                                                Exit Sub
+                                            End If
+                                        Case EnumChargeType.E
+                                            'Old
+                                            'If AmountToAllocate + CDec(Me.txtRemainingPrudential.Text) < defaultInterest + defaultWithhold Then
+                                            '    Exit Sub
+                                            'End If
+                                            'New - Removed the PR Amount by LAVV as of June 06, 2022
+                                            If AmountToAllocate < defaultInterest + defaultWithhold Then
+                                                Exit Sub
+                                            End If
+                                    End Select
+
+
+                                Else
+                                    AmountToAllocate = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                End If
+
+                                .Cells("colCash").ReadOnly = True
+                                .Cells("colCash").Value = AmountToAllocate
+
                                 Select Case ChargeType
                                     Case EnumChargeType.MF
-                                        If AmountToAllocate < defaultInterest + defaultWithhold Then
-                                            Exit Sub
-                                        End If
-                                    Case EnumChargeType.E
-                                        'Old
-                                        'If AmountToAllocate + CDec(Me.txtRemainingPrudential.Text) < defaultInterest + defaultWithhold Then
-                                        '    Exit Sub
-                                        'End If
-                                        'New - Removed the PR Amount by LAVV as of June 06, 2022
-                                        If AmountToAllocate < defaultInterest + defaultWithhold Then
-                                            Exit Sub
-                                        End If
+                                        Me.MarketFeesApplication()
+
+                                    Case EnumChargeType.E, EnumChargeType.EV
+                                        Me.CashEnergyAndVatOnEnergyApplication()
+
                                 End Select
-
-
-                            Else
-                                AmountToAllocate = Math.Abs(CDec(.Cells("colTotalPayable").Value))
                             End If
 
-                            .Cells("colCash").ReadOnly = True
-                            .Cells("colCash").Value = AmountToAllocate
-
-                            Select Case ChargeType
-                                Case EnumChargeType.MF
-                                    Me.MarketFeesApplication()
-
-                                Case EnumChargeType.E, EnumChargeType.EV
-                                    Me.CashEnergyAndVatOnEnergyApplication()
-
-                            End Select
-                        End If
-
-                        'Compute the remaining cash, prudential and applied amount
-                        Me.ComputeRemainingCash()
-                        Me.ComputeRemainingPrudential()
-                        Me.ComputeTotalAppliedAmount()
-                    End With
-
+                            'Compute the remaining cash, prudential and applied amount
+                            Me.ComputeRemainingCash()
+                            Me.ComputeRemainingPrudential()
+                            Me.ComputeTotalAppliedAmount()
+                        End With
+                    End If
                 Case 20 'For Drawdown Column
                     If Me.DGridView.CurrentCell.ColumnIndex = 20 Then
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
@@ -1244,7 +1358,6 @@ Public Class frmCollectionMgt
 
                         'Compute the remaining prudential
                         Me.ComputeRemainingPrudential()
-
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
                     End If
             End Select
@@ -1592,7 +1705,31 @@ Public Class frmCollectionMgt
             '    MsgBox("Collection date must not be later than date today!", MsgBoxStyle.Critical, "Invalid")
             '    Exit Function
             'End If
-
+            If Me.rbManual.Checked And CDec(Me.txtAmountCollected.Text) <> 0 And Me.LoadType = CollectionLoadType.Edit Then
+                Dim totalPayable As Decimal = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    totalPayable += CDec(Me.DGridView.Rows(i).Cells("colTotalPayable").Value)
+                Next
+                If Math.Abs(totalPayable) > 0 Then
+                    If CDec(txtAmountCollected.Text) < Math.Abs(totalPayable) Then
+                        MessageBox.Show("Total Applied Amount is greater than the amount collected! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Me.cb_CheckAll.Checked = False
+                        Exit Function
+                    End If
+                End If
+            ElseIf Me.rbManual.Checked And CDec(Me.txtAmountCollected.Text) = 0 And CDec(Me.txtPrudentialAmount.Text) <> 0 And Not Me.LoadType = CollectionLoadType.Edit Then
+                Dim totalPRDrawn As Decimal = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    totalPRDrawn += CDec(Me.DGridView.Rows(i).Cells("colDrawdown").Value)
+                Next
+                If Math.Abs(totalPRDrawn) > 0 Then
+                    If CDec(txtPrudentialAmount.Text) < Math.Abs(totalPRDrawn) Then
+                        MessageBox.Show("Total Applied PR is greater than the Prudential! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Me.cb_CheckAll.Checked = False
+                        Exit Function
+                    End If
+                End If
+            End If
         Catch ex1 As OverflowException
             MsgBox("Invalid Amount", MsgBoxStyle.Critical, "Error")
             Call ResetGrid()
@@ -1623,8 +1760,9 @@ Public Class frmCollectionMgt
         Me.txtTotalAllocatedAmount.Text = "0.00"
         Me.txtTotalOutstandingBalance.Text = "0.00"
         Me.txtForTheAcountOf.Text = ""
-
-        For index As Integer = 0 To Me.chckParticipantList.Items.Count - 1
+        Me.cb_CheckAll.Checked = False
+        checkAllBox = False
+        For Index As Integer = 0 To Me.chckParticipantList.Items.Count - 1
             Me.chckParticipantList.SetItemChecked(index, False)
         Next
 
@@ -1895,7 +2033,7 @@ Public Class frmCollectionMgt
         If remainingPrudential > 0 Then
             Me.txtRemainingPrudential.Text = FormatNumber(remainingPrudential, 2)
         Else
-            Me.txtRemainingPrudential.Text = "0.00"
+            Me.txtRemainingPrudential.Text = FormatNumber(remainingPrudential, 2)
         End If
     End Sub
 
@@ -1918,11 +2056,14 @@ Public Class frmCollectionMgt
                         CDec(Me.txtPrudentialReplenishment.Text)
         End If
 
-        If totalCash >= subTotal Then
-            Me.txtTotalAllocatedAmount.Text = FormatNumber(subTotal, 2)
-        Else
-            Me.txtTotalAllocatedAmount.Text = "0.00"
-        End If
+        'Disabled by LAVV as requested for checking all 11/03/2023
+        'If totalCash >= subTotal Then
+        '    Me.txtTotalAllocatedAmount.Text = FormatNumber(subTotal, 2)
+        'Else
+        '    Me.txtTotalAllocatedAmount.Text = "0.00"
+        'End If
+        Me.txtTotalAllocatedAmount.Text = FormatNumber(totalCash - subTotal, 2)
+
     End Sub
 
     Private Function SaveManualCollection(ByVal IDNumber As String, ByRef listCollections As List(Of Collection), _
@@ -2933,6 +3074,126 @@ Public Class frmCollectionMgt
         Return True
     End Function
 
+    Private Sub MarketFeesApplication(ByVal currRow As Integer)
+        Dim TotalValue As Decimal = 0, AmountToAllocate As Decimal = 0
+        Dim MFValue As Decimal = 0, MFVValue As Decimal = 0
+        Dim DefaultMF As Decimal = 0, DefaultMFV As Decimal = 0
+        Dim WithholdTax As Decimal = 0, WithholdVAT As Decimal = 0
+        Dim DefaultWithholdMF As Decimal = 0, DefaultWithholdMFV As Decimal = 0
+        Dim DueDate As Date, NewDueDate As Date
+
+        'Get daily interest rate
+        Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
+
+        With Me.DGridView.Rows(currRow)
+            Dim TotalCash = CDec(.Cells("colCash").Value)
+
+            If TotalCash = 0 Then
+                Exit Sub
+            End If
+
+            DueDate = CDate(.Cells("colDueDate").Value)
+            NewDueDate = CDate(.Cells("colNewDueDate").Value)
+
+            MFValue = CDec(.Cells("colMFOrig").Value)
+            MFVValue = CDec(.Cells("colMFVorig").Value)
+            WithholdTax = CDec(.Cells("colTaxOrig").Value)
+            WithholdVAT = CDec(.Cells("colVatOrig").Value)
+
+            'Check first if the default interest is edited
+            If MFValue <> 0 And CDec(.Cells("colDefaultInterest").Value) <> 0 Then
+
+                'For Default Interest on Market Fees
+                DefaultMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                       CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                       MFValue, interestRate), 2)
+
+                'For Default Interest on Withholding Tax on Market Fees
+                If Me.SelectedIDNumber.MarketFeesWHTax <> 0 Then
+                    DefaultWithholdMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                                  CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                  WithholdTax, interestRate), 2)
+                End If
+
+                'For Default Interest on Withholding VAT on Market Fees
+                If SelectedIDNumber.MarketFeesWHVAT <> 0 Then
+                    DefaultWithholdMFV = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                                    CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                    WithholdVAT, interestRate), 2)
+                End If
+
+            End If
+
+            'Check first if the default interest is edited
+            'If MFVValue <> 0 And CDec(.Cells("colDefaultInterest").Value) <> 0 Then
+
+            '    'For Default Interest on VAT on Market Fees
+            '    DefaultMFV = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate, _
+            '                            CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)), _
+            '                            MFVValue, interestRate), 2)
+
+
+            'End If
+
+            'Check if default interest is bigger than cash
+            If DefaultMF + DefaultMFV + DefaultWithholdMF + DefaultWithholdMFV > TotalCash Then
+
+                'Reset the datagrid row
+                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) - TotalCash
+
+                Exit Sub
+            End If
+
+            'Get the total
+            TotalValue = MFValue + MFVValue + WithholdTax + WithholdVAT
+
+            'Get the amount to allocate
+            AmountToAllocate = TotalCash - DefaultMF - DefaultMFV - DefaultWithholdMF - DefaultWithholdMFV
+
+            Dim totalDF As Decimal = DefaultMF + DefaultMFV + DefaultWithholdMF + DefaultWithholdMFV
+
+            'For partial application
+            If TotalValue > AmountToAllocate Then
+                If MFValue <> 0 Then
+                    MFValue = Math.Round((MFValue / TotalValue) * AmountToAllocate, 2)
+
+                    If WithholdTax <> 0 Then
+                        WithholdTax = Math.Round((WithholdTax / TotalValue) * AmountToAllocate, 2)
+                    End If
+                    'added by lance 11/04/2019
+                    If WithholdVAT <> 0 Then
+                        WithholdVAT = Math.Round((WithholdVAT / TotalValue) * AmountToAllocate, 2)
+                    End If
+                End If
+
+                If MFVValue <> 0 Then
+                    MFVValue = Math.Round((MFVValue / TotalValue) * AmountToAllocate, 2)
+
+                    'If WithholdVAT <> 0 Then
+                    '    WithholdVAT = Math.Round((WithholdVAT / TotalValue) * AmountToAllocate, 2)
+                    'End If
+                End If
+
+                'If there is .01 difference, adjust market fees
+                Dim allocatedAmount = MFValue + MFVValue + WithholdTax + WithholdVAT
+                If allocatedAmount <> AmountToAllocate Then
+                    MFValue = MFValue - (allocatedAmount - AmountToAllocate)
+                End If
+            End If
+
+            .Cells("colDefaultMF").Value = DefaultMF
+            .Cells("colDefaultMFV").Value = DefaultMFV
+            .Cells("colDefaultWithholdMFTax").Value = DefaultWithholdMF
+            .Cells("colDefaultWithholdMFVAT").Value = DefaultWithholdMFV
+            .Cells("colMF").Value = MFValue
+            .Cells("colMFV").Value = MFVValue
+            .Cells("colTax").Value = WithholdTax
+            .Cells("colVat").Value = WithholdVAT
+            .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) - TotalCash
+        End With
+    End Sub
+
     Private Sub MarketFeesApplication()
         Dim TotalValue As Decimal = 0, AmountToAllocate As Decimal = 0
         Dim MFValue As Decimal = 0, MFVValue As Decimal = 0
@@ -2963,21 +3224,21 @@ Public Class frmCollectionMgt
             If MFValue <> 0 And CDec(.Cells("colDefaultInterest").Value) <> 0 Then
 
                 'For Default Interest on Market Fees
-                DefaultMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate, _
-                                       CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)), _
+                DefaultMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                       CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
                                        MFValue, interestRate), 2)
 
                 'For Default Interest on Withholding Tax on Market Fees
                 If Me.SelectedIDNumber.MarketFeesWHTax <> 0 Then
-                    DefaultWithholdMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate, _
-                                                  CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)), _
+                    DefaultWithholdMF = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                                  CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
                                                   WithholdTax, interestRate), 2)
                 End If
 
                 'For Default Interest on Withholding VAT on Market Fees
                 If SelectedIDNumber.MarketFeesWHVAT <> 0 Then
-                    DefaultWithholdMFV = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate, _
-                                                    CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)), _
+                    DefaultWithholdMFV = Math.Round(BFactory.ComputeDefaultInterest(DueDate, NewDueDate,
+                                                    CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
                                                     WithholdVAT, interestRate), 2)
                 End If
 
@@ -3126,6 +3387,156 @@ Public Class frmCollectionMgt
         End With
     End Sub
 
+    Private Sub CashEnergyAndVatOnEnergyApplication(ByVal currRow As Integer)
+        Dim EndingBalance As Decimal, DefaultInterest As Decimal
+        Dim WithholdingTax As Decimal, WithholdingVat As Decimal
+        Dim TotalCash As Decimal, TotalEnergyOrVATNetWithholding As Decimal
+
+        'Get daily interest rate
+        If Not Me._dicInterestRate.ContainsKey(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))) Then
+            Throw New Exception("No available default interest for the selected collection date (" & CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) & ")!")
+        End If
+
+        Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
+
+        With Me.DGridView.Rows(currRow)
+            EndingBalance = Math.Abs(CDec(.Cells("colEndingBalance").Value))
+            WithholdingTax = CDec(.Cells("colTaxOrig").Value)
+            WithholdingVat = CDec(.Cells("colVatOrig").Value)
+
+            DefaultInterest = CDec(.Cells("colDefaultInterest").Value)
+            TotalCash = CDec(.Cells("colCash").Value)
+            'Reset the fields
+            .Cells("colCashEnergyAndVAT").Value = 0
+            .Cells("colCashDefaultEnergy").Value = 0
+            .Cells("colDrawdown").Value = 0
+            .Cells("colDrawdownEnergy").Value = 0
+            .Cells("colDrawdownDefaultEnergy").Value = 0
+
+            'Check if default interest is bigger than cash and remaining prudential
+            If TotalCash + CDec(Me.txtRemainingPrudential.Text) < DefaultInterest Then
+
+                'Reset the datagrid row
+                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                Exit Sub
+            End If
+
+            'No bearing if Energy or VAT on Energy
+            .Cells("colTax").Value = .Cells("colTaxOrig").Value
+            .Cells("colVat").Value = .Cells("colVatOrig").Value
+
+            'Check if total cash is greater than default interest vice versa
+            If TotalCash <= DefaultInterest Then
+                .Cells("colCashDefaultEnergy").Value = TotalCash
+                TotalCash = 0
+            Else
+                .Cells("colCashDefaultEnergy").Value = DefaultInterest
+                TotalCash = TotalCash - DefaultInterest
+            End If
+
+            'Compute the Energy and VAT Net Withholding
+            If TotalCash <> 0 Then
+                'Lance for Edit
+
+                'Get the Energy and Vat Net Withholding
+                TotalEnergyOrVATNetWithholding = EndingBalance
+                If TotalCash <= Math.Abs(TotalEnergyOrVATNetWithholding) Then
+                    If WithholdingTax = TotalCash And EndingBalance = 0 Then
+                        .Cells("colTax").Value = TotalCash
+                    ElseIf WithholdingTax > 0 And EndingBalance > 0 Then
+                        .Cells("colTax").Value = WithholdingTax
+                        .Cells("colCashEnergyAndVAT").Value = TotalCash - WithholdingTax
+                    Else
+                        'Lance added on 09202016
+                        .Cells("colCashEnergyAndVAT").Value = TotalCash
+                    End If
+                Else
+                    .Cells("colTax").Value = WithholdingTax
+                    .Cells("colCashEnergyAndVAT").Value = TotalCash
+                End If
+
+            End If
+
+            'Update the remaining balance
+            .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) -
+                                                  CDec(.Cells("colCashEnergyAndVAT").Value) -
+                                                  CDec(.Cells("colCashDefaultEnergy").Value)
+        End With
+    End Sub
+
+    Private Sub PREnergyApplication(ByVal currRow As Integer)
+        Dim EndingBalance As Decimal, DefaultInterest As Decimal
+        Dim WithholdingTax As Decimal, WithholdingVat As Decimal
+        Dim TotalPRDrawdown As Decimal, TotalEnergyOrVATNetWithholding As Decimal
+
+        'Get daily interest rate
+        If Not Me._dicInterestRate.ContainsKey(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))) Then
+            Throw New Exception("No available default interest for the selected collection date (" & CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) & ")!")
+        End If
+
+        Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
+
+        With Me.DGridView.Rows(currRow)
+            EndingBalance = Math.Abs(CDec(.Cells("colEndingBalance").Value))
+            WithholdingTax = CDec(.Cells("colTaxOrig").Value)
+            WithholdingVat = CDec(.Cells("colVatOrig").Value)
+
+            DefaultInterest = CDec(.Cells("colDefaultInterest").Value)
+            TotalPRDrawdown = CDec(.Cells("colDrawdown").Value)
+            'Reset the fields
+            .Cells("colCashEnergyAndVAT").Value = 0
+            .Cells("colCashDefaultEnergy").Value = 0
+            .Cells("colCash").Value = 0
+            .Cells("colDrawdownEnergy").Value = 0
+            .Cells("colDrawdownDefaultEnergy").Value = 0
+
+            'Check if default interest is bigger than cash and remaining prudential
+            If TotalPRDrawdown + CDec(Me.txtRemainingPrudential.Text) < DefaultInterest Then
+
+                'Reset the datagrid row
+                Me.ResetDatagridRow(Me.DGridView.CurrentRow.Index)
+                Exit Sub
+            End If
+
+            'No bearing if Energy or VAT on Energy
+            .Cells("colTax").Value = .Cells("colTaxOrig").Value
+            .Cells("colVat").Value = .Cells("colVatOrig").Value
+
+            'Check if total cash is greater than default interest vice versa
+            If TotalPRDrawdown <= DefaultInterest Then
+                .Cells("colDrawdownDefaultEnergy").Value = TotalPRDrawdown
+                TotalPRDrawdown = 0
+            Else
+                .Cells("colDrawdownDefaultEnergy").Value = DefaultInterest
+                TotalPRDrawdown = TotalPRDrawdown - DefaultInterest
+            End If
+
+            'Compute the Energy and VAT Net Withholding
+            If TotalPRDrawdown <> 0 Then
+                'Get the Energy and Vat Net Withholding
+                TotalEnergyOrVATNetWithholding = EndingBalance
+                If TotalPRDrawdown <= Math.Abs(TotalEnergyOrVATNetWithholding) Then
+                    If WithholdingTax = TotalPRDrawdown And EndingBalance = 0 Then
+                        .Cells("colTax").Value = TotalPRDrawdown
+                    ElseIf WithholdingTax > 0 And EndingBalance > 0 Then
+                        .Cells("colTax").Value = WithholdingTax
+                        .Cells("colDrawdownEnergy").Value = TotalPRDrawdown - WithholdingTax
+                    Else
+                        'Lance added on 09202016
+                        .Cells("colDrawdownEnergy").Value = TotalPRDrawdown
+                    End If
+                Else
+                    .Cells("colTax").Value = WithholdingTax
+                    .Cells("colDrawdownEnergy").Value = TotalPRDrawdown
+                End If
+
+            End If
+            'Update the remaining balance
+            .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) -
+                                                  CDec(.Cells("colDrawdownEnergy").Value) -
+                                                  CDec(.Cells("colDrawdownDefaultEnergy").Value)
+        End With
+    End Sub
     Private Sub DrawdownEnergy()
         Dim TotalPayable As Decimal, DefaultInterest As Decimal
         Dim WithholdingTax As Decimal, WithholdingVat As Decimal
@@ -3264,10 +3675,152 @@ Public Class frmCollectionMgt
         'Update the collection
         WBillHelper.SaveCollection(item)
     End Sub
+    Private Sub cb_CheckAll_CheckedChanged(sender As Object, e As EventArgs) Handles cb_CheckAll.CheckedChanged
+        Dim totalPayable As Decimal = 0
+        If checkAllBox = False Then
+            'For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+            '    totalPayable += CDec(Me.DGridView.Rows(i).Cells("colTotalPayable").Value)
+            'Next
 
+            'If CDec(txtAmountCollected.Text) < Math.Abs(totalPayable) Then
+            '    MessageBox.Show("Total Payables is greater than the amount collected! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            '    Me.cb_CheckAll.Checked = False
+            '    Exit Sub
+            'End If
 
+            If CDec(txtAmountCollected.Text) = 0 And CDec(txtPrudentialAmount.Text) = 0 Then
+                MessageBox.Show("No amount collected, nor available Prudential! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Me.cb_CheckAll.Checked = False
+                Exit Sub
+            End If
+            If CDec(txtAmountCollected.Text) <> 0 Then
+                Dim checkCounter As Integer = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
+                                                   CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False Then
+                        Me.DGridView.Rows(i).Cells("colChckPay").Value = True
+                        Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
+                        With Me.DGridView.Rows(i)
+                            'Enable/Disable AmoutToPay column
+                            If CBool(.Cells("colChckPay").Value) = False Then
+                                .Cells("colCash").ReadOnly = False
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                            Else
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                                Dim AmountToAllocate As Decimal = Math.Abs(CDec(.Cells("colTotalPayable").Value))
 
+                                .Cells("colCash").ReadOnly = True
+                                .Cells("colCash").Value = AmountToAllocate
+                                Select Case ChargeType
+                                    Case EnumChargeType.MF
+                                        Me.MarketFeesApplication(i)
+                                    Case EnumChargeType.E, EnumChargeType.EV
+                                        Me.CashEnergyAndVatOnEnergyApplication(i)
+                                End Select
+                            End If
+                        End With
+                        checkCounter += 1
+                    End If
+                Next
+                If checkCounter > 0 Then
+                    'Compute the remaining cash, prudential and applied amount
+                    Me.ComputeRemainingCash()
+                    Me.ComputeRemainingPrudential()
+                    Me.ComputeTotalAppliedAmount()
+                    checkAllBox = True
+                Else
+                    MessageBox.Show("No available invoices to check! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            ElseIf CDec(txtAmountCollected.Text) = 0 And CDec(txtPrudentialAmount.Text) <> 0 Then
+                Dim checkCounterPR As Integer = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
+                                                   CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
+                    If ChargeType = EnumChargeType.E Then
+                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
+                            Me.DGridView.Rows(i).Cells("colChckPay").Value = True
+                            Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                            With Me.DGridView.Rows(i)
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                                Dim AmountToAllocate As Decimal = Math.Abs(CDec(.Cells("colTotalPayable").Value))
+                                .Cells("colDrawdown").ReadOnly = True
+                                .Cells("colDrawdown").Value = AmountToAllocate
+                                Me.PREnergyApplication(i)
+                            End With
+                            checkCounterPR += 1
+                        End If
+                    End If
+                Next
+                If checkCounterPR > 0 Then
+                    'Compute the remaining cash, prudential and applied amount                    
+                    Me.ComputeRemainingPrudential()
+                    Me.ComputeTotalAppliedAmount()
+                    checkAllBox = True
+                Else
+                    MessageBox.Show("No available invoices to check! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            End If
+        Else
+            If CDec(txtAmountCollected.Text) <> 0 Then
+                Dim uncheckCounter As Integer = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = True Then
+                        Me.DGridView.Rows(i).Cells("colChckPay").Value = False
+                        Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                        With Me.DGridView.Rows(i)
+                            'Enable/Disable AmoutToPay column
+                            If CBool(.Cells("colChckPay").Value) = False Then
+                                .Cells("colCash").ReadOnly = False
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                            End If
+                        End With
+                        uncheckCounter += 1
+                    End If
+                Next
+                If uncheckCounter > 0 Then
+                    'Compute the remaining cash, prudential and applied amount
+                    Me.ComputeRemainingCash()
+                    Me.ComputeRemainingPrudential()
+                    Me.ComputeTotalAppliedAmount()
+                    checkAllBox = False
+                Else
+                    MessageBox.Show("No available invoices to uncheck! Uncheck All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            ElseIf CDec(txtAmountCollected.Text) = 0 And CDec(txtPrudentialAmount.Text) <> 0 Then
+                Dim uncheckCounterPR As Integer = 0
+                For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = True Then
+                        Me.DGridView.Rows(i).Cells("colChckPay").Value = False
+                        Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                        With Me.DGridView.Rows(i)
+                            'Enable/Disable AmoutToPay column
+                            If CBool(.Cells("colChckPay").Value) = False Then
+                                .Cells("colDrawdown").ReadOnly = False
+                                'Reset the datagrid row
+                                Me.ResetDatagridRow(Me.DGridView.Rows(i).Index)
+                            End If
+                        End With
+                        uncheckCounterPR += 1
+                    End If
+                Next
+                If uncheckCounterPR > 0 Then
+                    'Compute the remaining cash, prudential and applied amount
+                    Me.ComputeRemainingCash()
+                    Me.ComputeRemainingPrudential()
+                    Me.ComputeTotalAppliedAmount()
+                    checkAllBox = False
+                Else
+                    MessageBox.Show("No available invoices to uncheck! Uncheck All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            End If
+        End If
+    End Sub
 #End Region
 
 End Class

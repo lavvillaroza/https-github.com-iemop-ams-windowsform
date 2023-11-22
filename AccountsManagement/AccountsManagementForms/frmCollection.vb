@@ -250,7 +250,6 @@ Public Class frmCollection
             _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.CollEntryAllocationWindow.ToString, "Access Collection Entry Window", "", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.NoAccess.ToString, AMModule.UserName)
             Exit Sub
         End If
-
         Try
             'Resize the form
             Dim frm As New frmCollectionMgt
@@ -258,7 +257,6 @@ Public Class frmCollection
                 Dim valSize As New System.Drawing.Size
                 valSize.Width = 866
                 valSize.Height = 196
-
                 .Size = valSize
                 .LoadType = frmCollectionMgt.CollectionLoadType.Add
                 .Itemcollection = New Collection()
@@ -275,7 +273,6 @@ Public Class frmCollection
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
-
     End Sub
 
     Private Sub btnEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEdit.Click
@@ -284,7 +281,6 @@ Public Class frmCollection
         '    _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModules.AMS_CollectionEntryWindow.ToString, "Access Collection Entry Window", "", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.NoAccess.ToString, AMModule.UserName)        
         '    Exit Sub
         'End If
-
         Try
             If Me.DGridViewCollection.Rows.Count = 0 Then
                 MsgBox("No record to edit!", MsgBoxStyle.Exclamation, "Warning")

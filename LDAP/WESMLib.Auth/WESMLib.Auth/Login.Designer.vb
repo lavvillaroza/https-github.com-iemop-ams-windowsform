@@ -26,7 +26,6 @@ Partial Class Login
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.txtUsername = New System.Windows.Forms.TextBox()
-        Me.lblVersion = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -46,7 +45,6 @@ Partial Class Login
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.txtPassword, 1, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.txtUsername, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.lblVersion, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.Label2, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Label1, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Panel2, 1, 2)
@@ -87,21 +85,6 @@ Partial Class Login
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.Size = New System.Drawing.Size(208, 23)
         Me.txtUsername.TabIndex = 1
-        '
-        'lblVersion
-        '
-        Me.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblVersion.AutoSize = True
-        Me.lblVersion.BackColor = System.Drawing.Color.Transparent
-        Me.lblVersion.Font = New System.Drawing.Font("Arial Rounded MT Bold", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblVersion.ForeColor = System.Drawing.Color.Black
-        Me.lblVersion.Location = New System.Drawing.Point(4, 105)
-        Me.lblVersion.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblVersion.Name = "lblVersion"
-        Me.lblVersion.Size = New System.Drawing.Size(92, 14)
-        Me.lblVersion.TabIndex = 4
-        Me.lblVersion.Text = "v4.1.20230925"
-        Me.lblVersion.Visible = False
         '
         'Label2
         '
@@ -215,7 +198,6 @@ Partial Class Login
     Friend WithEvents txtPassword As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents lblVersion As System.Windows.Forms.Label
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents cb_showPwd As System.Windows.Forms.CheckBox
 
