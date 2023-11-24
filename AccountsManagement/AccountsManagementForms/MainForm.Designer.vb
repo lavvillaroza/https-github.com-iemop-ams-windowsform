@@ -927,7 +927,7 @@ Partial Class MainForm
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Accounts Management System (LUZVIS v4.1.997c1d9) "
+        Me.Text = "Accounts Management System (LVM v4.1.6efa41c) "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
