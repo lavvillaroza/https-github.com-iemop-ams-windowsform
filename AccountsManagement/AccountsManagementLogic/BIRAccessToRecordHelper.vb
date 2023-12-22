@@ -20,26 +20,14 @@ Option Strict On
 Imports AccountsManagementObjects
 Imports AccountsManagementDataAccess
 Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Threading.Tasks
+Imports Microsoft.Office.Interop.Excel
+
 Public Class BIRAccessToRecordHelper
-
-#Region "WESMBillHelper"
-    Public _WBillHelper As WESMBillHelper
-    Private ReadOnly Property WBillHelper() As WESMBillHelper
-        Get
-            Return _WBillHelper
-        End Get
-    End Property
-#End Region
-
-#Region "BFactory"
-    Public _BFactory As New BusinessFactory
-    Private ReadOnly Property BFactory() As BusinessFactory
-        Get
-            Return _BFactory
-        End Get
-    End Property
-#End Region
-
+    Public Sub New()
+        _DataAccess = DAL.GetInstance()
+        _WBillHelper = WESMBillHelper.GetInstance
+    End Sub
 #Region "DAL"
     Private _DataAccess As DAL
     Public ReadOnly Property DataAccess() As DAL
@@ -48,585 +36,842 @@ Public Class BIRAccessToRecordHelper
         End Get
     End Property
 #End Region
-
-    Private _objParticipantsList As New List(Of AMParticipants)
-    Public ReadOnly Property objParticipantsList() As List(Of AMParticipants)
+#Region "WESMBillHelper"
+    Private _WBillHelper As WESMBillHelper
+    Public ReadOnly Property WBillHelper() As WESMBillHelper
         Get
-            Return _objParticipantsList
+            Return _WBillHelper
+        End Get
+    End Property
+#End Region
+#Region "Object Properties"
+    Private _ParticipantsList As New List(Of AMParticipants)
+    Public ReadOnly Property ParticipantsList() As List(Of AMParticipants)
+        Get
+            Return _ParticipantsList
         End Get
     End Property
 
-    Private _objTransactionYearList As New List(Of String)
-    Public ReadOnly Property objTransactionYearList() As List(Of String)
+    Private _WESMBillList As New List(Of WESMBill)
+    Public ReadOnly Property WESMBillList() As List(Of WESMBill)
         Get
-            Return _objTransactionYearList
+            Return _WESMBillList
         End Get
     End Property
 
-    Private _objWESMBill As New List(Of WESMBill)
-    Public ReadOnly Property objWESMBill() As List(Of WESMBill)
+    Private _WESMBillSummaryList As New List(Of WESMBillSummary)
+    Public ReadOnly Property WESMBillSummaryList() As List(Of WESMBillSummary)
         Get
-            Return _objWESMBill
+            Return _WESMBillSummaryList
         End Get
     End Property
 
-    Private _objWESMBillSalesAndPurchased As New List(Of WESMBillSalesAndPurchased)
-    Public ReadOnly Property objWESMBillSalesAndPurchased() As List(Of WESMBillSalesAndPurchased)
+    Private _WESMBillSummaryHisList As New List(Of WESMBillSummaryHistory)
+    Public ReadOnly Property WESMBillSummaryHisList() As List(Of WESMBillSummaryHistory)
         Get
-            Return _objWESMBillSalesAndPurchased
+            Return _WESMBillSummaryHisList
         End Get
     End Property
 
-    Private _objWESMBillSummary As New List(Of WESMBillSummary)
-    Public ReadOnly Property objWESMBillSummary() As List(Of WESMBillSummary)
+    Private _WTAMainSummaryList As New List(Of WESMBillAllocCoverSummary)
+    Public ReadOnly Property WTAMainSummaryList() As List(Of WESMBillAllocCoverSummary)
         Get
-            Return _objWESMBillSummary
+            Return _WTAMainSummaryList
         End Get
     End Property
 
-    Private _objCollectionList As New List(Of Collection)
-    Public ReadOnly Property objCollectionList() As List(Of Collection)
+    Private _WTADetailsSummaryList As New List(Of WESMTransDetailsSummary)
+    Public ReadOnly Property WTADetailsSummaryList() As List(Of WESMTransDetailsSummary)
         Get
-            Return _objCollectionList
+            Return _WTADetailsSummaryList
         End Get
     End Property
 
-    Private _objCollectionAllocationList As New List(Of CollectionAllocation)
-    Public ReadOnly Property objCollectionAllocationList() As List(Of CollectionAllocation)
+    Private _WTADetailsSummaryHisList As New List(Of WESMTransDetailsSummaryHistory)
+    Public ReadOnly Property WTADetailsSummaryHisList() As List(Of WESMTransDetailsSummaryHistory)
         Get
-            Return _objCollectionAllocationList
+            Return _WTADetailsSummaryHisList
         End Get
     End Property
 
-    Private _objOffsetARCollectionList As New List(Of ARCollection)
-    Public ReadOnly Property objOffsetARCollectionList() As List(Of ARCollection)
+    Private _MFCollectionList As List(Of CollectionAllocation)
+    Public ReadOnly Property MFCollectionList() As List(Of CollectionAllocation)
         Get
-            Return _objOffsetARCollectionList
+            Return _MFCollectionList
         End Get
     End Property
 
-    Private _objPaymentAllocationList As New List(Of APAllocation)
-    Public ReadOnly Property objPaymentAllocationList() As List(Of APAllocation)
+    Private _MFOffsetFromPaymentList As List(Of ARCollection)
+    Public ReadOnly Property MFOffsetFromPaymentList() As List(Of ARCollection)
         Get
-            Return _objPaymentAllocationList
+            Return _MFOffsetFromPaymentList
         End Get
     End Property
+#End Region
 
-    Private _objOffsetAPAllocationList As New List(Of APAllocation)
-    Public ReadOnly Property objOffsetAPAllocationList() As List(Of APAllocation)
-        Get
-            Return _objOffsetAPAllocationList
-        End Get
-    End Property
+#Region "Get WESMBillsList"
+    Private Async Function GetWESMBillsListAsync(ByVal dateFrom As Date, ByVal dateTo As Date) As Threading.Tasks.Task(Of List(Of WESMBill))
+        Dim ret As New List(Of WESMBill)
+        Dim report As New DataReport
+        Try
+            Dim SQL As String = "SELECT * FROM AM_WESM_BILL " _
+                              & "WHERE DUE_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND (INVOICE_NO LIKE 'TS-W%' OR INVOICE_NO LIKE 'FS-W%') AND NOT UPPER(INVOICE_NO) LIKE '%ADJ%'"
 
-    Private _objOfficialReceiptList As New List(Of OfficialReceiptMain)
-    Public ReadOnly Property objOfficialReceiptList() As List(Of OfficialReceiptMain)
-        Get
-            Return _objOfficialReceiptList
-        End Get
-    End Property
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
 
-    Public Sub New()
-        Me._DataAccess = DAL.GetInstance()
-        Me._WBillHelper = WESMBillHelper.GetInstance
-        Me._BFactory = BusinessFactory.GetInstance
-        Me._objParticipantsList = Me.WBillHelper.GetAMParticipants()
-        Me._objTransactionYearList = Me.WBillHelper.GetAMTransactionYearList()
-    End Sub
+            ret = Me.GetWESMBillsList(report.ReturnedIDatareader)
 
-    Public Function GetParticipantsInvolvedInSelectedYear(ByVal SelectedYear As String) As List(Of AMParticipants)
-        Dim ret As New List(Of AMParticipants)
-        Me._objWESMBill = Me.WBillHelper.GetWESMBills(SelectedYear)
-
-        Me._objWESMBillSalesAndPurchased = Me.WBillHelper.GetBIRWBSalesAndPurchased(SelectedYear)
-
-        Me._objWESMBillSummary = Me.WBillHelper.GetWESMBillSummaryPerYear(SelectedYear)
-
-        Me._objCollectionAllocationList = Me.WBillHelper.GetCollectionAllocationByYear(SelectedYear)
-        Me._objCollectionList = Me.WBillHelper.GetCollectionsByYear(SelectedYear, Me.objCollectionAllocationList)
-        Me._objOffsetARCollectionList = Me.WBillHelper.GetAMPaymentNewOffsetARByYear(SelectedYear)
-
-        Me._objPaymentAllocationList = Me.WBillHelper.GetAMPaymentNewAPByYear(SelectedYear)
-        Me._objOffsetAPAllocationList = Me.WBillHelper.GetAMPaymentNewOffsetAPByYear(SelectedYear)
-        Me._objOfficialReceiptList = Me.WBillHelper.GetOfficialReceipt(SelectedYear)
-
-
-        Dim IDNumberList As List(Of String) = (From x In Me.objWESMBillSalesAndPurchased _
-                                               Select x.IDNumber.IDNumber Distinct).ToList()
-
-        Dim oParticipantsList As List(Of AMParticipants) = (From x In Me.objParticipantsList _
-                                                           Where IDNumberList.Contains(x.IDNumber) _
-                                                           Select x).ToList()
-        ret = oParticipantsList
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
         Return ret
     End Function
 
-    Public ReportCreatedCount As Integer = 0
+    Private Function GetWESMBillsList(ByVal dr As IDataReader) As List(Of WESMBill)
+        Dim ret As New List(Of WESMBill)
+        Try
+            While dr.Read()
+                Dim item As New WESMBill
 
-    Public Sub GenerateBIRAcessToRecordReport(ByVal TargetPathFolder As String, ByVal SelectedIDNumber As String, ByVal SelectedYear As String)
-        Dim oParticipantInfo As AMParticipants = (From x In Me.objParticipantsList _
-                                                  Where x.ParticipantID = SelectedIDNumber _
+                With dr
+                    item.BatchCode = .Item("BATCH_CODE").ToString()
+                    item.AMCode = .Item("AM_CODE").ToString()
+                    item.BillingPeriod = CInt(.Item("BILLING_PERIOD"))
+                    item.SettlementRun = CStr(.Item("STL_RUN"))
+                    item.IDNumber = CStr(.Item("ID_NUMBER"))
+                    item.RegistrationID = CStr(.Item("REG_ID"))
+                    item.ForTheAccountOf = CStr(.Item("FOR_ACCOUNT_OF").ToString())
+                    item.FullName = CStr(.Item("FULL_NAME").ToString())
+                    item.InvoiceNumber = CStr(.Item("INVOICE_NO"))
+                    item.InvoiceDate = CDate(.Item("INVOICE_DATE"))
+                    item.Amount = CDec(.Item("AMOUNT"))
+                    item.ChargeType = CType(System.Enum.Parse(GetType(EnumChargeType), CStr(.Item("CHARGE_TYPE"))), EnumChargeType)
+                    item.DueDate = CDate(.Item("DUE_DATE"))
+                    item.MarketFeesRate = CDec(.Item("MARKET_FEES_RATE"))
+                    item.Remarks = Trim(.Item("REMARKS").ToString())
+                    ret.Add(item)
+                End With
+            End While
+            ret.TrimExcess()
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return ret
+    End Function
+#End Region
+
+#Region "Get WESMBillSummaryList"
+    Private Async Function GetWESMBillSummaryListAsync(ByVal dateFrom As Date, ByVal dateTo As Date) As Threading.Tasks.Task(Of List(Of WESMBillSummary))
+        Dim result As New List(Of WESMBillSummary)
+        Dim report As New DataReport
+
+        Try
+            Dim SQL As String = "SELECT A.ID_NUMBER, A.ID_TYPE, A.GROUP_NO, B.PARTICIPANT_ID,  A.billing_period, A.TRANSACTION_DATE, A.ENERGY_WITHHOLD, " & vbNewLine _
+                                & "B.PARTICIPANT_ADDRESS, B.CITY, B.PROVINCE, B.ZIP_CODE, B.ZERO_RATED_MARKET_FEES, B.ZERO_RATED_ENERGY, " & vbNewLine _
+                                & "A.CHARGE_TYPE, A.DUE_DATE, A.ENDING_BALANCE, a.BEGINNING_BALANCE, a.NEW_DUEDATE, a.IS_MFWTAX_DEDUCTED, " & vbNewLine _
+                                & "A.INV_DM_CM, A.SUMMARY_TYPE, a.WESMBILL_SUMMARY_NO, A.ADJUSTMENT, a.WESMBILL_BATCH_NO, A.ENERGY_WITHHOLD_STATUS, A.NO_OFFSET, A.NO_SOA, A.NO_DEFINT, D.REMARKS, A.BALANCE_TYPE " & vbNewLine _
+                                & "FROM AM_WESM_BILL_SUMMARY A " & vbNewLine _
+                                & "INNER JOIN  AM_PARTICIPANTS B on a.id_number = b.id_number " & vbNewLine _
+                                & "INNER JOIN  AM_WESM_BILL D on D.invoice_no = a.inv_dm_cm and D.charge_type = a.charge_type " & vbNewLine _
+                                & "WHERE A.DUE_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                                & "AND A.DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+            result = Me.GetWESMBillSummaryList(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+    Private Function GetWESMBillSummaryList(ByVal dr As IDataReader) As List(Of WESMBillSummary)
+        Dim result As New List(Of WESMBillSummary)
+        Dim index As Integer = 0
+        Try
+            While dr.Read()
+                index += 1
+                With dr
+                    Dim item As New WESMBillSummary
+                    item.IDNumber = New AMParticipants(CStr(.Item("ID_NUMBER").ToString()), CStr(.Item("PARTICIPANT_ID").ToString()),
+                                                       CStr(.Item("PARTICIPANT_ADDRESS").ToString()), CStr(.Item("CITY").ToString()), CStr(.Item("PROVINCE").ToString()),
+                                                       CStr(.Item("ZIP_CODE").ToString()), CBool(IIf(CInt(.Item("ZERO_RATED_MARKET_FEES")) = 1, True, False)),
+                                                       CBool(IIf(CInt(.Item("ZERO_RATED_ENERGY")) = 1, True, False)))
+
+                    item.BillPeriod = CInt(.Item("BILLING_PERIOD").ToString())
+                    item.ChargeType = CType(System.Enum.Parse(GetType(EnumChargeType), CStr(.Item("CHARGE_TYPE").ToString())), EnumChargeType)
+                    item.DueDate = CDate(.Item("DUE_DATE").ToString())
+                    item.BeginningBalance = Math.Round(CDec(.Item("BEGINNING_BALANCE").ToString()), 2)
+                    item.BalanceType = CType(System.Enum.Parse(GetType(EnumBalanceType), CStr(.Item("BALANCE_TYPE").ToString)), EnumBalanceType)
+                    item.EndingBalance = Math.Round(CDec(.Item("ENDING_BALANCE").ToString()), 2)
+                    item.OrigEndingBalance = Math.Round(CDec(.Item("ENDING_BALANCE").ToString()), 2)
+                    item.IDType = CStr(.Item("ID_TYPE").ToString())
+                    item.NewDueDate = CDate(.Item("NEW_DUEDATE").ToString())
+                    item.OrigNewDueDate = CDate(.Item("NEW_DUEDATE").ToString())
+                    item.IsMFWTaxDeducted = CInt(.Item("IS_MFWTAX_DEDUCTED").ToString())
+                    item.INVDMCMNo = CStr(.Item("INV_DM_CM").ToString())
+                    If .Item("SUMMARY_TYPE") IsNot DBNull.Value Then
+                        item.SummaryType = CType(System.Enum.Parse(GetType(EnumSummaryType), CStr(.Item("SUMMARY_TYPE").ToString())), EnumSummaryType)
+                    End If
+                    item.WESMBillSummaryNo = CLng(.Item("WESMBILL_SUMMARY_NO"))
+                    item.Adjustment = CInt(.Item("ADJUSTMENT").ToString())
+                    item.TransactionDate = CDate(.Item("TRANSACTION_DATE"))
+                    item.EnergyWithhold = CDec(.Item("ENERGY_WITHHOLD"))
+                    item.WESMBillBatchNo = CLng(.Item("WESMBILL_BATCH_NO"))
+                    If .Item("ENERGY_WITHHOLD_STATUS") IsNot DBNull.Value Then
+                        item.EnergyWithholdStatus = CType(CInt(.Item("ENERGY_WITHHOLD_STATUS")), EnumEnergyWithholdStatus)
+                    Else
+                        item.EnergyWithholdStatus = EnumEnergyWithholdStatus.NotApplicable
+                    End If
+
+                    item.NoOffset = CBool(IIf(CInt(.Item("NO_OFFSET")) = 1, True, False))
+                    item.NoSOA = CBool(IIf(CInt(.Item("NO_SOA")) = 1, True, False))
+                    item.NoDefInt = CBool(IIf(CInt(.Item("NO_DEFINT")) = 1, True, False))
+                    item.BillingRemarks = CStr(.Item("REMARKS").ToString)
+                    result.Add(item)
+                End With
+            End While
+        Catch ex As Exception
+            Throw New ApplicationException("Error in row " & index & " --- " & ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+
+        Return result
+    End Function
+#End Region
+
+#Region "Get WESMBillSummaryHistoryList"
+    Private Async Function GetWESMBillSummaryHistoryListAsync(ByVal dateFrom As Date, ByVal dateTo As Date) As Threading.Tasks.Task(Of List(Of WESMBillSummaryHistory))
+        Dim result As New List(Of WESMBillSummaryHistory)
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT * FROM AM_WESM_BILL_SUMMARY_HISTORY " &
+                  "WHERE UPDATED_DATE >= TO_DATE('" & dateFrom & "','MM/DD/YYYY') AND " &
+                  "UPDATED_DATE <=  TO_DATE('" & dateTo & "','MM/DD/YYYY') AND " &
+                  " CERTIFICATE_NO = 0 ORDER BY UPDATED_DATE ASC"
+
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            result = Me.GetWESMBillSummaryHistory(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+    Private Function GetWESMBillSummaryHistory(ByVal dr As IDataReader) As List(Of WESMBillSummaryHistory)
+        Dim result As New List(Of WESMBillSummaryHistory)
+
+        Try
+            While dr.Read()
+                Dim item As New WESMBillSummaryHistory
+
+                With dr
+                    item.WESMBillSummaryNo = CLng(.Item("WESMBILL_SUMMARY_NO"))
+                    item.CollectionNumber = CLng(.Item("COLLECTION_NO"))
+                    item.PaymentBatchCode = If(IsDBNull(.Item("PAYMENT_BATCH_CODE")), Nothing, CStr(.Item("PAYMENT_BATCH_CODE").ToString()))
+                    item.DueDate = CDate(.Item("DUE_DATE"))
+                    item.Amount = CDec(.Item("AMOUNT"))
+                    If CLng(.Item("COLLECTION_NO")) = 0 And (CLng(.Item("PAYMENT_NO")) <> 0 Or CLng(.Item("CERTIFICATE_NO")) <> 0) Then
+                        item.PaymentType = CType(System.Enum.Parse(GetType(EnumPaymentType), CStr(.Item("PAYMENT_TYPE").ToString)), EnumPaymentType)
+                    End If
+                    If CLng(.Item("COLLECTION_NO")) <> 0 And CLng(.Item("PAYMENT_NO")) = 0 Then
+                        item.CollectionType = CType(System.Enum.Parse(GetType(EnumCollectionType), CStr(.Item("COLLECTION_TYPE").ToString)), EnumCollectionType)
+                    End If
+
+                    item.Status = CType(System.Enum.Parse(GetType(EnumStatus), CStr(.Item("STATUS").ToString())), EnumStatus)
+                    result.Add(item)
+                End With
+            End While
+            result.TrimExcess()
+
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
+#Region "Get WTAMainSummaryList"
+    Private Async Function GetWTAMainSummaryList(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of WESMBillAllocCoverSummary))
+        Dim ret As New List(Of WESMBillAllocCoverSummary)
+        Dim report As New DataReport
+        Try
+            Dim SQL As String = "SELECT * FROM AM_WESM_ALLOC_COVER_SUMMARY " _
+                              & "WHERE DUE_DATE >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            ret = Me.GetWTAMainSummaryList(report.ReturnedIDatareader)
+
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+        Return ret
+    End Function
+
+    Private Function GetWTAMainSummaryList(ByVal dr As IDataReader) As List(Of WESMBillAllocCoverSummary)
+        Dim ret As New List(Of WESMBillAllocCoverSummary)
+        Try
+            While dr.Read()
+                Dim item As New WESMBillAllocCoverSummary
+                With dr
+                    item.SummaryId = CLng(.Item("SUMMARY_ID"))
+                    item.STLRun = CStr(.Item("STL_RUN"))
+                    item.BillingPeriod = CInt(.Item("BILLING_PERIOD"))
+                    item.StlID = CStr(.Item("STL_ID"))
+                    item.BillingID = CStr(.Item("BILLING_ID"))
+                    item.NonVatableTag = CStr(.Item("NON_VATABLE_TAG"))
+                    item.ZeroRatedTag = CStr(.Item("ZERO_RATED_TAG"))
+                    item.WHT = CStr(.Item("WHT_TAG"))
+                    item.ITH = CStr(.Item("ITH_TAG"))
+                    item.NetSellerBuyerTag = CStr(.Item("NET_SELLER_BUYER_TAG"))
+                    item.TransactionNo = CStr(.Item("TRANSACTION_NUMBER"))
+                    item.TransactionDate = CDate(.Item("TRANSACTION_DATE"))
+                    item.DueDate = CDate(.Item("DUE_DATE"))
+                    item.VatableSales = CDec(.Item("VATABLE_SALES"))
+                    item.ZeroRatedSales = CDec(.Item("ZERO_RATED_SALES"))
+                    item.ZeroRatedEcoZoneSales = CDec(.Item("ZERO_RATED_ECOZONE_SALES"))
+                    item.VatablePurchases = CDec(.Item("VATABLE_PURCHASES"))
+                    item.ZeroRatedPurchases = CDec(.Item("ZERO_RATED_PURCHASES"))
+                    item.ZeroRatedEcoZonePurchases = CDec(.Item("ZERO_RATED_ECOZONE_PURCHASES"))
+                    item.NSSFlowBack = CDec(.Item("NSS_FLOWBACK"))
+                    item.VatOnSales = CDec(.Item("VAT_ON_SALES"))
+                    item.VatOnPurchases = CDec(.Item("VAT_ON_PURCHASES"))
+                    item.EWTSales = CDec(.Item("EWT_SALES"))
+                    item.EWTPurchases = CDec(.Item("EWT_PURCHASES"))
+                    item.GMR = CDec(.Item("GMR"))
+                    item.SpotQty = CDec(.Item("SPOT_QTY"))
+                    item.MarketFeesRate = CDec(.Item("MARKET_FEES_RATE"))
+                    item.Remarks = CStr(.Item("REMARKS"))
+                    ret.Add(item)
+                End With
+            End While
+            ret.TrimExcess()
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return ret
+    End Function
+#End Region
+
+#Region "Get WTADetailsSummaryList"
+    Private Async Function GetListWESMTransDetailsSummaryAsync(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of WESMTransDetailsSummary))
+        Dim ret As New List(Of WESMTransDetailsSummary)
+        Dim report As New DataReport
+        Try
+            Dim SQL As String = "SELECT A.* FROM AM_WESM_TRANS_DETAILS_SUMMARY A " & vbNewLine _
+                              & "WHERE DUE_DATE >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+            ret = Me.GetListWESMTransDetailsSummary(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+        Return ret
+    End Function
+    Private Function GetListWESMTransDetailsSummary(ByVal dr As IDataReader) As List(Of WESMTransDetailsSummary)
+        Dim result As New List(Of WESMTransDetailsSummary)
+        Dim index As Integer = 0
+        Try
+            While dr.Read()
+                index += 1
+                With dr
+                    Dim item As New WESMTransDetailsSummary
+                    item.BuyerTransNo = CStr(.Item("BUYER_TRANS_NO"))
+                    item.BuyerBillingID = CStr(.Item("BUYER_BILLING_ID"))
+                    item.SellerTransNo = CStr(.Item("SELLER_TRANS_NO"))
+                    item.SellerBillingID = CStr(.Item("SELLER_BILLING_ID"))
+                    item.DueDate = CDate(.Item("DUE_DATE"))
+                    item.NewDueDate = CDate(.Item("NEW_DUE_DATE"))
+                    item.OrigBalanceInEnergy = CDec(.Item("ORIG_AMOUNT_ENERGY"))
+                    item.OrigBalanceInVAT = CDec(.Item("ORIG_AMOUNT_VAT"))
+                    item.OrigBalanceInEWT = CDec(.Item("ORIG_AMOUNT_EWT"))
+                    item.OutstandingBalanceInEnergy = CDec(.Item("OBIN_ENERGY"))
+                    item.OutstandingBalanceInVAT = CDec(.Item("OBIN_VAT"))
+                    item.OutstandingBalanceInEWT = CDec(.Item("OBIN_EWT"))
+                    item.Status = EnumWESMTransDetailsSummaryStatus.CURRENT.ToString
+                    result.Add(item)
+                End With
+            End While
+        Catch ex As Exception
+            Throw New ApplicationException("Error in row " & index & " --- " & ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
+#Region "Get WTADetailsSummaryHisList"
+    Private Async Function GetListWESMTransDetailsSummaryHistory(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of WESMTransDetailsSummaryHistory))
+        Dim ret As New List(Of WESMTransDetailsSummaryHistory)
+        Dim report As New DataReport
+
+        Try
+            Dim SQL As String = "SELECT * FROM AM_WESM_TRANS_DETAILS_SUMMARY_HISTORY A " & vbNewLine _
+                              & "WHERE ALLOCATION_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND ALLOCATION_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+            ret = Me.GetListWESMTransDetailsSummaryHistory(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+        Return ret
+    End Function
+    Private Function GetListWESMTransDetailsSummaryHistory(ByVal dr As IDataReader) As List(Of WESMTransDetailsSummaryHistory)
+        Dim result As New List(Of WESMTransDetailsSummaryHistory)
+        Dim index As Integer = 0
+        Try
+            While dr.Read()
+                index += 1
+                With dr
+                    Dim item As New WESMTransDetailsSummaryHistory
+                    item.BuyerTransNo = CStr(.Item("BUYER_TRANS_NO"))
+                    item.BuyerBillingID = CStr(.Item("BUYER_BILLING_ID"))
+                    item.SellerTransNo = CStr(.Item("SELLER_TRANS_NO"))
+                    item.SellerBillingID = CStr(.Item("SELLER_BILLING_ID"))
+                    item.DueDate = CDate(.Item("DUE_DATE"))
+                    item.AllocationDate = CDate(.Item("ALLOCATION_DATE"))
+                    item.RemittanceDate = CDate(.Item("REMITTANCE_DATE"))
+                    item.AllocatedInEnergy = CDec(.Item("ALLOCATED_IN_ENERGY"))
+                    item.AllocatedInVAT = CDec(.Item("ALLOCATED_IN_VAT"))
+                    item.AllocatedInEWT = CDec(.Item("ALLOCATED_IN_EWT"))
+                    item.AllocatedInDefInt = CDec(.Item("ALLOCATED_IN_DEFINT"))
+                    result.Add(item)
+                End With
+            End While
+        Catch ex As Exception
+            Throw New ApplicationException("Error in row " & index & " --- " & ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
+#Region "Get Collections"
+    Private Async Function GetCollectionAllocation(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of CollectionAllocation))
+        Dim result As New List(Of CollectionAllocation)
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT a.*, b.INV_DM_CM, b.SUMMARY_TYPE, b.CHARGE_TYPE FROM AM_COLLECTION_ALLOCATION a, AM_WESM_BILL_SUMMARY b " & vbNewLine _
+                & "WHERE a.WESMBILL_SUMMARY_NO = b.WESMBILL_SUMMARY_NO AND a.STATUS = 1 " & vbNewLine _
+                & "AND a.COLLECTION_TYPE IN (6, 7) " & vbNewLine _
+                & "AND a.ALLOCATION_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                & "AND a.ALLOCATION_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+            result = Me.GetCollectionAllocation(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+        Return result
+    End Function
+    Private Function GetCollectionAllocation(ByVal dr As IDataReader) As List(Of CollectionAllocation)
+        Dim result As New List(Of CollectionAllocation)
+        Try
+            While dr.Read()
+                Dim item As New CollectionAllocation
+                With dr
+                    item.WESMBillSummaryNo = New WESMBillSummary(CLng(.Item("WESMBILL_SUMMARY_NO")), CStr(.Item("INV_DM_CM")),
+                                                                 CType(System.Enum.Parse(GetType(EnumSummaryType), CStr(.Item("SUMMARY_TYPE"))), EnumSummaryType),
+                                                                 CType(System.Enum.Parse(GetType(EnumChargeType), CStr(.Item("CHARGE_TYPE"))), EnumChargeType),
+                                                                 CDate(.Item("DUE_DATE")), CDec(.Item("ENERGY_WITHHOLD")))
+                    item.BillingPeriod = CInt(.Item("BILLING_PERIOD").ToString)
+                    item.CollectionNumber = CLng(.Item("COLLECTION_NO").ToString)
+                    item.Amount = CDec(.Item("AMOUNT").ToString)
+                    item.EndingBalance = CDec(.Item("ENDING_BALANCE").ToString)
+                    item.NewEndingBalance = CDec(.Item("NEW_ENDING_BALANCE").ToString)
+                    item.DueDate = CDate(.Item("DUE_DATE").ToString)
+                    item.NewDueDate = CDate(.Item("NEW_DUEDATE").ToString)
+                    item.CollectionType = CType(System.Enum.Parse(GetType(EnumCollectionType), CStr(.Item("COLLECTION_TYPE").ToString)), EnumCollectionType)
+                    item.Status = CInt(.Item("STATUS").ToString)
+                    item.AllocationDate = CDate(.Item("ALLOCATION_DATE").ToString)
+                    item.DMCMNumber = CLng(.Item("AM_DMCM_NO"))
+                    item.ReferenceNumber = CStr(.Item("AM_REF_NO"))
+                    item.ReferenceType = CType(System.Enum.Parse(GetType(EnumSummaryType), CStr(.Item("AM_REF_TYPE").ToString)), EnumSummaryType)
+                    result.Add(item)
+                End With
+            End While
+            result.TrimExcess()
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
+#Region "Get Offset Payments to Collections"
+    Public Async Function GetAMPaymentNewOffsetAR(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of ARCollection))
+        Dim ret As New List(Of ARCollection)
+        Dim report As New DataReport
+        Try
+            Dim SQL As String = "SELECT A.*, B.CHARGE_TYPE, B.INV_DM_CM, C.ID_NUMBER, C.PARTICIPANT_ID, B.WESMBILL_BATCH_NO, D.REMARKS " & vbNewLine _
+                              & "FROM AM_PAYMENT_NEW_OFFSETTING_AR A " & vbNewLine _
+                              & "LEFT JOIN AM_WESM_BILL_SUMMARY B ON A.WESMBILL_SUMMARY_NO = B.WESMBILL_SUMMARY_NO " & vbNewLine _
+                              & "LEFT JOIN AM_PARTICIPANTS C ON C.ID_NUMBER = A.ID_NUMBER " & vbNewLine _
+                              & "LEFT JOIN AM_WESM_BILL D ON D.INVOICE_NO = B.INV_DM_CM AND D.CHARGE_TYPE = B.CHARGE_TYPE " & vbNewLine _
+                              & "WHERE B.BALANCE_TYPE = 'AR' " & vbNewLine _
+                              & "AND A.COLLECTION_TYPE IN (6, 7)" & vbNewLine _
+                              & "AND A.ALLOCATION_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
+                              & "AND A.ALLOCATION_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY')"
+            report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            ret = Me.GetAMPaymentNewOffsetAR(report.ReturnedIDatareader)
+
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+        Return ret
+    End Function
+    Private Function GetAMPaymentNewOffsetAR(ByVal dr As IDataReader) As List(Of ARCollection)
+        Dim ret As New List(Of ARCollection)
+        Try
+            While dr.Read()
+                With dr
+                    Dim item As New ARCollection
+                    item.BillingRemarks = If(IsDBNull(.Item("REMARKS")), "", CStr(.Item("REMARKS")))
+                    item.BillingPeriod = CInt(.Item("BILLING_PERIOD"))
+                    item.EndingBalance = CDec(.Item("ENDING_BALANCE"))
+                    item.NewEndingBalance = CDec(.Item("NEW_ENDING_BALANCE"))
+                    item.DueDate = CDate(FormatDateTime(CDate(.Item("DUE_DATE")), DateFormat.ShortDate))
+                    item.NewDueDate = CDate(FormatDateTime(CDate(.Item("NEW_DUEDATE")), DateFormat.ShortDate))
+                    item.AllocationAmount = CDec(.Item("ALLOCATION_AMOUNT"))
+                    item.CollectionType = CType(.Item("COLLECTION_TYPE"), EnumCollectionType)
+                    item.CollectionCategory = CType(.Item("COLLECTION_CATEGORY"), EnumCollectionCategory)
+                    item.AllocationDate = CDate(FormatDateTime(CDate(.Item("ALLOCATION_DATE")), DateFormat.ShortDate))
+                    item.WESMBillSummaryNo = CLng(.Item("WESMBILL_SUMMARY_NO"))
+                    item.WESMBillBatchNo = CLng(.Item("WESMBILL_BATCH_NO"))
+                    item.OffsettingSequence = CInt(.Item("OFFSET_SEQ"))
+                    item.InvoiceNumber = CStr(.Item("INV_DM_CM"))
+                    item.IDNumber = CStr(.Item("ID_NUMBER"))
+                    item.ParticipantID = CStr(.Item("PARTICIPANT_ID"))
+                    item.GeneratedDMCM = CLng(.Item("AM_DMCM_NO"))
+                    item.EnergyWithHold = CDec(.Item("ENERGY_WITHHOLD"))
+                    ret.Add(item)
+                End With
+            End While
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return ret
+    End Function
+#End Region
+
+#Region "Main Functions"
+    Private ReportCreatedCount As Integer = 0
+    Public Async Function GetTPByDateRange(ByVal dateFrom As Date, ByVal dateTo As Date) As Task(Of List(Of AMParticipants))
+        Dim ret As New List(Of AMParticipants)
+        Try
+            Me._WESMBillList = Await Me.GetWESMBillsListAsync(dateFrom, dateTo)
+            Me._WESMBillSummaryList = Await Me.GetWESMBillSummaryListAsync(dateFrom, dateTo)
+            Me._WESMBillSummaryHisList = Await Me.GetWESMBillSummaryHistoryListAsync(dateFrom, dateTo)
+
+            Me._WTAMainSummaryList = Await Me.GetWTAMainSummaryList(dateFrom, dateTo)
+            'Me._WTADetailsSummaryList = Await Me.GetListWESMTransDetailsSummaryAsync(dateFrom, dateTo)
+            'Me._WTADetailsSummaryHisList = Await Me.GetListWESMTransDetailsSummaryHistory(dateFrom, dateTo)
+
+            Me._MFCollectionList = Await Me.GetCollectionAllocation(dateFrom, dateTo)
+            Me._MFOffsetFromPaymentList = Await Me.GetAMPaymentNewOffsetAR(dateFrom, dateTo)
+            Me._ParticipantsList = _WBillHelper.GetAMParticipants()
+
+            Dim IDNumberList As List(Of String) = (From x In Me.WESMBillList
+                                                   Select x.IDNumber Distinct).ToList()
+
+            ret = (From x In Me.ParticipantsList
+                   Where IDNumberList.Contains(x.IDNumber)
+                   Select x).ToList()
+
+            Return ret
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        End Try
+    End Function
+    Public Sub GenerateBIRAcessToRecordReport(ByVal TargetPathFolder As String, ByVal SelectedIDNumber As String, ByVal dateFrom As Date, ByVal dateTo As Date)
+        Dim oParticipantInfo As AMParticipants = (From x In Me.ParticipantsList
+                                                  Where x.ParticipantID = SelectedIDNumber
                                                   Select x).FirstOrDefault
 
-        Dim oWESMBillSalesAndPurchased As List(Of WESMBillSalesAndPurchased) = (From x In Me.objWESMBillSalesAndPurchased _
-                                                                                Where x.IDNumber.IDNumber = oParticipantInfo.IDNumber _                                                                                
-                                                                                Select x).ToList
-        If oWESMBillSalesAndPurchased.Count = 0 Then
+        Dim _WTAMainSummaryPerTP As List(Of WESMBillAllocCoverSummary) = (From x In Me.WTAMainSummaryList
+                                                                          Where x.StlID = oParticipantInfo.IDNumber
+                                                                          Select x).ToList
+
+        If _WTAMainSummaryPerTP.Count = 0 Then
             Exit Sub
         End If
 
         ReportCreatedCount += 1
-        Dim oWESMBills As List(Of WESMBill) = (From x In Me.objWESMBill _
-                                                Where x.IDNumber = oParticipantInfo.IDNumber _
-                                                Select x).ToList()
-        Dim oWESMBillSummary As List(Of WESMBillSummary) = (From x In Me.objWESMBillSummary _
-                                                Where x.IDNumber.IDNumber = oParticipantInfo.IDNumber _
-                                                Select x).ToList()
-     
+        Dim _WESMBillsPerTP As List(Of WESMBill) = (From x In Me.WESMBillList
+                                                    Where x.IDNumber = oParticipantInfo.IDNumber
+                                                    Select x).ToList()
+        Dim _WESMBillSummaryPerTP As List(Of WESMBillSummary) = (From x In Me.WESMBillSummaryList
+                                                                 Where x.IDNumber.IDNumber = oParticipantInfo.IDNumber
+                                                                 Select x).ToList()
+
         Dim SalesOfMP As Object(,) = New Object(,) {}
-        Dim PurchasesOfMP As Object(,) = New Object(,) {}                
+        Dim PurchasesOfMP As Object(,) = New Object(,) {}
         Dim MFPaid As Object(,) = New Object(,) {}
         Dim rowCountInSales As Integer = 0
         Dim rowCountInPurchases As Integer = 0
         Dim rowCountInMF As Integer = 0
-        Dim i As Integer = 1
-
-
+        Dim i As Integer = 2
         'Sales of Vatable Generator
-        Dim GetSalesOfMP = (From x In oWESMBillSalesAndPurchased _
-                            Where (x.VatableSales + x.ZeroRatedSales + x.ZeroRatedEcozone + x.VatablePurchases + x.ZeroRatedPurchases) > 0 _
-                            Or (x.VATonSales + x.VATonPurchases) > 0 _
-                            Select x).ToList()
-
-       
-
+        Dim GetSalesOfMP = (From x In _WTAMainSummaryPerTP
+                            Where x.GrossSale <> 0
+                            Select x Order By x.DueDate).ToList()
         rowCountInSales = GetSalesOfMP.Count
+        ReDim SalesOfMP(rowCountInSales + 4, 9)
+        SalesOfMP(0, 0) = "A. Power Sold/Traded to " & AMModule.CompanyShortName
+        SalesOfMP(2, 0) = "Period"
+        SalesOfMP(2, 1) = "KWH"
+        SalesOfMP(2, 2) = "WESM Transaction No."
+        SalesOfMP(2, 3) = "Transaction Date"
+        SalesOfMP(1, 4) = "Power Traded to " & AMModule.CompanyShortName
+        SalesOfMP(2, 4) = "Energy Fee"
+        SalesOfMP(2, 5) = "VAT"
+        SalesOfMP(2, 6) = "Total"
+        SalesOfMP(1, 7) = "Actual Amount Remitted to " & oParticipantInfo.IDNumber
+        SalesOfMP(2, 7) = "Energy Fee"
+        SalesOfMP(2, 8) = "VAT"
+        SalesOfMP(2, 9) = "Total"
+        SalesOfMP(UBound(SalesOfMP, 1), 0) = "Total"
         If rowCountInSales > 0 Then
-            ReDim SalesOfMP(rowCountInSales + 2, 16)
-            SalesOfMP(0, 0) = "A. Power Sold/Traded to " & AMModule.CompanyShortName
-            SalesOfMP(1, 0) = "BILLING_PERIOD"
-            SalesOfMP(1, 1) = "INVOICE_NO"
-            SalesOfMP(1, 2) = "INVOICE_DATE"
-            SalesOfMP(1, 3) = "VATABLE_SALES"
-            SalesOfMP(1, 4) = "ZERO_RATED_SALES"
-            SalesOfMP(1, 5) = "ZERO_RATED_ECOZONE"
-            SalesOfMP(1, 6) = "VATABLE_PURCHASES"
-            SalesOfMP(1, 7) = "ZERO_RATED_PURCHASES"
-            SalesOfMP(1, 8) = "TOTAL_ENERGY"
-            SalesOfMP(1, 9) = "VAT_ON_SALES"
-            SalesOfMP(1, 10) = "VAT_ON_PURCHASES"
-            SalesOfMP(1, 11) = "TOTAL_VAT"
-            SalesOfMP(1, 12) = "TOTAL_BILLING"
-            SalesOfMP(1, 13) = ""
-            SalesOfMP(1, 14) = "REMITTANCE(ENERGY)"
-            SalesOfMP(1, 15) = "REMITTANCE(VAT)"
-            SalesOfMP(1, 16) = "REMITTANCE_TOTAL"
-
-            SalesOfMP(UBound(SalesOfMP, 1), 0) = "TOTAL"
-
             For Each Item In GetSalesOfMP
-                Dim getWESMBill = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber Select x).FirstOrDefault
+                Dim getWESMBillEnergy = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
+                Dim getWESMBillVAT = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWESMBIllSummaryEnergy = (From x In WESMBillSummaryList Where x.INVDMCMNo = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
+                Dim getWESMBIllSummaryVAT = (From x In WESMBillSummaryList Where x.INVDMCMNo = Item.TransactionNo And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWTADetailsSummary = (From x In WTADetailsSummaryList Where x.SellerTransNo = Item.TransactionNo Select x).ToList()
 
-                Dim getWESMBillEnergy = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
-                Dim getWESMBillVAT = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
-                Dim getWESMBIllSUmmaryEnergy = (From x In oWESMBillSummary Where x.INVDMCMNo = Item.InvoiceNumber And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
-                Dim getWESMBIllSUmmaryVAT = (From x In oWESMBillSummary Where x.INVDMCMNo = Item.InvoiceNumber And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWESMBillSummaryHisListEnergy As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                If Not getWESMBIllSummaryEnergy Is Nothing Then
+                    getWESMBillSummaryHisListEnergy = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryEnergy.WESMBillSummaryNo And x.PaymentType = EnumPaymentType.PaymentEnergy Select x).ToList()
+                End If
+
+                Dim getWESMBillSummaryHisListVAT As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                If Not getWESMBIllSummaryVAT Is Nothing Then
+                    getWESMBillSummaryHisListVAT = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryVAT.WESMBillSummaryNo And x.PaymentType = EnumPaymentType.PaymentEnergyVAT Select x).ToList()
+                End If
 
                 i += 1
+                SalesOfMP(i, 0) = MonthName(Item.DueDate.Month) & " " & Item.DueDate.Year.ToString()
+                SalesOfMP(i, 1) = ""
+                SalesOfMP(i, 2) = Item.TransactionNo
+                SalesOfMP(i, 3) = Item.TransactionDate
 
-                Dim totalEnergy As Decimal = Item.VatableSales + Item.ZeroRatedSales + Item.ZeroRatedEcozone + Item.VatablePurchases + Item.ZeroRatedPurchases
-                Dim totalVat As Decimal = Item.VATonSales + Item.VATonPurchases
+                SalesOfMP(i, 4) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount)
+                SalesOfMP(i, 5) = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
+                SalesOfMP(i, 6) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
 
-                If totalEnergy > 0 Then
-                    SalesOfMP(i, 3) = Item.VatableSales
-                    SalesOfMP(i, 4) = Item.ZeroRatedSales
-                    SalesOfMP(i, 5) = Item.ZeroRatedEcozone
-                    SalesOfMP(i, 6) = Item.VatablePurchases
-                    SalesOfMP(i, 7) = Item.ZeroRatedPurchases
-                    SalesOfMP(i, 8) = Item.VatableSales + Item.ZeroRatedSales + Item.ZeroRatedEcozone + Item.VatablePurchases + Item.ZeroRatedPurchases
-                    If Not getWESMBIllSUmmaryEnergy Is Nothing Then
-                        SalesOfMP(i, 14) = Math.Abs(getWESMBillEnergy.Amount - getWESMBIllSUmmaryEnergy.EndingBalance)
-                    Else
-                        SalesOfMP(i, 14) = Math.Abs(getWESMBillEnergy.Amount)
-                    End If
-               
-                End If
+                Dim ActualRemittedInEnergy As Decimal = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) - CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
+                Dim ActualRemittedInVAT As Decimal = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount) - CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
 
+                SalesOfMP(i, 7) = ActualRemittedInEnergy
+                SalesOfMP(i, 8) = ActualRemittedInVAT
+                SalesOfMP(i, 9) = ActualRemittedInEnergy + ActualRemittedInVAT
 
-                If totalVat > 0 Then
-                    SalesOfMP(i, 9) = Item.VATonSales
-                    SalesOfMP(i, 10) = Item.VATonPurchases
-                    SalesOfMP(i, 11) = Item.VATonSales + Item.VATonPurchases
-                    If Not getWESMBIllSUmmaryVAT Is Nothing Then
-                        SalesOfMP(i, 15) = Math.Abs(getWESMBillVAT.Amount - getWESMBIllSUmmaryVAT.EndingBalance)
-                    Else
-                        SalesOfMP(i, 15) = Math.Abs(getWESMBillVAT.Amount)
-                    End If
-                End If
-
-                If totalEnergy > 0 Or totalVat > 0 Then
-                    SalesOfMP(i, 0) = MonthName(getWESMBill.DueDate.Month)
-                    SalesOfMP(i, 1) = getWESMBill.InvoiceNumber
-                    SalesOfMP(i, 2) = getWESMBill.InvoiceDate
-                    SalesOfMP(i, 12) = CDec(SalesOfMP(i, 8)) + CDec(SalesOfMP(i, 11))
-                    SalesOfMP(i, 13) = ""
-
-
-                    SalesOfMP(i, 16) = CDec(SalesOfMP(i, 14)) + CDec(SalesOfMP(i, 15))
-
-                    SalesOfMP(UBound(SalesOfMP, 1), 3) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 3)) + CDec(SalesOfMP(i, 3))
-                    SalesOfMP(UBound(SalesOfMP, 1), 4) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 4)) + CDec(SalesOfMP(i, 4))
-                    SalesOfMP(UBound(SalesOfMP, 1), 5) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 5)) + CDec(SalesOfMP(i, 5))
-                    SalesOfMP(UBound(SalesOfMP, 1), 6) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 6)) + CDec(SalesOfMP(i, 6))
-                    SalesOfMP(UBound(SalesOfMP, 1), 7) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 7)) + CDec(SalesOfMP(i, 7))
-                    SalesOfMP(UBound(SalesOfMP, 1), 8) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 8)) + CDec(SalesOfMP(i, 8))
-                    SalesOfMP(UBound(SalesOfMP, 1), 9) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 9)) + CDec(SalesOfMP(i, 9))
-                    SalesOfMP(UBound(SalesOfMP, 1), 10) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 10)) + CDec(SalesOfMP(i, 10))
-                    SalesOfMP(UBound(SalesOfMP, 1), 11) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 11)) + CDec(SalesOfMP(i, 11))
-                    SalesOfMP(UBound(SalesOfMP, 1), 12) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 12)) + CDec(SalesOfMP(i, 12))
-                    SalesOfMP(UBound(SalesOfMP, 1), 14) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 14)) + CDec(SalesOfMP(i, 14))
-                    SalesOfMP(UBound(SalesOfMP, 1), 15) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 15)) + CDec(SalesOfMP(i, 15))
-                    SalesOfMP(UBound(SalesOfMP, 1), 16) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 16)) + CDec(SalesOfMP(i, 16))
-                End If
-
+                SalesOfMP(UBound(SalesOfMP, 1), 4) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 4)) + CDec(SalesOfMP(i, 4))
+                SalesOfMP(UBound(SalesOfMP, 1), 5) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 5)) + CDec(SalesOfMP(i, 5))
+                SalesOfMP(UBound(SalesOfMP, 1), 6) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 6)) + CDec(SalesOfMP(i, 6))
+                SalesOfMP(UBound(SalesOfMP, 1), 7) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 7)) + CDec(SalesOfMP(i, 7))
+                SalesOfMP(UBound(SalesOfMP, 1), 8) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 8)) + CDec(SalesOfMP(i, 8))
+                SalesOfMP(UBound(SalesOfMP, 1), 9) = CDec(SalesOfMP(UBound(SalesOfMP, 1), 9)) + CDec(SalesOfMP(i, 9))
             Next
-        Else
-            ReDim SalesOfMP(rowCountInSales + 2, 16)
-            SalesOfMP(0, 0) = "A. Power Sold/Traded to " & AMModule.CompanyShortName
-            SalesOfMP(1, 0) = "BILLING_PERIOD"
-            SalesOfMP(1, 1) = "INVOICE_NO"
-            SalesOfMP(1, 2) = "INVOICE_DATE"
-            SalesOfMP(1, 3) = "VATABLE_SALES"
-            SalesOfMP(1, 4) = "ZERO_RATED_SALES"
-            SalesOfMP(1, 5) = "ZERO_RATED_ECOZONE"
-            SalesOfMP(1, 6) = "VATABLE_PURCHASES"
-            SalesOfMP(1, 7) = "ZERO_RATED_PURCHASES"
-            SalesOfMP(1, 8) = "TOTAL_ENERGY"
-            SalesOfMP(1, 9) = "VAT_ON_SALES"
-            SalesOfMP(1, 10) = "VAT_ON_PURCHASES"
-            SalesOfMP(1, 11) = "TOTAL_VAT"
-            SalesOfMP(1, 12) = "TOTAL_BILLING"
-            SalesOfMP(1, 13) = ""
-            SalesOfMP(1, 14) = "REMITTANCE(ENERGY)"
-            SalesOfMP(1, 15) = "REMITTANCE(VAT)"
-            SalesOfMP(1, 16) = "REMITTANCE_TOTAL"
-
-            SalesOfMP(UBound(SalesOfMP, 1), 0) = "TOTAL"
         End If
 
         'Purchases of Vatable Generators
-        Dim GetPurchasesOfMP = (From x In oWESMBillSalesAndPurchased _
-                            Where (x.VatableSales + x.ZeroRatedSales + x.ZeroRatedEcozone + x.VatablePurchases + x.ZeroRatedPurchases) < 0 _
-                            Or (x.VATonSales + x.VATonPurchases) < 0 _
-                            Select x).ToList()
+        Dim GetPurchasesOfMP = (From x In _WTAMainSummaryPerTP
+                                Where x.GrossPurchase <> 0
+                                Select x Order By x.DueDate).ToList()
 
         rowCountInPurchases = GetPurchasesOfMP.Count
+        ReDim PurchasesOfMP(rowCountInPurchases + 4, 9)
+        PurchasesOfMP(0, 0) = "B. Power Purchased by " & oParticipantInfo.FullName
+        PurchasesOfMP(2, 0) = "Period"
+        PurchasesOfMP(2, 1) = "KWH"
+        PurchasesOfMP(2, 2) = "WESM Transaction No."
+        PurchasesOfMP(2, 3) = "Transaction Date"
+        PurchasesOfMP(1, 4) = "Power Purchased by " & oParticipantInfo.IDNumber
+        PurchasesOfMP(2, 4) = "Energy Fee"
+        PurchasesOfMP(2, 5) = "VAT"
+        PurchasesOfMP(2, 6) = "Total"
+        PurchasesOfMP(1, 7) = "Actual Amount Remitted to " & oParticipantInfo.IDNumber
+        PurchasesOfMP(2, 7) = "Energy Fee"
+        PurchasesOfMP(2, 8) = "VAT"
+        PurchasesOfMP(2, 9) = "Total"
+        PurchasesOfMP(UBound(PurchasesOfMP, 1), 0) = "Total"
+        rowCountInPurchases = GetPurchasesOfMP.Count
         If rowCountInPurchases > 0 Then
-            ReDim PurchasesOfMP(rowCountInPurchases + 2, 16)
-            PurchasesOfMP(0, 0) = "B. Power Purchased by " & oParticipantInfo.FullName            
-            PurchasesOfMP(1, 0) = "BILLING_PERIOD"
-            PurchasesOfMP(1, 1) = "INVOICE_NO"
-            PurchasesOfMP(1, 2) = "INVOICE_DATE"
-            PurchasesOfMP(1, 3) = "VATABLE_SALES"
-            PurchasesOfMP(1, 4) = "ZERO_RATED_SALES"
-            PurchasesOfMP(1, 5) = "ZERO_RATED_ECOZONE"
-            PurchasesOfMP(1, 6) = "VATABLE_PURCHASES"
-            PurchasesOfMP(1, 7) = "ZERO_RATED_PURCHASES"
-            PurchasesOfMP(1, 8) = "TOTAL_ENERGY"
-            PurchasesOfMP(1, 9) = "VAT_ON_SALES"
-            PurchasesOfMP(1, 10) = "VAT_ON_PURCHASES"
-            PurchasesOfMP(1, 11) = "TOTAL_VAT"
-            PurchasesOfMP(1, 12) = "TOTAL_BILLING"
-            PurchasesOfMP(1, 13) = ""
-            PurchasesOfMP(1, 14) = "COLLECTION(ENERGY)"
-            PurchasesOfMP(1, 15) = "COLLECTION(VAT)"
-            PurchasesOfMP(1, 16) = "COLLECTION_TOTAL"
-
-            PurchasesOfMP(UBound(PurchasesOfMP, 1), 0) = "TOTAL"
-
-            i = 1
+            i = 2
             For Each Item In GetPurchasesOfMP
-                Dim getWESMBill = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber Select x).FirstOrDefault
-                Dim getWESMBillEnergy = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
-                Dim getWESMBillVAT = (From x In oWESMBills Where x.InvoiceNumber = Item.InvoiceNumber And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
-                Dim getWESMBIllSUmmaryEnergy = (From x In oWESMBillSummary Where x.INVDMCMNo = Item.InvoiceNumber And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
-                Dim getWESMBIllSUmmaryVAT = (From x In oWESMBillSummary Where x.INVDMCMNo = Item.InvoiceNumber And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWESMBillEnergy = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
+                Dim getWESMBillVAT = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWESMBIllSummaryEnergy = (From x In WESMBillSummaryList Where x.INVDMCMNo = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
+                Dim getWESMBIllSummaryVAT = (From x In WESMBillSummaryList Where x.INVDMCMNo = Item.TransactionNo And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
+                Dim getWTADetailsSummary = (From x In WTADetailsSummaryList Where x.BuyerTransNo = Item.TransactionNo Select x).ToList()
+
+                Dim getWESMBillSummaryHisListEnergy As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                If Not getWESMBIllSummaryEnergy Is Nothing Then
+                    getWESMBillSummaryHisListEnergy = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryEnergy.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.Energy Select x).ToList()
+                End If
+
+                Dim getWESMBillSummaryHisListVAT As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                If Not getWESMBIllSummaryVAT Is Nothing Then
+                    getWESMBillSummaryHisListVAT = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryVAT.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnEnergy Select x).ToList()
+                End If
 
                 i += 1
 
-                Dim totalEnergy As Decimal = Item.VatableSales + Item.ZeroRatedSales + Item.ZeroRatedEcozone + Item.VatablePurchases + Item.ZeroRatedPurchases
-                Dim totalVat As Decimal = Item.VATonSales + Item.VATonPurchases
-                If totalEnergy < 0 Then
-                    PurchasesOfMP(i, 3) = Item.VatableSales
-                    PurchasesOfMP(i, 4) = Item.ZeroRatedSales
-                    PurchasesOfMP(i, 5) = Item.ZeroRatedEcozone
-                    PurchasesOfMP(i, 6) = Item.VatablePurchases
-                    PurchasesOfMP(i, 7) = Item.ZeroRatedPurchases
-                    PurchasesOfMP(i, 8) = Item.VatableSales + Item.ZeroRatedSales + Item.ZeroRatedEcozone + Item.VatablePurchases + Item.ZeroRatedPurchases
-                    If Not getWESMBIllSUmmaryEnergy Is Nothing Then
-                        PurchasesOfMP(i, 14) = Math.Abs(getWESMBillEnergy.Amount - getWESMBIllSUmmaryEnergy.EndingBalance) * -1
-                    Else
-                        PurchasesOfMP(i, 14) = Math.Abs(getWESMBillEnergy.Amount) * -1
-                    End If
-                End If
+                PurchasesOfMP(i, 0) = MonthName(Item.DueDate.Month) & " " & Item.DueDate.Year.ToString()
+                PurchasesOfMP(i, 1) = ""
+                PurchasesOfMP(i, 2) = Item.TransactionNo
+                PurchasesOfMP(i, 3) = Item.TransactionDate
 
-                If totalVat < 0 Then
-                    PurchasesOfMP(i, 9) = Item.VATonSales
-                    PurchasesOfMP(i, 10) = Item.VATonPurchases
-                    PurchasesOfMP(i, 11) = Item.VATonSales + Item.VATonPurchases
-                    If Not getWESMBIllSUmmaryVAT Is Nothing Then
-                        PurchasesOfMP(i, 15) = Math.Abs(getWESMBillVAT.Amount - getWESMBIllSUmmaryVAT.EndingBalance) * -1
-                    Else
-                        PurchasesOfMP(i, 15) = Math.Abs(getWESMBillVAT.Amount) * -1
-                    End If
-                End If
+                PurchasesOfMP(i, 4) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount)
+                PurchasesOfMP(i, 5) = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
+                PurchasesOfMP(i, 6) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
 
-                If totalEnergy < 0 Or totalVat < 0 Then
-                    PurchasesOfMP(i, 0) = MonthName(getWESMBill.DueDate.Month)
-                    PurchasesOfMP(i, 1) = getWESMBill.InvoiceNumber
-                    PurchasesOfMP(i, 2) = getWESMBill.InvoiceDate
-                    PurchasesOfMP(i, 12) = CDec(PurchasesOfMP(i, 8)) + CDec(PurchasesOfMP(i, 11))
-                    PurchasesOfMP(i, 13) = ""
+                Dim ActualAmountPaidInEnergy As Decimal = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
+                Dim ActualAmountPaidInVAT As Decimal = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount) + CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
 
+                PurchasesOfMP(i, 7) = ActualAmountPaidInEnergy
+                PurchasesOfMP(i, 8) = ActualAmountPaidInVAT
+                PurchasesOfMP(i, 9) = ActualAmountPaidInEnergy + ActualAmountPaidInVAT
 
-                    PurchasesOfMP(i, 16) = CDec(PurchasesOfMP(i, 14)) + CDec(PurchasesOfMP(i, 15))
-
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 3) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 3)) + CDec(PurchasesOfMP(i, 3))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 4) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 4)) + CDec(PurchasesOfMP(i, 4))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 5) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 5)) + CDec(PurchasesOfMP(i, 5))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 6) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 6)) + CDec(PurchasesOfMP(i, 6))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 7) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 7)) + CDec(PurchasesOfMP(i, 7))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 8) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 8)) + CDec(PurchasesOfMP(i, 8))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 9) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 9)) + CDec(PurchasesOfMP(i, 9))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 10) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 10)) + CDec(PurchasesOfMP(i, 10))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 11) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 11)) + CDec(PurchasesOfMP(i, 11))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 12) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 12)) + CDec(PurchasesOfMP(i, 12))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 14) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 14)) + CDec(PurchasesOfMP(i, 14))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 15) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 15)) + CDec(PurchasesOfMP(i, 15))
-                    PurchasesOfMP(UBound(PurchasesOfMP, 1), 16) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 16)) + CDec(PurchasesOfMP(i, 16))
-                End If
-                
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 4) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 4)) + CDec(PurchasesOfMP(i, 4))
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 5) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 5)) + CDec(PurchasesOfMP(i, 5))
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 6) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 6)) + CDec(PurchasesOfMP(i, 6))
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 7) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 7)) + CDec(PurchasesOfMP(i, 7))
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 8) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 8)) + CDec(PurchasesOfMP(i, 8))
+                PurchasesOfMP(UBound(PurchasesOfMP, 1), 9) = CDec(PurchasesOfMP(UBound(PurchasesOfMP, 1), 9)) + CDec(PurchasesOfMP(i, 9))
             Next
-        Else
-            ReDim PurchasesOfMP(rowCountInPurchases + 2, 16)
-            PurchasesOfMP(0, 0) = "B. Power Purchased by " & oParticipantInfo.FullName
-            PurchasesOfMP(1, 0) = "BILLING_PERIOD"
-            PurchasesOfMP(1, 1) = "INVOICE_NO"
-            PurchasesOfMP(1, 2) = "INVOICE_DATE"
-            PurchasesOfMP(1, 3) = "VATABLE_SALES"
-            PurchasesOfMP(1, 4) = "ZERO_RATED_SALES"
-            PurchasesOfMP(1, 5) = "ZERO_RATED_ECOZONE"
-            PurchasesOfMP(1, 6) = "VATABLE_PURCHASES"
-            PurchasesOfMP(1, 7) = "ZERO_RATED_PURCHASES"
-            PurchasesOfMP(1, 8) = "TOTAL_ENERGY"
-            PurchasesOfMP(1, 9) = "VAT_ON_SALES"
-            PurchasesOfMP(1, 10) = "VAT_ON_PURCHASES"
-            PurchasesOfMP(1, 11) = "TOTAL_VAT"
-            PurchasesOfMP(1, 12) = "TOTAL_BILLING"
-            PurchasesOfMP(1, 13) = ""
-            PurchasesOfMP(1, 14) = "COLLECTION(ENERGY)"
-            PurchasesOfMP(1, 15) = "COLLECTION(VAT)"
-            PurchasesOfMP(1, 16) = "COLLECTION_TOTAL"
-
-            PurchasesOfMP(UBound(PurchasesOfMP, 1), 0) = "TOTAL"
         End If
-        
-        
+
         'AMOUNT PAID BY GENERATORS (FOR MARKET FEES)
-        Dim getWESMBillSummaryMF = (From x In oWESMBillSummary Where x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV Select x).ToList
-        Dim getWESMBillSummaryMFInv = getWESMBillSummaryMF.Select(Function(x) x.INVDMCMNo).Distinct.ToList()
+        Dim getWESMBillMFList = (From x In _WESMBillsPerTP Where x.ChargeType = EnumChargeType.MF Or x.ChargeType = EnumChargeType.MFV Select x Order By x.DueDate).ToList
+        Dim getWESMBillMFInv = getWESMBillMFList.Select(Function(x) x.InvoiceNumber).Distinct.ToList()
 
-        'AMOUNT PAID BY GENERATORS (FOR MARKET FEES)        
-        Dim GetAmountPaidByMP = (From x In objCollectionAllocationList _
-                                 Join y In objCollectionList On y.CollectionNumber Equals x.CollectionNumber _
-                                 Where x.WESMBillSummaryNo.IDNumber.IDNumber = oParticipantInfo.IDNumber _
-                                         And (x.CollectionType = EnumCollectionType.MarketFees _
-                                              Or x.CollectionType = EnumCollectionType.DefaultInterestOnMF _
-                                              Or x.CollectionType = EnumCollectionType.VatOnMarketFees _
-                                              Or x.CollectionType = EnumCollectionType.DefaultInterestOnVatOnMF) _
-                                  Select x.AllocationDate, x.WESMBillSummaryNo.INVDMCMNo, y.ORNo, x.Amount, y.CollectedAmount, y.CollectionDate).ToList
-
-        Dim GetAmountPaidByMPWHTax = (From x In objCollectionAllocationList _
-                                            Join y In objCollectionList On y.CollectionNumber Equals x.CollectionNumber _
-                                            Where x.WESMBillSummaryNo.IDNumber.IDNumber = oParticipantInfo.IDNumber _
-                                                And (x.CollectionType = EnumCollectionType.WithholdingTaxOnMF _
-                                                    Or x.CollectionType = EnumCollectionType.WithholdingTaxOnDefaultInterest) _
-                                            Select x.AllocationDate, x.WESMBillSummaryNo.INVDMCMNo, y.ORNo, x.Amount, y.CollectedAmount, y.CollectionDate).ToList
-
-        Dim GetAmountPaidByMPWHVAT = (From x In objCollectionAllocationList _
-                                            Join y In objCollectionList On y.CollectionNumber Equals x.CollectionNumber _
-                                            Where x.WESMBillSummaryNo.IDNumber.IDNumber = oParticipantInfo.IDNumber _
-                                                And (x.CollectionType = EnumCollectionType.WithholdingVatOnMF _
-                                                    Or x.CollectionType = EnumCollectionType.WithholdingVatOnDefaultInterest) _
-                                            Select x.AllocationDate, x.WESMBillSummaryNo.INVDMCMNo, y.ORNo, x.Amount, y.CollectedAmount, y.CollectionDate).ToList
-
-
-        Dim GetTotalAmountPaidByMP = (From x In GetAmountPaidByMP _
-                                      Group By x.AllocationDate, x.INVDMCMNo, x.ORNo, x.CollectedAmount, x.CollectionDate _
-                                      Into TotalAmount = Sum(x.Amount)).ToList
-
-        Dim GetTotalAmountPaidByMPWHTax = (From x In GetAmountPaidByMPWHTax _
-                                                    Group By x.AllocationDate, x.INVDMCMNo, x.ORNo, x.CollectedAmount, x.CollectionDate _
-                                                    Into TotalAmount = Sum(x.Amount)).ToList
-
-        Dim GetTotalAmountPaidByMPWHVAT = (From x In GetAmountPaidByMPWHVAT _
-                                                    Group By x.AllocationDate, x.INVDMCMNo, x.ORNo, x.CollectedAmount, x.CollectionDate _
-                                                    Into TotalAmount = Sum(x.Amount)).ToList
-
-        Dim GetOffsetAmountPaidByMP = (From x In objOffsetARCollectionList _
-                                       Where x.IDNumber = oParticipantInfo.IDNumber _
-                                        And (x.CollectionType = EnumCollectionType.MarketFees _
-                                             Or x.CollectionType = EnumCollectionType.DefaultInterestOnMF _
-                                             Or x.CollectionType = EnumCollectionType.VatOnMarketFees _
-                                             Or x.CollectionType = EnumCollectionType.DefaultInterestOnVatOnMF) _
-                                    Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount, x.WESMBillSummaryNo).ToList
-
-        Dim GetOffsetAmountPaidByMPWHTax = (From x In objOffsetARCollectionList _
-                                            Where x.IDNumber = oParticipantInfo.IDNumber _
-                                            And (x.CollectionType = EnumCollectionType.WithholdingTaxOnMF _
-                                                    Or x.CollectionType = EnumCollectionType.WithholdingTaxOnDefaultInterest) _
-                                            Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount, x.WESMBillSummaryNo).ToList
-
-        Dim GetOffsetAmountPaidByMPWHVat = (From x In objOffsetARCollectionList _
-                                            Where x.IDNumber = oParticipantInfo.IDNumber _
-                                            And (x.CollectionType = EnumCollectionType.WithholdingVatOnMF _
-                                                    Or x.CollectionType = EnumCollectionType.WithholdingVatOnDefaultInterest) _
-                                            Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount, x.WESMBillSummaryNo).ToList
-
-
-        Dim GetOffsetTotalAmountPaidByMP = (From x In GetOffsetAmountPaidByMP _
-                                            Group By x.AllocationDate, x.InvoiceNumber, x.WESMBillSummaryNo _
-                                            Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-        Dim GetOffsetTotalAmountPaidByMPWHTax = (From x In GetOffsetAmountPaidByMPWHTax _
-                                                Group By x.AllocationDate, x.InvoiceNumber, x.WESMBillSummaryNo _
-                                                Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-        Dim GetOffsetTotalAmountPaidByMPWHVAT = (From x In GetOffsetAmountPaidByMPWHVat _
-                                                Group By x.AllocationDate, x.InvoiceNumber, x.WESMBillSummaryNo _
-                                                Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-        Dim GetAmountPaidByIEMOPInMF = (From x In objPaymentAllocationList _
-                                 Where x.IDNumber = oParticipantInfo.IDNumber _
-                                         And (x.PaymentType = EnumPaymentNewType.MarketFees _
-                                              Or x.PaymentType = EnumPaymentNewType.DefaultInterestOnMF _
-                                              Or x.PaymentType = EnumPaymentNewType.VatOnMarketFees _
-                                              Or x.PaymentType = EnumPaymentNewType.DefaultInterestOnVatOnMF) _
-                                  Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount).ToList
-
-        Dim GetAmountPaidByIEMOPInMFWHTax = (From x In objPaymentAllocationList _
-                                 Where x.IDNumber = oParticipantInfo.IDNumber _
-                                                And (x.PaymentType = EnumPaymentNewType.WithholdingTaxOnMF _
-                                                    Or x.PaymentType = EnumPaymentNewType.WithholdingTaxOnDefaultInterest) _
-                                            Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount).ToList
-
-        Dim GetAmountPaidByIEMOPInMFWHVAT = (From x In objPaymentAllocationList _
-                                 Where x.IDNumber = oParticipantInfo.IDNumber _
-                                                And (x.PaymentType = EnumPaymentNewType.WithholdingVatOnMF _
-                                                    Or x.PaymentType = EnumPaymentNewType.WithholdingVatOnDefaultInterest) _
-                                            Select x.AllocationDate, x.InvoiceNumber, x.AllocationAmount).ToList
-
-        Dim GetTotalAmountPaidByIEMOPInMF = (From x In GetAmountPaidByIEMOPInMF _
-                                     Group By x.AllocationDate, x.InvoiceNumber _
-                                     Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-        Dim GetTotalAmountPaidByIEMOPInMFWHTax = (From x In GetAmountPaidByIEMOPInMFWHTax _
-                                                Group By x.AllocationDate, x.InvoiceNumber _
-                                                Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-        Dim GetTotalAmountPaidByIEMOPInMFWHVAT = (From x In GetAmountPaidByIEMOPInMFWHVAT _
-                                                Group By x.AllocationDate, x.InvoiceNumber _
-                                                Into TotalAmount = Sum(x.AllocationAmount)).ToList
-
-
-        rowCountInMF = getWESMBillSummaryMFInv.Count
-
-        If rowCountInMF > 0 Then            
-            ReDim MFPaid(rowCountInMF + 2, 6)
-            MFPaid(0, 0) = "C. Market Fees"
-            MFPaid(1, 0) = "BILLING_PERIOD"
-            MFPaid(1, 1) = "INVOICE_NO"
-            MFPaid(1, 2) = "INVOICE_DATE"
-            MFPaid(1, 3) = "MARKET FEES"
-            MFPaid(1, 4) = "OUTPUTTAX"
-            MFPaid(1, 5) = "TOTAL AMOUNT PAID"
-            MFPaid(1, 6) = "DATE PAID"
-
-            MFPaid(UBound(MFPaid, 1), 0) = "TOTAL"
-
+        rowCountInMF = getWESMBillMFInv.Count
+        ReDim MFPaid(rowCountInMF + 3, 5)
+        MFPaid(0, 0) = "C. Market Fees Billed by " & AMModule.CompanyShortName
+        MFPaid(1, 0) = "Period"
+        MFPaid(1, 1) = "KWH"
+        MFPaid(1, 2) = "Market Fees"
+        MFPaid(1, 3) = "Output Tax"
+        MFPaid(1, 4) = "Total Amount Paid"
+        MFPaid(1, 5) = "Date Paid"
+        MFPaid(UBound(MFPaid, 1), 0) = "Total"
+        If rowCountInMF > 0 Then
             i = 1
-            For Each item In getWESMBillSummaryMFInv
-                Dim getWESMBillMF = (From x In oWESMBills Where x.InvoiceNumber = item And x.ChargeType = EnumChargeType.MF Select x).FirstOrDefault
-                Dim getWESMBillMFV = (From x In oWESMBills Where x.InvoiceNumber = item And x.ChargeType = EnumChargeType.MFV Select x).FirstOrDefault
+            For Each item In getWESMBillMFInv
+                Dim getWESMBillMF = (From x In getWESMBillMFList Where x.InvoiceNumber = item And x.ChargeType = EnumChargeType.MF Select x).FirstOrDefault
+                Dim getWESMBillMFV = (From x In getWESMBillMFList Where x.InvoiceNumber = item And x.ChargeType = EnumChargeType.MFV Select x).FirstOrDefault
 
-                Dim getWESMBillSummMF = (From x In getWESMBillSummaryMF Where x.INVDMCMNo = item And x.ChargeType = EnumChargeType.MF Select x).FirstOrDefault
-                Dim getWESMBillSummMFV = (From x In getWESMBillSummaryMF Where x.INVDMCMNo = item And x.ChargeType = EnumChargeType.MFV Select x).FirstOrDefault
-                Dim getWESMBill = (From x In oWESMBills Where x.InvoiceNumber = item Select x).ToList()
+                Dim getWESMBIllSummaryMF = (From x In WESMBillSummaryList Where x.INVDMCMNo = item And x.ChargeType = EnumChargeType.MF Select x).FirstOrDefault
+                Dim getWESMBIllSummaryMFV = (From x In WESMBillSummaryList Where x.INVDMCMNo = item And x.ChargeType = EnumChargeType.MFV Select x).FirstOrDefault
+
+                Dim getWESMBillSummaryHisListMF As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                Dim getCollectionHisListMF As List(Of CollectionAllocation) = New List(Of CollectionAllocation)
+                Dim getOffsetHisListMF As List(Of ARCollection) = New List(Of ARCollection)
+                If Not getWESMBIllSummaryMF Is Nothing Then
+                    getWESMBillSummaryHisListMF = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.MarketFees Select x).ToList()
+                    getCollectionHisListMF = (From x In MFCollectionList Where x.WESMBillSummaryNo.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.MarketFees Select x).ToList()
+                    getOffsetHisListMF = (From x In MFOffsetFromPaymentList Where x.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.MarketFees Select x).ToList()
+                End If
+
+                Dim getWESMBillSummaryHisListMFV As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
+                Dim getCollectionHisListMFV As List(Of CollectionAllocation) = New List(Of CollectionAllocation)
+                Dim getOffsetHisListMFV As List(Of ARCollection) = New List(Of ARCollection)
+                If Not getWESMBIllSummaryMFV Is Nothing Then
+                    getWESMBillSummaryHisListMFV = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryMFV.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
+                    getCollectionHisListMFV = (From x In MFCollectionList Where x.WESMBillSummaryNo.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
+                    getOffsetHisListMFV = (From x In MFOffsetFromPaymentList Where x.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
+                End If
+
                 i += 1
-                If Not getWESMBillSummMF Is Nothing Then
-                    MFPaid(i, 0) = MonthName(getWESMBillSummMF.DueDate.Month)
-                    MFPaid(i, 6) = getWESMBillSummMF.NewDueDate.ToShortDateString()
-                Else
-                    MFPaid(i, 0) = MonthName(getWESMBillSummMFV.DueDate.Month)
-                    MFPaid(i, 6) = getWESMBillSummMFV.NewDueDate.ToShortDateString()
+                MFPaid(i, 0) = MonthName(getWESMBillMF.DueDate.Month) & " " & getWESMBillMF.DueDate.Year.ToString()
+                MFPaid(i, 1) = ""
+                MFPaid(i, 2) = getWESMBillMF.Amount
+                MFPaid(i, 3) = IIf(getWESMBillMFV Is Nothing, 0, getWESMBillMFV.Amount)
+                Dim totalAmountPaidInMF As Decimal = getCollectionHisListMF.Select(Function(x) x.Amount).Sum() + getOffsetHisListMF.Select(Function(x) x.AllocationAmount).Sum()
+                Dim totalAmountPaidInMFV As Decimal = getCollectionHisListMFV.Select(Function(x) x.Amount).Sum() + getOffsetHisListMFV.Select(Function(x) x.AllocationAmount).Sum()
+                MFPaid(i, 4) = totalAmountPaidInMF + totalAmountPaidInMFV
+                If Not getCollectionHisListMF Is Nothing Then
+                    Dim currDate As Date = getCollectionHisListMF.Select(Function(x) x.AllocationDate).OrderByDescending(Function(x) x).FirstOrDefault()
+                    MFPaid(i, 5) = currDate.ToString("MM/dd/yyyy")
                 End If
-
-                MFPaid(i, 1) = getWESMBill.Select(Function(x) x.InvoiceNumber).FirstOrDefault
-                MFPaid(i, 2) = getWESMBill.Select(Function(x) x.InvoiceDate).FirstOrDefault
-                If Not getWESMBillMF Is Nothing Then
-                    MFPaid(i, 3) = getWESMBillMF.Amount
-                Else
-                    MFPaid(i, 3) = 0
+                If Not getOffsetHisListMF Is Nothing Then
+                    Dim currDate As Date = getOffsetHisListMF.Select(Function(x) x.AllocationDate).OrderByDescending(Function(x) x).FirstOrDefault()
+                    MFPaid(i, 5) = If(CDate(MFPaid(i, 5)) > currDate, MFPaid(i, 5), currDate.ToString("MM/dd/yyyy"))
                 End If
-                If Not getWESMBillMFV Is Nothing Then
-                    MFPaid(i, 4) = getWESMBillMFV.Amount
-                Else
-                    MFPaid(i, 4) = 0
-                End If
-
-                If (CDec(MFPaid(i, 3)) + CDec(MFPaid(i, 4))) > 0 Then
-                    Dim TotalAmountPaidByIEMOPMF = (From x In GetTotalAmountPaidByIEMOPInMF Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-                    Dim TotalAmountPaidByIEMOPWHTax = (From x In GetTotalAmountPaidByIEMOPInMFWHTax Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-                    Dim TotalAmountPaidByIEMOPWHVAT = (From x In GetTotalAmountPaidByIEMOPInMFWHVAT Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-
-                    MFPaid(i, 5) = Math.Abs(TotalAmountPaidByIEMOPMF + TotalAmountPaidByIEMOPWHTax + TotalAmountPaidByIEMOPWHVAT)
-                Else
-                    Dim TotalAmountPaidByMPMF = (From x In GetTotalAmountPaidByMP Where x.INVDMCMNo = item Select x.TotalAmount).Sum()
-                    Dim TotalAmountPaidByMPWHTax = (From x In GetTotalAmountPaidByMPWHTax Where x.INVDMCMNo = item Select x.TotalAmount).Sum()
-                    Dim TotalAmountPaidByMPWHVAT = (From x In GetTotalAmountPaidByMPWHVAT Where x.INVDMCMNo = item Select x.TotalAmount).Sum()
-                    Dim OffsetTotalAmountPaidByMP = (From x In GetOffsetTotalAmountPaidByMP Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-                    Dim OffsetTotalAmountPaidByMPWHTax = (From x In GetOffsetTotalAmountPaidByMPWHTax Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-                    Dim OffsetTotalAmountPaidByMPWHVAT = (From x In GetOffsetTotalAmountPaidByMPWHVAT Where x.InvoiceNumber = item Select x.TotalAmount).Sum()
-
-                    MFPaid(i, 5) = Math.Abs(TotalAmountPaidByMPMF + TotalAmountPaidByMPWHTax + TotalAmountPaidByMPWHVAT + OffsetTotalAmountPaidByMP + OffsetTotalAmountPaidByMPWHTax + OffsetTotalAmountPaidByMPWHVAT) * -1
-                End If
-
+                MFPaid(UBound(MFPaid, 1), 2) = CDec(MFPaid(UBound(MFPaid, 1), 2)) + CDec(MFPaid(i, 2))
                 MFPaid(UBound(MFPaid, 1), 3) = CDec(MFPaid(UBound(MFPaid, 1), 3)) + CDec(MFPaid(i, 3))
                 MFPaid(UBound(MFPaid, 1), 4) = CDec(MFPaid(UBound(MFPaid, 1), 4)) + CDec(MFPaid(i, 4))
-                MFPaid(UBound(MFPaid, 1), 5) = CDec(MFPaid(UBound(MFPaid, 1), 5)) + CDec(MFPaid(i, 5))
-
             Next
-        Else
-            ReDim MFPaid(rowCountInMF + 2, 6)
-            MFPaid(0, 0) = "C. Market Fees"
-            MFPaid(1, 0) = "BILLING_PERIOD"
-            MFPaid(1, 1) = "INVOICE_NO"
-            MFPaid(1, 2) = "INVOICE_DATE"
-            MFPaid(1, 3) = "MARKET FEES"
-            MFPaid(1, 4) = "OUTPUTTAX"
-            MFPaid(1, 5) = "TOTAL AMOUNT PAID"
-            MFPaid(1, 6) = "DATE PAID"
-
-            MFPaid(UBound(MFPaid, 1), 0) = "TOTAL"
         End If
-        
         'Generate Excel File
-        Me.SaveToExcelGen(TargetPathFolder, SelectedYear, oParticipantInfo, _
+        Me.SaveToExcelGen(TargetPathFolder, dateFrom, dateTo, oParticipantInfo,
                           SalesOfMP, PurchasesOfMP, MFPaid)
-
     End Sub
-
-    Public Sub SaveToExcelGen(ByVal TargetPathFolder As String, ByVal SelectedYear As String, ByVal ParticipantInfo As AMParticipants, _
+    Public Sub SaveToExcelGen(ByVal TargetPathFolder As String, ByVal dateFrom As Date, ByVal dateTo As Date, ByVal ParticipantInfo As AMParticipants,
                               ByVal sales As Object(,), ByVal purchases As Object(,), ByVal amountPaid As Object(,))
 
         Dim xlApp As Excel.Application
@@ -654,53 +899,55 @@ Public Class BIRAccessToRecordHelper
         xlApp = New Excel.Application
         xlWorkBook = xlApp.Workbooks.Add(TemplatePathFile)
         xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
-        'xlWorkSheet.Name = ParticipantInfo.ParticipantID & "_BATR_" & SelectedYear
+        xlWorkSheet.Name = "BIR Access To Record"
         Try
             '********************************************* Supply Content Header
-            ReDim ContentHeader(4, 0)
+            ReDim ContentHeader(5, 0)
             ContentHeader(0, 0) = AMModule.CompanyFullName
-            ContentHeader(1, 0) = "MP Name: " & ParticipantInfo.FullName.ToString()
-            ContentHeader(2, 0) = "MP ID No.: " & ParticipantInfo.IDNumber.ToString()
-            ContentHeader(3, 0) = "Transactions for the year " & SelectedYear
+            ContentHeader(2, 0) = "MP Name: " & ParticipantInfo.FullName.ToString()
+            ContentHeader(3, 0) = "MP ID No.: " & ParticipantInfo.IDNumber.ToString()
+            ContentHeader(4, 0) = "Transactions for " & dateFrom.ToString("MMM yyyy") & "-" & dateTo.ToString("MMM yyyy")
             RowIndx = 1
-            xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 1), Excel.Range)
-            RowIndx += 3
-            xlRowRange2 = DirectCast(xlWorkSheet.Cells(4, 1), Excel.Range)
+            xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 2), Excel.Range)
+            RowIndx += 4
+            xlRowRange2 = DirectCast(xlWorkSheet.Cells(5, 2), Excel.Range)
             xlContentHeader = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
             xlContentHeader.Value = ContentHeader
 
             '********************************************* Supply Sales of Market Participant           
-            If UBound(sales, 1) > 0 Then
+            If UBound(sales, 2) > 0 Then
                 RowIndx += 2
-                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 1), Excel.Range)
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 2), Excel.Range)
                 RowIndx += UBound(sales, 1)
-                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(sales, 2) + 1), Excel.Range)
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(sales, 2) + 2), Excel.Range)
                 xlSalesOfMP = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
                 xlSalesOfMP.Value = sales
             End If
             '********************************************* Supply Purchases of Market Participant
-            If UBound(purchases, 1) > 0 Then
+            If UBound(purchases, 2) > 0 Then
                 RowIndx += 2
-                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 1), Excel.Range)
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 2), Excel.Range)
                 RowIndx += UBound(purchases, 1)
-                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(purchases, 2) + 1), Excel.Range)
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(purchases, 2) + 2), Excel.Range)
                 xlPurchasesOfMP = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
                 xlPurchasesOfMP.Value = purchases
             End If
             '********************************************* Supply Amount Paid  of Market Participant
-            If UBound(amountPaid, 1) > 0 Then
+            If UBound(amountPaid, 2) > 0 Then
                 RowIndx += 2
-                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 1), Excel.Range)
+                xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 2), Excel.Range)
                 RowIndx += UBound(amountPaid, 1)
-                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(amountPaid, 2) + 1), Excel.Range)
+                xlRowRange2 = DirectCast(xlWorkSheet.Cells(RowIndx, UBound(amountPaid, 2) + 2), Excel.Range)
                 xlAmountPaid = xlWorkSheet.Range(xlRowRange1, xlRowRange2)
                 xlAmountPaid.Value = amountPaid
             End If
 
-            Dim FileName As String = ParticipantInfo.ParticipantID & "_BATR_" & SelectedYear
+            Dim FileName As String = ParticipantInfo.ParticipantID & "_BATR_" & dateFrom.ToString("MMMyyyy") & "-" & dateTo.ToString("MMMyyyy")
             xlWorkBook.SaveAs(TargetPathFolder & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbookMacroEnabled, misValue, misValue, misValue, misValue,
                         Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
-
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
             xlWorkBook.Close(False)
             xlApp.Quit()
             releaseObject(CObj(xlAmountPaid))
@@ -712,21 +959,8 @@ Public Class BIRAccessToRecordHelper
             releaseObject(CObj(xlWorkSheet))
             releaseObject(CObj(xlWorkBook))
             releaseObject(CObj(xlApp))
-
-        Catch ex As Exception
-            releaseObject(CObj(xlAmountPaid))
-            releaseObject(CObj(xlPurchasesOfMP))
-            releaseObject(CObj(xlSalesOfMP))
-            releaseObject(CObj(xlContentHeader))
-            releaseObject(CObj(xlRowRange2))
-            releaseObject(CObj(xlRowRange1))
-            releaseObject(CObj(xlWorkSheet))
-            releaseObject(CObj(xlWorkBook))
-            releaseObject(CObj(xlApp))
-            Throw New Exception(ex.Message)
         End Try
     End Sub
-    
     Private Sub releaseObject(ByVal obj As Object)
         Try
             System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
@@ -737,4 +971,9 @@ Public Class BIRAccessToRecordHelper
             GC.Collect()
         End Try
     End Sub
+    Public Function GetReportCreatedCount() As Integer
+        Return ReportCreatedCount
+    End Function
+#End Region
+
 End Class

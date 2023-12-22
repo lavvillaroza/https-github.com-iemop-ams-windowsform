@@ -177,12 +177,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3B8116A484E63C84C17D0FC32997821A"
-        "OwnerKey" = "8:_73699AFF01A3B3BE2F7A535D59B68606"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3C5654B7D53CAD2AF3E46F62D5620303"
         "OwnerKey" = "8:_EACE765F3D044A55AE9755AAC9BACAA1"
         "MsmSig" = "8:_UNDEFINED"
@@ -1856,11 +1850,6 @@
             "AssemblyAsmDisplayName" = "8:System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3933F17D662D0DEC0B1041FE2CAF1B59"
-                    {
-                    "Name" = "8:System.Buffers.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Buffers.dll"
             "TargetName" = "8:"
@@ -1929,26 +1918,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3B8116A484E63C84C17D0FC32997821A"
-            {
-            "SourcePath" = "8:Flash.ocx"
-            "TargetName" = "8:Flash.ocx"
-            "Tag" = "8:"
-            "Folder" = "8:_DF47CD35C2F14D8C8392E890B4C6A0CD"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C5654B7D53CAD2AF3E46F62D5620303"
@@ -2020,11 +1989,6 @@
             "AssemblyAsmDisplayName" = "8:AccountsManagementLogic, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_3F9618912F7C61E8AB74313E53AC12E6"
-                    {
-                    "Name" = "8:AccountsManagementLogic.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AccountsManagementLogic.dll"
             "TargetName" = "8:"
@@ -2206,11 +2170,6 @@
             "AssemblyAsmDisplayName" = "8:AccountsManagementObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_501972CDBEA2C5F4E37F3E7FBB98D757"
-                    {
-                    "Name" = "8:AccountsManagementObjects.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AccountsManagementObjects.dll"
             "TargetName" = "8:"
@@ -2381,11 +2340,6 @@
             "AssemblyAsmDisplayName" = "8:System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_59CE22D0EA6ABA04F5D42014C588EF38"
-                    {
-                    "Name" = "8:System.Memory.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Memory.dll"
             "TargetName" = "8:"
@@ -2680,11 +2634,6 @@
             "AssemblyAsmDisplayName" = "8:Library.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_74E4D4BD6B92EBFFA2CF5B66E5AB1601"
-                    {
-                    "Name" = "8:Library.Core.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Library.Core.dll"
             "TargetName" = "8:"
@@ -2731,11 +2680,6 @@
             "AssemblyAsmDisplayName" = "8:System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7F1BB5F305CCB876FBA02615C3C8CEB1"
-                    {
-                    "Name" = "8:System.ValueTuple.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.ValueTuple.dll"
             "TargetName" = "8:"
@@ -3092,11 +3036,6 @@
             "AssemblyAsmDisplayName" = "8:WESMLib.Auth, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_990EDB08979E32F8677B6CB9629B60FD"
-                    {
-                    "Name" = "8:WESMLib.Auth.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:WESMLib.Auth.exe"
             "TargetName" = "8:"
@@ -3123,11 +3062,6 @@
             "AssemblyAsmDisplayName" = "8:AccountsManagementDataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_9C0E37DD52028DFB4673F4C291392300"
-                    {
-                    "Name" = "8:AccountsManagementDataAccess.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AccountsManagementDataAccess.dll"
             "TargetName" = "8:"
@@ -3340,11 +3274,6 @@
             "AssemblyAsmDisplayName" = "8:System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B46298E2BA50522B047F6F74DFC6C93B"
-                    {
-                    "Name" = "8:System.Threading.Tasks.Extensions.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Threading.Tasks.Extensions.dll"
             "TargetName" = "8:"
@@ -3462,11 +3391,6 @@
             "AssemblyAsmDisplayName" = "8:Npgsql, Version=4.0.12.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C161E1C6888D13A3CFF7800C1AE4A39B"
-                    {
-                    "Name" = "8:Npgsql.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Npgsql.dll"
             "TargetName" = "8:"
@@ -3699,11 +3623,6 @@
             "AssemblyAsmDisplayName" = "8:System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E6DFFF883E944CBBB00A810E77819F40"
-                    {
-                    "Name" = "8:System.Runtime.CompilerServices.Unsafe.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Runtime.CompilerServices.Unsafe.dll"
             "TargetName" = "8:"
@@ -3854,11 +3773,6 @@
             "AssemblyAsmDisplayName" = "8:Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F5EF14B004FA6443719846042B3DF03E"
-                    {
-                    "Name" = "8:Oracle.ManagedDataAccess.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Oracle.ManagedDataAccess.dll"
             "TargetName" = "8:"
@@ -4223,7 +4137,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_59F6ECCDB9A54A348D9CD3145882E085"
             {
-            "Name" = "8:AMS LVM 4.1.997c1d9"
+            "Name" = "8:AMS LVM 4.1.c1d0960"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -4237,7 +4151,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_990F00359F1C4D2985F90DB46F207637"
             {
-            "Name" = "8:AMS LVM 4.1.997c1d9"
+            "Name" = "8:AMS LVM 4.1.c1d0960"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
