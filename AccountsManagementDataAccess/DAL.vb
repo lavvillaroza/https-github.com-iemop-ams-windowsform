@@ -164,6 +164,33 @@ Public Class DAL
     End Function
 #End Region
 
+#Region "ExecuteSelectQueryReturningDataReader"
+    Public Async Function ExecuteSelectQueryReturningDataReaderAsync(ByVal _SQL As String) As Tasks.Task(Of DataReport)
+        Dim report As New DataReport
+        Me._myReader = Nothing
+        Try
+            Me.OpenConnection()
+            Try
+                Me._myCommand = New OracleCommand(_SQL, _conn)
+                Me._myReader = CType(Await Me._myCommand.ExecuteReaderAsync(CommandBehavior.CloseConnection), OracleDataReader)
+                report.ReturnedIDatareader = Me._myReader
+            Catch ex As Exception
+                report.ErrorMessage = ex.Message
+                If Me._conn.State <> ConnectionState.Closed Then
+                    Me._conn.Close()
+                End If
+                Me._myCommand.Dispose()
+            End Try
+        Catch ex As Exception
+            report.ErrorMessage = ex.Message
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+        End Try
+        Return report
+    End Function
+#End Region
+
 #Region "ExcuteNonQuery"
     Public Function ExcuteNonQuery(ByVal _SQL As String, ByVal sqlParameter() As OracleParameter) As DataReport
         Dim report As New DataReport

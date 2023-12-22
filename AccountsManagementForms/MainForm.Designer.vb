@@ -110,7 +110,6 @@ Partial Class MainForm
         Me.MarketFeesSummary_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MAPBIR_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NoticeOfDrawdown_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NSSRA_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OfficialReceipt_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PaymentDetails_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Prudential_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -124,6 +123,7 @@ Partial Class MainForm
         Me.SummaryForAccountingBooks_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SummaryOfDefaultInterest_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SummaryOfOutstandingBalances_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SummaryofWTADetails = New System.Windows.Forms.ToolStripMenuItem()
         Me.WESMInvoice_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WESMBills_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WESMTransAllocationSummary_TSMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -548,7 +548,7 @@ Partial Class MainForm
         '
         'InquiryReports_TSMenuItem
         '
-        Me.InquiryReports_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgingReport_TSMenuItem, Me.BankReconStatement_TSMenuItem, Me.BIRAccessToRecordToolStripMenuItem, Me.BIRRulingToolStripMenuItem, Me.CashSummaryReport_TSMenuItem, Me.Checks_TSMenuItem, Me.CollectionSummary_TSMenuItem, Me.DailyCollectionSummary_TSMenuItem, Me.DebitCreditMemo_TSMenuItem, Me.DefaultNotice_TSMenuItem, Me.DeferredPayment_TSMenuItem, Me.EFT_TSMenuItem, Me.WVAT_TagAlloc_ToolStripMenuItem, Me.EWT_TagAlloc_Report_ToolStripMenuItem, Me.FundTransferForm_TSMenuItem, Me.GeneralLedgerToolStripMenuItem, Me.JournalVoucher_TSMenuItem, Me.MarketFeesSummary_TSMenuItem, Me.MAPBIR_TSMenuItem, Me.NoticeOfDrawdown_TSMenuItem, Me.NSSRA_TSMenuItem, Me.OfficialReceipt_TSMenuItem, Me.PaymentDetails_TSMenuItem, Me.Prudential_TSMenuItem, Me.RequestForPayment_TSMenuItem, Me.SettlementNotice_TSMenuItem, Me.StatementAccount_TSMenuItem, Me.Subsidiary_Ledger_TSMenuItem, Me.SummaryForAccountingBooks_TSMenuItem, Me.SummaryOfDefaultInterest_TSMenuItem, Me.SummaryOfOutstandingBalances_TSMenuItem, Me.WESMInvoice_TSMenuItem, Me.WESMBills_TSMenuItem, Me.WESMTransAllocationSummary_TSMenuItem, Me.WESMBillsSummary_TSMenuItem})
+        Me.InquiryReports_TSMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AgingReport_TSMenuItem, Me.BankReconStatement_TSMenuItem, Me.BIRAccessToRecordToolStripMenuItem, Me.BIRRulingToolStripMenuItem, Me.CashSummaryReport_TSMenuItem, Me.Checks_TSMenuItem, Me.CollectionSummary_TSMenuItem, Me.DailyCollectionSummary_TSMenuItem, Me.DebitCreditMemo_TSMenuItem, Me.DefaultNotice_TSMenuItem, Me.DeferredPayment_TSMenuItem, Me.EFT_TSMenuItem, Me.WVAT_TagAlloc_ToolStripMenuItem, Me.EWT_TagAlloc_Report_ToolStripMenuItem, Me.FundTransferForm_TSMenuItem, Me.GeneralLedgerToolStripMenuItem, Me.JournalVoucher_TSMenuItem, Me.MarketFeesSummary_TSMenuItem, Me.MAPBIR_TSMenuItem, Me.NoticeOfDrawdown_TSMenuItem, Me.OfficialReceipt_TSMenuItem, Me.PaymentDetails_TSMenuItem, Me.Prudential_TSMenuItem, Me.RequestForPayment_TSMenuItem, Me.SettlementNotice_TSMenuItem, Me.StatementAccount_TSMenuItem, Me.Subsidiary_Ledger_TSMenuItem, Me.SummaryForAccountingBooks_TSMenuItem, Me.SummaryOfDefaultInterest_TSMenuItem, Me.SummaryOfOutstandingBalances_TSMenuItem, Me.SummaryofWTADetails, Me.WESMInvoice_TSMenuItem, Me.WESMBills_TSMenuItem, Me.WESMTransAllocationSummary_TSMenuItem, Me.WESMBillsSummary_TSMenuItem})
         Me.InquiryReports_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.InquiryReports_TSMenuItem.Name = "InquiryReports_TSMenuItem"
         Me.InquiryReports_TSMenuItem.Size = New System.Drawing.Size(101, 20)
@@ -573,7 +573,6 @@ Partial Class MainForm
         Me.BIRAccessToRecordToolStripMenuItem.Name = "BIRAccessToRecordToolStripMenuItem"
         Me.BIRAccessToRecordToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.BIRAccessToRecordToolStripMenuItem.Text = "BIR Access To Record"
-        Me.BIRAccessToRecordToolStripMenuItem.Visible = False
         '
         'BIRRulingToolStripMenuItem
         '
@@ -713,13 +712,6 @@ Partial Class MainForm
         Me.NoticeOfDrawdown_TSMenuItem.Text = "Notice of Drawdown"
         Me.NoticeOfDrawdown_TSMenuItem.Visible = False
         '
-        'NSSRA_TSMenuItem
-        '
-        Me.NSSRA_TSMenuItem.Name = "NSSRA_TSMenuItem"
-        Me.NSSRA_TSMenuItem.Size = New System.Drawing.Size(291, 22)
-        Me.NSSRA_TSMenuItem.Text = "NSSRA"
-        Me.NSSRA_TSMenuItem.Visible = False
-        '
         'OfficialReceipt_TSMenuItem
         '
         Me.OfficialReceipt_TSMenuItem.Name = "OfficialReceipt_TSMenuItem"
@@ -804,6 +796,12 @@ Partial Class MainForm
         Me.SummaryOfOutstandingBalances_TSMenuItem.Name = "SummaryOfOutstandingBalances_TSMenuItem"
         Me.SummaryOfOutstandingBalances_TSMenuItem.Size = New System.Drawing.Size(291, 22)
         Me.SummaryOfOutstandingBalances_TSMenuItem.Text = "Summary of Outstanding Balances"
+        '
+        'SummaryofWTADetails
+        '
+        Me.SummaryofWTADetails.Name = "SummaryofWTADetails"
+        Me.SummaryofWTADetails.Size = New System.Drawing.Size(291, 22)
+        Me.SummaryofWTADetails.Text = "Summary of WTA Details"
         '
         'WESMInvoice_TSMenuItem
         '
@@ -927,7 +925,7 @@ Partial Class MainForm
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Accounts Management System (LUZVIS v4.1.997c1d9) "
+        Me.Text = "Accounts Management System (LVM v4.1.c1d0960) "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
@@ -983,7 +981,6 @@ Partial Class MainForm
     Friend WithEvents SummaryForAccountingBooks_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NoticeOfDrawdown_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents BankReconStatement_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents NSSRA_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CashSummaryReport_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OfficialReceipt_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SOAP_TSMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -1050,4 +1047,5 @@ Partial Class MainForm
     Friend WithEvents WESMTransactionSummaryFromCRSSDBToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WithholdingVATCertificateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WVAT_TagAlloc_ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SummaryofWTADetails As ToolStripMenuItem
 End Class

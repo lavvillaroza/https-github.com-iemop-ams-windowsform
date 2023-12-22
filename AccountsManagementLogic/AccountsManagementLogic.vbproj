@@ -160,6 +160,7 @@
     <Compile Include="PaymentLogic\PaymentHelper.vb" />
     <Compile Include="STLNoticeHelper.vb" />
     <Compile Include="SummaryofOutstandingBalancesHelper.vb" />
+    <Compile Include="SummaryofWTADetailsHelper.vb" />
     <Compile Include="WESMBillHelper.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

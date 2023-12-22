@@ -1706,12 +1706,12 @@ Public Class frmCollectionMgt
             '    Exit Function
             'End If
             If Me.rbManual.Checked And CDec(Me.txtAmountCollected.Text) <> 0 And Me.LoadType = CollectionLoadType.Edit Then
-                Dim totalPayable As Decimal = 0
+                Dim totalAmountApplied As Decimal = 0
                 For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
-                    totalPayable += CDec(Me.DGridView.Rows(i).Cells("colTotalPayable").Value)
+                    totalAmountApplied += CDec(Me.DGridView.Rows(i).Cells("colCash").Value)
                 Next
-                If Math.Abs(totalPayable) > 0 Then
-                    If CDec(txtAmountCollected.Text) < Math.Abs(totalPayable) Then
+                If Math.Abs(totalAmountApplied) > 0 Then
+                    If CDec(txtAmountCollected.Text) < Math.Abs(totalAmountApplied) Then
                         MessageBox.Show("Total Applied Amount is greater than the amount collected! Check All is cancelled.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         Me.cb_CheckAll.Checked = False
                         Exit Function
@@ -2062,8 +2062,11 @@ Public Class frmCollectionMgt
         'Else
         '    Me.txtTotalAllocatedAmount.Text = "0.00"
         'End If
-        Me.txtTotalAllocatedAmount.Text = FormatNumber(totalCash - subTotal, 2)
-
+        If totalCash >= subTotal Then
+            Me.txtTotalAllocatedAmount.Text = FormatNumber(subTotal, 2)
+        Else
+            Me.txtTotalAllocatedAmount.Text = FormatNumber(totalCash - subTotal, 2)
+        End If
     End Sub
 
     Private Function SaveManualCollection(ByVal IDNumber As String, ByRef listCollections As List(Of Collection), _

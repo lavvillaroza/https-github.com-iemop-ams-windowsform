@@ -3631,7 +3631,7 @@ Public Class WESMBillHelper
         Return result
     End Function
 
-    Private Function GetCollections(ByVal dr As IDataReader, _
+    Private Function GetCollections(ByVal dr As IDataReader,
                                     ByVal listCollectionAllocation As List(Of CollectionAllocation)) As List(Of Collection)
         Dim result As New List(Of Collection)
 
@@ -3660,12 +3660,12 @@ Public Class WESMBillHelper
                     End If
 
                     'Get the list of Collection Allocation
-                    Dim items = (From x In listCollectionAllocation _
-                                 Where x.CollectionNumber = item.CollectionNumber _
+                    Dim items = (From x In listCollectionAllocation
+                                 Where x.CollectionNumber = item.CollectionNumber
                                  Select x).ToList()
 
-                    Dim _chkExisting = (From x In item.ListOfCollectionAllocation _
-                                        Where x.CollectionNumber = item.CollectionNumber _
+                    Dim _chkExisting = (From x In item.ListOfCollectionAllocation
+                                        Where x.CollectionNumber = item.CollectionNumber
                                         Select x).ToList
 
                     If _chkExisting.Count = 0 Then

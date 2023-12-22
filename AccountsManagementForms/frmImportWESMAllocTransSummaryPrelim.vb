@@ -206,11 +206,13 @@ Public Class frmImportWESMAllocTransSummaryPrelim
 
                 'Compare NSSRA line item from AP minus AR.
                 If TotalAmount <> 0 Then
-                    Dim conf = MessageBox.Show("Total AP and AR:" & vbTab & vbTab & FormatNumber(TotalAmount, 2) & vbNewLine &
-                                               "Total AP and AR are not equal! Do you want to continue?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                    If conf = DialogResult.No Then
-                        Exit Sub
-                    End If
+                    'Dim conf = MessageBox.Show("Total AP and AR:" & vbTab & vbTab & FormatNumber(TotalAmount, 2) & vbNewLine &
+                    '                           "Total AP and AR are not equal! Do you want to continue?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    'If conf = DialogResult.No Then
+                    '    Exit Sub
+                    'End If
+                    MessageBox.Show("Total AP and AR:" & vbTab & vbTab & FormatNumber(TotalAmount, 2), "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
                 Else
                     MessageBox.Show("Total AP and AR:" & vbTab & vbTab & FormatNumber(TotalAmount, 2), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If

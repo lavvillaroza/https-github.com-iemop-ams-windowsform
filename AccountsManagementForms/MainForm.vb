@@ -1135,4 +1135,12 @@ Public Class MainForm
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Sub SummaryofWTADetails_Click(sender As Object, e As EventArgs) Handles SummaryofWTADetails.Click
+        Try
+            frmSummaryOfWTADetails.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class
