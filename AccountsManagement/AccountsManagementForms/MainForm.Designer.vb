@@ -167,7 +167,7 @@ Partial Class MainForm
         Me.AccountingCodes_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AccountingCodes_TSMenuItem.ForeColor = System.Drawing.Color.Black
         Me.AccountingCodes_TSMenuItem.Name = "AccountingCodes_TSMenuItem"
-        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.AccountingCodes_TSMenuItem.Text = "Libraries"
         '
         'AccountingCodeToolStripMenuItem
@@ -248,7 +248,7 @@ Partial Class MainForm
         'LogoutToolStripMenuItem
         '
         Me.LogoutToolStripMenuItem.Name = "LogoutToolStripMenuItem"
-        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.LogoutToolStripMenuItem.Text = "Logout"
         '
         'SOAP_TSMenuItem

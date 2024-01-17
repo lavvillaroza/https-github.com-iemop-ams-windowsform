@@ -302,10 +302,10 @@ Public Class SummaryofWTADetailsHelper
         ReDim WTADSArr(RowCount, 11)
 
         For Each item In wtaDetailsSummaryList
-            WTADSArr(RowIndex, 0) = item.BuyerBillingID
-            WTADSArr(RowIndex, 1) = item.BuyerTransNo
-            WTADSArr(RowIndex, 2) = item.SellerBillingID
-            WTADSArr(RowIndex, 3) = item.SellerTransNo
+            WTADSArr(RowIndex, 0) = item.BuyerTransNo
+            WTADSArr(RowIndex, 1) = item.BuyerBillingID
+            WTADSArr(RowIndex, 2) = item.SellerTransNo
+            WTADSArr(RowIndex, 3) = item.SellerBillingID
             WTADSArr(RowIndex, 4) = item.DueDate.ToShortDateString
             WTADSArr(RowIndex, 5) = item.NewDueDate.ToShortDateString()
             WTADSArr(RowIndex, 6) = item.OrigBalanceInEnergy
