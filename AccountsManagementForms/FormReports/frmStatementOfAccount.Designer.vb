@@ -45,6 +45,7 @@ Partial Class frmStatementOfAccount
         '
         'cmd_GenerateReport
         '
+        Me.cmd_GenerateReport.BackColor = System.Drawing.Color.White
         Me.cmd_GenerateReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenerateReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -58,11 +59,12 @@ Partial Class frmStatementOfAccount
         Me.cmd_GenerateReport.Size = New System.Drawing.Size(106, 39)
         Me.cmd_GenerateReport.TabIndex = 35
         Me.cmd_GenerateReport.Text = "   Generate"
-        Me.cmd_GenerateReport.UseVisualStyleBackColor = True
+        Me.cmd_GenerateReport.UseVisualStyleBackColor = False
         '
         'Close_Button
         '
         Me.Close_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Close_Button.BackColor = System.Drawing.Color.White
         Me.Close_Button.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.Close_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.Close_Button.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -76,7 +78,7 @@ Partial Class frmStatementOfAccount
         Me.Close_Button.Size = New System.Drawing.Size(106, 39)
         Me.Close_Button.TabIndex = 36
         Me.Close_Button.Text = "Close"
-        Me.Close_Button.UseVisualStyleBackColor = True
+        Me.Close_Button.UseVisualStyleBackColor = False
         '
         'DueDate_ComboBox
         '
@@ -129,6 +131,7 @@ Partial Class frmStatementOfAccount
         'Preview_Button
         '
         Me.Preview_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Preview_Button.BackColor = System.Drawing.Color.White
         Me.Preview_Button.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.Preview_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.Preview_Button.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -142,7 +145,7 @@ Partial Class frmStatementOfAccount
         Me.Preview_Button.Size = New System.Drawing.Size(106, 39)
         Me.Preview_Button.TabIndex = 46
         Me.Preview_Button.Text = "   Preview"
-        Me.Preview_Button.UseVisualStyleBackColor = True
+        Me.Preview_Button.UseVisualStyleBackColor = False
         '
         'TableLayoutPanel1
         '
@@ -230,7 +233,7 @@ Partial Class frmStatementOfAccount
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(840, 565)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

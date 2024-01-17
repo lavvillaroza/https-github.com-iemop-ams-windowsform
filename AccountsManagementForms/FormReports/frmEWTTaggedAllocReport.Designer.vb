@@ -43,13 +43,13 @@ Partial Class frmEWTTaggedAllocReport
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Location = New System.Drawing.Point(15, 19)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(302, 60)
+        Me.Panel1.Size = New System.Drawing.Size(302, 48)
         Me.Panel1.TabIndex = 24
         '
         'dtFrom
         '
         Me.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFrom.Location = New System.Drawing.Point(43, 25)
+        Me.dtFrom.Location = New System.Drawing.Point(43, 5)
         Me.dtFrom.Name = "dtFrom"
         Me.dtFrom.Size = New System.Drawing.Size(104, 20)
         Me.dtFrom.TabIndex = 21
@@ -57,7 +57,7 @@ Partial Class frmEWTTaggedAllocReport
         'dtTo
         '
         Me.dtTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtTo.Location = New System.Drawing.Point(189, 25)
+        Me.dtTo.Location = New System.Drawing.Point(189, 5)
         Me.dtTo.Name = "dtTo"
         Me.dtTo.Size = New System.Drawing.Size(104, 20)
         Me.dtTo.TabIndex = 22
@@ -67,7 +67,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(3, 29)
+        Me.Label1.Location = New System.Drawing.Point(3, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(34, 14)
         Me.Label1.TabIndex = 17
@@ -78,7 +78,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label3.Location = New System.Drawing.Point(162, 29)
+        Me.Label3.Location = New System.Drawing.Point(162, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(21, 14)
         Me.Label3.TabIndex = 18
@@ -91,14 +91,14 @@ Partial Class frmEWTTaggedAllocReport
         Me.GroupBox1.Controls.Add(Me.btnClose)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(338, 146)
+        Me.GroupBox1.Size = New System.Drawing.Size(338, 145)
         Me.GroupBox1.TabIndex = 25
         Me.GroupBox1.TabStop = False
         '
         'btnExportToExcel
         '
         Me.btnExportToExcel.AccessibleName = ""
-        Me.btnExportToExcel.BackColor = System.Drawing.SystemColors.Control
+        Me.btnExportToExcel.BackColor = System.Drawing.Color.White
         Me.btnExportToExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnExportToExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnExportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -106,7 +106,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.btnExportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.btnExportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnExportToExcel.Location = New System.Drawing.Point(31, 86)
+        Me.btnExportToExcel.Location = New System.Drawing.Point(46, 100)
         Me.btnExportToExcel.Name = "btnExportToExcel"
         Me.btnExportToExcel.Size = New System.Drawing.Size(140, 39)
         Me.btnExportToExcel.TabIndex = 19
@@ -115,7 +115,7 @@ Partial Class frmEWTTaggedAllocReport
         '
         'btnClose
         '
-        Me.btnClose.BackColor = System.Drawing.SystemColors.Control
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -123,7 +123,7 @@ Partial Class frmEWTTaggedAllocReport
         Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.DeleteIcon24x24
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnClose.Location = New System.Drawing.Point(177, 86)
+        Me.btnClose.Location = New System.Drawing.Point(192, 100)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(140, 39)
         Me.btnClose.TabIndex = 20
@@ -134,7 +134,7 @@ Partial Class frmEWTTaggedAllocReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(364, 169)
         Me.ControlBox = False
         Me.Controls.Add(Me.GroupBox1)

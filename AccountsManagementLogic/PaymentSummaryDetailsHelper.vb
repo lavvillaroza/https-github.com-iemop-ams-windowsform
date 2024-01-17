@@ -46,9 +46,9 @@ Public Class PaymentSummaryDetailsHelper
     End Sub
 
 
-    Public Sub GenerateSTLNoticeReport(ByVal ParticipantID As String)
+    Public Sub GeneratePSDReport(ByVal ParticipantID As String)
         Try
-            
+
             Dim Remittances As New List(Of STLNoticeNew)
             Dim OffettingOnFITParticipants As New List(Of STLNoticeNew)
             Dim EndingBalances As New List(Of STLNoticeNew)
@@ -64,7 +64,7 @@ Public Class PaymentSummaryDetailsHelper
             Me.ProcessRemarks = "Exporting Payment Summary Details of " & ParticipantID
             If RecordsCount > 0 Then
                 FileCounter += RecordsCount
-                Me.GenerateSTLNoticeWithTemplateInExcel(FilePath, Remittances, TransferToPayment, _
+                Me.GenerateSTLNoticeWithTemplateInExcel(FilePath, Remittances, TransferToPayment,
                                                       AmParticipantsInfo, PaymentRemarks)
             End If
         Catch ex As Exception

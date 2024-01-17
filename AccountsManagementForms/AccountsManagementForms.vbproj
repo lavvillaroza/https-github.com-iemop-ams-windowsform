@@ -146,6 +146,7 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
@@ -489,7 +490,7 @@
     <Compile Include="frmImportCSVInsert.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmImportWBTransactionSummaryBIRR.Designer.vb">
+    <Compile Include="frmImportWESMAllocTransSummary.Designer.vb">
       <DependentUpon>frmImportWESMAllocTransSummary.vb</DependentUpon>
     </Compile>
     <Compile Include="frmImportWESMAllocTransSummary.vb">
@@ -1629,7 +1630,7 @@
     <EmbeddedResource Include="frmImportCSVInsert.resx">
       <DependentUpon>frmImportCSVInsert.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmImportWBTransactionSummaryBIRR.resx">
+    <EmbeddedResource Include="frmImportWESMAllocTransSummary.resx">
       <DependentUpon>frmImportWESMAllocTransSummary.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportWESMAllocTransSummaryPrelim.resx">
@@ -2236,7 +2237,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AccountsManagementForms_TemporaryKey.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

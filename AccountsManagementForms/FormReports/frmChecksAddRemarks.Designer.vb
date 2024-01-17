@@ -30,7 +30,7 @@ Partial Class frmChecksAddRemarks
         '
         'txt_Remarks
         '
-        Me.txt_Remarks.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Remarks.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Remarks.Location = New System.Drawing.Point(12, 25)
         Me.txt_Remarks.MaxLength = 150
         Me.txt_Remarks.Multiline = True
@@ -41,10 +41,10 @@ Partial Class frmChecksAddRemarks
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(12, 8)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(57, 14)
+        Me.Label1.Size = New System.Drawing.Size(60, 14)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Remarks:"
         '
@@ -80,16 +80,16 @@ Partial Class frmChecksAddRemarks
         '
         'frmChecksAddRemarks
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(350, 145)
         Me.ControlBox = False
         Me.Controls.Add(Me.cmd_Cancel)
         Me.Controls.Add(Me.cmd_Ok)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txt_Remarks)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmChecksAddRemarks"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent

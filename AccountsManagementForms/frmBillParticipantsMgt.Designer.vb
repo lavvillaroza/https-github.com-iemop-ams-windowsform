@@ -87,6 +87,9 @@ Partial Class frmBillParticipantsMgt
         Me.txtEnergyWHTax = New System.Windows.Forms.TextBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.gpOtherInfo = New System.Windows.Forms.GroupBox()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.rbInactive = New System.Windows.Forms.RadioButton()
+        Me.rbActive = New System.Windows.Forms.RadioButton()
         Me.CB_MembershipType = New System.Windows.Forms.ComboBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.ATCType_cmb = New System.Windows.Forms.ComboBox()
@@ -116,10 +119,7 @@ Partial Class frmBillParticipantsMgt
         Me.txtMunicipality = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.rbInactive = New System.Windows.Forms.RadioButton()
-        Me.rbActive = New System.Windows.Forms.RadioButton()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Label34 = New System.Windows.Forms.Label()
         Me.gpMain.SuspendLayout()
         Me.gpRep.SuspendLayout()
         Me.gpBankInfo.SuspendLayout()
@@ -839,6 +839,43 @@ Partial Class frmBillParticipantsMgt
         Me.gpOtherInfo.TabIndex = 4
         Me.gpOtherInfo.TabStop = False
         '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label34.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label34.Location = New System.Drawing.Point(587, 48)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(45, 14)
+        Me.Label34.TabIndex = 63
+        Me.Label34.Text = "Status:"
+        '
+        'rbInactive
+        '
+        Me.rbInactive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rbInactive.AutoSize = True
+        Me.rbInactive.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.rbInactive.Location = New System.Drawing.Point(701, 45)
+        Me.rbInactive.Name = "rbInactive"
+        Me.rbInactive.Size = New System.Drawing.Size(68, 18)
+        Me.rbInactive.TabIndex = 2
+        Me.rbInactive.TabStop = True
+        Me.rbInactive.Text = "In-Active"
+        Me.rbInactive.UseVisualStyleBackColor = True
+        '
+        'rbActive
+        '
+        Me.rbActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rbActive.AutoSize = True
+        Me.rbActive.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.rbActive.Location = New System.Drawing.Point(639, 45)
+        Me.rbActive.Name = "rbActive"
+        Me.rbActive.Size = New System.Drawing.Size(56, 18)
+        Me.rbActive.TabIndex = 1
+        Me.rbActive.TabStop = True
+        Me.rbActive.Text = "Active"
+        Me.rbActive.UseVisualStyleBackColor = True
+        '
         'CB_MembershipType
         '
         Me.CB_MembershipType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -1169,52 +1206,15 @@ Partial Class frmBillParticipantsMgt
         Me.Label24.Text = "Address:"
         Me.Label24.Visible = False
         '
-        'rbInactive
-        '
-        Me.rbInactive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rbInactive.AutoSize = True
-        Me.rbInactive.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.rbInactive.Location = New System.Drawing.Point(701, 45)
-        Me.rbInactive.Name = "rbInactive"
-        Me.rbInactive.Size = New System.Drawing.Size(68, 18)
-        Me.rbInactive.TabIndex = 2
-        Me.rbInactive.TabStop = True
-        Me.rbInactive.Text = "In-Active"
-        Me.rbInactive.UseVisualStyleBackColor = True
-        '
-        'rbActive
-        '
-        Me.rbActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rbActive.AutoSize = True
-        Me.rbActive.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.rbActive.Location = New System.Drawing.Point(639, 45)
-        Me.rbActive.Name = "rbActive"
-        Me.rbActive.Size = New System.Drawing.Size(56, 18)
-        Me.rbActive.TabIndex = 1
-        Me.rbActive.TabStop = True
-        Me.rbActive.Text = "Active"
-        Me.rbActive.UseVisualStyleBackColor = True
-        '
         'ErrorProvider1
         '
         Me.ErrorProvider1.ContainerControl = Me
-        '
-        'Label34
-        '
-        Me.Label34.AutoSize = True
-        Me.Label34.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label34.Location = New System.Drawing.Point(587, 48)
-        Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(45, 14)
-        Me.Label34.TabIndex = 63
-        Me.Label34.Text = "Status:"
         '
         'frmBillParticipantsMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(936, 709)
         Me.ControlBox = False
         Me.Controls.Add(Me.gpZeroRatedEnergy)

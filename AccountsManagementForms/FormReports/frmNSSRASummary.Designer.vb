@@ -31,7 +31,7 @@ Partial Class frmNSSRASummary
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(9, 22)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(82, 14)
@@ -44,17 +44,18 @@ Partial Class frmNSSRASummary
         Me.ddlMonth.FormattingEnabled = True
         Me.ddlMonth.Location = New System.Drawing.Point(97, 20)
         Me.ddlMonth.Name = "ddlMonth"
-        Me.ddlMonth.Size = New System.Drawing.Size(190, 20)
+        Me.ddlMonth.Size = New System.Drawing.Size(190, 22)
         Me.ddlMonth.TabIndex = 2
         '
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDark
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -63,16 +64,17 @@ Partial Class frmNSSRASummary
         Me.btnClose.Size = New System.Drawing.Size(120, 39)
         Me.btnClose.TabIndex = 27
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnShowReport
         '
         Me.btnShowReport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnShowReport.BackColor = System.Drawing.Color.White
         Me.btnShowReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnShowReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnShowReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDark
         Me.btnShowReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnShowReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShowReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnShowReport.ForeColor = System.Drawing.Color.Black
         Me.btnShowReport.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnShowReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -82,19 +84,19 @@ Partial Class frmNSSRASummary
         Me.btnShowReport.TabIndex = 28
         Me.btnShowReport.Text = "Generate Report"
         Me.btnShowReport.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnShowReport.UseVisualStyleBackColor = True
+        Me.btnShowReport.UseVisualStyleBackColor = False
         '
         'frmNSSRASummary
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(300, 118)
         Me.Controls.Add(Me.btnShowReport)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.ddlMonth)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmNSSRASummary"

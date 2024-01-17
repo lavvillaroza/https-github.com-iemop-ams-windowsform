@@ -69,7 +69,7 @@ Partial Class frmRPTRequestForPaymentDetails
         Me.gbox_PaymentTotals.Controls.Add(Me.Label9)
         Me.gbox_PaymentTotals.Controls.Add(Me.txt_TotRTGS)
         Me.gbox_PaymentTotals.Controls.Add(Me.Label8)
-        Me.gbox_PaymentTotals.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbox_PaymentTotals.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbox_PaymentTotals.Location = New System.Drawing.Point(12, 12)
         Me.gbox_PaymentTotals.Name = "gbox_PaymentTotals"
         Me.gbox_PaymentTotals.Size = New System.Drawing.Size(764, 164)
@@ -80,7 +80,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_Payment.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_Payment.Enabled = False
-        Me.txt_Payment.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Payment.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Payment.Location = New System.Drawing.Point(561, 95)
         Me.txt_Payment.Name = "txt_Payment"
         Me.txt_Payment.ReadOnly = True
@@ -92,10 +92,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(398, 97)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(93, 14)
+        Me.Label1.Size = New System.Drawing.Size(94, 14)
         Me.Label1.TabIndex = 29
         Me.Label1.Text = "Total Payments:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -104,7 +104,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_HeldCollection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_HeldCollection.Enabled = False
-        Me.txt_HeldCollection.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_HeldCollection.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_HeldCollection.Location = New System.Drawing.Point(146, 95)
         Me.txt_HeldCollection.Name = "txt_HeldCollection"
         Me.txt_HeldCollection.ReadOnly = True
@@ -117,7 +117,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_Collection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_Collection.Enabled = False
-        Me.txt_Collection.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Collection.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Collection.Location = New System.Drawing.Point(561, 117)
         Me.txt_Collection.Name = "txt_Collection"
         Me.txt_Collection.ReadOnly = True
@@ -129,10 +129,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(8, 97)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(122, 14)
+        Me.Label13.Size = New System.Drawing.Size(121, 14)
         Me.Label13.TabIndex = 37
         Me.Label13.Text = "Total Held Collection:"
         '
@@ -140,7 +140,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_TransferPEMC.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_TransferPEMC.Enabled = False
-        Me.txt_TransferPEMC.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_TransferPEMC.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_TransferPEMC.Location = New System.Drawing.Point(146, 117)
         Me.txt_TransferPEMC.Name = "txt_TransferPEMC"
         Me.txt_TransferPEMC.ReadOnly = True
@@ -152,7 +152,7 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.Location = New System.Drawing.Point(398, 119)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(139, 14)
@@ -162,10 +162,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(8, 119)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(89, 14)
+        Me.Label12.Size = New System.Drawing.Size(86, 14)
         Me.Label12.TabIndex = 35
         Me.Label12.Text = "Total To PEMC:"
         '
@@ -173,7 +173,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_MFApplication.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_MFApplication.Enabled = False
-        Me.txt_MFApplication.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_MFApplication.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_MFApplication.Location = New System.Drawing.Point(146, 64)
         Me.txt_MFApplication.Name = "txt_MFApplication"
         Me.txt_MFApplication.ReadOnly = True
@@ -185,10 +185,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(8, 66)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(57, 14)
+        Me.Label16.Size = New System.Drawing.Size(55, 14)
         Me.Label16.TabIndex = 33
         Me.Label16.Text = "Total MF:"
         '
@@ -196,7 +196,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_PRReplenish.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_PRReplenish.Enabled = False
-        Me.txt_PRReplenish.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PRReplenish.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_PRReplenish.Location = New System.Drawing.Point(561, 64)
         Me.txt_PRReplenish.Name = "txt_PRReplenish"
         Me.txt_PRReplenish.ReadOnly = True
@@ -208,10 +208,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(398, 66)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(148, 14)
+        Me.Label15.Size = New System.Drawing.Size(153, 14)
         Me.Label15.TabIndex = 31
         Me.Label15.Text = "Prudential Replenishment:"
         '
@@ -219,7 +219,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_NSSApplied.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_NSSApplied.Enabled = False
-        Me.txt_NSSApplied.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_NSSApplied.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_NSSApplied.Location = New System.Drawing.Point(561, 42)
         Me.txt_NSSApplied.Name = "txt_NSSApplied"
         Me.txt_NSSApplied.ReadOnly = True
@@ -231,10 +231,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(398, 44)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(77, 14)
+        Me.Label14.Size = New System.Drawing.Size(76, 14)
         Me.Label14.TabIndex = 29
         Me.Label14.Text = "NSS Applied:"
         '
@@ -242,7 +242,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_totDeferred.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_totDeferred.Enabled = False
-        Me.txt_totDeferred.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_totDeferred.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_totDeferred.Location = New System.Drawing.Point(561, 19)
         Me.txt_totDeferred.Name = "txt_totDeferred"
         Me.txt_totDeferred.ReadOnly = True
@@ -254,10 +254,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(398, 21)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(86, 14)
+        Me.Label10.Size = New System.Drawing.Size(88, 14)
         Me.Label10.TabIndex = 27
         Me.Label10.Text = "Total Deferred:"
         '
@@ -265,7 +265,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_TotLBC.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_TotLBC.Enabled = False
-        Me.txt_TotLBC.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_TotLBC.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_TotLBC.Location = New System.Drawing.Point(146, 42)
         Me.txt_TotLBC.Name = "txt_TotLBC"
         Me.txt_TotLBC.ReadOnly = True
@@ -277,10 +277,10 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(8, 44)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(64, 14)
+        Me.Label9.Size = New System.Drawing.Size(61, 14)
         Me.Label9.TabIndex = 25
         Me.Label9.Text = "Total LBC:"
         '
@@ -288,7 +288,7 @@ Partial Class frmRPTRequestForPaymentDetails
         '
         Me.txt_TotRTGS.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txt_TotRTGS.Enabled = False
-        Me.txt_TotRTGS.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_TotRTGS.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_TotRTGS.Location = New System.Drawing.Point(146, 19)
         Me.txt_TotRTGS.Name = "txt_TotRTGS"
         Me.txt_TotRTGS.ReadOnly = True
@@ -300,20 +300,21 @@ Partial Class frmRPTRequestForPaymentDetails
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(8, 21)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(72, 14)
+        Me.Label8.Size = New System.Drawing.Size(68, 14)
         Me.Label8.TabIndex = 23
         Me.Label8.Text = "Total RTGS:"
         '
         'Button1
         '
+        Me.Button1.BackColor = System.Drawing.Color.White
         Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.Location = New System.Drawing.Point(657, 182)
@@ -321,13 +322,13 @@ Partial Class frmRPTRequestForPaymentDetails
         Me.Button1.Size = New System.Drawing.Size(119, 37)
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Close"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'frmRPTRequestForPaymentDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(789, 229)
         Me.ControlBox = False
         Me.Controls.Add(Me.gbox_PaymentTotals)

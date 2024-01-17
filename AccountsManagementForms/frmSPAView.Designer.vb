@@ -154,7 +154,7 @@ Partial Class frmSPAView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.Label13)
         Me.GroupBox3.Controls.Add(Me.DGV_SPAINV_AP)
-        Me.GroupBox3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.ForeColor = System.Drawing.Color.Black
         Me.GroupBox3.Location = New System.Drawing.Point(5, 212)
         Me.GroupBox3.Name = "GroupBox3"
@@ -165,11 +165,11 @@ Partial Class frmSPAView
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label13.Location = New System.Drawing.Point(6, 0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(112, 14)
+        Me.Label13.Size = New System.Drawing.Size(114, 14)
         Me.Label13.TabIndex = 23
         Me.Label13.Text = "Accounts Payables:"
         '
@@ -188,7 +188,7 @@ Partial Class frmSPAView
         Me.DGV_SPAINV_AP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
@@ -209,7 +209,7 @@ Partial Class frmSPAView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.Label12)
         Me.GroupBox2.Controls.Add(Me.DGV_SPAINV_AR)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.Black
         Me.GroupBox2.Location = New System.Drawing.Point(5, 5)
         Me.GroupBox2.Name = "GroupBox2"
@@ -220,11 +220,11 @@ Partial Class frmSPAView
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label12.Location = New System.Drawing.Point(6, 0)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(122, 14)
+        Me.Label12.Size = New System.Drawing.Size(124, 14)
         Me.Label12.TabIndex = 22
         Me.Label12.Text = "Account Receivables:"
         '
@@ -242,7 +242,7 @@ Partial Class frmSPAView
         Me.DGV_SPAINV_AR.ColumnHeadersHeight = 30
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
@@ -252,7 +252,7 @@ Partial Class frmSPAView
         Me.DGV_SPAINV_AR.Name = "DGV_SPAINV_AR"
         Me.DGV_SPAINV_AR.ReadOnly = True
         Me.DGV_SPAINV_AR.RowHeadersVisible = False
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGV_SPAINV_AR.RowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGV_SPAINV_AR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGV_SPAINV_AR.Size = New System.Drawing.Size(806, 132)
@@ -278,7 +278,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalIntAR.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalIntAR.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalIntAR.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalIntAR.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalIntAR.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalIntAR.Location = New System.Drawing.Point(396, 7)
         Me.txtbox_SubTotalIntAR.Name = "txtbox_SubTotalIntAR"
@@ -289,7 +289,7 @@ Partial Class frmSPAView
         '
         Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.Black
         Me.Label9.Location = New System.Drawing.Point(33, 10)
         Me.Label9.Name = "Label9"
@@ -301,7 +301,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalPrinAR.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalPrinAR.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalPrinAR.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalPrinAR.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalPrinAR.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalPrinAR.Location = New System.Drawing.Point(128, 7)
         Me.txtbox_SubTotalPrinAR.Name = "txtbox_SubTotalPrinAR"
@@ -312,11 +312,11 @@ Partial Class frmSPAView
         '
         Me.Label6.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(308, 10)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(76, 14)
+        Me.Label6.Size = New System.Drawing.Size(75, 14)
         Me.Label6.TabIndex = 4
         Me.Label6.Text = "Subtotal Int.:"
         '
@@ -324,7 +324,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalBalAR.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalBalAR.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalBalAR.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalBalAR.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalBalAR.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalBalAR.Location = New System.Drawing.Point(662, 7)
         Me.txtbox_SubTotalBalAR.Name = "txtbox_SubTotalBalAR"
@@ -335,11 +335,11 @@ Partial Class frmSPAView
         '
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(571, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(79, 14)
+        Me.Label1.Size = New System.Drawing.Size(77, 14)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Subtotal Bal.:"
         '
@@ -363,7 +363,7 @@ Partial Class frmSPAView
         '
         Me.Label11.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Black
         Me.Label11.Location = New System.Drawing.Point(39, 9)
         Me.Label11.Name = "Label11"
@@ -375,11 +375,11 @@ Partial Class frmSPAView
         '
         Me.Label10.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Black
         Me.Label10.Location = New System.Drawing.Point(314, 9)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(76, 14)
+        Me.Label10.Size = New System.Drawing.Size(75, 14)
         Me.Label10.TabIndex = 5
         Me.Label10.Text = "Subtotal Int.:"
         '
@@ -387,7 +387,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalIntAP.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalIntAP.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalIntAP.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalIntAP.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalIntAP.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalIntAP.Location = New System.Drawing.Point(396, 7)
         Me.txtbox_SubTotalIntAP.Name = "txtbox_SubTotalIntAP"
@@ -398,7 +398,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalPrinAP.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalPrinAP.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalPrinAP.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalPrinAP.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalPrinAP.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalPrinAP.Location = New System.Drawing.Point(128, 7)
         Me.txtbox_SubTotalPrinAP.Name = "txtbox_SubTotalPrinAP"
@@ -409,11 +409,11 @@ Partial Class frmSPAView
         '
         Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(577, 9)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(79, 14)
+        Me.Label2.Size = New System.Drawing.Size(77, 14)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Subtotal Bal.:"
         '
@@ -421,7 +421,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_SubTotalBalAP.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_SubTotalBalAP.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_SubTotalBalAP.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_SubTotalBalAP.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_SubTotalBalAP.ForeColor = System.Drawing.Color.Black
         Me.txtbox_SubTotalBalAP.Location = New System.Drawing.Point(662, 7)
         Me.txtbox_SubTotalBalAP.Name = "txtbox_SubTotalBalAP"
@@ -430,7 +430,7 @@ Partial Class frmSPAView
         '
         'DTP_UpdateDueDate
         '
-        Me.DTP_UpdateDueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DTP_UpdateDueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DTP_UpdateDueDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.DTP_UpdateDueDate.Location = New System.Drawing.Point(7, 19)
         Me.DTP_UpdateDueDate.Name = "DTP_UpdateDueDate"
@@ -441,7 +441,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_GrandTotal.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_GrandTotal.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_GrandTotal.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_GrandTotal.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_GrandTotal.Location = New System.Drawing.Point(667, 8)
         Me.txtbox_GrandTotal.Name = "txtbox_GrandTotal"
         Me.txtbox_GrandTotal.Size = New System.Drawing.Size(144, 20)
@@ -451,7 +451,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_TotalInterest.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalInterest.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalInterest.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalInterest.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalInterest.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalInterest.Location = New System.Drawing.Point(401, 8)
         Me.txtbox_TotalInterest.Name = "txtbox_TotalInterest"
@@ -462,11 +462,11 @@ Partial Class frmSPAView
         '
         Me.Label7.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Black
         Me.Label7.Location = New System.Drawing.Point(314, 11)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(81, 14)
+        Me.Label7.Size = New System.Drawing.Size(83, 14)
         Me.Label7.TabIndex = 1
         Me.Label7.Text = "Total Interest:"
         '
@@ -474,11 +474,11 @@ Partial Class frmSPAView
         '
         Me.Label4.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(578, 11)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(83, 14)
+        Me.Label4.Size = New System.Drawing.Size(81, 14)
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Total Balance:"
         '
@@ -489,22 +489,22 @@ Partial Class frmSPAView
         Me.cmb_DueDateList.BackColor = System.Drawing.Color.White
         Me.cmb_DueDateList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_DueDateList.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_DueDateList.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_DueDateList.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_DueDateList.FormattingEnabled = True
         Me.cmb_DueDateList.Location = New System.Drawing.Point(5, 19)
         Me.cmb_DueDateList.Name = "cmb_DueDateList"
-        Me.cmb_DueDateList.Size = New System.Drawing.Size(147, 22)
+        Me.cmb_DueDateList.Size = New System.Drawing.Size(147, 23)
         Me.cmb_DueDateList.TabIndex = 0
         '
         'Label5
         '
         Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(40, 11)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(87, 14)
+        Me.Label5.Size = New System.Drawing.Size(86, 14)
         Me.Label5.TabIndex = 3
         Me.Label5.Text = "Total Principal:"
         '
@@ -512,7 +512,7 @@ Partial Class frmSPAView
         '
         Me.txtbox_TotalPrincipal.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalPrincipal.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalPrincipal.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalPrincipal.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalPrincipal.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalPrincipal.Location = New System.Drawing.Point(133, 8)
         Me.txtbox_TotalPrincipal.Name = "txtbox_TotalPrincipal"
@@ -564,7 +564,7 @@ Partial Class frmSPAView
         Me.btn_Update.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Update.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Update.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Update.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Update.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Update.ForeColor = System.Drawing.Color.Black
         Me.btn_Update.Image = Global.AccountsManagementForms.My.Resources.Resources.OkIcon22x22
         Me.btn_Update.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -586,7 +586,7 @@ Partial Class frmSPAView
         Me.btn_UpdateDueDate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_UpdateDueDate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_UpdateDueDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_UpdateDueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_UpdateDueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_UpdateDueDate.ForeColor = System.Drawing.Color.Black
         Me.btn_UpdateDueDate.Image = Global.AccountsManagementForms.My.Resources.Resources.EditDocumentColored22x22
         Me.btn_UpdateDueDate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -608,7 +608,7 @@ Partial Class frmSPAView
         Me.btn_JVSetup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_JVSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_JVSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_JVSetup.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_JVSetup.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_JVSetup.ForeColor = System.Drawing.Color.Black
         Me.btn_JVSetup.Image = CType(resources.GetObject("btn_JVSetup.Image"), System.Drawing.Image)
         Me.btn_JVSetup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -630,7 +630,7 @@ Partial Class frmSPAView
         Me.btn_JVClosing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_JVClosing.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_JVClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_JVClosing.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_JVClosing.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_JVClosing.ForeColor = System.Drawing.Color.Black
         Me.btn_JVClosing.Image = CType(resources.GetObject("btn_JVClosing.Image"), System.Drawing.Image)
         Me.btn_JVClosing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -652,7 +652,7 @@ Partial Class frmSPAView
         Me.btn_GenerateSummary.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_GenerateSummary.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_GenerateSummary.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_GenerateSummary.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_GenerateSummary.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_GenerateSummary.ForeColor = System.Drawing.Color.Black
         Me.btn_GenerateSummary.Image = CType(resources.GetObject("btn_GenerateSummary.Image"), System.Drawing.Image)
         Me.btn_GenerateSummary.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -674,7 +674,7 @@ Partial Class frmSPAView
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel13, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.TabCntrl_Main, 1, 0)
-        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(2, 2)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
@@ -710,7 +710,7 @@ Partial Class frmSPAView
         Me.gb_NDueDate.Controls.Add(Me.btn_backCancel)
         Me.gb_NDueDate.Controls.Add(Me.DTP_UpdateDueDate)
         Me.gb_NDueDate.Controls.Add(Me.btn_Update)
-        Me.gb_NDueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_NDueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_NDueDate.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_NDueDate.Location = New System.Drawing.Point(3, 103)
         Me.gb_NDueDate.Name = "gb_NDueDate"
@@ -728,7 +728,7 @@ Partial Class frmSPAView
         Me.btn_backCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_backCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_backCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_backCancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_backCancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_backCancel.ForeColor = System.Drawing.Color.Black
         Me.btn_backCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIcon22x22
         Me.btn_backCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -761,7 +761,7 @@ Partial Class frmSPAView
         Me.btn_Cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Cancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Cancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Cancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Cancel.ForeColor = System.Drawing.Color.Black
         Me.btn_Cancel.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btn_Cancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -781,7 +781,7 @@ Partial Class frmSPAView
         Me.btn_Save.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Save.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Save.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Save.ForeColor = System.Drawing.Color.Black
         Me.btn_Save.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btn_Save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -796,7 +796,7 @@ Partial Class frmSPAView
         '
         Me.gb_SelectionDueDate.Controls.Add(Me.cmb_DueDateList)
         Me.gb_SelectionDueDate.Controls.Add(Me.btn_UpdateDueDate)
-        Me.gb_SelectionDueDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_SelectionDueDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_SelectionDueDate.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_SelectionDueDate.Location = New System.Drawing.Point(3, 3)
         Me.gb_SelectionDueDate.Name = "gb_SelectionDueDate"
@@ -809,7 +809,7 @@ Partial Class frmSPAView
         '
         Me.gb_ProformaEntry.Controls.Add(Me.btn_JVSetup)
         Me.gb_ProformaEntry.Controls.Add(Me.btn_JVClosing)
-        Me.gb_ProformaEntry.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_ProformaEntry.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_ProformaEntry.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_ProformaEntry.Location = New System.Drawing.Point(3, 253)
         Me.gb_ProformaEntry.Name = "gb_ProformaEntry"
@@ -821,7 +821,7 @@ Partial Class frmSPAView
         'gb_ScheduleReport
         '
         Me.gb_ScheduleReport.Controls.Add(Me.btn_GenerateSummary)
-        Me.gb_ScheduleReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_ScheduleReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_ScheduleReport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_ScheduleReport.Location = New System.Drawing.Point(3, 373)
         Me.gb_ScheduleReport.Name = "gb_ScheduleReport"
@@ -837,7 +837,7 @@ Partial Class frmSPAView
         Me.TabCntrl_Main.Controls.Add(Me.TP_WESMBill)
         Me.TabCntrl_Main.Controls.Add(Me.TP_SPABill)
         Me.TabCntrl_Main.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
-        Me.TabCntrl_Main.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TabCntrl_Main.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabCntrl_Main.Location = New System.Drawing.Point(173, 3)
         Me.TabCntrl_Main.Name = "TabCntrl_Main"
         Me.TabCntrl_Main.SelectedIndex = 0
@@ -848,10 +848,10 @@ Partial Class frmSPAView
         '
         Me.TP_WESMBill.BackColor = System.Drawing.Color.White
         Me.TP_WESMBill.Controls.Add(Me.TableLayoutPanel8)
-        Me.TP_WESMBill.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TP_WESMBill.Location = New System.Drawing.Point(4, 21)
+        Me.TP_WESMBill.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TP_WESMBill.Location = New System.Drawing.Point(4, 23)
         Me.TP_WESMBill.Name = "TP_WESMBill"
-        Me.TP_WESMBill.Size = New System.Drawing.Size(838, 539)
+        Me.TP_WESMBill.Size = New System.Drawing.Size(838, 537)
         Me.TP_WESMBill.TabIndex = 0
         Me.TP_WESMBill.Text = "WESM Bill Invoices"
         '
@@ -885,7 +885,7 @@ Partial Class frmSPAView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox9.Controls.Add(Me.Label28)
         Me.GroupBox9.Controls.Add(Me.DGV_WESMINV_AP)
-        Me.GroupBox9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox9.ForeColor = System.Drawing.Color.Black
         Me.GroupBox9.Location = New System.Drawing.Point(5, 270)
         Me.GroupBox9.Name = "GroupBox9"
@@ -896,11 +896,11 @@ Partial Class frmSPAView
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label28.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label28.Location = New System.Drawing.Point(6, 2)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(112, 14)
+        Me.Label28.Size = New System.Drawing.Size(114, 14)
         Me.Label28.TabIndex = 22
         Me.Label28.Text = "Accounts Payables:"
         '
@@ -919,7 +919,7 @@ Partial Class frmSPAView
         Me.DGV_WESMINV_AP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
@@ -940,7 +940,7 @@ Partial Class frmSPAView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox10.Controls.Add(Me.Label18)
         Me.GroupBox10.Controls.Add(Me.DGV_WESMINV_AR)
-        Me.GroupBox10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox10.ForeColor = System.Drawing.Color.Black
         Me.GroupBox10.Location = New System.Drawing.Point(5, 5)
         Me.GroupBox10.Name = "GroupBox10"
@@ -951,11 +951,11 @@ Partial Class frmSPAView
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label18.Location = New System.Drawing.Point(6, 2)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(122, 14)
+        Me.Label18.Size = New System.Drawing.Size(124, 14)
         Me.Label18.TabIndex = 21
         Me.Label18.Text = "Account Receivables:"
         '
@@ -974,7 +974,7 @@ Partial Class frmSPAView
         Me.DGV_WESMINV_AR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
@@ -1004,7 +1004,7 @@ Partial Class frmSPAView
         '
         Me.tb_GrandTotalARE.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.tb_GrandTotalARE.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.tb_GrandTotalARE.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_GrandTotalARE.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tb_GrandTotalARE.ForeColor = System.Drawing.Color.Black
         Me.tb_GrandTotalARE.Location = New System.Drawing.Point(662, 7)
         Me.tb_GrandTotalARE.Name = "tb_GrandTotalARE"
@@ -1015,11 +1015,11 @@ Partial Class frmSPAView
         '
         Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(563, 9)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(93, 14)
+        Me.Label3.Size = New System.Drawing.Size(90, 14)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Grand Total AR:"
         '
@@ -1039,11 +1039,11 @@ Partial Class frmSPAView
         '
         Me.Label8.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(564, 11)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(92, 14)
+        Me.Label8.Size = New System.Drawing.Size(90, 14)
         Me.Label8.TabIndex = 2
         Me.Label8.Text = "Grand Total AP:"
         '
@@ -1051,7 +1051,7 @@ Partial Class frmSPAView
         '
         Me.tb_GrandTotalAPE.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.tb_GrandTotalAPE.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.tb_GrandTotalAPE.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_GrandTotalAPE.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tb_GrandTotalAPE.ForeColor = System.Drawing.Color.Black
         Me.tb_GrandTotalAPE.Location = New System.Drawing.Point(662, 9)
         Me.tb_GrandTotalAPE.Name = "tb_GrandTotalAPE"
@@ -1062,10 +1062,10 @@ Partial Class frmSPAView
         '
         Me.TP_SPABill.BackColor = System.Drawing.Color.White
         Me.TP_SPABill.Controls.Add(Me.TblLP_Main)
-        Me.TP_SPABill.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TP_SPABill.Location = New System.Drawing.Point(4, 21)
+        Me.TP_SPABill.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TP_SPABill.Location = New System.Drawing.Point(4, 23)
         Me.TP_SPABill.Name = "TP_SPABill"
-        Me.TP_SPABill.Size = New System.Drawing.Size(838, 539)
+        Me.TP_SPABill.Size = New System.Drawing.Size(838, 537)
         Me.TP_SPABill.TabIndex = 0
         Me.TP_SPABill.Text = "SPA Bill Invoices"
         '
@@ -1073,7 +1073,7 @@ Partial Class frmSPAView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1025, 574)
         Me.ControlBox = False
         Me.Controls.Add(Me.TableLayoutPanel3)

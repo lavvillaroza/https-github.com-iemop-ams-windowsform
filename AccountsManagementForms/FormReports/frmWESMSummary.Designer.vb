@@ -28,10 +28,10 @@ Partial Class frmWESMSummary
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtTo = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.cbo_ParticipantId = New System.Windows.Forms.ComboBox()
-        Me.chkParticipantID = New System.Windows.Forms.CheckBox()
         Me.cmd_ExportInExcel = New System.Windows.Forms.Button()
         Me.cmd_Close = New System.Windows.Forms.Button()
+        Me.cbo_ParticipantId = New System.Windows.Forms.ComboBox()
+        Me.chkParticipantID = New System.Windows.Forms.CheckBox()
         Me.grpSearch.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -100,6 +100,42 @@ Partial Class frmWESMSummary
         Me.Label3.TabIndex = 14
         Me.Label3.Text = "Categories:"
         '
+        'cmd_ExportInExcel
+        '
+        Me.cmd_ExportInExcel.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.cmd_ExportInExcel.BackColor = System.Drawing.Color.White
+        Me.cmd_ExportInExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.cmd_ExportInExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.cmd_ExportInExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.cmd_ExportInExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmd_ExportInExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_ExportInExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
+        Me.cmd_ExportInExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.cmd_ExportInExcel.Location = New System.Drawing.Point(10, 94)
+        Me.cmd_ExportInExcel.Name = "cmd_ExportInExcel"
+        Me.cmd_ExportInExcel.Size = New System.Drawing.Size(273, 37)
+        Me.cmd_ExportInExcel.TabIndex = 11
+        Me.cmd_ExportInExcel.Text = "Export in Excel"
+        Me.cmd_ExportInExcel.UseVisualStyleBackColor = False
+        '
+        'cmd_Close
+        '
+        Me.cmd_Close.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.cmd_Close.BackColor = System.Drawing.Color.White
+        Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
+        Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.cmd_Close.Location = New System.Drawing.Point(11, 137)
+        Me.cmd_Close.Name = "cmd_Close"
+        Me.cmd_Close.Size = New System.Drawing.Size(273, 37)
+        Me.cmd_Close.TabIndex = 9
+        Me.cmd_Close.Text = "Close"
+        Me.cmd_Close.UseVisualStyleBackColor = False
+        '
         'cbo_ParticipantId
         '
         Me.cbo_ParticipantId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
@@ -121,48 +157,16 @@ Partial Class frmWESMSummary
         Me.chkParticipantID.Text = "Participant ID"
         Me.chkParticipantID.UseVisualStyleBackColor = True
         '
-        'cmd_ExportInExcel
-        '
-        Me.cmd_ExportInExcel.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.cmd_ExportInExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.cmd_ExportInExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.cmd_ExportInExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.cmd_ExportInExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_ExportInExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmd_ExportInExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
-        Me.cmd_ExportInExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmd_ExportInExcel.Location = New System.Drawing.Point(10, 94)
-        Me.cmd_ExportInExcel.Name = "cmd_ExportInExcel"
-        Me.cmd_ExportInExcel.Size = New System.Drawing.Size(273, 37)
-        Me.cmd_ExportInExcel.TabIndex = 11
-        Me.cmd_ExportInExcel.Text = "Export in Excel"
-        Me.cmd_ExportInExcel.UseVisualStyleBackColor = True
-        '
-        'cmd_Close
-        '
-        Me.cmd_Close.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
-        Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmd_Close.Location = New System.Drawing.Point(11, 137)
-        Me.cmd_Close.Name = "cmd_Close"
-        Me.cmd_Close.Size = New System.Drawing.Size(273, 37)
-        Me.cmd_Close.TabIndex = 9
-        Me.cmd_Close.Text = "Close"
-        Me.cmd_Close.UseVisualStyleBackColor = True
-        '
         'frmWESMSummary
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(319, 210)
         Me.Controls.Add(Me.grpSearch)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmWESMSummary"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WESM Bills Uploaded"

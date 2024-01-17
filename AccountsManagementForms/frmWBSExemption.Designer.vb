@@ -22,8 +22,8 @@ Partial Class frmWBSExemption
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnSearch = New System.Windows.Forms.Button()
@@ -95,13 +95,15 @@ Partial Class frmWBSExemption
         '
         'btnSearch
         '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
         Me.btnSearch.BackgroundImage = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSearch.Location = New System.Drawing.Point(343, 33)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(39, 30)
+        Me.btnSearch.Size = New System.Drawing.Size(32, 30)
         Me.btnSearch.TabIndex = 64
-        Me.btnSearch.UseVisualStyleBackColor = True
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'btnAddNew
         '
@@ -148,7 +150,7 @@ Partial Class frmWBSExemption
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(148, 18)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(88, 13)
+        Me.Label2.Size = New System.Drawing.Size(87, 13)
         Me.Label2.TabIndex = 60
         Me.Label2.Text = "Search Value:"
         '
@@ -169,7 +171,7 @@ Partial Class frmWBSExemption
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.Black
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -246,8 +248,8 @@ Partial Class frmWBSExemption
         Me.dataGridView.AllowUserToDeleteRows = False
         Me.dataGridView.AllowUserToResizeColumns = False
         Me.dataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dataGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -316,10 +318,10 @@ Partial Class frmWBSExemption
         '
         'ending_balance
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.ending_balance.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.ending_balance.DefaultCellStyle = DataGridViewCellStyle4
         Me.ending_balance.Frozen = True
         Me.ending_balance.HeaderText = "Ending Balance"
         Me.ending_balance.Name = "ending_balance"
@@ -363,28 +365,31 @@ Partial Class frmWBSExemption
         '
         'btnNext
         '
+        Me.btnNext.BackColor = System.Drawing.Color.White
         Me.btnNext.BackgroundImage = Global.AccountsManagementForms.My.Resources.Resources.ArrowRight
         Me.btnNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnNext.Location = New System.Drawing.Point(1003, 555)
         Me.btnNext.Name = "btnNext"
         Me.btnNext.Size = New System.Drawing.Size(34, 23)
         Me.btnNext.TabIndex = 2
-        Me.btnNext.UseVisualStyleBackColor = True
+        Me.btnNext.UseVisualStyleBackColor = False
         '
         'btnPrevious
         '
+        Me.btnPrevious.BackColor = System.Drawing.Color.White
         Me.btnPrevious.BackgroundImage = Global.AccountsManagementForms.My.Resources.Resources.ArrowLeft
         Me.btnPrevious.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnPrevious.Location = New System.Drawing.Point(963, 555)
         Me.btnPrevious.Name = "btnPrevious"
         Me.btnPrevious.Size = New System.Drawing.Size(34, 23)
         Me.btnPrevious.TabIndex = 3
-        Me.btnPrevious.UseVisualStyleBackColor = True
+        Me.btnPrevious.UseVisualStyleBackColor = False
         '
         'frmWBSExemption
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1046, 583)
         Me.Controls.Add(Me.btnPrevious)
         Me.Controls.Add(Me.btnNext)

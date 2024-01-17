@@ -115,7 +115,7 @@ Public Class frmPaymentSummaryDetails
             Dim j As Integer = Me.chkLB_Participants.CheckedItems.Count
             For Each item In Me.chkLB_Participants.CheckedItems
                 i += 1
-                _PSDHelper.GenerateSTLNoticeReport(item.ToString)
+                _PSDHelper.GeneratePSDReport(item.ToString)
                 bgw_PaymentSummaryDetails.ReportProgress(CInt((i / j) * 100), "Running...")
             Next
         Catch ex As Exception
@@ -137,7 +137,7 @@ Public Class frmPaymentSummaryDetails
     Private Sub bgw_STLNotice_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw_PaymentSummaryDetails.RunWorkerCompleted
         Try
             If e.Cancelled = True Then
-                Me.ToolStripStatusLabel_Text.Text = "Process cancelled due to error."
+                Me.ToolStripStatusLabel_Text.Text = "Process cancelled due to error!"
                 Me.ToolStripProgressBar_STLNotice.Visible = False
                 Me.ToolStripStatusLabel_Text.Visible = False
                 Me.ToolStripStatusLabel_Percent.Visible = False
@@ -146,7 +146,7 @@ Public Class frmPaymentSummaryDetails
                 MessageBox.Show(e.Error.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             Else
-                Me.ToolStripStatusLabel_Text.Text = "Done."
+                Me.ToolStripStatusLabel_Text.Text = "Done..."
                 If _PSDHelper.FileCounter = 0 Then
                     MessageBox.Show("No generated file", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Else

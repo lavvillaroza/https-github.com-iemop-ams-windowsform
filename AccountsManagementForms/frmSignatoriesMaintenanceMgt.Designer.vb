@@ -44,11 +44,12 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'CMD_Ok
         '
+        Me.CMD_Ok.BackColor = System.Drawing.Color.White
         Me.CMD_Ok.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.CMD_Ok.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.CMD_Ok.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.CMD_Ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CMD_Ok.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CMD_Ok.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CMD_Ok.ForeColor = System.Drawing.Color.Black
         Me.CMD_Ok.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.CMD_Ok.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -57,15 +58,16 @@ Partial Class frmSignatoriesMaintenanceMgt
         Me.CMD_Ok.Size = New System.Drawing.Size(110, 36)
         Me.CMD_Ok.TabIndex = 0
         Me.CMD_Ok.Text = "&Save"
-        Me.CMD_Ok.UseVisualStyleBackColor = True
+        Me.CMD_Ok.UseVisualStyleBackColor = False
         '
         'CMD_Cancel
         '
+        Me.CMD_Cancel.BackColor = System.Drawing.Color.White
         Me.CMD_Cancel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.CMD_Cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.CMD_Cancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.CMD_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CMD_Cancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CMD_Cancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CMD_Cancel.ForeColor = System.Drawing.Color.Black
         Me.CMD_Cancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.CMD_Cancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -74,33 +76,33 @@ Partial Class frmSignatoriesMaintenanceMgt
         Me.CMD_Cancel.Size = New System.Drawing.Size(110, 36)
         Me.CMD_Cancel.TabIndex = 1
         Me.CMD_Cancel.Text = "&Cancel"
-        Me.CMD_Cancel.UseVisualStyleBackColor = True
+        Me.CMD_Cancel.UseVisualStyleBackColor = False
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(9, 8)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(97, 14)
+        Me.Label1.Size = New System.Drawing.Size(98, 14)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Document Code:"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(9, 29)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(130, 14)
+        Me.Label2.Size = New System.Drawing.Size(132, 14)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Document Description:"
         '
         'TXT_description
         '
-        Me.TXT_description.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TXT_description.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TXT_description.ForeColor = System.Drawing.Color.Black
         Me.TXT_description.Location = New System.Drawing.Point(12, 45)
         Me.TXT_description.MaxLength = 200
@@ -112,18 +114,18 @@ Partial Class frmSignatoriesMaintenanceMgt
         'LBL_DocumentContainer
         '
         Me.LBL_DocumentContainer.AutoSize = True
-        Me.LBL_DocumentContainer.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LBL_DocumentContainer.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LBL_DocumentContainer.ForeColor = System.Drawing.Color.Black
         Me.LBL_DocumentContainer.Location = New System.Drawing.Point(112, 7)
         Me.LBL_DocumentContainer.Name = "LBL_DocumentContainer"
-        Me.LBL_DocumentContainer.Size = New System.Drawing.Size(37, 12)
+        Me.LBL_DocumentContainer.Size = New System.Drawing.Size(39, 14)
         Me.LBL_DocumentContainer.TabIndex = 11
         Me.LBL_DocumentContainer.Text = "Label6"
         '
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.Black
         Me.Label9.Location = New System.Drawing.Point(254, 165)
         Me.Label9.Name = "Label9"
@@ -134,7 +136,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Black
         Me.Label10.Location = New System.Drawing.Point(254, 141)
         Me.Label10.Name = "Label10"
@@ -145,7 +147,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Black
         Me.Label7.Location = New System.Drawing.Point(254, 117)
         Me.Label7.Name = "Label7"
@@ -156,7 +158,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(254, 93)
         Me.Label8.Name = "Label8"
@@ -167,7 +169,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(254, 69)
         Me.Label6.Name = "Label6"
@@ -178,7 +180,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(254, 45)
         Me.Label3.Name = "Label3"
@@ -188,7 +190,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_p3
         '
-        Me.txt_p3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_p3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_p3.ForeColor = System.Drawing.Color.Black
         Me.txt_p3.Location = New System.Drawing.Point(331, 165)
         Me.txt_p3.MaxLength = 100
@@ -198,7 +200,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_s3
         '
-        Me.txt_s3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_s3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_s3.ForeColor = System.Drawing.Color.Black
         Me.txt_s3.Location = New System.Drawing.Point(331, 141)
         Me.txt_s3.MaxLength = 100
@@ -208,7 +210,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_p2
         '
-        Me.txt_p2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_p2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_p2.ForeColor = System.Drawing.Color.Black
         Me.txt_p2.Location = New System.Drawing.Point(331, 117)
         Me.txt_p2.MaxLength = 100
@@ -218,7 +220,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_s2
         '
-        Me.txt_s2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_s2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_s2.ForeColor = System.Drawing.Color.Black
         Me.txt_s2.Location = New System.Drawing.Point(331, 93)
         Me.txt_s2.MaxLength = 100
@@ -228,7 +230,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_p1
         '
-        Me.txt_p1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_p1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_p1.ForeColor = System.Drawing.Color.Black
         Me.txt_p1.Location = New System.Drawing.Point(331, 69)
         Me.txt_p1.MaxLength = 100
@@ -238,7 +240,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'txt_s1
         '
-        Me.txt_s1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_s1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_s1.ForeColor = System.Drawing.Color.Black
         Me.txt_s1.Location = New System.Drawing.Point(331, 45)
         Me.txt_s1.MaxLength = 100
@@ -248,9 +250,9 @@ Partial Class frmSignatoriesMaintenanceMgt
         '
         'frmSignatoriesMaintenanceMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(712, 254)
         Me.ControlBox = False
         Me.Controls.Add(Me.txt_p3)
@@ -271,7 +273,7 @@ Partial Class frmSignatoriesMaintenanceMgt
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.CMD_Cancel)
         Me.Controls.Add(Me.CMD_Ok)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False

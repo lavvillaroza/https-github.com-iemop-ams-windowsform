@@ -93,7 +93,7 @@ Partial Class frmUploadedWESMBill
         Me.chckStlRun.AutoSize = True
         Me.chckStlRun.Location = New System.Drawing.Point(324, 18)
         Me.chckStlRun.Name = "chckStlRun"
-        Me.chckStlRun.Size = New System.Drawing.Size(101, 16)
+        Me.chckStlRun.Size = New System.Drawing.Size(101, 18)
         Me.chckStlRun.TabIndex = 1
         Me.chckStlRun.Text = "Settlement Run:"
         Me.chckStlRun.UseVisualStyleBackColor = True
@@ -104,7 +104,7 @@ Partial Class frmUploadedWESMBill
         Me.ddlBillingPeriod.FormattingEnabled = True
         Me.ddlBillingPeriod.Location = New System.Drawing.Point(105, 15)
         Me.ddlBillingPeriod.Name = "ddlBillingPeriod"
-        Me.ddlBillingPeriod.Size = New System.Drawing.Size(193, 20)
+        Me.ddlBillingPeriod.Size = New System.Drawing.Size(193, 22)
         Me.ddlBillingPeriod.TabIndex = 2
         '
         'StatusStrip1
@@ -138,7 +138,7 @@ Partial Class frmUploadedWESMBill
         Me.ddlSTLRun.FormattingEnabled = True
         Me.ddlSTLRun.Location = New System.Drawing.Point(436, 15)
         Me.ddlSTLRun.Name = "ddlSTLRun"
-        Me.ddlSTLRun.Size = New System.Drawing.Size(191, 20)
+        Me.ddlSTLRun.Size = New System.Drawing.Size(191, 22)
         Me.ddlSTLRun.TabIndex = 6
         '
         'rbEnergy
@@ -146,7 +146,7 @@ Partial Class frmUploadedWESMBill
         Me.rbEnergy.AutoSize = True
         Me.rbEnergy.Location = New System.Drawing.Point(16, 32)
         Me.rbEnergy.Name = "rbEnergy"
-        Me.rbEnergy.Size = New System.Drawing.Size(58, 16)
+        Me.rbEnergy.Size = New System.Drawing.Size(59, 18)
         Me.rbEnergy.TabIndex = 7
         Me.rbEnergy.TabStop = True
         Me.rbEnergy.Text = "Energy"
@@ -157,7 +157,7 @@ Partial Class frmUploadedWESMBill
         Me.rbMF.AutoSize = True
         Me.rbMF.Location = New System.Drawing.Point(93, 32)
         Me.rbMF.Name = "rbMF"
-        Me.rbMF.Size = New System.Drawing.Size(85, 16)
+        Me.rbMF.Size = New System.Drawing.Size(84, 18)
         Me.rbMF.TabIndex = 8
         Me.rbMF.TabStop = True
         Me.rbMF.Text = "Market Fees"
@@ -177,11 +177,11 @@ Partial Class frmUploadedWESMBill
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(7, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(78, 14)
+        Me.Label4.Size = New System.Drawing.Size(79, 14)
         Me.Label4.TabIndex = 22
         Me.Label4.Text = "Charge Type:"
         '
@@ -291,7 +291,7 @@ Partial Class frmUploadedWESMBill
         Me.rbInvoiceDate.AutoSize = True
         Me.rbInvoiceDate.Location = New System.Drawing.Point(15, 44)
         Me.rbInvoiceDate.Name = "rbInvoiceDate"
-        Me.rbInvoiceDate.Size = New System.Drawing.Size(84, 16)
+        Me.rbInvoiceDate.Size = New System.Drawing.Size(84, 18)
         Me.rbInvoiceDate.TabIndex = 17
         Me.rbInvoiceDate.TabStop = True
         Me.rbInvoiceDate.Text = "Invoice Date"
@@ -302,7 +302,7 @@ Partial Class frmUploadedWESMBill
         Me.rbBillingPeriod.AutoSize = True
         Me.rbBillingPeriod.Location = New System.Drawing.Point(15, 20)
         Me.rbBillingPeriod.Name = "rbBillingPeriod"
-        Me.rbBillingPeriod.Size = New System.Drawing.Size(84, 16)
+        Me.rbBillingPeriod.Size = New System.Drawing.Size(85, 18)
         Me.rbBillingPeriod.TabIndex = 16
         Me.rbBillingPeriod.TabStop = True
         Me.rbBillingPeriod.Text = "Billing Period"
@@ -313,7 +313,7 @@ Partial Class frmUploadedWESMBill
         Me.chckParticipant.AutoSize = True
         Me.chckParticipant.Location = New System.Drawing.Point(324, 45)
         Me.chckParticipant.Name = "chckParticipant"
-        Me.chckParticipant.Size = New System.Drawing.Size(92, 16)
+        Me.chckParticipant.Size = New System.Drawing.Size(91, 18)
         Me.chckParticipant.TabIndex = 14
         Me.chckParticipant.Text = "Participant ID:"
         Me.chckParticipant.UseVisualStyleBackColor = True
@@ -324,13 +324,13 @@ Partial Class frmUploadedWESMBill
         Me.ddlParticipant.FormattingEnabled = True
         Me.ddlParticipant.Location = New System.Drawing.Point(436, 42)
         Me.ddlParticipant.Name = "ddlParticipant"
-        Me.ddlParticipant.Size = New System.Drawing.Size(191, 20)
+        Me.ddlParticipant.Size = New System.Drawing.Size(191, 22)
         Me.ddlParticipant.TabIndex = 15
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(196, 45)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(11, 14)
@@ -372,7 +372,7 @@ Partial Class frmUploadedWESMBill
         'txtNSSEnergyMF
         '
         Me.txtNSSEnergyMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtNSSEnergyMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNSSEnergyMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNSSEnergyMF.ForeColor = System.Drawing.Color.Black
         Me.txtNSSEnergyMF.Location = New System.Drawing.Point(81, 68)
         Me.txtNSSEnergyMF.Name = "txtNSSEnergyMF"
@@ -384,7 +384,7 @@ Partial Class frmUploadedWESMBill
         'txtAPEnergyMF
         '
         Me.txtAPEnergyMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtAPEnergyMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAPEnergyMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAPEnergyMF.ForeColor = System.Drawing.Color.Black
         Me.txtAPEnergyMF.Location = New System.Drawing.Point(81, 17)
         Me.txtAPEnergyMF.Name = "txtAPEnergyMF"
@@ -396,7 +396,7 @@ Partial Class frmUploadedWESMBill
         'txtAREnergyMF
         '
         Me.txtAREnergyMF.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtAREnergyMF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAREnergyMF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAREnergyMF.ForeColor = System.Drawing.Color.Black
         Me.txtAREnergyMF.Location = New System.Drawing.Point(80, 42)
         Me.txtAREnergyMF.Name = "txtAREnergyMF"
@@ -408,41 +408,41 @@ Partial Class frmUploadedWESMBill
         'lblEnergyMF
         '
         Me.lblEnergyMF.AutoSize = True
-        Me.lblEnergyMF.Font = New System.Drawing.Font("Helvetica", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEnergyMF.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEnergyMF.ForeColor = System.Drawing.Color.Blue
         Me.lblEnergyMF.Location = New System.Drawing.Point(9, 0)
         Me.lblEnergyMF.Name = "lblEnergyMF"
-        Me.lblEnergyMF.Size = New System.Drawing.Size(12, 17)
+        Me.lblEnergyMF.Size = New System.Drawing.Size(12, 18)
         Me.lblEnergyMF.TabIndex = 23
         Me.lblEnergyMF.Text = " "
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(11, 71)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(63, 14)
+        Me.Label7.Size = New System.Drawing.Size(60, 14)
         Me.Label7.TabIndex = 2
         Me.Label7.Text = "Total NSS:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(20, 22)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(56, 14)
+        Me.Label6.Size = New System.Drawing.Size(54, 14)
         Me.Label6.TabIndex = 1
         Me.Label6.Text = "Total AP:"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(20, 45)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(57, 14)
+        Me.Label5.Size = New System.Drawing.Size(54, 14)
         Me.Label5.TabIndex = 0
         Me.Label5.Text = "Total AR:"
         '
@@ -465,7 +465,7 @@ Partial Class frmUploadedWESMBill
         'txtNSSVat
         '
         Me.txtNSSVat.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtNSSVat.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNSSVat.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNSSVat.ForeColor = System.Drawing.Color.Black
         Me.txtNSSVat.Location = New System.Drawing.Point(82, 68)
         Me.txtNSSVat.Name = "txtNSSVat"
@@ -477,7 +477,7 @@ Partial Class frmUploadedWESMBill
         'txtAPVat
         '
         Me.txtAPVat.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtAPVat.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAPVat.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAPVat.ForeColor = System.Drawing.Color.Black
         Me.txtAPVat.Location = New System.Drawing.Point(82, 19)
         Me.txtAPVat.Name = "txtAPVat"
@@ -489,7 +489,7 @@ Partial Class frmUploadedWESMBill
         'txtARVat
         '
         Me.txtARVat.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtARVat.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtARVat.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtARVat.ForeColor = System.Drawing.Color.Black
         Me.txtARVat.Location = New System.Drawing.Point(82, 44)
         Me.txtARVat.Name = "txtARVat"
@@ -501,52 +501,53 @@ Partial Class frmUploadedWESMBill
         'lblVat
         '
         Me.lblVat.AutoSize = True
-        Me.lblVat.Font = New System.Drawing.Font("Helvetica", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVat.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblVat.ForeColor = System.Drawing.Color.Blue
         Me.lblVat.Location = New System.Drawing.Point(9, 0)
         Me.lblVat.Name = "lblVat"
-        Me.lblVat.Size = New System.Drawing.Size(12, 17)
+        Me.lblVat.Size = New System.Drawing.Size(12, 18)
         Me.lblVat.TabIndex = 23
         Me.lblVat.Text = " "
         '
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(5, 73)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(63, 14)
+        Me.Label10.Size = New System.Drawing.Size(60, 14)
         Me.Label10.TabIndex = 2
         Me.Label10.Text = "Total NSS:"
         '
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(14, 24)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(56, 14)
+        Me.Label11.Size = New System.Drawing.Size(54, 14)
         Me.Label11.TabIndex = 1
         Me.Label11.Text = "Total AP:"
         '
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(14, 47)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(57, 14)
+        Me.Label12.Size = New System.Drawing.Size(54, 14)
         Me.Label12.TabIndex = 0
         Me.Label12.Text = "Total AR:"
         '
         'btnDownload
         '
         Me.btnDownload.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnDownload.BackColor = System.Drawing.Color.White
         Me.btnDownload.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnDownload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnDownload.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDownload.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDownload.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDownload.ForeColor = System.Drawing.Color.Black
         Me.btnDownload.Image = Global.AccountsManagementForms.My.Resources.Resources.DownloadIcon22x22
         Me.btnDownload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -555,16 +556,17 @@ Partial Class frmUploadedWESMBill
         Me.btnDownload.Size = New System.Drawing.Size(140, 39)
         Me.btnDownload.TabIndex = 24
         Me.btnDownload.Text = "Download"
-        Me.btnDownload.UseVisualStyleBackColor = True
+        Me.btnDownload.UseVisualStyleBackColor = False
         '
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -573,16 +575,17 @@ Partial Class frmUploadedWESMBill
         Me.btnClose.Size = New System.Drawing.Size(140, 39)
         Me.btnClose.TabIndex = 21
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnShowReport
         '
         Me.btnShowReport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnShowReport.BackColor = System.Drawing.Color.White
         Me.btnShowReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnShowReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnShowReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnShowReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnShowReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShowReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnShowReport.ForeColor = System.Drawing.Color.Black
         Me.btnShowReport.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnShowReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -591,15 +594,16 @@ Partial Class frmUploadedWESMBill
         Me.btnShowReport.Size = New System.Drawing.Size(140, 39)
         Me.btnShowReport.TabIndex = 20
         Me.btnShowReport.Text = "Generate Report"
-        Me.btnShowReport.UseVisualStyleBackColor = True
+        Me.btnShowReport.UseVisualStyleBackColor = False
         '
         'btnLoad
         '
+        Me.btnLoad.BackColor = System.Drawing.Color.White
         Me.btnLoad.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnLoad.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnLoad.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLoad.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLoad.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLoad.ForeColor = System.Drawing.Color.Black
         Me.btnLoad.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.btnLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -608,15 +612,16 @@ Partial Class frmUploadedWESMBill
         Me.btnLoad.Size = New System.Drawing.Size(35, 30)
         Me.btnLoad.TabIndex = 11
         Me.btnLoad.Text = "     Search"
-        Me.btnLoad.UseVisualStyleBackColor = True
+        Me.btnLoad.UseVisualStyleBackColor = False
         '
         'btnClear
         '
+        Me.btnClear.BackColor = System.Drawing.Color.White
         Me.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClear.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClear.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClear.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClear.ForeColor = System.Drawing.Color.Black
         Me.btnClear.Image = Global.AccountsManagementForms.My.Resources.Resources.CancelIconRed22x22
         Me.btnClear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -624,13 +629,13 @@ Partial Class frmUploadedWESMBill
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(35, 30)
         Me.btnClear.TabIndex = 10
-        Me.btnClear.UseVisualStyleBackColor = True
+        Me.btnClear.UseVisualStyleBackColor = False
         '
         'frmUploadedWESMBill
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1048, 537)
         Me.Controls.Add(Me.btnDownload)
         Me.Controls.Add(Me.GroupBox3)
@@ -643,7 +648,7 @@ Partial Class frmUploadedWESMBill
         Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.gpChargeType)
         Me.Controls.Add(Me.StatusStrip1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmUploadedWESMBill"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

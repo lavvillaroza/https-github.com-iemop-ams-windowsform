@@ -51,7 +51,7 @@ Partial Class frmAddMappingMgt
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -69,7 +69,7 @@ Partial Class frmAddMappingMgt
         Me.btn_Save.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Save.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Save.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Save.ForeColor = System.Drawing.Color.Black
         Me.btn_Save.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btn_Save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -127,11 +127,11 @@ Partial Class frmAddMappingMgt
         '
         Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(3, 10)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(82, 14)
+        Me.Label5.Size = New System.Drawing.Size(81, 14)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Participant ID:"
         '
@@ -139,11 +139,11 @@ Partial Class frmAddMappingMgt
         '
         Me.Label6.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(3, 45)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(53, 14)
+        Me.Label6.Size = New System.Drawing.Size(51, 14)
         Me.Label6.TabIndex = 11
         Me.Label6.Text = "Child ID:"
         '
@@ -151,7 +151,7 @@ Partial Class frmAddMappingMgt
         '
         Me.Label7.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Black
         Me.Label7.Location = New System.Drawing.Point(3, 80)
         Me.Label7.Name = "Label7"
@@ -163,7 +163,7 @@ Partial Class frmAddMappingMgt
         '
         Me.Label8.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(3, 116)
         Me.Label8.Name = "Label8"
@@ -177,12 +177,12 @@ Partial Class frmAddMappingMgt
         Me.cmb_parentParticipant.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_parentParticipant.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_parentParticipant.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_parentParticipant.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_parentParticipant.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_parentParticipant.ForeColor = System.Drawing.Color.Black
         Me.cmb_parentParticipant.FormattingEnabled = True
-        Me.cmb_parentParticipant.Location = New System.Drawing.Point(132, 7)
+        Me.cmb_parentParticipant.Location = New System.Drawing.Point(132, 6)
         Me.cmb_parentParticipant.Name = "cmb_parentParticipant"
-        Me.cmb_parentParticipant.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_parentParticipant.Size = New System.Drawing.Size(118, 22)
         Me.cmb_parentParticipant.TabIndex = 1
         '
         'cmb_childParticipant
@@ -191,13 +191,13 @@ Partial Class frmAddMappingMgt
         Me.cmb_childParticipant.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_childParticipant.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_childParticipant.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_childParticipant.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_childParticipant.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_childParticipant.ForeColor = System.Drawing.Color.Black
         Me.cmb_childParticipant.FormattingEnabled = True
-        Me.cmb_childParticipant.ItemHeight = 12
-        Me.cmb_childParticipant.Location = New System.Drawing.Point(132, 42)
+        Me.cmb_childParticipant.ItemHeight = 14
+        Me.cmb_childParticipant.Location = New System.Drawing.Point(132, 41)
         Me.cmb_childParticipant.Name = "cmb_childParticipant"
-        Me.cmb_childParticipant.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_childParticipant.Size = New System.Drawing.Size(118, 22)
         Me.cmb_childParticipant.TabIndex = 2
         '
         'cmb_chargeId
@@ -206,19 +206,19 @@ Partial Class frmAddMappingMgt
         Me.cmb_chargeId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_chargeId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_chargeId.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_chargeId.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_chargeId.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_chargeId.ForeColor = System.Drawing.Color.Black
         Me.cmb_chargeId.FormattingEnabled = True
-        Me.cmb_chargeId.ItemHeight = 12
-        Me.cmb_chargeId.Location = New System.Drawing.Point(132, 77)
+        Me.cmb_chargeId.ItemHeight = 14
+        Me.cmb_chargeId.Location = New System.Drawing.Point(132, 76)
         Me.cmb_chargeId.Name = "cmb_chargeId"
-        Me.cmb_chargeId.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_chargeId.Size = New System.Drawing.Size(118, 22)
         Me.cmb_chargeId.TabIndex = 3
         '
         'txtbox_ParentID
         '
         Me.txtbox_ParentID.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtbox_ParentID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_ParentID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_ParentID.ForeColor = System.Drawing.Color.DimGray
         Me.txtbox_ParentID.Location = New System.Drawing.Point(261, 7)
         Me.txtbox_ParentID.Name = "txtbox_ParentID"
@@ -228,7 +228,7 @@ Partial Class frmAddMappingMgt
         'txtbox_ChildID
         '
         Me.txtbox_ChildID.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtbox_ChildID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_ChildID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_ChildID.ForeColor = System.Drawing.Color.DimGray
         Me.txtbox_ChildID.Location = New System.Drawing.Point(261, 42)
         Me.txtbox_ChildID.Name = "txtbox_ChildID"
@@ -273,7 +273,7 @@ Partial Class frmAddMappingMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(464, 222)
         Me.Controls.Add(Me.btn_Close)
         Me.Controls.Add(Me.btn_Save)

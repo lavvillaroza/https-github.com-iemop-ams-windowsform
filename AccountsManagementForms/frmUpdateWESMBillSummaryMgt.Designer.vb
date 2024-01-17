@@ -288,7 +288,7 @@ Partial Class frmUpdateWESMBillSummaryMgt
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(727, 556)
         Me.ControlBox = False
         Me.Controls.Add(Me.OrigDueDate_TextBox)

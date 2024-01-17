@@ -224,7 +224,7 @@ Partial Class frmPrudentialMgt
         Me.AccessibleDescription = " "
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(557, 601)
         Me.ControlBox = False
         Me.Controls.Add(Me.chckAll)

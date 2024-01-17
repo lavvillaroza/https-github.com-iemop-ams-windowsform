@@ -22,14 +22,14 @@ Partial Class frmWBSAdjustmentPerBatchView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmWBSAdjustmentPerBatchView))
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.TabCntrl_Main = New System.Windows.Forms.TabControl()
@@ -125,7 +125,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.TabCntrl_Main, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Panel5, 0, 1)
-        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TableLayoutPanel3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(2, 2)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 2
@@ -141,7 +141,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.TabCntrl_Main.Controls.Add(Me.TP_WESMBill)
         Me.TabCntrl_Main.Controls.Add(Me.TP_WESMBillAdj)
         Me.TabCntrl_Main.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
-        Me.TabCntrl_Main.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TabCntrl_Main.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabCntrl_Main.Location = New System.Drawing.Point(3, 3)
         Me.TabCntrl_Main.Name = "TabCntrl_Main"
         Me.TabCntrl_Main.SelectedIndex = 0
@@ -150,12 +150,12 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         'TP_WESMBill
         '
-        Me.TP_WESMBill.BackColor = System.Drawing.Color.White
+        Me.TP_WESMBill.BackColor = System.Drawing.Color.WhiteSmoke
         Me.TP_WESMBill.Controls.Add(Me.TableLayoutPanel8)
-        Me.TP_WESMBill.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TP_WESMBill.Location = New System.Drawing.Point(4, 21)
+        Me.TP_WESMBill.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TP_WESMBill.Location = New System.Drawing.Point(4, 23)
         Me.TP_WESMBill.Name = "TP_WESMBill"
-        Me.TP_WESMBill.Size = New System.Drawing.Size(952, 453)
+        Me.TP_WESMBill.Size = New System.Drawing.Size(952, 451)
         Me.TP_WESMBill.TabIndex = 0
         Me.TP_WESMBill.Text = "WESMBill Original"
         '
@@ -189,7 +189,7 @@ Partial Class frmWBSAdjustmentPerBatchView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox9.Controls.Add(Me.dgv_WESMInvoices_AP)
         Me.GroupBox9.Controls.Add(Me.Label28)
-        Me.GroupBox9.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox9.ForeColor = System.Drawing.Color.Black
         Me.GroupBox9.Location = New System.Drawing.Point(5, 227)
         Me.GroupBox9.Name = "GroupBox9"
@@ -203,22 +203,22 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.dgv_WESMInvoices_AP.AllowUserToDeleteRows = False
         Me.dgv_WESMInvoices_AP.AllowUserToResizeColumns = False
         Me.dgv_WESMInvoices_AP.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_WESMInvoices_AP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_WESMInvoices_AP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
         Me.dgv_WESMInvoices_AP.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_WESMInvoices_AP.ColumnHeadersHeight = 30
         Me.dgv_WESMInvoices_AP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_WESMInvoices_AP.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col_APBillingPeriodNo, Me.col_APBillingBatchNo, Me.col_APInvoiceNo, Me.col_APDueDate, Me.col_APNewDueDate, Me.col_APBeginningBalance, Me.col_APEnding_Balance, Me.col_APAmountAdjusted, Me.col_APCreatedDoc})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_WESMInvoices_AP.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_WESMInvoices_AP.DefaultCellStyle = DataGridViewCellStyle10
         Me.dgv_WESMInvoices_AP.Location = New System.Drawing.Point(6, 19)
         Me.dgv_WESMInvoices_AP.Name = "dgv_WESMInvoices_AP"
         Me.dgv_WESMInvoices_AP.ReadOnly = True
@@ -285,11 +285,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label28.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label28.Location = New System.Drawing.Point(6, 2)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(112, 14)
+        Me.Label28.Size = New System.Drawing.Size(114, 14)
         Me.Label28.TabIndex = 22
         Me.Label28.Text = "Accounts Payables:"
         '
@@ -300,7 +300,7 @@ Partial Class frmWBSAdjustmentPerBatchView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox10.Controls.Add(Me.Label18)
         Me.GroupBox10.Controls.Add(Me.dgv_WESMInvoices_AR)
-        Me.GroupBox10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox10.ForeColor = System.Drawing.Color.Black
         Me.GroupBox10.Location = New System.Drawing.Point(5, 5)
         Me.GroupBox10.Name = "GroupBox10"
@@ -311,11 +311,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label18.Location = New System.Drawing.Point(6, 2)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(122, 14)
+        Me.Label18.Size = New System.Drawing.Size(124, 14)
         Me.Label18.TabIndex = 21
         Me.Label18.Text = "Account Receivables:"
         '
@@ -325,22 +325,22 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.dgv_WESMInvoices_AR.AllowUserToDeleteRows = False
         Me.dgv_WESMInvoices_AR.AllowUserToResizeColumns = False
         Me.dgv_WESMInvoices_AR.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_WESMInvoices_AR.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_WESMInvoices_AR.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
         Me.dgv_WESMInvoices_AR.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_WESMInvoices_AR.ColumnHeadersHeight = 30
         Me.dgv_WESMInvoices_AR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_WESMInvoices_AR.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col_ARBillingPeriodNo, Me.col_ARBillingBatchNo, Me.col_ARInvoiceNo, Me.col_ARDueDate, Me.col_ARNewDueDate, Me.col_ARBeginningBalance, Me.col_AREndingBalance, Me.col_ARAmountAdjusted, Me.col_ARCreatedDoc})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_WESMInvoices_AR.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_WESMInvoices_AR.DefaultCellStyle = DataGridViewCellStyle12
         Me.dgv_WESMInvoices_AR.Location = New System.Drawing.Point(6, 19)
         Me.dgv_WESMInvoices_AR.Name = "dgv_WESMInvoices_AR"
         Me.dgv_WESMInvoices_AR.ReadOnly = True
@@ -420,7 +420,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.txtbox_TotalARAdj.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalARAdj.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalARAdj.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalARAdj.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalARAdj.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalARAdj.Location = New System.Drawing.Point(756, 8)
         Me.txtbox_TotalARAdj.Name = "txtbox_TotalARAdj"
@@ -431,7 +431,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(633, 10)
         Me.Label3.Name = "Label3"
@@ -455,11 +455,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.Label8.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(633, 10)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(121, 14)
+        Me.Label8.Size = New System.Drawing.Size(122, 14)
         Me.Label8.TabIndex = 2
         Me.Label8.Text = "Total AP Adjustment:"
         '
@@ -467,7 +467,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.txtbox_TotalAPAdj.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalAPAdj.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalAPAdj.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAPAdj.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAPAdj.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAPAdj.Location = New System.Drawing.Point(756, 7)
         Me.txtbox_TotalAPAdj.Name = "txtbox_TotalAPAdj"
@@ -476,12 +476,12 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         'TP_WESMBillAdj
         '
-        Me.TP_WESMBillAdj.BackColor = System.Drawing.Color.White
+        Me.TP_WESMBillAdj.BackColor = System.Drawing.Color.WhiteSmoke
         Me.TP_WESMBillAdj.Controls.Add(Me.TableLayoutPanel1)
-        Me.TP_WESMBillAdj.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TP_WESMBillAdj.Location = New System.Drawing.Point(4, 21)
+        Me.TP_WESMBillAdj.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TP_WESMBillAdj.Location = New System.Drawing.Point(4, 23)
         Me.TP_WESMBillAdj.Name = "TP_WESMBillAdj"
-        Me.TP_WESMBillAdj.Size = New System.Drawing.Size(952, 453)
+        Me.TP_WESMBillAdj.Size = New System.Drawing.Size(952, 451)
         Me.TP_WESMBillAdj.TabIndex = 0
         Me.TP_WESMBillAdj.Text = "WESMBill Adjustment"
         '
@@ -515,7 +515,7 @@ Partial Class frmWBSAdjustmentPerBatchView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.dgv_AdjAPDummy)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.Black
         Me.GroupBox1.Location = New System.Drawing.Point(5, 227)
         Me.GroupBox1.Name = "GroupBox1"
@@ -528,22 +528,22 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.dgv_AdjAPDummy.AllowUserToAddRows = False
         Me.dgv_AdjAPDummy.AllowUserToDeleteRows = False
         Me.dgv_AdjAPDummy.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_AdjAPDummy.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_AdjAPDummy.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
         Me.dgv_AdjAPDummy.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_AdjAPDummy.ColumnHeadersHeight = 30
         Me.dgv_AdjAPDummy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_AdjAPDummy.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col_APBillingPeriodNo2, Me.col_APBillingBatchNo2, Me.col_APInvoceNo2, Me.col_APDueDate2, Me.col_APNewDueDate2, Me.col_APAmountAdj2})
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_AdjAPDummy.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_AdjAPDummy.DefaultCellStyle = DataGridViewCellStyle14
         Me.dgv_AdjAPDummy.Location = New System.Drawing.Point(6, 19)
         Me.dgv_AdjAPDummy.Name = "dgv_AdjAPDummy"
         Me.dgv_AdjAPDummy.ReadOnly = True
@@ -592,11 +592,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(6, 2)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(112, 14)
+        Me.Label1.Size = New System.Drawing.Size(114, 14)
         Me.Label1.TabIndex = 22
         Me.Label1.Text = "Accounts Payables:"
         '
@@ -607,7 +607,7 @@ Partial Class frmWBSAdjustmentPerBatchView
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.dgv_AdjARDummy)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.Black
         Me.GroupBox2.Location = New System.Drawing.Point(5, 5)
         Me.GroupBox2.Name = "GroupBox2"
@@ -618,11 +618,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label2.Location = New System.Drawing.Point(6, 2)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(122, 14)
+        Me.Label2.Size = New System.Drawing.Size(124, 14)
         Me.Label2.TabIndex = 21
         Me.Label2.Text = "Account Receivables:"
         '
@@ -631,22 +631,22 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.dgv_AdjARDummy.AllowUserToAddRows = False
         Me.dgv_AdjARDummy.AllowUserToDeleteRows = False
         Me.dgv_AdjARDummy.AllowUserToResizeRows = False
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_AdjARDummy.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_AdjARDummy.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle15
         Me.dgv_AdjARDummy.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_AdjARDummy.ColumnHeadersHeight = 30
         Me.dgv_AdjARDummy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_AdjARDummy.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col_ARBillingPeriodNo2, Me.col_ARBillingBatchNo2, Me.col_ARInvoiceNo2, Me.col_ARDueDate2, Me.col_ARNewDueDate2, Me.col_ARAmountAdj2})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_AdjARDummy.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_AdjARDummy.DefaultCellStyle = DataGridViewCellStyle16
         Me.dgv_AdjARDummy.Location = New System.Drawing.Point(6, 19)
         Me.dgv_AdjARDummy.Name = "dgv_AdjARDummy"
         Me.dgv_AdjARDummy.ReadOnly = True
@@ -708,7 +708,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.txtbox_TotalARAmountAdj.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalARAmountAdj.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalARAmountAdj.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalARAmountAdj.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalARAmountAdj.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalARAmountAdj.Location = New System.Drawing.Point(756, 8)
         Me.txtbox_TotalARAmountAdj.Name = "txtbox_TotalARAmountAdj"
@@ -719,7 +719,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.Label4.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(633, 10)
         Me.Label4.Name = "Label4"
@@ -743,11 +743,11 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(633, 10)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(121, 14)
+        Me.Label5.Size = New System.Drawing.Size(122, 14)
         Me.Label5.TabIndex = 2
         Me.Label5.Text = "Total AP Adjustment:"
         '
@@ -755,7 +755,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         '
         Me.txtbox_TotalAPAmountAdj.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.txtbox_TotalAPAmountAdj.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtbox_TotalAPAmountAdj.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAPAmountAdj.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAPAmountAdj.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAPAmountAdj.Location = New System.Drawing.Point(756, 7)
         Me.txtbox_TotalAPAmountAdj.Name = "txtbox_TotalAPAmountAdj"
@@ -786,7 +786,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.btn_JVSetup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_JVSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_JVSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_JVSetup.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_JVSetup.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_JVSetup.ForeColor = System.Drawing.Color.Black
         Me.btn_JVSetup.Image = CType(resources.GetObject("btn_JVSetup.Image"), System.Drawing.Image)
         Me.btn_JVSetup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -806,7 +806,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.btn_Save.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Save.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Save.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Save.ForeColor = System.Drawing.Color.Black
         Me.btn_Save.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btn_Save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -826,7 +826,7 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.btn_Back.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Back.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Back.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Back.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Back.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Back.ForeColor = System.Drawing.Color.Black
         Me.btn_Back.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.btn_Back.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -837,15 +837,15 @@ Partial Class frmWBSAdjustmentPerBatchView
         Me.btn_Back.Text = "Back"
         Me.btn_Back.UseVisualStyleBackColor = False
         '
-        'frmWESMBillSummaryAdjustmentPerBatchView
+        'frmWBSAdjustmentPerBatchView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(970, 549)
         Me.Controls.Add(Me.TableLayoutPanel3)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.Name = "frmWESMBillSummaryAdjustmentPerBatchView"
+        Me.Name = "frmWBSAdjustmentPerBatchView"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Withholding TAX Adjustment (View)"
         Me.TableLayoutPanel3.ResumeLayout(False)

@@ -146,7 +146,7 @@ Public Class frmWVATTaggedAllocReport
         End Try
     End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) 
         Me.Close()
     End Sub
 

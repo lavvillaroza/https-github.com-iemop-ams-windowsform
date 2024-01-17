@@ -47,11 +47,11 @@ Partial Class frmOfficialReceipt
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(12, 14)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 14)
+        Me.Label1.Size = New System.Drawing.Size(52, 14)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "OR Date:"
         '
@@ -66,6 +66,7 @@ Partial Class frmOfficialReceipt
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -73,12 +74,12 @@ Partial Class frmOfficialReceipt
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnClose.Location = New System.Drawing.Point(574, 512)
+        Me.btnClose.Location = New System.Drawing.Point(574, 516)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(136, 39)
         Me.btnClose.TabIndex = 58
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
@@ -182,7 +183,7 @@ Partial Class frmOfficialReceipt
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(195, 14)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(18, 14)
@@ -195,7 +196,7 @@ Partial Class frmOfficialReceipt
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(554, 15)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(135, 12)
+        Me.Label3.Size = New System.Drawing.Size(135, 14)
         Me.Label3.TabIndex = 63
         Me.Label3.Text = "Generate OR with Header:"
         '
@@ -210,9 +211,9 @@ Partial Class frmOfficialReceipt
         '
         'frmOfficialReceipt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(722, 567)
         Me.Controls.Add(Me.chkboxHeader)
         Me.Controls.Add(Me.Label3)
@@ -223,7 +224,7 @@ Partial Class frmOfficialReceipt
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.dtFrom)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmOfficialReceipt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

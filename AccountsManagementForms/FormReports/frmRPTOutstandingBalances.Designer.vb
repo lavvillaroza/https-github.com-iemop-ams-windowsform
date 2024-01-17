@@ -49,7 +49,7 @@ Partial Class frmRPTOutstandingBalances
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.dgv_OutstandingSummary)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 98)
         Me.GroupBox2.Name = "GroupBox2"
@@ -63,7 +63,7 @@ Partial Class frmRPTOutstandingBalances
         Me.dgv_OutstandingSummary.AllowUserToAddRows = False
         Me.dgv_OutstandingSummary.AllowUserToDeleteRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dgv_OutstandingSummary.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.dgv_OutstandingSummary.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
@@ -71,7 +71,7 @@ Partial Class frmRPTOutstandingBalances
         Me.dgv_OutstandingSummary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -81,7 +81,7 @@ Partial Class frmRPTOutstandingBalances
         Me.dgv_OutstandingSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dgv_OutstandingSummary.Location = New System.Drawing.Point(6, 21)
         Me.dgv_OutstandingSummary.Name = "dgv_OutstandingSummary"
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
         Me.dgv_OutstandingSummary.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_OutstandingSummary.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -94,7 +94,7 @@ Partial Class frmRPTOutstandingBalances
         Me.cmd_search.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_search.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_search.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_search.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.cmd_search.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_search.Location = New System.Drawing.Point(195, 16)
@@ -108,10 +108,10 @@ Partial Class frmRPTOutstandingBalances
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(314, 21)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(96, 12)
+        Me.Label1.Size = New System.Drawing.Size(96, 14)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "Destination Folder:"
         '
@@ -119,7 +119,7 @@ Partial Class frmRPTOutstandingBalances
         '
         Me.txt_DestFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_DestFile.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_DestFile.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_DestFile.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_DestFile.Location = New System.Drawing.Point(415, 16)
         Me.txt_DestFile.Name = "txt_DestFile"
         Me.txt_DestFile.ReadOnly = True
@@ -133,7 +133,7 @@ Partial Class frmRPTOutstandingBalances
         Me.cmd_browse.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_browse.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_browse.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_browse.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_browse.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_browse.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.cmd_browse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_browse.Location = New System.Drawing.Point(680, 16)
@@ -145,11 +145,12 @@ Partial Class frmRPTOutstandingBalances
         'cmd_GenerateReport
         '
         Me.cmd_GenerateReport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_GenerateReport.BackColor = System.Drawing.Color.White
         Me.cmd_GenerateReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenerateReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenerateReport.Image = Global.AccountsManagementForms.My.Resources.Resources.CSVIconColored22x22
         Me.cmd_GenerateReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_GenerateReport.Location = New System.Drawing.Point(437, 557)
@@ -157,16 +158,17 @@ Partial Class frmRPTOutstandingBalances
         Me.cmd_GenerateReport.Size = New System.Drawing.Size(150, 39)
         Me.cmd_GenerateReport.TabIndex = 7
         Me.cmd_GenerateReport.Text = "     Export Report to CSV"
-        Me.cmd_GenerateReport.UseVisualStyleBackColor = True
+        Me.cmd_GenerateReport.UseVisualStyleBackColor = False
         '
         'cmd_close
         '
         Me.cmd_close.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_close.BackColor = System.Drawing.Color.White
         Me.cmd_close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_close.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_close.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_close.Location = New System.Drawing.Point(593, 556)
@@ -174,7 +176,7 @@ Partial Class frmRPTOutstandingBalances
         Me.cmd_close.Size = New System.Drawing.Size(140, 39)
         Me.cmd_close.TabIndex = 8
         Me.cmd_close.Text = "Close"
-        Me.cmd_close.UseVisualStyleBackColor = True
+        Me.cmd_close.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
@@ -196,10 +198,10 @@ Partial Class frmRPTOutstandingBalances
         'rb_VATonEnergy
         '
         Me.rb_VATonEnergy.AutoSize = True
-        Me.rb_VATonEnergy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_VATonEnergy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_VATonEnergy.Location = New System.Drawing.Point(12, 44)
         Me.rb_VATonEnergy.Name = "rb_VATonEnergy"
-        Me.rb_VATonEnergy.Size = New System.Drawing.Size(91, 16)
+        Me.rb_VATonEnergy.Size = New System.Drawing.Size(90, 18)
         Me.rb_VATonEnergy.TabIndex = 18
         Me.rb_VATonEnergy.Text = "VATonEnergy"
         Me.rb_VATonEnergy.UseVisualStyleBackColor = True
@@ -207,10 +209,10 @@ Partial Class frmRPTOutstandingBalances
         'rb_MF
         '
         Me.rb_MF.AutoSize = True
-        Me.rb_MF.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_MF.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_MF.Location = New System.Drawing.Point(105, 19)
         Me.rb_MF.Name = "rb_MF"
-        Me.rb_MF.Size = New System.Drawing.Size(85, 16)
+        Me.rb_MF.Size = New System.Drawing.Size(84, 18)
         Me.rb_MF.TabIndex = 16
         Me.rb_MF.Text = "Market Fees"
         Me.rb_MF.UseVisualStyleBackColor = True
@@ -219,10 +221,10 @@ Partial Class frmRPTOutstandingBalances
         '
         Me.rb_Energy.AutoSize = True
         Me.rb_Energy.Checked = True
-        Me.rb_Energy.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Energy.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_Energy.Location = New System.Drawing.Point(12, 19)
         Me.rb_Energy.Name = "rb_Energy"
-        Me.rb_Energy.Size = New System.Drawing.Size(58, 16)
+        Me.rb_Energy.Size = New System.Drawing.Size(59, 18)
         Me.rb_Energy.TabIndex = 15
         Me.rb_Energy.TabStop = True
         Me.rb_Energy.Text = "Energy"
@@ -231,11 +233,12 @@ Partial Class frmRPTOutstandingBalances
         'cmd_GenerateReportToExcel
         '
         Me.cmd_GenerateReportToExcel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_GenerateReportToExcel.BackColor = System.Drawing.Color.White
         Me.cmd_GenerateReportToExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenerateReportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReportToExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenerateReportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenerateReportToExcel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenerateReportToExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenerateReportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.cmd_GenerateReportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_GenerateReportToExcel.Location = New System.Drawing.Point(281, 557)
@@ -243,13 +246,13 @@ Partial Class frmRPTOutstandingBalances
         Me.cmd_GenerateReportToExcel.Size = New System.Drawing.Size(150, 39)
         Me.cmd_GenerateReportToExcel.TabIndex = 17
         Me.cmd_GenerateReportToExcel.Text = " Generate"
-        Me.cmd_GenerateReportToExcel.UseVisualStyleBackColor = True
+        Me.cmd_GenerateReportToExcel.UseVisualStyleBackColor = False
         '
         'frmRPTOutstandingBalances
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(751, 607)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.cmd_GenerateReportToExcel)
@@ -257,6 +260,8 @@ Partial Class frmRPTOutstandingBalances
         Me.Controls.Add(Me.cmd_close)
         Me.Controls.Add(Me.cmd_GenerateReport)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(767, 603)
         Me.Name = "frmRPTOutstandingBalances"
         Me.Text = " "

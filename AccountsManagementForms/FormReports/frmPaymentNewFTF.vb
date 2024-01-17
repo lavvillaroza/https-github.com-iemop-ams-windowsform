@@ -187,7 +187,7 @@ Public Class frmPaymentNewFTF
         Return DS
     End Function
 
-    Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
+    Private Sub btn_Close_Click(sender As Object, e As EventArgs) 
         Me.Close()
     End Sub
 End Class

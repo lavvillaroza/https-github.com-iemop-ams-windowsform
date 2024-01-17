@@ -37,7 +37,7 @@ Partial Class frmSLAccountsPayable
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.dtTransaction)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(6, 6)
         Me.GroupBox1.Name = "GroupBox1"
@@ -49,7 +49,7 @@ Partial Class frmSLAccountsPayable
         'dtTransaction
         '
         Me.dtTransaction.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtTransaction.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtTransaction.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtTransaction.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtTransaction.Location = New System.Drawing.Point(28, 20)
         Me.dtTransaction.Name = "dtTransaction"
@@ -60,7 +60,7 @@ Partial Class frmSLAccountsPayable
         '
         Me.GroupBox2.Controls.Add(Me.txtFullName)
         Me.GroupBox2.Controls.Add(Me.ddlParticipantID)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 68)
         Me.GroupBox2.Name = "GroupBox2"
@@ -72,7 +72,7 @@ Partial Class frmSLAccountsPayable
         'txtFullName
         '
         Me.txtFullName.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtFullName.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtFullName.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtFullName.Location = New System.Drawing.Point(22, 49)
         Me.txtFullName.Multiline = True
         Me.txtFullName.Name = "txtFullName"
@@ -83,20 +83,21 @@ Partial Class frmSLAccountsPayable
         'ddlParticipantID
         '
         Me.ddlParticipantID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ddlParticipantID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ddlParticipantID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ddlParticipantID.FormattingEnabled = True
         Me.ddlParticipantID.Location = New System.Drawing.Point(22, 20)
         Me.ddlParticipantID.Name = "ddlParticipantID"
-        Me.ddlParticipantID.Size = New System.Drawing.Size(217, 20)
+        Me.ddlParticipantID.Size = New System.Drawing.Size(217, 22)
         Me.ddlParticipantID.TabIndex = 0
         '
         'cmd_Close
         '
+        Me.cmd_Close.BackColor = System.Drawing.Color.White
         Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_Close.Location = New System.Drawing.Point(277, 102)
@@ -104,15 +105,16 @@ Partial Class frmSLAccountsPayable
         Me.cmd_Close.Size = New System.Drawing.Size(145, 39)
         Me.cmd_Close.TabIndex = 14
         Me.cmd_Close.Text = "Close"
-        Me.cmd_Close.UseVisualStyleBackColor = True
+        Me.cmd_Close.UseVisualStyleBackColor = False
         '
         'cmd_Generate
         '
+        Me.cmd_Generate.BackColor = System.Drawing.Color.White
         Me.cmd_Generate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Generate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Generate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Generate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Generate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Generate.Image = Global.AccountsManagementForms.My.Resources.Resources.PDFIcon22x22
         Me.cmd_Generate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_Generate.Location = New System.Drawing.Point(277, 12)
@@ -120,7 +122,7 @@ Partial Class frmSLAccountsPayable
         Me.cmd_Generate.Size = New System.Drawing.Size(145, 39)
         Me.cmd_Generate.TabIndex = 13
         Me.cmd_Generate.Text = "Generate"
-        Me.cmd_Generate.UseVisualStyleBackColor = True
+        Me.cmd_Generate.UseVisualStyleBackColor = False
         '
         'btn_ExportToCSV
         '
@@ -129,7 +131,7 @@ Partial Class frmSLAccountsPayable
         Me.btn_ExportToCSV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_ExportToCSV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_ExportToCSV.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_ExportToCSV.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ExportToCSV.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_ExportToCSV.ForeColor = System.Drawing.Color.Black
         Me.btn_ExportToCSV.Image = Global.AccountsManagementForms.My.Resources.Resources.CSVIconColored22x22
         Me.btn_ExportToCSV.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -144,7 +146,7 @@ Partial Class frmSLAccountsPayable
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(435, 188)
         Me.Controls.Add(Me.btn_ExportToCSV)
         Me.Controls.Add(Me.cmd_Close)

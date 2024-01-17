@@ -294,8 +294,16 @@ Public Class frmWESMInvoice
                     expReport.SetParameterValue("paramMarketFeeRate", getMarketFeesRate)
                     expReport.SetParameterValue("paramSystemGeneratedMsg", systemGeneratedMessage)
 
-                    expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                    Dim stlRun As String = Me.ddlSTLRun.Text
+                    If stlRun.Length <> 1 Then
+                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                                           participant & "_TS-WAD-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                    Else
+                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
                                            participant & "_TS-WF-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                    End If
+
+
                     expReport.Close()
                     expReport.Dispose()
 

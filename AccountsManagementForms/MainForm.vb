@@ -57,7 +57,7 @@ Public Class MainForm
     Private Sub ChargeIDToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChargeIDToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibChargeIDWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmChargeId.Show()
@@ -69,7 +69,7 @@ Public Class MainForm
     Private Sub AccountingCodeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccountingCodeToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibAccountCodeWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
 
@@ -82,7 +82,7 @@ Public Class MainForm
     Private Sub WESMBills_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMBills_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepWESMBillsWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmUploadedWESMBill.Show()
@@ -94,7 +94,7 @@ Public Class MainForm
     Private Sub WESMBillsSummaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMBillsSummary_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepWESMBillsSummary.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWESMSummary.Show()
@@ -106,7 +106,7 @@ Public Class MainForm
     Private Sub StatementAccount_TSMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles StatementAccount_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSOAWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             With frmStatementOfAccount
@@ -121,7 +121,7 @@ Public Class MainForm
     Private Sub JournalVoucherToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles JournalVoucher_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepJVWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmViewJournalVoucher.Show()
@@ -133,7 +133,7 @@ Public Class MainForm
     Private Sub SignatoriesMaintenanceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SignatoriesMaintenanceToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibSignatoriesMainteWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSignatoriesMaintenance.Show()
@@ -199,11 +199,11 @@ Public Class MainForm
     End Sub
 
 
-   
+
     Private Sub DailyInterestRateToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DailyInterestRateToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibDailyInterestRateWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmInterestRate.Show()
@@ -215,7 +215,7 @@ Public Class MainForm
     Private Sub BillParticipantsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BillParticipantsToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibParticipantInfoWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmBillParticipants.Show()
@@ -227,7 +227,7 @@ Public Class MainForm
     'Private Sub GreatPlainsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GreatPlainsToolStripMenuItem.Click
     '    Try
     '        If Not _Login.HasAccess(EnumAMSModulesFinal.AMS_GreatPlainsWindow.ToString) Then
-    '            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
     '            _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.AMS_GreatPlainsWindow.ToString, "Accessing Great Plains WIndow", "", "", EnumColorCode.Red, EnumLogType.NoAccess, AMModule.UserName)
     '            Exit Sub
     '        Else
@@ -242,7 +242,7 @@ Public Class MainForm
     'Private Sub ManualDMCMToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ManualDMCMToolStripMenuItem1.Click
     '    Try
     '        If Not _Login.HasAccess(EnumAMSModulesFinal.AMS_ManualDMCMWindow.ToString) Then
-    '            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
     '            _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.AMS_ManualDMCMWindow.ToString, "Accessing Manual DMCM Window", "", "", EnumColorCode.Red, EnumLogType.NoAccess, AMModule.UserName)
     '            Exit Sub
     '        Else
@@ -257,7 +257,7 @@ Public Class MainForm
     Private Sub CollectionSummary_TSMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CollectionSummary_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepCollectionSummaryWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             Dim frm As New frmCollectionSummary
@@ -272,7 +272,7 @@ Public Class MainForm
     Private Sub ToolStripMenuItem5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DebitCreditMemo_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepDebitCreditMemoWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmDebitCreditMemo.Show()
@@ -281,14 +281,10 @@ Public Class MainForm
         End Try
     End Sub
 
-    Private Sub ToolStripMenuItem6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMInvoice_TSMenuItem.Click
-
-    End Sub
-
     Private Sub FundTransferFormToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FundTransferForm_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepFundTransferFormWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmFTF.Show()
@@ -300,7 +296,7 @@ Public Class MainForm
     Private Sub EFTToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EFT_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepEFTWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmEFT.Show()
@@ -312,7 +308,7 @@ Public Class MainForm
     Private Sub MarketFeesSummaryToolStrip_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MarketFeesSummary_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepMFSummaryWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmMarketFeesSummary.Show()
@@ -324,7 +320,7 @@ Public Class MainForm
     Private Sub RequestForPaymentToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RequestForPayment_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepRequestForPaymentWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmRPTRequestForPayment.Show()
@@ -336,7 +332,7 @@ Public Class MainForm
     Private Sub SummaryOfOutstandingBalancesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SummaryOfOutstandingBalances_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSummaryofOBWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmOutstandingBalancesNew.Show()
@@ -348,7 +344,7 @@ Public Class MainForm
     Private Sub DefaultNoticeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DefaultNotice_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepDefaultNoticeWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmDefaultNotice.Show()
@@ -360,7 +356,7 @@ Public Class MainForm
     Private Sub TransferOfInterestToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles InterestToolStripMenuItem1.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonPrudentialIntWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudentialInterest.Show()
@@ -372,7 +368,7 @@ Public Class MainForm
     Private Sub PrudentialToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Prudential_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepPrudentialWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudential.Show()
@@ -384,7 +380,7 @@ Public Class MainForm
     Private Sub SettlementNoticeToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SettlementNotice_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSettleNoticeWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSTLNoticeNew.Show()
@@ -396,7 +392,7 @@ Public Class MainForm
     Private Sub ReplenishmentToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReplenishmentToolStripMenuItem1.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonPrudentialRepWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudentialReplenishment.Show()
@@ -408,7 +404,7 @@ Public Class MainForm
     Private Sub TransferOfInterestToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TransferOfInterestToolStripMenuItem1.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonPrudentialTransIntWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudentialTransferInterest.Show()
@@ -420,7 +416,7 @@ Public Class MainForm
     Private Sub DailyCollectionSummaryToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DailyCollectionSummary_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepDCashCollSummaryWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             Dim frm As New frmCollectionSummary
@@ -435,7 +431,7 @@ Public Class MainForm
     Private Sub AgingReport_TSMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AgingReport_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepAgingReportWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmAgingReport.Show()
@@ -447,7 +443,7 @@ Public Class MainForm
     Private Sub CalendarBillingPeriodToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CalendarBillingPeriodToolStripMenuItem1.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibCalendarBillingWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmBillingCalendar.Show()
@@ -460,7 +456,7 @@ Public Class MainForm
     Private Sub SummaryOfDefaultInterestToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SummaryOfDefaultInterest_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSummaryofDefaultWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSummaryOfDefaultInterest.Show()
@@ -472,7 +468,7 @@ Public Class MainForm
     Private Sub SummaryForAccountingBooksToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SummaryForAccountingBooks_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSummaryForABWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSummary.Show()
@@ -484,7 +480,7 @@ Public Class MainForm
     Private Sub CashSummaryReport_TSMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CashSummaryReport_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepCashSummaryReportWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmCashSummaryReport.Show()
@@ -496,7 +492,7 @@ Public Class MainForm
     Private Sub OfficialReceiptToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OfficialReceipt_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepOfficialReceiptWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmOfficialReceipt.Show()
@@ -508,7 +504,7 @@ Public Class MainForm
     Private Sub WESMBillToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMBillToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmImportWESMBillFlatfile.Show()
@@ -520,7 +516,7 @@ Public Class MainForm
     Private Sub WESMSalesAndPurchasedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMSalesAndPurchasedToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillSAPWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmImportWESMBillSalesAndPurchased.Show()
@@ -532,7 +528,7 @@ Public Class MainForm
     Private Sub WESMBillOffsettingToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WESMBillOffsettingToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPWESMBillOffsetingWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmOffSetWESMBill.Show()
@@ -544,7 +540,7 @@ Public Class MainForm
     Private Sub StatementOfAccountToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles StatementOfAccountToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPSOAWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmStatementOfAccount.Show()
@@ -556,7 +552,7 @@ Public Class MainForm
     Private Sub ChecksToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Checks_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepChecksWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmChecks.Show()
@@ -569,7 +565,7 @@ Public Class MainForm
     Private Sub CollectionEntryAllocationToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CollectionEntryAllocationToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
 
@@ -587,7 +583,7 @@ Public Class MainForm
     Private Sub PostDailyCollectionToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PostDailyCollectionToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.CollPostDailyCollectionsWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
 
@@ -602,7 +598,7 @@ Public Class MainForm
     Private Sub PostManualCollectionsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PostManualCollectionsToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.CollPostManualCollectionsWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
 
@@ -620,7 +616,7 @@ Public Class MainForm
 
     'Private Sub GenerateSettlementEndingBalanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerateSettlementEndingBalanceToolStripMenuItem.Click
     '    If Not _Login.HasAccess(EnumAMSModulesFinal.AMS_GenerateSettlementEndingBalanceWindow.ToString) Then
-    '        MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '        MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
     '        _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.AMS_GenerateSettlementEndingBalanceWindow.ToString(), "Accessing Generate Settlement Ending Balance Window", "", "", EnumColorCode.Red, EnumLogType.NoAccess, AMModule.UserName)
     '        Exit Sub
     '    Else
@@ -632,7 +628,7 @@ Public Class MainForm
 
     Private Sub LogsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles Logs_TSMenuItem.Click
         If Not _Login.HasAccess(EnumAMSModulesFinal.Logs.ToString) Then
-            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
         frmLogs.Show()
@@ -641,7 +637,7 @@ Public Class MainForm
     Private Sub DeferredPaymentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeferredPayment_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepDeferredPaymentWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmDeferredMonitoring.Show()
@@ -653,7 +649,7 @@ Public Class MainForm
     Private Sub ToolStripEarnedInterest_Click(sender As Object, e As EventArgs) Handles ToolStripEarnedInterest.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonEarnedInterestWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmInterestRateEarned.Show()
@@ -665,7 +661,7 @@ Public Class MainForm
     Private Sub SPAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SPAToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonSPAWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSPA.Show()
@@ -677,7 +673,7 @@ Public Class MainForm
     Private Sub AccountsReceivableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AccountsReceivable_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSubsidiaryLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             With frmSLAccountsReceivable
@@ -691,7 +687,7 @@ Public Class MainForm
     Private Sub AccountsPayableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AccountsPayable_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSubsidiaryLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             With frmSLAccountsPayable
@@ -705,7 +701,7 @@ Public Class MainForm
     Private Sub PrudentialPerParticipantToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrudentialPerParticipant_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepSubsidiaryLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             With frmSLPrudentialPerParticipant
@@ -719,7 +715,7 @@ Public Class MainForm
     Private Sub CashInBankPrudentialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CashInBankPrudential_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepGeneralLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmGLCashInBankPrudential.Show()
@@ -731,7 +727,7 @@ Public Class MainForm
     Private Sub CashInBankSettlementToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CashInBankSettlement_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepGeneralLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmGLCashInBankSettlement.Show()
@@ -743,7 +739,7 @@ Public Class MainForm
     Private Sub InterestPayableSettlementToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InterestPayableSettlement_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepGeneralLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmGLInterestPayableSettlement.Show()
@@ -755,7 +751,7 @@ Public Class MainForm
     Private Sub InterestPayablePrudentialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InterestPayablePrudential_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepGeneralLedgerWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmGLInterestPayablePrudential.Show()
@@ -779,7 +775,7 @@ Public Class MainForm
     Private Sub WithholdingTAXonEnergy_Click(sender As Object, e As EventArgs) Handles MAPBIR_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepMAPEWTCertifWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmMAPReport.Show()
@@ -791,7 +787,7 @@ Public Class MainForm
     Private Sub BIRAlphanumericTaxCode_TSMenuItem_Click(sender As Object, e As EventArgs) Handles BIRAlphanumericTaxCode_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibBATCodeWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmBIRATC.Show()
@@ -803,7 +799,7 @@ Public Class MainForm
     Private Sub BIRAccessToRecordToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BIRAccessToRecordToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepBIRAccessToRecordWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmBIRAccessToRecord.Show()
@@ -815,7 +811,7 @@ Public Class MainForm
     Private Sub PaymentDetails_TSMenuItem_Click(sender As Object, e As EventArgs) Handles PaymentDetails_TSMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepPaymentDetailsWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPaymentSummaryDetails.Show()
@@ -827,7 +823,7 @@ Public Class MainForm
     Private Sub ParticipantMaintenanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ParticipantMaintenanceToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibParticipantPACEOWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmParticipantPCMapping.Show()
@@ -839,7 +835,7 @@ Public Class MainForm
     Private Sub WESMBillSummaryChangeParentIDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMBillSummaryChangeParentIDToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.LibWESMBillChangeParentIDWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWBSParentIdChange.Show()
@@ -851,7 +847,7 @@ Public Class MainForm
     Private Sub PerParticipantToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PerParticipantToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonWhTaxAdjPerInvoiceWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmUpdateWESMBillSummary.Show()
@@ -863,7 +859,7 @@ Public Class MainForm
     Private Sub PerInvoiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PerInvoiceToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonWhTaxWhtaxAdjustmentWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWBSAdjustmentPerBatchMain.Show()
@@ -875,7 +871,7 @@ Public Class MainForm
     Private Sub WESMBillExtractionFromCRSSDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMBillExtractionFromCRSSDBToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmImportWESMBillFromCRSS.Show()
@@ -886,8 +882,8 @@ Public Class MainForm
 
     Private Sub AllocateCollectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllocateCollectionsToolStripMenuItem.Click
         Try
-            If Not _Login.HasAccess(EnumAMSModulesFinal.PaymentAllocationWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If Not _Login.HasAccess(EnumAMSModulesFinal.PayAllocateCollectionsWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPaymentNew.Show()
@@ -898,8 +894,8 @@ Public Class MainForm
 
     Private Sub AllocateCollectionsCollectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewAllocatedCollectionsToolStripMenuItem.Click
         Try
-            If Not _Login.HasAccess(EnumAMSModulesFinal.PaymentAllocationHistoryViewWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If Not _Login.HasAccess(EnumAMSModulesFinal.PayViewAllocatedCollectionsWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPaymentNewView.Show()
@@ -913,15 +909,15 @@ Public Class MainForm
         msgAns = MsgBox("Do you really want to logout?", CType(MsgBoxStyle.YesNo + MsgBoxStyle.Question, MsgBoxStyle), "System Message")
         If msgAns = MsgBoxResult.Yes Then
             MessageBox.Show(Me, "You have successfully logout.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            System.Diagnostics.Process.Start(Application.ExecutablePath)
             Me.Close()
+            Process.Start(Application.ExecutablePath)
         End If
     End Sub
 
     Private Sub PostingWESMBillToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PostingWESMBillToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPWESMBillJVPostingWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmGPInterface.Show()
@@ -933,7 +929,7 @@ Public Class MainForm
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonRefundPRWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudentialRefund.Show()
@@ -945,7 +941,7 @@ Public Class MainForm
     Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonRefundPRWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmPrudentialRefundView.Show()
@@ -957,7 +953,7 @@ Public Class MainForm
     Private Sub SystemParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SystemParametersToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SystemParamWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmSettings.Show()
@@ -969,7 +965,7 @@ Public Class MainForm
     Private Sub ExemptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExemptionToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.MonWESMBillsExemptionWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWBSExemption.Show()
@@ -981,7 +977,7 @@ Public Class MainForm
     Private Sub PrintingOfWESMInvoiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintingOfWESMInvoiceToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepWESMInvWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWESMInvoice.Show()
@@ -994,7 +990,7 @@ Public Class MainForm
     Private Sub ChangeBPinWBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeBPinWBToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.ChangeWESMBillBP.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWESMBillBillingPeriodMgt.Show()
@@ -1014,10 +1010,10 @@ Public Class MainForm
     Private Sub WESMBillTransactionSummaryToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-            frmImportWBTransactionSummaryBIRR.Show()
+            frmImportWESMAllocTransSummary.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
@@ -1026,7 +1022,7 @@ Public Class MainForm
     Private Sub PrintingOfWESMTransactionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintingOfWESMTransactionToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepWESMInvWindow.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmWESMBillTransactionSummaryPrint.Show()
@@ -1038,6 +1034,10 @@ Public Class MainForm
 
     Private Sub WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmImportWESMAllocTransSummaryPrelim.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1054,6 +1054,10 @@ Public Class MainForm
 
     Private Sub WithholdingTaxCertificateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WithholdingTaxCertificateToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmWHTaxCertificateSTLMgt.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1062,6 +1066,10 @@ Public Class MainForm
 
     Private Sub BIRRulingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BIRRulingToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepCollectionSummaryWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmBRCollectionReportMgt.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1070,6 +1078,10 @@ Public Class MainForm
 
     Private Sub WESMTransAllocationSummary_TSMenuItem_Click(sender As Object, e As EventArgs) Handles WESMTransAllocationSummary_TSMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.InqRepWESMBillsSummary.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmExportWTASummary.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1079,7 +1091,7 @@ Public Class MainForm
     Private Sub WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMBillsMappingCRSSChangeInvoiceIDForAggregationToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPWESMBillAggregateMapping.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmImportCRSSMappingID.Show()
@@ -1090,10 +1102,10 @@ Public Class MainForm
 
     Private Sub EWT_TagAlloc_Report_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EWT_TagAlloc_Report_ToolStripMenuItem.Click
         Try
-            'If Not _Login.HasAccess(EnumAMSModulesFinal.SAPWESMBillAggregateMapping.ToString) Then
-            '    MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            '    Exit Sub
-            'End If
+            If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmEWTTaggedAllocReport.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1103,7 +1115,7 @@ Public Class MainForm
     Private Sub WESMBillsAggregateInvoicesMappingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMBillsAggregateInvoicesMappingToolStripMenuItem.Click
         Try
             If Not _Login.HasAccess(EnumAMSModulesFinal.SAPWESMBillAggregateMapping.ToString) Then
-                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
             frmImportCRSSMappingID.Show()
@@ -1114,6 +1126,10 @@ Public Class MainForm
 
     Private Sub WESMTransactionSummaryFromCRSSDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WESMTransactionSummaryFromCRSSDBToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillFetchFromCRSSDBWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmImportWTAFromCRSS.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1122,6 +1138,10 @@ Public Class MainForm
 
     Private Sub WithholdingVATCertificateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WithholdingVATCertificateToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmWHVATCertificateSTLMgt.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1130,6 +1150,10 @@ Public Class MainForm
 
     Private Sub WVAT_TagAlloc_ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WVAT_TagAlloc_ToolStripMenuItem.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmWVATTaggedAllocReport.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
@@ -1138,9 +1162,15 @@ Public Class MainForm
 
     Private Sub SummaryofWTADetails_Click(sender As Object, e As EventArgs) Handles SummaryofWTADetails.Click
         Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.CollEntryAllocationWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             frmSummaryOfWTADetails.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
     End Sub
+
+
 End Class

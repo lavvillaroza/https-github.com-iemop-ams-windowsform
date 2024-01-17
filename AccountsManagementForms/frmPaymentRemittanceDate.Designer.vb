@@ -81,7 +81,7 @@ Partial Class frmPaymentRemittanceDate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(268, 98)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnCancel)

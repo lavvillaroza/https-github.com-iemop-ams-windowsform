@@ -23,24 +23,25 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TC_Import = New System.Windows.Forms.TabControl()
         Me.tp_New = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DGridViewNew = New System.Windows.Forms.DataGridView()
+        Me.cbAdd = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.IDNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FullName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Billing_Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Renewable = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ZeroRated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IncomeTaxHoliday = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FacilityType = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColRegion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MembershipType = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.cb_SelectAll = New System.Windows.Forms.CheckBox()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.MembershipType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColRegion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FacilityType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IncomeTaxHoliday = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ZeroRated = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Renewable = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Billing_Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FullName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IDNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cbAdd = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.TC_Import.SuspendLayout()
         Me.tp_New.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -59,6 +60,7 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
         '
         'tp_New
         '
+        Me.tp_New.BackColor = System.Drawing.Color.WhiteSmoke
         Me.tp_New.Controls.Add(Me.TableLayoutPanel1)
         Me.tp_New.Location = New System.Drawing.Point(4, 23)
         Me.tp_New.Name = "tp_New"
@@ -66,7 +68,6 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
         Me.tp_New.Size = New System.Drawing.Size(1072, 576)
         Me.tp_New.TabIndex = 0
         Me.tp_New.Text = "New Participants"
-        Me.tp_New.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel1
         '
@@ -94,6 +95,14 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
         Me.DGridViewNew.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewNew.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DGridViewNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewNew.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.cbAdd, Me.IDNumber, Me.FullName, Me.Billing_Address, Me.Renewable, Me.ZeroRated, Me.IncomeTaxHoliday, Me.FacilityType, Me.ColRegion, Me.MembershipType})
         Me.DGridViewNew.Location = New System.Drawing.Point(3, 3)
@@ -105,8 +114,73 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
         Me.DGridViewNew.Size = New System.Drawing.Size(1060, 507)
         Me.DGridViewNew.TabIndex = 37
         '
+        'cbAdd
+        '
+        Me.cbAdd.HeaderText = ""
+        Me.cbAdd.Name = "cbAdd"
+        Me.cbAdd.ReadOnly = True
+        Me.cbAdd.Width = 25
+        '
+        'IDNumber
+        '
+        Me.IDNumber.HeaderText = "ID Number"
+        Me.IDNumber.Name = "IDNumber"
+        Me.IDNumber.ReadOnly = True
+        '
+        'FullName
+        '
+        Me.FullName.HeaderText = "Name"
+        Me.FullName.Name = "FullName"
+        Me.FullName.ReadOnly = True
+        Me.FullName.Width = 200
+        '
+        'Billing_Address
+        '
+        Me.Billing_Address.HeaderText = "Billing Address"
+        Me.Billing_Address.Name = "Billing_Address"
+        Me.Billing_Address.ReadOnly = True
+        Me.Billing_Address.Width = 200
+        '
+        'Renewable
+        '
+        Me.Renewable.HeaderText = "Renewable"
+        Me.Renewable.Name = "Renewable"
+        Me.Renewable.ReadOnly = True
+        '
+        'ZeroRated
+        '
+        Me.ZeroRated.HeaderText = "ZeroRated"
+        Me.ZeroRated.Name = "ZeroRated"
+        Me.ZeroRated.ReadOnly = True
+        '
+        'IncomeTaxHoliday
+        '
+        Me.IncomeTaxHoliday.HeaderText = "IncomeTaxHoliday"
+        Me.IncomeTaxHoliday.Name = "IncomeTaxHoliday"
+        Me.IncomeTaxHoliday.ReadOnly = True
+        '
+        'FacilityType
+        '
+        Me.FacilityType.HeaderText = "FacilityType"
+        Me.FacilityType.Name = "FacilityType"
+        Me.FacilityType.ReadOnly = True
+        '
+        'ColRegion
+        '
+        Me.ColRegion.HeaderText = "Region"
+        Me.ColRegion.Name = "ColRegion"
+        Me.ColRegion.ReadOnly = True
+        '
+        'MembershipType
+        '
+        Me.MembershipType.HeaderText = "Membership Type"
+        Me.MembershipType.Name = "MembershipType"
+        Me.MembershipType.ReadOnly = True
+        Me.MembershipType.Width = 120
+        '
         'Panel1
         '
+        Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Panel1.Controls.Add(Me.cb_SelectAll)
         Me.Panel1.Controls.Add(Me.btnSave)
         Me.Panel1.Controls.Add(Me.btnCancel)
@@ -162,74 +236,11 @@ Partial Class frmBillParticiopantsImportFromCRSSDB
         Me.btnCancel.Text = "&Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
-        'MembershipType
-        '
-        Me.MembershipType.HeaderText = "Membership Type"
-        Me.MembershipType.Name = "MembershipType"
-        Me.MembershipType.ReadOnly = True
-        Me.MembershipType.Width = 120
-        '
-        'ColRegion
-        '
-        Me.ColRegion.HeaderText = "Region"
-        Me.ColRegion.Name = "ColRegion"
-        Me.ColRegion.ReadOnly = True
-        '
-        'FacilityType
-        '
-        Me.FacilityType.HeaderText = "FacilityType"
-        Me.FacilityType.Name = "FacilityType"
-        Me.FacilityType.ReadOnly = True
-        '
-        'IncomeTaxHoliday
-        '
-        Me.IncomeTaxHoliday.HeaderText = "IncomeTaxHoliday"
-        Me.IncomeTaxHoliday.Name = "IncomeTaxHoliday"
-        Me.IncomeTaxHoliday.ReadOnly = True
-        '
-        'ZeroRated
-        '
-        Me.ZeroRated.HeaderText = "ZeroRated"
-        Me.ZeroRated.Name = "ZeroRated"
-        Me.ZeroRated.ReadOnly = True
-        '
-        'Renewable
-        '
-        Me.Renewable.HeaderText = "Renewable"
-        Me.Renewable.Name = "Renewable"
-        Me.Renewable.ReadOnly = True
-        '
-        'Billing_Address
-        '
-        Me.Billing_Address.HeaderText = "Billing Address"
-        Me.Billing_Address.Name = "Billing_Address"
-        Me.Billing_Address.ReadOnly = True
-        Me.Billing_Address.Width = 200
-        '
-        'FullName
-        '
-        Me.FullName.HeaderText = "Name"
-        Me.FullName.Name = "FullName"
-        Me.FullName.ReadOnly = True
-        Me.FullName.Width = 200
-        '
-        'IDNumber
-        '
-        Me.IDNumber.HeaderText = "ID Number"
-        Me.IDNumber.Name = "IDNumber"
-        Me.IDNumber.ReadOnly = True
-        '
-        'cbAdd
-        '
-        Me.cbAdd.HeaderText = ""
-        Me.cbAdd.Name = "cbAdd"
-        Me.cbAdd.ReadOnly = True
-        Me.cbAdd.Width = 25
-        '
         'frmBillParticiopantsImportFromCRSSDB
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1104, 628)
         Me.Controls.Add(Me.TC_Import)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

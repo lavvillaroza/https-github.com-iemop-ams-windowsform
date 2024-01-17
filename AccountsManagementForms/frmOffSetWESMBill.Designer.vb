@@ -84,16 +84,16 @@ Partial Class frmOffSetWESMBill
         Me.ddlSettlementRun.FormattingEnabled = True
         Me.ddlSettlementRun.Location = New System.Drawing.Point(503, 21)
         Me.ddlSettlementRun.Name = "ddlSettlementRun"
-        Me.ddlSettlementRun.Size = New System.Drawing.Size(119, 20)
+        Me.ddlSettlementRun.Size = New System.Drawing.Size(119, 22)
         Me.ddlSettlementRun.TabIndex = 12
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(440, 23)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(57, 14)
+        Me.Label5.Size = New System.Drawing.Size(55, 14)
         Me.Label5.TabIndex = 11
         Me.Label5.Text = "STL Run:"
         '
@@ -111,11 +111,11 @@ Partial Class frmOffSetWESMBill
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(7, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(78, 14)
+        Me.Label4.Size = New System.Drawing.Size(79, 14)
         Me.Label4.TabIndex = 22
         Me.Label4.Text = "Charge Type:"
         '
@@ -124,7 +124,7 @@ Partial Class frmOffSetWESMBill
         Me.rbMF.AutoSize = True
         Me.rbMF.Location = New System.Drawing.Point(93, 27)
         Me.rbMF.Name = "rbMF"
-        Me.rbMF.Size = New System.Drawing.Size(85, 16)
+        Me.rbMF.Size = New System.Drawing.Size(84, 18)
         Me.rbMF.TabIndex = 8
         Me.rbMF.TabStop = True
         Me.rbMF.Text = "Market Fees"
@@ -135,7 +135,7 @@ Partial Class frmOffSetWESMBill
         Me.rbEnergy.AutoSize = True
         Me.rbEnergy.Location = New System.Drawing.Point(15, 27)
         Me.rbEnergy.Name = "rbEnergy"
-        Me.rbEnergy.Size = New System.Drawing.Size(58, 16)
+        Me.rbEnergy.Size = New System.Drawing.Size(59, 18)
         Me.rbEnergy.TabIndex = 7
         Me.rbEnergy.TabStop = True
         Me.rbEnergy.Text = "Energy"
@@ -143,6 +143,7 @@ Partial Class frmOffSetWESMBill
         '
         'btnRefresh
         '
+        Me.btnRefresh.BackColor = System.Drawing.Color.White
         Me.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -155,10 +156,11 @@ Partial Class frmOffSetWESMBill
         Me.btnRefresh.TabIndex = 8
         Me.btnRefresh.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.ToolTip1.SetToolTip(Me.btnRefresh, "Refresh")
-        Me.btnRefresh.UseVisualStyleBackColor = True
+        Me.btnRefresh.UseVisualStyleBackColor = False
         '
         'btnLoad
         '
+        Me.btnLoad.BackColor = System.Drawing.Color.White
         Me.btnLoad.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnLoad.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnLoad.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -170,10 +172,11 @@ Partial Class frmOffSetWESMBill
         Me.btnLoad.Size = New System.Drawing.Size(35, 30)
         Me.btnLoad.TabIndex = 7
         Me.ToolTip1.SetToolTip(Me.btnLoad, "Search")
-        Me.btnLoad.UseVisualStyleBackColor = True
+        Me.btnLoad.UseVisualStyleBackColor = False
         '
         'btnGenerate
         '
+        Me.btnGenerate.BackColor = System.Drawing.Color.White
         Me.btnGenerate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnGenerate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnGenerate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -185,7 +188,7 @@ Partial Class frmOffSetWESMBill
         Me.btnGenerate.Size = New System.Drawing.Size(35, 30)
         Me.btnGenerate.TabIndex = 5
         Me.ToolTip1.SetToolTip(Me.btnGenerate, "Offset Balance")
-        Me.btnGenerate.UseVisualStyleBackColor = True
+        Me.btnGenerate.UseVisualStyleBackColor = False
         '
         'ddlDueDate
         '
@@ -194,16 +197,16 @@ Partial Class frmOffSetWESMBill
         Me.ddlDueDate.FormattingEnabled = True
         Me.ddlDueDate.Location = New System.Drawing.Point(309, 45)
         Me.ddlDueDate.Name = "ddlDueDate"
-        Me.ddlDueDate.Size = New System.Drawing.Size(119, 20)
+        Me.ddlDueDate.Size = New System.Drawing.Size(119, 22)
         Me.ddlDueDate.TabIndex = 3
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(244, 47)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(59, 14)
+        Me.Label2.Size = New System.Drawing.Size(58, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Due Date:"
         '
@@ -214,13 +217,13 @@ Partial Class frmOffSetWESMBill
         Me.ddlBillingPeriod.FormattingEnabled = True
         Me.ddlBillingPeriod.Location = New System.Drawing.Point(309, 21)
         Me.ddlBillingPeriod.Name = "ddlBillingPeriod"
-        Me.ddlBillingPeriod.Size = New System.Drawing.Size(119, 20)
+        Me.ddlBillingPeriod.Size = New System.Drawing.Size(119, 22)
         Me.ddlBillingPeriod.TabIndex = 1
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(221, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(82, 14)
@@ -243,11 +246,11 @@ Partial Class frmOffSetWESMBill
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(19, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(165, 14)
+        Me.Label3.Size = New System.Drawing.Size(169, 14)
         Me.Label3.TabIndex = 23
         Me.Label3.Text = "Final Statement for Offsetting"
         '
@@ -314,11 +317,12 @@ Partial Class frmOffSetWESMBill
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -327,18 +331,18 @@ Partial Class frmOffSetWESMBill
         Me.btnClose.Size = New System.Drawing.Size(139, 39)
         Me.btnClose.TabIndex = 6
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'frmOffSetWESMBill
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(952, 534)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnClose)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmOffSetWESMBill"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

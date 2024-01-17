@@ -33,7 +33,7 @@ Partial Class frmImportWESMBillSalesAndPurchased
         '
         Me.GroupBox1.Controls.Add(Me.txtDirectory)
         Me.GroupBox1.Controls.Add(Me.btnOpenFile)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 11)
         Me.GroupBox1.Name = "GroupBox1"
@@ -48,7 +48,7 @@ Partial Class frmImportWESMBillSalesAndPurchased
         Me.txtDirectory.Location = New System.Drawing.Point(6, 22)
         Me.txtDirectory.Name = "txtDirectory"
         Me.txtDirectory.ReadOnly = True
-        Me.txtDirectory.Size = New System.Drawing.Size(373, 21)
+        Me.txtDirectory.Size = New System.Drawing.Size(373, 20)
         Me.txtDirectory.TabIndex = 2
         '
         'btnOpenFile
@@ -82,13 +82,13 @@ Partial Class frmImportWESMBillSalesAndPurchased
         '
         'frmImportWESMBillSalesAndPurchased
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(453, 123)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnImport)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False

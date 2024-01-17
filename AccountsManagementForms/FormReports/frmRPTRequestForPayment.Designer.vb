@@ -23,11 +23,11 @@ Partial Class frmRPTRequestForPayment
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRPTRequestForPayment))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -96,30 +96,30 @@ Partial Class frmRPTRequestForPayment
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(6, 45)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(25, 15)
+        Me.Label2.Size = New System.Drawing.Size(23, 15)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "To:"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(6, 70)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(41, 15)
+        Me.Label3.Size = New System.Drawing.Size(39, 15)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "From:"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(640, 43)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(127, 15)
+        Me.Label4.Size = New System.Drawing.Size(125, 15)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "Purpose of Payment:"
         '
@@ -153,11 +153,12 @@ Partial Class frmRPTRequestForPayment
         '
         'cmd_editTo
         '
+        Me.cmd_editTo.BackColor = System.Drawing.Color.White
         Me.cmd_editTo.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_editTo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_editTo.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_editTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_editTo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_editTo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_editTo.Image = CType(resources.GetObject("cmd_editTo.Image"), System.Drawing.Image)
         Me.cmd_editTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_editTo.Location = New System.Drawing.Point(323, 35)
@@ -165,15 +166,16 @@ Partial Class frmRPTRequestForPayment
         Me.cmd_editTo.Size = New System.Drawing.Size(80, 30)
         Me.cmd_editTo.TabIndex = 9
         Me.cmd_editTo.Text = "Edit"
-        Me.cmd_editTo.UseVisualStyleBackColor = True
+        Me.cmd_editTo.UseVisualStyleBackColor = False
         '
         'cmd_editFrom
         '
+        Me.cmd_editFrom.BackColor = System.Drawing.Color.White
         Me.cmd_editFrom.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_editFrom.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_editFrom.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_editFrom.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_editFrom.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_editFrom.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_editFrom.Image = CType(resources.GetObject("cmd_editFrom.Image"), System.Drawing.Image)
         Me.cmd_editFrom.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_editFrom.Location = New System.Drawing.Point(323, 68)
@@ -181,15 +183,16 @@ Partial Class frmRPTRequestForPayment
         Me.cmd_editFrom.Size = New System.Drawing.Size(80, 30)
         Me.cmd_editFrom.TabIndex = 10
         Me.cmd_editFrom.Text = "Edit"
-        Me.cmd_editFrom.UseVisualStyleBackColor = True
+        Me.cmd_editFrom.UseVisualStyleBackColor = False
         '
         'cmd_editPurpose
         '
+        Me.cmd_editPurpose.BackColor = System.Drawing.Color.White
         Me.cmd_editPurpose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_editPurpose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_editPurpose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_editPurpose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_editPurpose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_editPurpose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_editPurpose.Image = CType(resources.GetObject("cmd_editPurpose.Image"), System.Drawing.Image)
         Me.cmd_editPurpose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_editPurpose.Location = New System.Drawing.Point(871, 95)
@@ -197,14 +200,14 @@ Partial Class frmRPTRequestForPayment
         Me.cmd_editPurpose.Size = New System.Drawing.Size(80, 30)
         Me.cmd_editPurpose.TabIndex = 11
         Me.cmd_editPurpose.Text = "Edit"
-        Me.cmd_editPurpose.UseVisualStyleBackColor = True
+        Me.cmd_editPurpose.UseVisualStyleBackColor = False
         '
         'gbox_PaymentDetails
         '
         Me.gbox_PaymentDetails.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbox_PaymentDetails.Controls.Add(Me.dgv_PaymentDetails)
-        Me.gbox_PaymentDetails.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbox_PaymentDetails.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbox_PaymentDetails.ForeColor = System.Drawing.Color.Black
         Me.gbox_PaymentDetails.Location = New System.Drawing.Point(12, 164)
         Me.gbox_PaymentDetails.Name = "gbox_PaymentDetails"
@@ -217,22 +220,22 @@ Partial Class frmRPTRequestForPayment
         Me.dgv_PaymentDetails.AllowUserToAddRows = False
         Me.dgv_PaymentDetails.AllowUserToDeleteRows = False
         Me.dgv_PaymentDetails.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_PaymentDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_PaymentDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv_PaymentDetails.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_PaymentDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         Me.dgv_PaymentDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_PaymentDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.pPayee, Me.pIDNumber, Me.pBankBranch, Me.pAccountNo, Me.pPaymentType, Me.pAmount, Me.pParticulars})
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_PaymentDetails.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_PaymentDetails.DefaultCellStyle = DataGridViewCellStyle8
         Me.dgv_PaymentDetails.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dgv_PaymentDetails.Location = New System.Drawing.Point(3, 16)
         Me.dgv_PaymentDetails.Name = "dgv_PaymentDetails"
@@ -244,47 +247,47 @@ Partial Class frmRPTRequestForPayment
         '
         Me.pPayee.HeaderText = "Payee"
         Me.pPayee.Name = "pPayee"
-        Me.pPayee.Width = 61
+        Me.pPayee.Width = 62
         '
         'pIDNumber
         '
         Me.pIDNumber.HeaderText = "IDNumber"
         Me.pIDNumber.Name = "pIDNumber"
-        Me.pIDNumber.Width = 80
+        Me.pIDNumber.Width = 78
         '
         'pBankBranch
         '
         Me.pBankBranch.HeaderText = "Bank/Branch"
         Me.pBankBranch.Name = "pBankBranch"
-        Me.pBankBranch.Width = 93
+        Me.pBankBranch.Width = 94
         '
         'pAccountNo
         '
         Me.pAccountNo.HeaderText = "AccountNo"
         Me.pAccountNo.Name = "pAccountNo"
-        Me.pAccountNo.Width = 84
+        Me.pAccountNo.Width = 86
         '
         'pPaymentType
         '
         Me.pPaymentType.HeaderText = "PaymentType"
         Me.pPaymentType.Name = "pPaymentType"
-        Me.pPaymentType.Width = 98
+        Me.pPaymentType.Width = 96
         '
         'pAmount
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.Format = "n2"
-        DataGridViewCellStyle2.NullValue = "0.00"
-        Me.pAmount.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle7.Format = "n2"
+        DataGridViewCellStyle7.NullValue = "0.00"
+        Me.pAmount.DefaultCellStyle = DataGridViewCellStyle7
         Me.pAmount.HeaderText = "Amount"
         Me.pAmount.Name = "pAmount"
-        Me.pAmount.Width = 67
+        Me.pAmount.Width = 69
         '
         'pParticulars
         '
         Me.pParticulars.HeaderText = "Particulars"
         Me.pParticulars.Name = "pParticulars"
-        Me.pParticulars.Width = 82
+        Me.pParticulars.Width = 83
         '
         'gbox_CollectionDetails
         '
@@ -292,7 +295,7 @@ Partial Class frmRPTRequestForPayment
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbox_CollectionDetails.Controls.Add(Me.Label19)
         Me.gbox_CollectionDetails.Controls.Add(Me.dgv_CollectionDetails)
-        Me.gbox_CollectionDetails.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbox_CollectionDetails.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbox_CollectionDetails.ForeColor = System.Drawing.Color.Black
         Me.gbox_CollectionDetails.Location = New System.Drawing.Point(9, 447)
         Me.gbox_CollectionDetails.Name = "gbox_CollectionDetails"
@@ -303,11 +306,11 @@ Partial Class frmRPTRequestForPayment
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label19.Location = New System.Drawing.Point(4, 0)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(303, 14)
+        Me.Label19.Size = New System.Drawing.Size(309, 14)
         Me.Label19.TabIndex = 34
         Me.Label19.Text = "II. Sources of Funds (Collections/NSS/Security Deposit):"
         '
@@ -316,8 +319,8 @@ Partial Class frmRPTRequestForPayment
         Me.dgv_CollectionDetails.AllowUserToAddRows = False
         Me.dgv_CollectionDetails.AllowUserToDeleteRows = False
         Me.dgv_CollectionDetails.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_CollectionDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_CollectionDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
         Me.dgv_CollectionDetails.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -337,14 +340,14 @@ Partial Class frmRPTRequestForPayment
         Me.cParticipant.HeaderText = "Payor"
         Me.cParticipant.Name = "cParticipant"
         Me.cParticipant.ReadOnly = True
-        Me.cParticipant.Width = 59
+        Me.cParticipant.Width = 60
         '
         'cIDNumber
         '
         Me.cIDNumber.HeaderText = "IDNumber"
         Me.cIDNumber.Name = "cIDNumber"
         Me.cIDNumber.ReadOnly = True
-        Me.cIDNumber.Width = 80
+        Me.cIDNumber.Width = 78
         '
         'cDateOfDeposit
         '
@@ -355,21 +358,21 @@ Partial Class frmRPTRequestForPayment
         '
         'cAmount
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "n2"
-        DataGridViewCellStyle5.NullValue = "0.00"
-        Me.cAmount.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle10.Format = "n2"
+        DataGridViewCellStyle10.NullValue = "0.00"
+        Me.cAmount.DefaultCellStyle = DataGridViewCellStyle10
         Me.cAmount.HeaderText = "Amount"
         Me.cAmount.Name = "cAmount"
         Me.cAmount.ReadOnly = True
-        Me.cAmount.Width = 67
+        Me.cAmount.Width = 69
         '
         'cParticulars
         '
         Me.cParticulars.HeaderText = "Particulars"
         Me.cParticulars.Name = "cParticulars"
         Me.cParticulars.ReadOnly = True
-        Me.cParticulars.Width = 82
+        Me.cParticulars.Width = 83
         '
         'gbox_PaymentTotals
         '
@@ -424,20 +427,20 @@ Partial Class frmRPTRequestForPayment
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.Location = New System.Drawing.Point(611, 58)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(125, 15)
+        Me.Label22.Size = New System.Drawing.Size(163, 15)
         Me.Label22.TabIndex = 27
         Me.Label22.Text = "Total Collection Applied:"
         '
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(611, 11)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(110, 15)
+        Me.Label13.Size = New System.Drawing.Size(145, 15)
         Me.Label13.TabIndex = 37
         Me.Label13.Text = "Total Held Collection:"
         '
@@ -456,10 +459,10 @@ Partial Class frmRPTRequestForPayment
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(611, 34)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(81, 15)
+        Me.Label12.Size = New System.Drawing.Size(106, 15)
         Me.Label12.TabIndex = 35
         Me.Label12.Text = "Total To PEMC:"
         '
@@ -478,10 +481,10 @@ Partial Class frmRPTRequestForPayment
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(6, 56)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(52, 15)
+        Me.Label16.Size = New System.Drawing.Size(67, 15)
         Me.Label16.TabIndex = 33
         Me.Label16.Text = "Total MF:"
         '
@@ -500,10 +503,10 @@ Partial Class frmRPTRequestForPayment
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(284, 56)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(132, 15)
+        Me.Label15.Size = New System.Drawing.Size(174, 15)
         Me.Label15.TabIndex = 31
         Me.Label15.Text = "Prudential Replenishment"
         '
@@ -522,10 +525,10 @@ Partial Class frmRPTRequestForPayment
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(284, 36)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(71, 15)
+        Me.Label14.Size = New System.Drawing.Size(91, 15)
         Me.Label14.TabIndex = 29
         Me.Label14.Text = "NSS Applied:"
         '
@@ -544,10 +547,10 @@ Partial Class frmRPTRequestForPayment
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(284, 13)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(79, 15)
+        Me.Label10.Size = New System.Drawing.Size(103, 15)
         Me.Label10.TabIndex = 27
         Me.Label10.Text = "Total Deferred:"
         '
@@ -566,10 +569,10 @@ Partial Class frmRPTRequestForPayment
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(6, 34)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(57, 15)
+        Me.Label9.Size = New System.Drawing.Size(73, 15)
         Me.Label9.TabIndex = 25
         Me.Label9.Text = "Total LBC:"
         '
@@ -588,20 +591,20 @@ Partial Class frmRPTRequestForPayment
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(6, 11)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(64, 15)
+        Me.Label8.Size = New System.Drawing.Size(84, 15)
         Me.Label8.TabIndex = 23
         Me.Label8.Text = "Total RTGS:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(742, 17)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(90, 15)
+        Me.Label6.Size = New System.Drawing.Size(87, 15)
         Me.Label6.TabIndex = 14
         Me.Label6.Text = "Reference No:"
         '
@@ -618,10 +621,10 @@ Partial Class frmRPTRequestForPayment
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(6, 95)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(106, 15)
+        Me.Label7.Size = New System.Drawing.Size(103, 15)
         Me.Label7.TabIndex = 18
         Me.Label7.Text = "Date of Payment:"
         '
@@ -640,10 +643,10 @@ Partial Class frmRPTRequestForPayment
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(6, 121)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(93, 15)
+        Me.Label5.Size = New System.Drawing.Size(90, 15)
         Me.Label5.TabIndex = 20
         Me.Label5.Text = "Total Payment:"
         '
@@ -660,20 +663,21 @@ Partial Class frmRPTRequestForPayment
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(417, 43)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(38, 15)
+        Me.Label11.Size = New System.Drawing.Size(36, 15)
         Me.Label11.TabIndex = 23
         Me.Label11.Text = "Note:"
         '
         'cmd_EditNote
         '
+        Me.cmd_EditNote.BackColor = System.Drawing.Color.White
         Me.cmd_EditNote.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_EditNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_EditNote.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_EditNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_EditNote.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_EditNote.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_EditNote.Image = CType(resources.GetObject("cmd_EditNote.Image"), System.Drawing.Image)
         Me.cmd_EditNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_EditNote.Location = New System.Drawing.Point(551, 95)
@@ -681,7 +685,7 @@ Partial Class frmRPTRequestForPayment
         Me.cmd_EditNote.Size = New System.Drawing.Size(80, 30)
         Me.cmd_EditNote.TabIndex = 25
         Me.cmd_EditNote.Text = "Edit"
-        Me.cmd_EditNote.UseVisualStyleBackColor = True
+        Me.cmd_EditNote.UseVisualStyleBackColor = False
         '
         'cbo_AllocationDate
         '
@@ -703,11 +707,12 @@ Partial Class frmRPTRequestForPayment
         '
         'cmd_GenerateReport
         '
+        Me.cmd_GenerateReport.BackColor = System.Drawing.Color.White
         Me.cmd_GenerateReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenerateReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenerateReport.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_GenerateReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_GenerateReport.Location = New System.Drawing.Point(817, 639)
@@ -715,26 +720,26 @@ Partial Class frmRPTRequestForPayment
         Me.cmd_GenerateReport.Size = New System.Drawing.Size(141, 39)
         Me.cmd_GenerateReport.TabIndex = 16
         Me.cmd_GenerateReport.Text = "      Generate Report"
-        Me.cmd_GenerateReport.UseVisualStyleBackColor = True
+        Me.cmd_GenerateReport.UseVisualStyleBackColor = False
         '
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(6, 22)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(92, 14)
+        Me.Label17.Size = New System.Drawing.Size(91, 14)
         Me.Label17.TabIndex = 32
         Me.Label17.Text = "Allocation Date:"
         '
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label18.Location = New System.Drawing.Point(18, 166)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(119, 14)
+        Me.Label18.Size = New System.Drawing.Size(121, 14)
         Me.Label18.TabIndex = 33
         Me.Label18.Text = "I. Details of Payment:"
         '
@@ -742,7 +747,7 @@ Partial Class frmRPTRequestForPayment
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(964, 691)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.gbox_PaymentTotals)
@@ -771,6 +776,7 @@ Partial Class frmRPTRequestForPayment
         Me.Controls.Add(Me.Label2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(975, 680)
         Me.Name = "frmRPTRequestForPayment"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

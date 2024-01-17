@@ -103,9 +103,9 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.lbl_asterisk4.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_asterisk4.AutoSize = True
-        Me.lbl_asterisk4.Location = New System.Drawing.Point(280, 127)
+        Me.lbl_asterisk4.Location = New System.Drawing.Point(280, 126)
         Me.lbl_asterisk4.Name = "lbl_asterisk4"
-        Me.lbl_asterisk4.Size = New System.Drawing.Size(12, 14)
+        Me.lbl_asterisk4.Size = New System.Drawing.Size(12, 15)
         Me.lbl_asterisk4.TabIndex = 14
         Me.lbl_asterisk4.Text = "*"
         Me.ToolTip1.SetToolTip(Me.lbl_asterisk4, "Required Field")
@@ -114,9 +114,9 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.lbl_asterisk3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_asterisk3.AutoSize = True
-        Me.lbl_asterisk3.Location = New System.Drawing.Point(280, 88)
+        Me.lbl_asterisk3.Location = New System.Drawing.Point(280, 87)
         Me.lbl_asterisk3.Name = "lbl_asterisk3"
-        Me.lbl_asterisk3.Size = New System.Drawing.Size(12, 14)
+        Me.lbl_asterisk3.Size = New System.Drawing.Size(12, 15)
         Me.lbl_asterisk3.TabIndex = 13
         Me.lbl_asterisk3.Text = "*"
         Me.ToolTip1.SetToolTip(Me.lbl_asterisk3, "Required Field")
@@ -125,9 +125,9 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.lbl_asterisk2.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_asterisk2.AutoSize = True
-        Me.lbl_asterisk2.Location = New System.Drawing.Point(280, 50)
+        Me.lbl_asterisk2.Location = New System.Drawing.Point(280, 49)
         Me.lbl_asterisk2.Name = "lbl_asterisk2"
-        Me.lbl_asterisk2.Size = New System.Drawing.Size(12, 14)
+        Me.lbl_asterisk2.Size = New System.Drawing.Size(12, 15)
         Me.lbl_asterisk2.TabIndex = 12
         Me.lbl_asterisk2.Text = "*"
         Me.ToolTip1.SetToolTip(Me.lbl_asterisk2, "Required Field")
@@ -135,7 +135,7 @@ Partial Class frmWBSParentIDChangeMgt
         'txtbox_NewParentID
         '
         Me.txtbox_NewParentID.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtbox_NewParentID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_NewParentID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_NewParentID.ForeColor = System.Drawing.Color.DimGray
         Me.txtbox_NewParentID.Location = New System.Drawing.Point(302, 85)
         Me.txtbox_NewParentID.Name = "txtbox_NewParentID"
@@ -146,11 +146,11 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(3, 12)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(82, 14)
+        Me.Label1.Size = New System.Drawing.Size(81, 14)
         Me.Label1.TabIndex = 10
         Me.Label1.Text = "Participant ID:"
         '
@@ -158,11 +158,11 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(3, 50)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(53, 14)
+        Me.Label2.Size = New System.Drawing.Size(51, 14)
         Me.Label2.TabIndex = 11
         Me.Label2.Text = "Child ID:"
         '
@@ -170,7 +170,7 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(3, 88)
         Me.Label3.Name = "Label3"
@@ -182,7 +182,7 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.Label4.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(3, 127)
         Me.Label4.Name = "Label4"
@@ -196,12 +196,12 @@ Partial Class frmWBSParentIDChangeMgt
         Me.cmb_ParentID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_ParentID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_ParentID.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_ParentID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_ParentID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_ParentID.ForeColor = System.Drawing.Color.Black
         Me.cmb_ParentID.FormattingEnabled = True
-        Me.cmb_ParentID.Location = New System.Drawing.Point(133, 9)
+        Me.cmb_ParentID.Location = New System.Drawing.Point(133, 8)
         Me.cmb_ParentID.Name = "cmb_ParentID"
-        Me.cmb_ParentID.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_ParentID.Size = New System.Drawing.Size(118, 22)
         Me.cmb_ParentID.TabIndex = 1
         '
         'cmb_ChildID
@@ -210,13 +210,13 @@ Partial Class frmWBSParentIDChangeMgt
         Me.cmb_ChildID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_ChildID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_ChildID.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_ChildID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_ChildID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_ChildID.ForeColor = System.Drawing.Color.Black
         Me.cmb_ChildID.FormattingEnabled = True
-        Me.cmb_ChildID.ItemHeight = 12
-        Me.cmb_ChildID.Location = New System.Drawing.Point(133, 47)
+        Me.cmb_ChildID.ItemHeight = 14
+        Me.cmb_ChildID.Location = New System.Drawing.Point(133, 46)
         Me.cmb_ChildID.Name = "cmb_ChildID"
-        Me.cmb_ChildID.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_ChildID.Size = New System.Drawing.Size(118, 22)
         Me.cmb_ChildID.TabIndex = 2
         '
         'cmb_NewParentID
@@ -225,19 +225,19 @@ Partial Class frmWBSParentIDChangeMgt
         Me.cmb_NewParentID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
         Me.cmb_NewParentID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_NewParentID.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cmb_NewParentID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmb_NewParentID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmb_NewParentID.ForeColor = System.Drawing.Color.Black
         Me.cmb_NewParentID.FormattingEnabled = True
-        Me.cmb_NewParentID.ItemHeight = 12
-        Me.cmb_NewParentID.Location = New System.Drawing.Point(133, 85)
+        Me.cmb_NewParentID.ItemHeight = 14
+        Me.cmb_NewParentID.Location = New System.Drawing.Point(133, 84)
         Me.cmb_NewParentID.Name = "cmb_NewParentID"
-        Me.cmb_NewParentID.Size = New System.Drawing.Size(118, 20)
+        Me.cmb_NewParentID.Size = New System.Drawing.Size(118, 22)
         Me.cmb_NewParentID.TabIndex = 3
         '
         'txtbox_ParentID
         '
         Me.txtbox_ParentID.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtbox_ParentID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_ParentID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_ParentID.ForeColor = System.Drawing.Color.DimGray
         Me.txtbox_ParentID.Location = New System.Drawing.Point(302, 9)
         Me.txtbox_ParentID.Name = "txtbox_ParentID"
@@ -247,7 +247,7 @@ Partial Class frmWBSParentIDChangeMgt
         'txtbox_ChildID
         '
         Me.txtbox_ChildID.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtbox_ChildID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_ChildID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_ChildID.ForeColor = System.Drawing.Color.DimGray
         Me.txtbox_ChildID.Location = New System.Drawing.Point(302, 47)
         Me.txtbox_ChildID.Name = "txtbox_ChildID"
@@ -258,9 +258,9 @@ Partial Class frmWBSParentIDChangeMgt
         '
         Me.lbl_asterisk1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_asterisk1.AutoSize = True
-        Me.lbl_asterisk1.Location = New System.Drawing.Point(280, 12)
+        Me.lbl_asterisk1.Location = New System.Drawing.Point(280, 11)
         Me.lbl_asterisk1.Name = "lbl_asterisk1"
-        Me.lbl_asterisk1.Size = New System.Drawing.Size(12, 14)
+        Me.lbl_asterisk1.Size = New System.Drawing.Size(12, 15)
         Me.lbl_asterisk1.TabIndex = 11
         Me.lbl_asterisk1.Text = "*"
         Me.ToolTip1.SetToolTip(Me.lbl_asterisk1, "Required Field")
@@ -282,7 +282,7 @@ Partial Class frmWBSParentIDChangeMgt
         Me.rd_Inactive.AutoSize = True
         Me.rd_Inactive.Location = New System.Drawing.Point(70, 8)
         Me.rd_Inactive.Name = "rd_Inactive"
-        Me.rd_Inactive.Size = New System.Drawing.Size(68, 18)
+        Me.rd_Inactive.Size = New System.Drawing.Size(66, 19)
         Me.rd_Inactive.TabIndex = 3
         Me.rd_Inactive.TabStop = True
         Me.rd_Inactive.Text = "InActive"
@@ -293,7 +293,7 @@ Partial Class frmWBSParentIDChangeMgt
         Me.rd_active.AutoSize = True
         Me.rd_active.Location = New System.Drawing.Point(6, 8)
         Me.rd_active.Name = "rd_active"
-        Me.rd_active.Size = New System.Drawing.Size(58, 18)
+        Me.rd_active.Size = New System.Drawing.Size(56, 19)
         Me.rd_active.TabIndex = 2
         Me.rd_active.TabStop = True
         Me.rd_active.Text = "Active"
@@ -307,7 +307,7 @@ Partial Class frmWBSParentIDChangeMgt
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -325,7 +325,7 @@ Partial Class frmWBSParentIDChangeMgt
         Me.btn_Save.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Save.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Save.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Save.ForeColor = System.Drawing.Color.Black
         Me.btn_Save.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btn_Save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -336,19 +336,19 @@ Partial Class frmWBSParentIDChangeMgt
         Me.btn_Save.Text = "Save"
         Me.btn_Save.UseVisualStyleBackColor = False
         '
-        'frmWESMBillSummaryParentIdChangeMgt
+        'frmWBSParentIDChangeMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(480, 234)
         Me.Controls.Add(Me.btn_Close)
         Me.Controls.Add(Me.btn_Save)
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        Me.Name = "frmWESMBillSummaryParentIdChangeMgt"
+        Me.Name = "frmWBSParentIDChangeMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WESM Bills - Change Parent ID Management"
         Me.TableLayoutPanel1.ResumeLayout(False)

@@ -50,7 +50,7 @@ Partial Class frmSPA
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -90,7 +90,7 @@ Partial Class frmSPA
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -109,7 +109,7 @@ Partial Class frmSPA
         Me.btn_View.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_View.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_View.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_View.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_View.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_View.ForeColor = System.Drawing.Color.Black
         Me.btn_View.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.btn_View.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -128,7 +128,7 @@ Partial Class frmSPA
         Me.btn_Add.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Add.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Add.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Add.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Add.ForeColor = System.Drawing.Color.Black
         Me.btn_Add.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btn_Add.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -173,7 +173,7 @@ Partial Class frmSPA
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(844, 369)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

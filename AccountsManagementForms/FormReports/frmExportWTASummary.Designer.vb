@@ -32,6 +32,7 @@ Partial Class frmExportWTASummary
         '
         'ddlDueDate
         '
+        Me.ddlDueDate.BackColor = System.Drawing.Color.DimGray
         Me.ddlDueDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ddlDueDate.FormattingEnabled = True
         Me.ddlDueDate.Location = New System.Drawing.Point(7, 21)
@@ -66,6 +67,7 @@ Partial Class frmExportWTASummary
         'cmd_ExportInExcel
         '
         Me.cmd_ExportInExcel.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.cmd_ExportInExcel.BackColor = System.Drawing.Color.White
         Me.cmd_ExportInExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_ExportInExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_ExportInExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -78,11 +80,12 @@ Partial Class frmExportWTASummary
         Me.cmd_ExportInExcel.Size = New System.Drawing.Size(232, 37)
         Me.cmd_ExportInExcel.TabIndex = 11
         Me.cmd_ExportInExcel.Text = "Export in Excel"
-        Me.cmd_ExportInExcel.UseVisualStyleBackColor = True
+        Me.cmd_ExportInExcel.UseVisualStyleBackColor = False
         '
         'cmd_Close
         '
         Me.cmd_Close.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.cmd_Close.BackColor = System.Drawing.Color.White
         Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -95,18 +98,19 @@ Partial Class frmExportWTASummary
         Me.cmd_Close.Size = New System.Drawing.Size(232, 37)
         Me.cmd_Close.TabIndex = 9
         Me.cmd_Close.Text = "Close"
-        Me.cmd_Close.UseVisualStyleBackColor = True
+        Me.cmd_Close.UseVisualStyleBackColor = False
         '
-        'frmWESMTransAllocSummary
+        'frmExportWTASummary
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(277, 166)
         Me.Controls.Add(Me.grpSearch)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "frmWESMTransAllocSummary"
+        Me.Name = "frmExportWTASummary"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WESM Transaction Allocation Summary"
         Me.grpSearch.ResumeLayout(False)

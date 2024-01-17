@@ -23,8 +23,9 @@ Partial Class frmBillParticipants
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btn_Export = New System.Windows.Forms.Button()
         Me.btn_Import = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.btnSearch = New System.Windows.Forms.Button()
@@ -39,7 +40,6 @@ Partial Class frmBillParticipants
         Me.colFullName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btn_Export = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         CType(Me.DGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -62,6 +62,22 @@ Partial Class frmBillParticipants
         Me.GroupBox2.Size = New System.Drawing.Size(628, 58)
         Me.GroupBox2.TabIndex = 35
         Me.GroupBox2.TabStop = False
+        '
+        'btn_Export
+        '
+        Me.btn_Export.BackColor = System.Drawing.Color.White
+        Me.btn_Export.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.btn_Export.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Export.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Export.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Export.Image = Global.AccountsManagementForms.My.Resources.Resources.DownloadIcon22x22
+        Me.btn_Export.Location = New System.Drawing.Point(435, 12)
+        Me.btn_Export.Name = "btn_Export"
+        Me.btn_Export.Size = New System.Drawing.Size(35, 30)
+        Me.btn_Export.TabIndex = 34
+        Me.ToolTip1.SetToolTip(Me.btn_Export, "Export Master List")
+        Me.btn_Export.UseVisualStyleBackColor = False
         '
         'btn_Import
         '
@@ -188,8 +204,8 @@ Partial Class frmBillParticipants
         Me.DGridView.AllowUserToDeleteRows = False
         Me.DGridView.AllowUserToResizeColumns = False
         Me.DGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -229,32 +245,18 @@ Partial Class frmBillParticipants
         Me.colStatus.Name = "colStatus"
         Me.colStatus.ReadOnly = True
         '
-        'btn_Export
-        '
-        Me.btn_Export.BackColor = System.Drawing.Color.White
-        Me.btn_Export.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.btn_Export.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btn_Export.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btn_Export.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btn_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Export.Image = Global.AccountsManagementForms.My.Resources.Resources.DownloadIcon22x22
-        Me.btn_Export.Location = New System.Drawing.Point(435, 12)
-        Me.btn_Export.Name = "btn_Export"
-        Me.btn_Export.Size = New System.Drawing.Size(35, 30)
-        Me.btn_Export.TabIndex = 34
-        Me.ToolTip1.SetToolTip(Me.btn_Export, "Export Master List")
-        Me.btn_Export.UseVisualStyleBackColor = False
-        '
         'frmBillParticipants
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(649, 571)
         Me.Controls.Add(Me.DGridView)
         Me.Controls.Add(Me.GroupBox2)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmBillParticipants"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = " Participants Information"

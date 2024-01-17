@@ -179,6 +179,7 @@ Partial Class frmSearchTransDate
         'btnCancel
         '
         Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCancel.BackColor = System.Drawing.Color.White
         Me.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -192,11 +193,12 @@ Partial Class frmSearchTransDate
         Me.btnCancel.Size = New System.Drawing.Size(90, 39)
         Me.btnCancel.TabIndex = 7
         Me.btnCancel.Text = "   &Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = True
+        Me.btnCancel.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.BackColor = System.Drawing.Color.White
         Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -210,13 +212,13 @@ Partial Class frmSearchTransDate
         Me.btnSearch.Size = New System.Drawing.Size(90, 39)
         Me.btnSearch.TabIndex = 6
         Me.btnSearch.Text = "   &Search"
-        Me.btnSearch.UseVisualStyleBackColor = True
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'frmSearchTransDate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(241, 148)
         Me.ControlBox = False
         Me.Controls.Add(Me.ddlMonth)

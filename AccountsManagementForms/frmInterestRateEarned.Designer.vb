@@ -155,16 +155,17 @@ Partial Class frmInterestRateEarned
         '
         Me.txtInterestRate.Location = New System.Drawing.Point(161, 59)
         Me.txtInterestRate.Name = "txtInterestRate"
-        Me.txtInterestRate.Size = New System.Drawing.Size(163, 21)
+        Me.txtInterestRate.Size = New System.Drawing.Size(163, 20)
         Me.txtInterestRate.TabIndex = 18
         '
         'btnFilterOnOff
         '
+        Me.btnFilterOnOff.BackColor = System.Drawing.Color.White
         Me.btnFilterOnOff.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnFilterOnOff.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnFilterOnOff.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnFilterOnOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFilterOnOff.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFilterOnOff.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnFilterOnOff.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.btnFilterOnOff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnFilterOnOff.Location = New System.Drawing.Point(761, 131)
@@ -172,15 +173,16 @@ Partial Class frmInterestRateEarned
         Me.btnFilterOnOff.Size = New System.Drawing.Size(35, 30)
         Me.btnFilterOnOff.TabIndex = 17
         Me.btnFilterOnOff.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnFilterOnOff.UseVisualStyleBackColor = True
+        Me.btnFilterOnOff.UseVisualStyleBackColor = False
         '
         'cmdDelete
         '
+        Me.cmdDelete.BackColor = System.Drawing.Color.White
         Me.cmdDelete.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmdDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdDelete.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdDelete.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdDelete.Image = CType(resources.GetObject("cmdDelete.Image"), System.Drawing.Image)
         Me.cmdDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdDelete.Location = New System.Drawing.Point(679, 131)
@@ -188,21 +190,21 @@ Partial Class frmInterestRateEarned
         Me.cmdDelete.Size = New System.Drawing.Size(35, 30)
         Me.cmdDelete.TabIndex = 14
         Me.cmdDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmdDelete.UseVisualStyleBackColor = True
+        Me.cmdDelete.UseVisualStyleBackColor = False
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(382, 12)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(60, 14)
+        Me.Label4.Size = New System.Drawing.Size(63, 14)
         Me.Label4.TabIndex = 13
         Me.Label4.Text = "Remarks :"
         '
         'rtbRemarks
         '
-        Me.rtbRemarks.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rtbRemarks.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rtbRemarks.Location = New System.Drawing.Point(380, 29)
         Me.rtbRemarks.MaxLength = 50
         Me.rtbRemarks.Name = "rtbRemarks"
@@ -212,11 +214,12 @@ Partial Class frmInterestRateEarned
         '
         'cmdCancel
         '
+        Me.cmdCancel.BackColor = System.Drawing.Color.White
         Me.cmdCancel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmdCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdCancel.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdCancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CancelIconRed22x22
         Me.cmdCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdCancel.Location = New System.Drawing.Point(720, 131)
@@ -224,11 +227,11 @@ Partial Class frmInterestRateEarned
         Me.cmdCancel.Size = New System.Drawing.Size(35, 30)
         Me.cmdCancel.TabIndex = 11
         Me.cmdCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmdCancel.UseVisualStyleBackColor = True
+        Me.cmdCancel.UseVisualStyleBackColor = False
         '
         'txtid
         '
-        Me.txtid.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtid.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtid.Location = New System.Drawing.Point(48, 94)
         Me.txtid.Name = "txtid"
         Me.txtid.Size = New System.Drawing.Size(32, 20)
@@ -237,11 +240,12 @@ Partial Class frmInterestRateEarned
         '
         'cmdSave
         '
+        Me.cmdSave.BackColor = System.Drawing.Color.White
         Me.cmdSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmdSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdSave.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.cmdSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdSave.Location = New System.Drawing.Point(638, 131)
@@ -249,15 +253,16 @@ Partial Class frmInterestRateEarned
         Me.cmdSave.Size = New System.Drawing.Size(35, 30)
         Me.cmdSave.TabIndex = 9
         Me.cmdSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmdSave.UseVisualStyleBackColor = True
+        Me.cmdSave.UseVisualStyleBackColor = False
         '
         'cmdNew
         '
+        Me.cmdNew.BackColor = System.Drawing.Color.White
         Me.cmdNew.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmdNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdNew.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdNew.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdNew.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdNew.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.cmdNew.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdNew.Location = New System.Drawing.Point(597, 131)
@@ -265,21 +270,21 @@ Partial Class frmInterestRateEarned
         Me.cmdNew.Size = New System.Drawing.Size(35, 30)
         Me.cmdNew.TabIndex = 8
         Me.cmdNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmdNew.UseVisualStyleBackColor = True
+        Me.cmdNew.UseVisualStyleBackColor = False
         '
         'cboStatus
         '
-        Me.cboStatus.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboStatus.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboStatus.FormattingEnabled = True
         Me.cboStatus.Location = New System.Drawing.Point(161, 96)
         Me.cboStatus.Name = "cboStatus"
-        Me.cboStatus.Size = New System.Drawing.Size(163, 20)
+        Me.cboStatus.Size = New System.Drawing.Size(163, 22)
         Me.cboStatus.TabIndex = 7
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(108, 98)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(48, 14)
@@ -289,17 +294,17 @@ Partial Class frmInterestRateEarned
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(56, 62)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(100, 14)
+        Me.Label2.Size = New System.Drawing.Size(104, 14)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Interest Amount :"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(51, 25)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(104, 14)
@@ -308,7 +313,7 @@ Partial Class frmInterestRateEarned
         '
         'transactionDate
         '
-        Me.transactionDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.transactionDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.transactionDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.transactionDate.Location = New System.Drawing.Point(161, 20)
         Me.transactionDate.Name = "transactionDate"
@@ -331,11 +336,12 @@ Partial Class frmInterestRateEarned
         '
         'cmdSearch
         '
+        Me.cmdSearch.BackColor = System.Drawing.Color.White
         Me.cmdSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmdSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdSearch.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.OkIcon22x22
         Me.cmdSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdSearch.Location = New System.Drawing.Point(291, 12)
@@ -343,7 +349,7 @@ Partial Class frmInterestRateEarned
         Me.cmdSearch.Size = New System.Drawing.Size(45, 39)
         Me.cmdSearch.TabIndex = 12
         Me.cmdSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cmdSearch.UseVisualStyleBackColor = True
+        Me.cmdSearch.UseVisualStyleBackColor = False
         '
         'Label7
         '
@@ -357,7 +363,7 @@ Partial Class frmInterestRateEarned
         '
         'cboSearch
         '
-        Me.cboSearch.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboSearch.FormattingEnabled = True
         Me.cboSearch.Location = New System.Drawing.Point(198, 13)
         Me.cboSearch.Name = "cboSearch"
@@ -366,20 +372,20 @@ Partial Class frmInterestRateEarned
         '
         'dtSearchTo
         '
-        Me.dtSearchTo.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtSearchTo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtSearchTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtSearchTo.Location = New System.Drawing.Point(107, 14)
         Me.dtSearchTo.Name = "dtSearchTo"
-        Me.dtSearchTo.Size = New System.Drawing.Size(82, 22)
+        Me.dtSearchTo.Size = New System.Drawing.Size(82, 21)
         Me.dtSearchTo.TabIndex = 4
         '
         'dtSearchFrom
         '
-        Me.dtSearchFrom.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtSearchFrom.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtSearchFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtSearchFrom.Location = New System.Drawing.Point(8, 13)
         Me.dtSearchFrom.Name = "dtSearchFrom"
-        Me.dtSearchFrom.Size = New System.Drawing.Size(81, 22)
+        Me.dtSearchFrom.Size = New System.Drawing.Size(81, 21)
         Me.dtSearchFrom.TabIndex = 3
         '
         'lblRecordCount
@@ -402,11 +408,11 @@ Partial Class frmInterestRateEarned
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label5.Location = New System.Drawing.Point(3, 11)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(50, 14)
+        Me.Label5.Size = New System.Drawing.Size(51, 14)
         Me.Label5.TabIndex = 17
         Me.Label5.Text = "Search :"
         '
@@ -428,7 +434,7 @@ Partial Class frmInterestRateEarned
         Me.btnFilterClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnFilterClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnFilterClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFilterClose.Font = New System.Drawing.Font("Helvetica Condensed", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFilterClose.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnFilterClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
         Me.btnFilterClose.Location = New System.Drawing.Point(320, 3)
         Me.btnFilterClose.Name = "btnFilterClose"
@@ -439,16 +445,16 @@ Partial Class frmInterestRateEarned
         '
         'frmInterestRateEarned
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(827, 564)
         Me.Controls.Add(Me.pnlFilter)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.lblRecordCount)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dgvIntRateEarned)
-        Me.Font = New System.Drawing.Font("Helvetica Condensed", 8.25!)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmInterestRateEarned"

@@ -58,7 +58,7 @@ Partial Class frmCheckNumber
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.dgv_History)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 135)
         Me.GroupBox1.Name = "GroupBox1"
@@ -70,17 +70,17 @@ Partial Class frmCheckNumber
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(34, 8)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(85, 14)
+        Me.Label1.Size = New System.Drawing.Size(86, 14)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Current Batch:"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(22, 41)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(97, 14)
@@ -90,37 +90,37 @@ Partial Class frmCheckNumber
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(28, 66)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(91, 14)
+        Me.Label3.Size = New System.Drawing.Size(92, 14)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Last Check No.:"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(306, 9)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(119, 14)
+        Me.Label4.Size = New System.Drawing.Size(123, 14)
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "Last Sequence Used:"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(294, 37)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(131, 14)
+        Me.Label5.Size = New System.Drawing.Size(133, 14)
         Me.Label5.TabIndex = 6
         Me.Label5.Text = "Total Checks Available:"
         '
         'txt_BatchNo
         '
         Me.txt_BatchNo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_BatchNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_BatchNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_BatchNo.Location = New System.Drawing.Point(125, 6)
         Me.txt_BatchNo.Name = "txt_BatchNo"
         Me.txt_BatchNo.ReadOnly = True
@@ -130,7 +130,7 @@ Partial Class frmCheckNumber
         'txt_InitCheckNo
         '
         Me.txt_InitCheckNo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_InitCheckNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_InitCheckNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_InitCheckNo.Location = New System.Drawing.Point(125, 35)
         Me.txt_InitCheckNo.Name = "txt_InitCheckNo"
         Me.txt_InitCheckNo.ReadOnly = True
@@ -140,7 +140,7 @@ Partial Class frmCheckNumber
         'txt_LastCheckNo
         '
         Me.txt_LastCheckNo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_LastCheckNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_LastCheckNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_LastCheckNo.Location = New System.Drawing.Point(125, 64)
         Me.txt_LastCheckNo.Name = "txt_LastCheckNo"
         Me.txt_LastCheckNo.ReadOnly = True
@@ -150,7 +150,7 @@ Partial Class frmCheckNumber
         'txt_RemainingAvailable
         '
         Me.txt_RemainingAvailable.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_RemainingAvailable.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_RemainingAvailable.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_RemainingAvailable.Location = New System.Drawing.Point(431, 35)
         Me.txt_RemainingAvailable.Name = "txt_RemainingAvailable"
         Me.txt_RemainingAvailable.ReadOnly = True
@@ -160,7 +160,7 @@ Partial Class frmCheckNumber
         'txt_LastSeqUsed
         '
         Me.txt_LastSeqUsed.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_LastSeqUsed.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_LastSeqUsed.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_LastSeqUsed.Location = New System.Drawing.Point(431, 6)
         Me.txt_LastSeqUsed.Name = "txt_LastSeqUsed"
         Me.txt_LastSeqUsed.ReadOnly = True
@@ -174,7 +174,7 @@ Partial Class frmCheckNumber
         Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Close.ForeColor = System.Drawing.Color.Black
         Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -192,7 +192,7 @@ Partial Class frmCheckNumber
         Me.cmd_Refresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Refresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Refresh.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Refresh.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Refresh.ForeColor = System.Drawing.Color.Black
         Me.cmd_Refresh.Image = Global.AccountsManagementForms.My.Resources.Resources.RefreshGreenIcon22x22
         Me.cmd_Refresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -210,7 +210,7 @@ Partial Class frmCheckNumber
         Me.cmd_Add.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Add.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Add.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Add.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Add.ForeColor = System.Drawing.Color.Black
         Me.cmd_Add.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.cmd_Add.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -225,7 +225,7 @@ Partial Class frmCheckNumber
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(588, 388)
         Me.Controls.Add(Me.cmd_Close)
         Me.Controls.Add(Me.cmd_Refresh)
@@ -242,6 +242,8 @@ Partial Class frmCheckNumber
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmCheckNumber"
         Me.Text = "Check Number Input"
         CType(Me.dgv_History, System.ComponentModel.ISupportInitialize).EndInit()

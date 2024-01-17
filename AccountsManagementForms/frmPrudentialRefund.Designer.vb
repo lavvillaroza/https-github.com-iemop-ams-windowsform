@@ -114,6 +114,7 @@ Partial Class frmPrudentialRefund
         '
         'BtnJVEFT
         '
+        Me.BtnJVEFT.BackColor = System.Drawing.Color.White
         Me.BtnJVEFT.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.BtnJVEFT.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.BtnJVEFT.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -127,10 +128,11 @@ Partial Class frmPrudentialRefund
         Me.BtnJVEFT.Size = New System.Drawing.Size(194, 42)
         Me.BtnJVEFT.TabIndex = 70
         Me.BtnJVEFT.Text = "      Journal Voucher EFT (Draft)"
-        Me.BtnJVEFT.UseVisualStyleBackColor = True
+        Me.BtnJVEFT.UseVisualStyleBackColor = False
         '
         'BtnJVClosing
         '
+        Me.BtnJVClosing.BackColor = System.Drawing.Color.White
         Me.BtnJVClosing.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.BtnJVClosing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.BtnJVClosing.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -144,10 +146,11 @@ Partial Class frmPrudentialRefund
         Me.BtnJVClosing.Size = New System.Drawing.Size(194, 42)
         Me.BtnJVClosing.TabIndex = 69
         Me.BtnJVClosing.Text = "      Journal Voucher Closing (Draft)"
-        Me.BtnJVClosing.UseVisualStyleBackColor = True
+        Me.BtnJVClosing.UseVisualStyleBackColor = False
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -160,10 +163,11 @@ Partial Class frmPrudentialRefund
         Me.btnClose.Size = New System.Drawing.Size(194, 42)
         Me.btnClose.TabIndex = 68
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnInputRefund
         '
+        Me.btnInputRefund.BackColor = System.Drawing.Color.White
         Me.btnInputRefund.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnInputRefund.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnInputRefund.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -177,10 +181,11 @@ Partial Class frmPrudentialRefund
         Me.btnInputRefund.Size = New System.Drawing.Size(194, 42)
         Me.btnInputRefund.TabIndex = 61
         Me.btnInputRefund.Text = "       &Input Refund"
-        Me.btnInputRefund.UseVisualStyleBackColor = True
+        Me.btnInputRefund.UseVisualStyleBackColor = False
         '
         'btnJVSetup
         '
+        Me.btnJVSetup.BackColor = System.Drawing.Color.White
         Me.btnJVSetup.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnJVSetup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnJVSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -194,10 +199,11 @@ Partial Class frmPrudentialRefund
         Me.btnJVSetup.Size = New System.Drawing.Size(194, 42)
         Me.btnJVSetup.TabIndex = 64
         Me.btnJVSetup.Text = "      Journal Voucher Setup (Draft)"
-        Me.btnJVSetup.UseVisualStyleBackColor = True
+        Me.btnJVSetup.UseVisualStyleBackColor = False
         '
         'btnSave
         '
+        Me.btnSave.BackColor = System.Drawing.Color.White
         Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -211,10 +217,11 @@ Partial Class frmPrudentialRefund
         Me.btnSave.Size = New System.Drawing.Size(194, 42)
         Me.btnSave.TabIndex = 63
         Me.btnSave.Text = "&Save"
-        Me.btnSave.UseVisualStyleBackColor = True
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'btnGenerateFTF
         '
+        Me.btnGenerateFTF.BackColor = System.Drawing.Color.White
         Me.btnGenerateFTF.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnGenerateFTF.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnGenerateFTF.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -228,13 +235,14 @@ Partial Class frmPrudentialRefund
         Me.btnGenerateFTF.Size = New System.Drawing.Size(194, 42)
         Me.btnGenerateFTF.TabIndex = 72
         Me.btnGenerateFTF.Text = "      Generate FTF (Draft)"
-        Me.btnGenerateFTF.UseVisualStyleBackColor = True
+        Me.btnGenerateFTF.UseVisualStyleBackColor = False
         '
         'frmPrudentialRefund
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1105, 351)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnGenerateFTF)

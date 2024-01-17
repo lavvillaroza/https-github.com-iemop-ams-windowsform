@@ -48,7 +48,7 @@ Partial Class frmCashSummaryReport
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.dtp_to)
         Me.GroupBox1.Controls.Add(Me.dtp_From)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
@@ -60,19 +60,19 @@ Partial Class frmCashSummaryReport
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.DimGray
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(27, 63)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(25, 14)
+        Me.Label2.Size = New System.Drawing.Size(23, 14)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "To:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.DimGray
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(27, 24)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 14)
@@ -81,8 +81,8 @@ Partial Class frmCashSummaryReport
         '
         'dtp_to
         '
-        Me.dtp_to.CalendarFont = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtp_to.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_to.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_to.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_to.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_to.Location = New System.Drawing.Point(73, 58)
         Me.dtp_to.Name = "dtp_to"
@@ -91,8 +91,8 @@ Partial Class frmCashSummaryReport
         '
         'dtp_From
         '
-        Me.dtp_From.CalendarFont = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtp_From.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_From.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_From.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_From.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_From.Location = New System.Drawing.Point(73, 19)
         Me.dtp_From.Name = "dtp_From"
@@ -104,7 +104,7 @@ Partial Class frmCashSummaryReport
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Controls.Add(Me.txt_AccountCode)
         Me.GroupBox2.Controls.Add(Me.cbo_AccountToGenerate)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 112)
         Me.GroupBox2.Name = "GroupBox2"
@@ -116,7 +116,7 @@ Partial Class frmCashSummaryReport
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(6, 47)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(87, 14)
@@ -129,7 +129,7 @@ Partial Class frmCashSummaryReport
         Me.txt_AccountCode.Location = New System.Drawing.Point(6, 65)
         Me.txt_AccountCode.Name = "txt_AccountCode"
         Me.txt_AccountCode.ReadOnly = True
-        Me.txt_AccountCode.Size = New System.Drawing.Size(214, 21)
+        Me.txt_AccountCode.Size = New System.Drawing.Size(214, 20)
         Me.txt_AccountCode.TabIndex = 1
         Me.txt_AccountCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -138,11 +138,11 @@ Partial Class frmCashSummaryReport
         Me.cbo_AccountToGenerate.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cbo_AccountToGenerate.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbo_AccountToGenerate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_AccountToGenerate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_AccountToGenerate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_AccountToGenerate.FormattingEnabled = True
         Me.cbo_AccountToGenerate.Location = New System.Drawing.Point(6, 21)
         Me.cbo_AccountToGenerate.Name = "cbo_AccountToGenerate"
-        Me.cbo_AccountToGenerate.Size = New System.Drawing.Size(214, 20)
+        Me.cbo_AccountToGenerate.Size = New System.Drawing.Size(214, 22)
         Me.cbo_AccountToGenerate.TabIndex = 0
         '
         'GroupBox3
@@ -150,7 +150,7 @@ Partial Class frmCashSummaryReport
         Me.GroupBox3.Controls.Add(Me.rb_Descending)
         Me.GroupBox3.Controls.Add(Me.rb_Ascending)
         Me.GroupBox3.Controls.Add(Me.cbo_ColumnSort)
-        Me.GroupBox3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox3.Location = New System.Drawing.Point(12, 215)
         Me.GroupBox3.Name = "GroupBox3"
@@ -162,11 +162,11 @@ Partial Class frmCashSummaryReport
         'rb_Descending
         '
         Me.rb_Descending.AutoSize = True
-        Me.rb_Descending.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rb_Descending.ForeColor = System.Drawing.Color.DimGray
+        Me.rb_Descending.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Descending.ForeColor = System.Drawing.Color.Black
         Me.rb_Descending.Location = New System.Drawing.Point(129, 51)
         Me.rb_Descending.Name = "rb_Descending"
-        Me.rb_Descending.Size = New System.Drawing.Size(81, 16)
+        Me.rb_Descending.Size = New System.Drawing.Size(82, 18)
         Me.rb_Descending.TabIndex = 7
         Me.rb_Descending.Text = "Descending"
         Me.rb_Descending.UseVisualStyleBackColor = True
@@ -175,11 +175,11 @@ Partial Class frmCashSummaryReport
         '
         Me.rb_Ascending.AutoSize = True
         Me.rb_Ascending.Checked = True
-        Me.rb_Ascending.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rb_Ascending.ForeColor = System.Drawing.Color.DimGray
+        Me.rb_Ascending.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_Ascending.ForeColor = System.Drawing.Color.Black
         Me.rb_Ascending.Location = New System.Drawing.Point(6, 51)
         Me.rb_Ascending.Name = "rb_Ascending"
-        Me.rb_Ascending.Size = New System.Drawing.Size(74, 16)
+        Me.rb_Ascending.Size = New System.Drawing.Size(77, 18)
         Me.rb_Ascending.TabIndex = 6
         Me.rb_Ascending.TabStop = True
         Me.rb_Ascending.Text = "Ascending"
@@ -190,20 +190,21 @@ Partial Class frmCashSummaryReport
         Me.cbo_ColumnSort.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cbo_ColumnSort.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbo_ColumnSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_ColumnSort.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_ColumnSort.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_ColumnSort.FormattingEnabled = True
         Me.cbo_ColumnSort.Location = New System.Drawing.Point(6, 21)
         Me.cbo_ColumnSort.Name = "cbo_ColumnSort"
-        Me.cbo_ColumnSort.Size = New System.Drawing.Size(214, 22)
+        Me.cbo_ColumnSort.Size = New System.Drawing.Size(214, 23)
         Me.cbo_ColumnSort.TabIndex = 5
         '
         'cmd_Generate
         '
+        Me.cmd_Generate.BackColor = System.Drawing.Color.White
         Me.cmd_Generate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Generate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Generate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Generate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Generate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Generate.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.cmd_Generate.Image = Global.AccountsManagementForms.My.Resources.Resources.DownloadIcon22x22
         Me.cmd_Generate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -212,15 +213,16 @@ Partial Class frmCashSummaryReport
         Me.cmd_Generate.Size = New System.Drawing.Size(226, 39)
         Me.cmd_Generate.TabIndex = 3
         Me.cmd_Generate.Text = "&Generate"
-        Me.cmd_Generate.UseVisualStyleBackColor = True
+        Me.cmd_Generate.UseVisualStyleBackColor = False
         '
         'cmd_Close
         '
+        Me.cmd_Close.BackColor = System.Drawing.Color.White
         Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Close.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIcon22x22
         Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -229,13 +231,13 @@ Partial Class frmCashSummaryReport
         Me.cmd_Close.Size = New System.Drawing.Size(226, 39)
         Me.cmd_Close.TabIndex = 4
         Me.cmd_Close.Text = "&Close"
-        Me.cmd_Close.UseVisualStyleBackColor = True
+        Me.cmd_Close.UseVisualStyleBackColor = False
         '
         'frmCashSummaryReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(249, 403)
         Me.Controls.Add(Me.cmd_Close)
         Me.Controls.Add(Me.cmd_Generate)

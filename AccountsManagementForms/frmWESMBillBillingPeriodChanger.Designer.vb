@@ -64,11 +64,11 @@ Partial Class frmWESMBillBillingPeriodChanger
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(10, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(121, 14)
+        Me.Label6.Size = New System.Drawing.Size(125, 14)
         Me.Label6.TabIndex = 24
         Me.Label6.Text = "Current Billing Period"
         '
@@ -95,11 +95,11 @@ Partial Class frmWESMBillBillingPeriodChanger
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(10, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(104, 14)
+        Me.Label1.Size = New System.Drawing.Size(106, 14)
         Me.Label1.TabIndex = 24
         Me.Label1.Text = "New Billing Period"
         '
@@ -121,7 +121,7 @@ Partial Class frmWESMBillBillingPeriodChanger
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.Black
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -168,7 +168,7 @@ Partial Class frmWESMBillBillingPeriodChanger
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(9, 0)
         Me.Label3.Name = "Label3"
@@ -269,6 +269,7 @@ Partial Class frmWESMBillBillingPeriodChanger
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(863, 384)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.btnSave)

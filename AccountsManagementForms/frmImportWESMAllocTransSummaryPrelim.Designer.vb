@@ -358,6 +358,7 @@ Partial Class frmImportWESMAllocTransSummaryPrelim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(730, 355)
         Me.Controls.Add(Me.Panel_Main)
         Me.Controls.Add(Me.ctrl_statusStrip)
