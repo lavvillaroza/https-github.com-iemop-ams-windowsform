@@ -38,7 +38,7 @@ Partial Class frmBillingCalendarMgt
         '
         Me.GroupBox1.Controls.Add(Me.txtMonthFrom)
         Me.GroupBox1.Controls.Add(Me.txtYearFrom)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 10)
         Me.GroupBox1.Name = "GroupBox1"
@@ -53,7 +53,7 @@ Partial Class frmBillingCalendarMgt
         Me.txtMonthFrom.Location = New System.Drawing.Point(93, 17)
         Me.txtMonthFrom.Name = "txtMonthFrom"
         Me.txtMonthFrom.ReadOnly = True
-        Me.txtMonthFrom.Size = New System.Drawing.Size(159, 21)
+        Me.txtMonthFrom.Size = New System.Drawing.Size(159, 20)
         Me.txtMonthFrom.TabIndex = 1
         '
         'txtYearFrom
@@ -62,14 +62,14 @@ Partial Class frmBillingCalendarMgt
         Me.txtYearFrom.Location = New System.Drawing.Point(6, 17)
         Me.txtYearFrom.Name = "txtYearFrom"
         Me.txtYearFrom.ReadOnly = True
-        Me.txtYearFrom.Size = New System.Drawing.Size(81, 21)
+        Me.txtYearFrom.Size = New System.Drawing.Size(81, 20)
         Me.txtYearFrom.TabIndex = 0
         '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.ddlMonthTo)
         Me.GroupBox2.Controls.Add(Me.ddlYearTo)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 59)
         Me.GroupBox2.Name = "GroupBox2"
@@ -127,16 +127,16 @@ Partial Class frmBillingCalendarMgt
         '
         'frmBillingCalendarMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(284, 162)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmBillingCalendarMgt"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

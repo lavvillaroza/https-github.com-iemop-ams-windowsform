@@ -123,6 +123,7 @@ Partial Class frmPrudentialTransferInterest
         'btnPostToGP
         '
         Me.btnPostToGP.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnPostToGP.BackColor = System.Drawing.Color.White
         Me.btnPostToGP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnPostToGP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnPostToGP.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -136,10 +137,11 @@ Partial Class frmPrudentialTransferInterest
         Me.btnPostToGP.Size = New System.Drawing.Size(135, 39)
         Me.btnPostToGP.TabIndex = 47
         Me.btnPostToGP.Text = "       &Post To GP"
-        Me.btnPostToGP.UseVisualStyleBackColor = True
+        Me.btnPostToGP.UseVisualStyleBackColor = False
         '
         'btnSummaryReport
         '
+        Me.btnSummaryReport.BackColor = System.Drawing.Color.White
         Me.btnSummaryReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSummaryReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSummaryReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -153,10 +155,11 @@ Partial Class frmPrudentialTransferInterest
         Me.btnSummaryReport.Size = New System.Drawing.Size(169, 39)
         Me.btnSummaryReport.TabIndex = 51
         Me.btnSummaryReport.Text = "      &Summary Report (Draft)"
-        Me.btnSummaryReport.UseVisualStyleBackColor = True
+        Me.btnSummaryReport.UseVisualStyleBackColor = False
         '
         'btnSearchReplenishment
         '
+        Me.btnSearchReplenishment.BackColor = System.Drawing.Color.White
         Me.btnSearchReplenishment.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSearchReplenishment.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSearchReplenishment.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -170,11 +173,12 @@ Partial Class frmPrudentialTransferInterest
         Me.btnSearchReplenishment.Size = New System.Drawing.Size(110, 39)
         Me.btnSearchReplenishment.TabIndex = 43
         Me.btnSearchReplenishment.Text = "       &Search"
-        Me.btnSearchReplenishment.UseVisualStyleBackColor = True
+        Me.btnSearchReplenishment.UseVisualStyleBackColor = False
         '
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -187,10 +191,11 @@ Partial Class frmPrudentialTransferInterest
         Me.btnClose.Size = New System.Drawing.Size(136, 39)
         Me.btnClose.TabIndex = 56
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnEdit
         '
+        Me.btnEdit.BackColor = System.Drawing.Color.White
         Me.btnEdit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -204,10 +209,11 @@ Partial Class frmPrudentialTransferInterest
         Me.btnEdit.Size = New System.Drawing.Size(110, 39)
         Me.btnEdit.TabIndex = 48
         Me.btnEdit.Text = "      &Modify"
-        Me.btnEdit.UseVisualStyleBackColor = True
+        Me.btnEdit.UseVisualStyleBackColor = False
         '
         'btnJV
         '
+        Me.btnJV.BackColor = System.Drawing.Color.White
         Me.btnJV.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnJV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnJV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -221,11 +227,12 @@ Partial Class frmPrudentialTransferInterest
         Me.btnJV.Size = New System.Drawing.Size(169, 39)
         Me.btnJV.TabIndex = 46
         Me.btnJV.Text = "      &Journal Voucher (Draft)"
-        Me.btnJV.UseVisualStyleBackColor = True
+        Me.btnJV.UseVisualStyleBackColor = False
         '
         'btnTransfer
         '
         Me.btnTransfer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnTransfer.BackColor = System.Drawing.Color.White
         Me.btnTransfer.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnTransfer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnTransfer.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -239,10 +246,11 @@ Partial Class frmPrudentialTransferInterest
         Me.btnTransfer.Size = New System.Drawing.Size(131, 39)
         Me.btnTransfer.TabIndex = 45
         Me.btnTransfer.Text = "      &Transfer"
-        Me.btnTransfer.UseVisualStyleBackColor = True
+        Me.btnTransfer.UseVisualStyleBackColor = False
         '
         'btnLoadInterest
         '
+        Me.btnLoadInterest.BackColor = System.Drawing.Color.White
         Me.btnLoadInterest.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnLoadInterest.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnLoadInterest.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -256,12 +264,13 @@ Partial Class frmPrudentialTransferInterest
         Me.btnLoadInterest.Size = New System.Drawing.Size(110, 39)
         Me.btnLoadInterest.TabIndex = 42
         Me.btnLoadInterest.Text = "      &Load Interest"
-        Me.btnLoadInterest.UseVisualStyleBackColor = True
+        Me.btnLoadInterest.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
         Me.btnSearch.AccessibleName = ""
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.BackColor = System.Drawing.Color.White
         Me.btnSearch.BackgroundImage = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
@@ -273,13 +282,13 @@ Partial Class frmPrudentialTransferInterest
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(35, 30)
         Me.btnSearch.TabIndex = 51
-        Me.btnSearch.UseVisualStyleBackColor = True
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'frmPrudentialTransferInterest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1102, 484)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnPostToGP)

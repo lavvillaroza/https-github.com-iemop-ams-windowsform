@@ -42,10 +42,10 @@ Partial Class frmChargeIdMgt
         'rb_active
         '
         Me.rb_active.AutoSize = True
-        Me.rb_active.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_active.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_active.Location = New System.Drawing.Point(121, 188)
         Me.rb_active.Name = "rb_active"
-        Me.rb_active.Size = New System.Drawing.Size(53, 16)
+        Me.rb_active.Size = New System.Drawing.Size(56, 18)
         Me.rb_active.TabIndex = 37
         Me.rb_active.TabStop = True
         Me.rb_active.Text = "Active"
@@ -54,7 +54,7 @@ Partial Class frmChargeIdMgt
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(12, 188)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(45, 14)
@@ -65,25 +65,25 @@ Partial Class frmChargeIdMgt
         '
         Me.cbo_Type.BackColor = System.Drawing.Color.White
         Me.cbo_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_Type.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_Type.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_Type.FormattingEnabled = True
         Me.cbo_Type.Location = New System.Drawing.Point(121, 47)
         Me.cbo_Type.Name = "cbo_Type"
-        Me.cbo_Type.Size = New System.Drawing.Size(167, 20)
+        Me.cbo_Type.Size = New System.Drawing.Size(167, 22)
         Me.cbo_Type.TabIndex = 33
         '
         'lbl_addEdit
         '
         Me.lbl_addEdit.AutoSize = True
-        Me.lbl_addEdit.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_addEdit.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_addEdit.Location = New System.Drawing.Point(118, 241)
         Me.lbl_addEdit.Name = "lbl_addEdit"
-        Me.lbl_addEdit.Size = New System.Drawing.Size(0, 12)
+        Me.lbl_addEdit.Size = New System.Drawing.Size(0, 14)
         Me.lbl_addEdit.TabIndex = 32
         '
         'txt_desc
         '
-        Me.txt_desc.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_desc.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_desc.Location = New System.Drawing.Point(121, 72)
         Me.txt_desc.MaxLength = 100
         Me.txt_desc.Multiline = True
@@ -94,46 +94,46 @@ Partial Class frmChargeIdMgt
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(12, 72)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(75, 14)
+        Me.Label7.Size = New System.Drawing.Size(76, 14)
         Me.Label7.TabIndex = 30
         Me.Label7.Text = "Description: "
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(12, 241)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 14)
+        Me.Label6.Size = New System.Drawing.Size(71, 14)
         Me.Label6.TabIndex = 29
         Me.Label6.Text = "Updated By:"
         '
         'lbl_dcomm
         '
         Me.lbl_dcomm.AutoSize = True
-        Me.lbl_dcomm.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_dcomm.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_dcomm.Location = New System.Drawing.Point(118, 217)
         Me.lbl_dcomm.Name = "lbl_dcomm"
-        Me.lbl_dcomm.Size = New System.Drawing.Size(0, 12)
+        Me.lbl_dcomm.Size = New System.Drawing.Size(0, 14)
         Me.lbl_dcomm.TabIndex = 28
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(12, 217)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(83, 14)
+        Me.Label4.Size = New System.Drawing.Size(82, 14)
         Me.Label4.TabIndex = 27
         Me.Label4.Text = "Updated Date:"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(12, 55)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(92, 14)
@@ -143,7 +143,7 @@ Partial Class frmChargeIdMgt
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(12, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 14)
@@ -152,7 +152,7 @@ Partial Class frmChargeIdMgt
         '
         'txt_cId
         '
-        Me.txt_cId.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_cId.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_cId.Location = New System.Drawing.Point(121, 21)
         Me.txt_cId.MaxLength = 13
         Me.txt_cId.Name = "txt_cId"
@@ -162,10 +162,10 @@ Partial Class frmChargeIdMgt
         'rb_inactive
         '
         Me.rb_inactive.AutoSize = True
-        Me.rb_inactive.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rb_inactive.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rb_inactive.Location = New System.Drawing.Point(225, 188)
         Me.rb_inactive.Name = "rb_inactive"
-        Me.rb_inactive.Size = New System.Drawing.Size(61, 16)
+        Me.rb_inactive.Size = New System.Drawing.Size(62, 18)
         Me.rb_inactive.TabIndex = 38
         Me.rb_inactive.TabStop = True
         Me.rb_inactive.Text = "Inactive"
@@ -178,7 +178,7 @@ Partial Class frmChargeIdMgt
         Me.cmdCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdCancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdCancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdCancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdCancel.ForeColor = System.Drawing.Color.Black
         Me.cmdCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmdCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -196,7 +196,7 @@ Partial Class frmChargeIdMgt
         Me.cmdSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmdSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdSave.ForeColor = System.Drawing.Color.Black
         Me.cmdSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.cmdSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -209,9 +209,9 @@ Partial Class frmChargeIdMgt
         '
         'frmChargeIdMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(301, 322)
         Me.ControlBox = False
         Me.Controls.Add(Me.rb_active)
@@ -229,7 +229,7 @@ Partial Class frmChargeIdMgt
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.lbl_dcomm)
         Me.Controls.Add(Me.Label6)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "frmChargeIdMgt"

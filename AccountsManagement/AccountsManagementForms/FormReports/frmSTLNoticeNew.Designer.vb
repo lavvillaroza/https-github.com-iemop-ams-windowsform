@@ -49,10 +49,10 @@ Partial Class frmSTLNoticeNew
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(10, 8)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(141, 12)
+        Me.Label1.Size = New System.Drawing.Size(142, 14)
         Me.Label1.TabIndex = 8
         Me.Label1.Text = "Transaction Month (As Of) :"
         '
@@ -60,8 +60,8 @@ Partial Class frmSTLNoticeNew
         '
         Me.GroupBox1.Controls.Add(Me.txt_Note)
         Me.GroupBox1.Controls.Add(Me.chk_Note)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(247, 8)
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(233, 8)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(202, 261)
         Me.GroupBox1.TabIndex = 7
@@ -70,7 +70,7 @@ Partial Class frmSTLNoticeNew
         'txt_Note
         '
         Me.txt_Note.BackColor = System.Drawing.Color.White
-        Me.txt_Note.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Note.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Note.Location = New System.Drawing.Point(6, 39)
         Me.txt_Note.Multiline = True
         Me.txt_Note.Name = "txt_Note"
@@ -81,10 +81,10 @@ Partial Class frmSTLNoticeNew
         'chk_Note
         '
         Me.chk_Note.AutoSize = True
-        Me.chk_Note.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chk_Note.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chk_Note.Location = New System.Drawing.Point(6, 13)
         Me.chk_Note.Name = "chk_Note"
-        Me.chk_Note.Size = New System.Drawing.Size(85, 16)
+        Me.chk_Note.Size = New System.Drawing.Size(85, 18)
         Me.chk_Note.TabIndex = 0
         Me.chk_Note.Text = "Include Note"
         Me.chk_Note.UseVisualStyleBackColor = True
@@ -93,7 +93,7 @@ Partial Class frmSTLNoticeNew
         '
         Me.gbox_Participants.Controls.Add(Me.chkLB_Participants)
         Me.gbox_Participants.Controls.Add(Me.chkbox_SelectAll)
-        Me.gbox_Participants.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbox_Participants.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbox_Participants.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gbox_Participants.Location = New System.Drawing.Point(13, 61)
         Me.gbox_Participants.Name = "gbox_Participants"
@@ -104,7 +104,7 @@ Partial Class frmSTLNoticeNew
         '
         'chkLB_Participants
         '
-        Me.chkLB_Participants.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkLB_Participants.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkLB_Participants.FormattingEnabled = True
         Me.chkLB_Participants.Location = New System.Drawing.Point(5, 38)
         Me.chkLB_Participants.Name = "chkLB_Participants"
@@ -114,11 +114,11 @@ Partial Class frmSTLNoticeNew
         'chkbox_SelectAll
         '
         Me.chkbox_SelectAll.AutoSize = True
-        Me.chkbox_SelectAll.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkbox_SelectAll.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkbox_SelectAll.ForeColor = System.Drawing.Color.Black
         Me.chkbox_SelectAll.Location = New System.Drawing.Point(8, 17)
         Me.chkbox_SelectAll.Name = "chkbox_SelectAll"
-        Me.chkbox_SelectAll.Size = New System.Drawing.Size(68, 16)
+        Me.chkbox_SelectAll.Size = New System.Drawing.Size(70, 18)
         Me.chkbox_SelectAll.TabIndex = 1
         Me.chkbox_SelectAll.Text = "Select All"
         Me.chkbox_SelectAll.UseVisualStyleBackColor = True
@@ -126,11 +126,11 @@ Partial Class frmSTLNoticeNew
         'cbo_date
         '
         Me.cbo_date.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_date.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_date.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_date.FormattingEnabled = True
         Me.cbo_date.Location = New System.Drawing.Point(13, 24)
         Me.cbo_date.Name = "cbo_date"
-        Me.cbo_date.Size = New System.Drawing.Size(186, 20)
+        Me.cbo_date.Size = New System.Drawing.Size(186, 22)
         Me.cbo_date.TabIndex = 1
         '
         'TableLayoutPanel_Main
@@ -140,13 +140,13 @@ Partial Class frmSTLNoticeNew
         Me.TableLayoutPanel_Main.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_Main.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Main.Controls.Add(Me.Panel1, 0, 0)
-        Me.TableLayoutPanel_Main.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TableLayoutPanel_Main.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel_Main.Location = New System.Drawing.Point(12, 12)
         Me.TableLayoutPanel_Main.Name = "TableLayoutPanel_Main"
         Me.TableLayoutPanel_Main.RowCount = 1
         Me.TableLayoutPanel_Main.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_Main.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 339.0!))
-        Me.TableLayoutPanel_Main.Size = New System.Drawing.Size(471, 341)
+        Me.TableLayoutPanel_Main.Size = New System.Drawing.Size(456, 341)
         Me.TableLayoutPanel_Main.TabIndex = 4
         '
         'Panel1
@@ -159,34 +159,35 @@ Partial Class frmSTLNoticeNew
         Me.Panel1.Controls.Add(Me.cbo_date)
         Me.Panel1.Controls.Add(Me.GroupBox1)
         Me.Panel1.Controls.Add(Me.gbox_Participants)
-        Me.Panel1.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Panel1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Panel1.Location = New System.Drawing.Point(5, 5)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(461, 331)
+        Me.Panel1.Size = New System.Drawing.Size(446, 331)
         Me.Panel1.TabIndex = 0
         '
         'btn_ExportToExcel
         '
+        Me.btn_ExportToExcel.BackColor = System.Drawing.Color.White
         Me.btn_ExportToExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_ExportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_ExportToExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_ExportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_ExportToExcel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ExportToExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_ExportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.btn_ExportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_ExportToExcel.Location = New System.Drawing.Point(247, 275)
+        Me.btn_ExportToExcel.Location = New System.Drawing.Point(233, 275)
         Me.btn_ExportToExcel.Name = "btn_ExportToExcel"
         Me.btn_ExportToExcel.Size = New System.Drawing.Size(202, 45)
         Me.btn_ExportToExcel.TabIndex = 8
         Me.btn_ExportToExcel.Text = "Export to Excel"
-        Me.btn_ExportToExcel.UseVisualStyleBackColor = True
+        Me.btn_ExportToExcel.UseVisualStyleBackColor = False
         '
         'StatusStrip_STLNotice
         '
         Me.StatusStrip_STLNotice.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel_Text, Me.ToolStripProgressBar_STLNotice, Me.ToolStripStatusLabel_Percent})
         Me.StatusStrip_STLNotice.Location = New System.Drawing.Point(0, 358)
         Me.StatusStrip_STLNotice.Name = "StatusStrip_STLNotice"
-        Me.StatusStrip_STLNotice.Size = New System.Drawing.Size(495, 26)
+        Me.StatusStrip_STLNotice.Size = New System.Drawing.Size(476, 26)
         Me.StatusStrip_STLNotice.TabIndex = 5
         Me.StatusStrip_STLNotice.Text = "StatusStrip1"
         '
@@ -201,7 +202,7 @@ Partial Class frmSTLNoticeNew
         Me.ToolStripStatusLabel_Text.Name = "ToolStripStatusLabel_Text"
         Me.ToolStripStatusLabel_Text.Size = New System.Drawing.Size(293, 21)
         Me.ToolStripStatusLabel_Text.Spring = True
-        Me.ToolStripStatusLabel_Text.Text = "..."
+        Me.ToolStripStatusLabel_Text.Text = "Ready ..."
         Me.ToolStripStatusLabel_Text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ToolStripProgressBar_STLNotice
@@ -223,8 +224,8 @@ Partial Class frmSTLNoticeNew
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(495, 384)
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.ClientSize = New System.Drawing.Size(476, 384)
         Me.Controls.Add(Me.StatusStrip_STLNotice)
         Me.Controls.Add(Me.TableLayoutPanel_Main)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

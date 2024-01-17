@@ -51,7 +51,7 @@ Partial Class frmBillingCalendar
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRefresh.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRefresh.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRefresh.ForeColor = System.Drawing.Color.Black
         Me.btnRefresh.Image = Global.AccountsManagementForms.My.Resources.Resources.RefreshOrangeIcon22x22
         Me.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -70,7 +70,7 @@ Partial Class frmBillingCalendar
         Me.btnGenerate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnGenerate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnGenerate.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGenerate.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGenerate.ForeColor = System.Drawing.Color.Black
         Me.btnGenerate.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btnGenerate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -83,16 +83,17 @@ Partial Class frmBillingCalendar
         '
         'frmBillingCalendar
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(483, 498)
         Me.Controls.Add(Me.DGridViewMain)
         Me.Controls.Add(Me.btnRefresh)
         Me.Controls.Add(Me.btnGenerate)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmBillingCalendar"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Calendar Billing Period"

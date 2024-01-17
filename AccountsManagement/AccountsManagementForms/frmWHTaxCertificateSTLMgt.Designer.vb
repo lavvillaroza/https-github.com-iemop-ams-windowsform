@@ -23,8 +23,8 @@ Partial Class frmWHTaxCertificateSTLMgt
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.gbMenu2 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.DGridViewCollection = New System.Windows.Forms.DataGridView()
@@ -35,6 +35,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.colAllocatedToAP = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.colUntag = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.gbMenu1 = New System.Windows.Forms.GroupBox()
+        Me.btn_Close = New System.Windows.Forms.Button()
         Me.chkbox_Untagged = New System.Windows.Forms.CheckBox()
         Me.chkbox_Allocated = New System.Windows.Forms.CheckBox()
         Me.btnUntag = New System.Windows.Forms.Button()
@@ -49,7 +50,6 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.chkbox_SelectAll = New System.Windows.Forms.CheckBox()
         Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
         Me.tsslbl_Msg = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.btn_Close = New System.Windows.Forms.Button()
         Me.tsslbl_Timer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.MainPanel = New System.Windows.Forms.Panel()
@@ -84,20 +84,20 @@ Partial Class frmWHTaxCertificateSTLMgt
         'DGridViewCollection
         '
         Me.DGridViewCollection.AllowUserToAddRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGridViewCollection.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridViewCollection.BackgroundColor = System.Drawing.SystemColors.ButtonShadow
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.DimGray
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DGridViewCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewCollection.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCertificateNo, Me.colRemittanceDate, Me.ColBillingIDNo, Me.colCollectedAmount, Me.colAllocatedToAP, Me.colUntag})
         Me.DGridViewCollection.Location = New System.Drawing.Point(9, 19)
@@ -168,6 +168,24 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.gbMenu1.Size = New System.Drawing.Size(823, 85)
         Me.gbMenu1.TabIndex = 29
         Me.gbMenu1.TabStop = False
+        '
+        'btn_Close
+        '
+        Me.btn_Close.BackColor = System.Drawing.Color.White
+        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.ForeColor = System.Drawing.Color.Black
+        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
+        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Close.Location = New System.Drawing.Point(727, 19)
+        Me.btn_Close.Name = "btn_Close"
+        Me.btn_Close.Size = New System.Drawing.Size(90, 39)
+        Me.btn_Close.TabIndex = 55
+        Me.btn_Close.Text = "   &Cancel"
+        Me.btn_Close.UseVisualStyleBackColor = False
         '
         'chkbox_Untagged
         '
@@ -352,24 +370,6 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.tsslbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.tsslbl_Msg.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         '
-        'btn_Close
-        '
-        Me.btn_Close.BackColor = System.Drawing.Color.White
-        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Close.ForeColor = System.Drawing.Color.Black
-        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
-        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Close.Location = New System.Drawing.Point(727, 19)
-        Me.btn_Close.Name = "btn_Close"
-        Me.btn_Close.Size = New System.Drawing.Size(90, 39)
-        Me.btn_Close.TabIndex = 55
-        Me.btn_Close.Text = "   &Cancel"
-        Me.btn_Close.UseVisualStyleBackColor = False
-        '
         'tsslbl_Timer
         '
         Me.tsslbl_Timer.AutoSize = False
@@ -393,6 +393,7 @@ Partial Class frmWHTaxCertificateSTLMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(835, 454)
         Me.ControlBox = False
         Me.Controls.Add(Me.MainPanel)

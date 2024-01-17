@@ -29,7 +29,7 @@ Public Class frmPaymentNew
 
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PaymentAllocationWindow.ToString,
+            _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PayAllocateCollectionsWindow.ToString,
                                     ex.Message, "", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.ErrorInAccessing.ToString, AMModule.UserName)
         End Try
     End Sub
@@ -1543,7 +1543,7 @@ Public Class frmPaymentNew
                 Await Task.Run(Sub() paymntHelper.SavePaymentProcess(progressIndicator, cts.Token))
 
                 getTimeEnd = wBillHelper.GetSystemDateTime
-                _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PaymentAllocationWindow.ToString, "", "Saving allocation date " & paymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
+                _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PayAllocateCollectionsWindow.ToString, "", "Saving allocation date " & paymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
 
                 'Disposing trash data in memory                
                 paymntHelper.Dispose()

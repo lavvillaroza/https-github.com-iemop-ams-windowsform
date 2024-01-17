@@ -53,11 +53,12 @@ Partial Class frmCollectionSumary
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -66,15 +67,16 @@ Partial Class frmCollectionSumary
         Me.btnClose.Size = New System.Drawing.Size(110, 39)
         Me.btnClose.TabIndex = 11
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnShow
         '
+        Me.btnShow.BackColor = System.Drawing.Color.White
         Me.btnShow.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnShow.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnShow.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption
         Me.btnShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnShow.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShow.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnShow.ForeColor = System.Drawing.Color.Black
         Me.btnShow.Image = Global.AccountsManagementForms.My.Resources.Resources.FileSearchIcon22x22
         Me.btnShow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -83,7 +85,7 @@ Partial Class frmCollectionSumary
         Me.btnShow.Size = New System.Drawing.Size(110, 39)
         Me.btnShow.TabIndex = 8
         Me.btnShow.Text = "&View/Print"
-        Me.btnShow.UseVisualStyleBackColor = True
+        Me.btnShow.UseVisualStyleBackColor = False
         '
         'GroupBox7
         '
@@ -99,11 +101,11 @@ Partial Class frmCollectionSumary
         'chckNotPost
         '
         Me.chckNotPost.AutoSize = True
-        Me.chckNotPost.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckNotPost.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckNotPost.ForeColor = System.Drawing.Color.Black
         Me.chckNotPost.Location = New System.Drawing.Point(157, 10)
         Me.chckNotPost.Name = "chckNotPost"
-        Me.chckNotPost.Size = New System.Drawing.Size(63, 16)
+        Me.chckNotPost.Size = New System.Drawing.Size(63, 18)
         Me.chckNotPost.TabIndex = 15
         Me.chckNotPost.Text = "&NotPost"
         Me.chckNotPost.UseVisualStyleBackColor = True
@@ -111,11 +113,11 @@ Partial Class frmCollectionSumary
         'chckPosted
         '
         Me.chckPosted.AutoSize = True
-        Me.chckPosted.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckPosted.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckPosted.ForeColor = System.Drawing.Color.Black
         Me.chckPosted.Location = New System.Drawing.Point(80, 10)
         Me.chckPosted.Name = "chckPosted"
-        Me.chckPosted.Size = New System.Drawing.Size(58, 16)
+        Me.chckPosted.Size = New System.Drawing.Size(59, 18)
         Me.chckPosted.TabIndex = 14
         Me.chckPosted.Text = "&Posted"
         Me.chckPosted.UseVisualStyleBackColor = True
@@ -123,11 +125,11 @@ Partial Class frmCollectionSumary
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.ForeColor = System.Drawing.Color.Black
         Me.Label17.Location = New System.Drawing.Point(8, 9)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(57, 14)
+        Me.Label17.Size = New System.Drawing.Size(59, 14)
         Me.Label17.TabIndex = 25
         Me.Label17.Text = "IsPosted:"
         '
@@ -148,11 +150,11 @@ Partial Class frmCollectionSumary
         'rbAllocationDate
         '
         Me.rbAllocationDate.AutoSize = True
-        Me.rbAllocationDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rbAllocationDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbAllocationDate.ForeColor = System.Drawing.Color.Black
         Me.rbAllocationDate.Location = New System.Drawing.Point(5, 37)
         Me.rbAllocationDate.Name = "rbAllocationDate"
-        Me.rbAllocationDate.Size = New System.Drawing.Size(95, 16)
+        Me.rbAllocationDate.Size = New System.Drawing.Size(97, 18)
         Me.rbAllocationDate.TabIndex = 20
         Me.rbAllocationDate.TabStop = True
         Me.rbAllocationDate.Text = "&Allocation Date"
@@ -161,11 +163,11 @@ Partial Class frmCollectionSumary
         'rbCollectionDate
         '
         Me.rbCollectionDate.AutoSize = True
-        Me.rbCollectionDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rbCollectionDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbCollectionDate.ForeColor = System.Drawing.Color.Black
         Me.rbCollectionDate.Location = New System.Drawing.Point(5, 12)
         Me.rbCollectionDate.Name = "rbCollectionDate"
-        Me.rbCollectionDate.Size = New System.Drawing.Size(96, 16)
+        Me.rbCollectionDate.Size = New System.Drawing.Size(96, 18)
         Me.rbCollectionDate.TabIndex = 19
         Me.rbCollectionDate.TabStop = True
         Me.rbCollectionDate.Text = "&Collection Date"
@@ -182,7 +184,7 @@ Partial Class frmCollectionSumary
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(104, 15)
         Me.Label6.Name = "Label6"
@@ -201,11 +203,11 @@ Partial Class frmCollectionSumary
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(117, 39)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(52, 14)
+        Me.Label8.Size = New System.Drawing.Size(50, 14)
         Me.Label8.TabIndex = 17
         Me.Label8.Text = "Date To:"
         '
@@ -223,11 +225,11 @@ Partial Class frmCollectionSumary
         'chckManual
         '
         Me.chckManual.AutoSize = True
-        Me.chckManual.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckManual.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckManual.ForeColor = System.Drawing.Color.Black
         Me.chckManual.Location = New System.Drawing.Point(157, 10)
         Me.chckManual.Name = "chckManual"
-        Me.chckManual.Size = New System.Drawing.Size(59, 16)
+        Me.chckManual.Size = New System.Drawing.Size(60, 18)
         Me.chckManual.TabIndex = 15
         Me.chckManual.Text = "&Manual"
         Me.chckManual.UseVisualStyleBackColor = True
@@ -235,11 +237,11 @@ Partial Class frmCollectionSumary
         'chckAuto
         '
         Me.chckAuto.AutoSize = True
-        Me.chckAuto.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckAuto.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckAuto.ForeColor = System.Drawing.Color.Black
         Me.chckAuto.Location = New System.Drawing.Point(80, 10)
         Me.chckAuto.Name = "chckAuto"
-        Me.chckAuto.Size = New System.Drawing.Size(72, 16)
+        Me.chckAuto.Size = New System.Drawing.Size(74, 18)
         Me.chckAuto.TabIndex = 14
         Me.chckAuto.Text = "&Automatic"
         Me.chckAuto.UseVisualStyleBackColor = True
@@ -247,11 +249,11 @@ Partial Class frmCollectionSumary
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(26, 11)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(37, 14)
+        Me.Label5.Size = New System.Drawing.Size(36, 14)
         Me.Label5.TabIndex = 25
         Me.Label5.Text = "Type:"
         '
@@ -269,11 +271,11 @@ Partial Class frmCollectionSumary
         'chckUnallocated
         '
         Me.chckUnallocated.AutoSize = True
-        Me.chckUnallocated.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckUnallocated.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckUnallocated.ForeColor = System.Drawing.Color.Black
         Me.chckUnallocated.Location = New System.Drawing.Point(157, 7)
         Me.chckUnallocated.Name = "chckUnallocated"
-        Me.chckUnallocated.Size = New System.Drawing.Size(81, 16)
+        Me.chckUnallocated.Size = New System.Drawing.Size(82, 18)
         Me.chckUnallocated.TabIndex = 15
         Me.chckUnallocated.Text = "&Unallocated"
         Me.chckUnallocated.UseVisualStyleBackColor = True
@@ -281,11 +283,11 @@ Partial Class frmCollectionSumary
         'chckAllocated
         '
         Me.chckAllocated.AutoSize = True
-        Me.chckAllocated.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckAllocated.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckAllocated.ForeColor = System.Drawing.Color.Black
         Me.chckAllocated.Location = New System.Drawing.Point(80, 10)
         Me.chckAllocated.Name = "chckAllocated"
-        Me.chckAllocated.Size = New System.Drawing.Size(68, 16)
+        Me.chckAllocated.Size = New System.Drawing.Size(71, 18)
         Me.chckAllocated.TabIndex = 14
         Me.chckAllocated.Text = "&Allocated"
         Me.chckAllocated.UseVisualStyleBackColor = True
@@ -293,7 +295,7 @@ Partial Class frmCollectionSumary
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(20, 9)
         Me.Label4.Name = "Label4"
@@ -304,21 +306,21 @@ Partial Class frmCollectionSumary
         'ddlParticipantID
         '
         Me.ddlParticipantID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ddlParticipantID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ddlParticipantID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ddlParticipantID.FormattingEnabled = True
         Me.ddlParticipantID.Location = New System.Drawing.Point(119, 12)
         Me.ddlParticipantID.Name = "ddlParticipantID"
-        Me.ddlParticipantID.Size = New System.Drawing.Size(174, 20)
+        Me.ddlParticipantID.Size = New System.Drawing.Size(174, 22)
         Me.ddlParticipantID.TabIndex = 28
         '
         'chckParticipantID
         '
         Me.chckParticipantID.AutoSize = True
-        Me.chckParticipantID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckParticipantID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chckParticipantID.ForeColor = System.Drawing.Color.Black
         Me.chckParticipantID.Location = New System.Drawing.Point(21, 15)
         Me.chckParticipantID.Name = "chckParticipantID"
-        Me.chckParticipantID.Size = New System.Drawing.Size(92, 16)
+        Me.chckParticipantID.Size = New System.Drawing.Size(91, 18)
         Me.chckParticipantID.TabIndex = 27
         Me.chckParticipantID.Text = "&Participant ID:"
         Me.chckParticipantID.UseVisualStyleBackColor = True
@@ -327,7 +329,7 @@ Partial Class frmCollectionSumary
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(302, 253)
         Me.Controls.Add(Me.GroupBox7)
         Me.Controls.Add(Me.GroupBox6)

@@ -71,6 +71,7 @@ Partial Class frmWESMBillBillingPeriodMgt
         '
         'btnRefresh
         '
+        Me.btnRefresh.BackColor = System.Drawing.Color.White
         Me.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -82,10 +83,11 @@ Partial Class frmWESMBillBillingPeriodMgt
         Me.btnRefresh.Size = New System.Drawing.Size(35, 30)
         Me.btnRefresh.TabIndex = 8
         Me.btnRefresh.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.btnRefresh.UseVisualStyleBackColor = True
+        Me.btnRefresh.UseVisualStyleBackColor = False
         '
         'btnLoad
         '
+        Me.btnLoad.BackColor = System.Drawing.Color.White
         Me.btnLoad.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnLoad.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnLoad.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -96,7 +98,7 @@ Partial Class frmWESMBillBillingPeriodMgt
         Me.btnLoad.Name = "btnLoad"
         Me.btnLoad.Size = New System.Drawing.Size(35, 30)
         Me.btnLoad.TabIndex = 7
-        Me.btnLoad.UseVisualStyleBackColor = True
+        Me.btnLoad.UseVisualStyleBackColor = False
         '
         'ddlDueDate
         '
@@ -210,6 +212,7 @@ Partial Class frmWESMBillBillingPeriodMgt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(611, 314)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)

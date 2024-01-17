@@ -11,7 +11,12 @@ Public Class WHTaxCertificateSTLHelper
         Me._WBillHelper = WESMBillHelper.GetInstance
         Me._DataAccess = DAL.GetInstance()
     End Sub
-
+    Private _GetError As String
+    Public ReadOnly Property GetError() As String
+        Get
+            Return _GetError
+        End Get
+    End Property
 #Region "DAL"
     Private _DataAccess As DAL
     Public ReadOnly Property DataAccess() As DAL
@@ -30,6 +35,7 @@ Public Class WHTaxCertificateSTLHelper
     End Property
 #End Region
 
+#Region "Attributes"
     Private _ViewListOfWHTCertSTL As List(Of WHTaxCertificateSTL)
     Public Property ViewListOfWHTCertSTL() As List(Of WHTaxCertificateSTL)
         Get
@@ -69,6 +75,7 @@ Public Class WHTaxCertificateSTLHelper
             _ListOfParticipants = value
         End Set
     End Property
+#End Region
 
 #Region "Property of WESM Transaction Cover Summary"
     Private _WESMTransCoverSummaryList As New List(Of WESMBillAllocCoverSummary)
@@ -103,7 +110,7 @@ Public Class WHTaxCertificateSTLHelper
     End Property
 #End Region
 
-#Region "Property of ALLOCATION DATE"
+#Region "Property of Allocation and Remittanec Date"
     Private _AllocRemittDate As AllocationDate
     Public Property AllocRemittDate() As AllocationDate
         Get

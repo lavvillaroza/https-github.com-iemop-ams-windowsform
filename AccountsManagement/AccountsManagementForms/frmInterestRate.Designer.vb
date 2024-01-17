@@ -23,7 +23,7 @@ Partial Class frmInterestRate
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
@@ -66,7 +66,7 @@ Partial Class frmInterestRate
         Me.btnCancel.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.Image = Global.AccountsManagementForms.My.Resources.Resources.CancelIconRed22x22
         Me.btnCancel.Location = New System.Drawing.Point(351, 20)
         Me.btnCancel.Name = "btnCancel"
@@ -83,7 +83,7 @@ Partial Class frmInterestRate
         Me.btnSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.Image = Global.AccountsManagementForms.My.Resources.Resources.SaveIconColored22x22
         Me.btnSave.Location = New System.Drawing.Point(310, 20)
         Me.btnSave.Name = "btnSave"
@@ -100,7 +100,7 @@ Partial Class frmInterestRate
         Me.btnNew.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnNew.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnNew.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNew.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNew.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btnNew.Location = New System.Drawing.Point(228, 19)
         Me.btnNew.Name = "btnNew"
@@ -117,7 +117,7 @@ Partial Class frmInterestRate
         Me.btnEdit.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnEdit.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEdit.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEdit.Image = Global.AccountsManagementForms.My.Resources.Resources.EditDocumentColored22x22
         Me.btnEdit.Location = New System.Drawing.Point(269, 19)
         Me.btnEdit.Name = "btnEdit"
@@ -128,7 +128,7 @@ Partial Class frmInterestRate
         '
         'txtInterestRate
         '
-        Me.txtInterestRate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtInterestRate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtInterestRate.Location = New System.Drawing.Point(97, 46)
         Me.txtInterestRate.MaxLength = 7
         Me.txtInterestRate.Name = "txtInterestRate"
@@ -138,16 +138,16 @@ Partial Class frmInterestRate
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(16, 48)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(78, 14)
+        Me.Label2.Size = New System.Drawing.Size(81, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Interest Rate:"
         '
         'dtDate
         '
-        Me.dtDate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtDate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtDate.Location = New System.Drawing.Point(97, 20)
         Me.dtDate.Name = "dtDate"
@@ -157,10 +157,10 @@ Partial Class frmInterestRate
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(56, 25)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(35, 14)
+        Me.Label1.Size = New System.Drawing.Size(34, 14)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Date:"
         '
@@ -183,9 +183,9 @@ Partial Class frmInterestRate
         '
         'colDate
         '
-        DataGridViewCellStyle1.Format = "d"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.colDate.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Format = "d"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colDate.DefaultCellStyle = DataGridViewCellStyle2
         Me.colDate.HeaderText = "Date"
         Me.colDate.Name = "colDate"
         Me.colDate.ReadOnly = True
@@ -201,11 +201,12 @@ Partial Class frmInterestRate
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -214,13 +215,13 @@ Partial Class frmInterestRate
         Me.btnClose.Size = New System.Drawing.Size(113, 39)
         Me.btnClose.TabIndex = 11
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'frmInterestRate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(446, 560)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.DGridView)
@@ -228,6 +229,7 @@ Partial Class frmInterestRate
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmInterestRate"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Interest Rate"

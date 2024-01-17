@@ -44,45 +44,47 @@ Partial Class frmChkDate
         '
         'Button2
         '
+        Me.Button2.BackColor = System.Drawing.Color.White
         Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.Button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.Image = Global.AccountsManagementForms.My.Resources.Resources.BackRedIcon22x22
         Me.Button2.Location = New System.Drawing.Point(174, 53)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(35, 30)
         Me.Button2.TabIndex = 3
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.UseVisualStyleBackColor = False
         '
         'Button1
         '
+        Me.Button1.BackColor = System.Drawing.Color.White
         Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.Button1.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.Image = Global.AccountsManagementForms.My.Resources.Resources.OkIcon22x22
         Me.Button1.Location = New System.Drawing.Point(130, 53)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(35, 30)
         Me.Button1.TabIndex = 2
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(9, 30)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(70, 14)
+        Me.Label1.Size = New System.Drawing.Size(71, 14)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Select Date:"
         '
         'dtp_Date
         '
-        Me.dtp_Date.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_Date.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_Date.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_Date.Location = New System.Drawing.Point(85, 26)
         Me.dtp_Date.Name = "dtp_Date"
@@ -93,7 +95,7 @@ Partial Class frmChkDate
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(248, 117)
         Me.Controls.Add(Me.gb_DateSelection)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

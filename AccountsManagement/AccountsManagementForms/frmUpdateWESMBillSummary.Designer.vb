@@ -140,6 +140,7 @@ Partial Class frmUpdateWESMBillSummary
         'btn_Cancel
         '
         Me.btn_Cancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Cancel.BackColor = System.Drawing.Color.White
         Me.btn_Cancel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_Cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Cancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -153,7 +154,7 @@ Partial Class frmUpdateWESMBillSummary
         Me.btn_Cancel.Size = New System.Drawing.Size(110, 39)
         Me.btn_Cancel.TabIndex = 9
         Me.btn_Cancel.Text = "&Close"
-        Me.btn_Cancel.UseVisualStyleBackColor = True
+        Me.btn_Cancel.UseVisualStyleBackColor = False
         '
         'SearchOption_GroupBox
         '
@@ -195,7 +196,7 @@ Partial Class frmUpdateWESMBillSummary
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1020, 494)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btn_Cancel)

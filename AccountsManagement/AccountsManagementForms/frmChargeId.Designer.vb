@@ -23,8 +23,8 @@ Partial Class frmChargeId
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgv_ChargeID = New System.Windows.Forms.DataGridView()
         Me.ch_Id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ch_desc = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -55,19 +55,19 @@ Partial Class frmChargeId
         Me.dgv_ChargeID.AllowUserToAddRows = False
         Me.dgv_ChargeID.AllowUserToDeleteRows = False
         Me.dgv_ChargeID.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_ChargeID.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_ChargeID.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_ChargeID.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgv_ChargeID.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_ChargeID.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_ChargeID.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.dgv_ChargeID.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_ChargeID.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ch_Id, Me.ch_desc, Me.ch_IDType, Me.ch_status, Me.ch_update, Me.ch_upBy})
         Me.dgv_ChargeID.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
@@ -86,7 +86,7 @@ Partial Class frmChargeId
         Me.ch_Id.HeaderText = "ChargeID"
         Me.ch_Id.Name = "ch_Id"
         Me.ch_Id.ReadOnly = True
-        Me.ch_Id.Width = 77
+        Me.ch_Id.Width = 76
         '
         'ch_desc
         '
@@ -94,7 +94,7 @@ Partial Class frmChargeId
         Me.ch_desc.HeaderText = "Description"
         Me.ch_desc.Name = "ch_desc"
         Me.ch_desc.ReadOnly = True
-        Me.ch_desc.Width = 85
+        Me.ch_desc.Width = 86
         '
         'ch_IDType
         '
@@ -102,7 +102,7 @@ Partial Class frmChargeId
         Me.ch_IDType.HeaderText = "ChargeIDType"
         Me.ch_IDType.Name = "ch_IDType"
         Me.ch_IDType.ReadOnly = True
-        Me.ch_IDType.Width = 102
+        Me.ch_IDType.Width = 99
         '
         'ch_status
         '
@@ -110,7 +110,7 @@ Partial Class frmChargeId
         Me.ch_status.HeaderText = "Status"
         Me.ch_status.Name = "ch_status"
         Me.ch_status.ReadOnly = True
-        Me.ch_status.Width = 61
+        Me.ch_status.Width = 63
         '
         'ch_update
         '
@@ -126,21 +126,21 @@ Partial Class frmChargeId
         Me.ch_upBy.HeaderText = "UpdatedBy"
         Me.ch_upBy.Name = "ch_upBy"
         Me.ch_upBy.ReadOnly = True
-        Me.ch_upBy.Width = 84
+        Me.ch_upBy.Width = 85
         '
         'txtSearch
         '
-        Me.txtSearch.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSearch.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSearch.Location = New System.Drawing.Point(81, 15)
         Me.txtSearch.MaxLength = 13
         Me.txtSearch.Name = "txtSearch"
-        Me.txtSearch.Size = New System.Drawing.Size(126, 23)
+        Me.txtSearch.Size = New System.Drawing.Size(126, 22)
         Me.txtSearch.TabIndex = 1
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(6, 18)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(63, 14)
@@ -173,7 +173,7 @@ Partial Class frmChargeId
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_close.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_close.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_close.ForeColor = System.Drawing.Color.Black
         Me.cmd_close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -193,7 +193,7 @@ Partial Class frmChargeId
         Me.btn_TSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_TSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_TSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_TSearch.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_TSearch.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_TSearch.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btn_TSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.btn_TSearch.Location = New System.Drawing.Point(213, 12)
@@ -211,7 +211,7 @@ Partial Class frmChargeId
         Me.btnNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnNew.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnNew.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNew.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNew.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btnNew.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btnNew.Location = New System.Drawing.Point(259, 12)
@@ -229,7 +229,7 @@ Partial Class frmChargeId
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnEdit.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEdit.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEdit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btnEdit.Image = Global.AccountsManagementForms.My.Resources.Resources.EditDocumentColored22x22
         Me.btnEdit.Location = New System.Drawing.Point(305, 12)
@@ -247,7 +247,7 @@ Partial Class frmChargeId
         Me.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDelete.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDelete.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btnDelete.Image = Global.AccountsManagementForms.My.Resources.Resources.CancelIconRed22x22
         Me.btnDelete.Location = New System.Drawing.Point(351, 12)
@@ -266,7 +266,7 @@ Partial Class frmChargeId
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRefresh.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRefresh.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRefresh.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btnRefresh.Location = New System.Drawing.Point(397, 12)
         Me.btnRefresh.Name = "btnRefresh"
@@ -299,16 +299,17 @@ Partial Class frmChargeId
         '
         'frmChargeId
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(624, 489)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.dgv_ChargeID)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(630, 426)
         Me.Name = "frmChargeId"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

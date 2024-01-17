@@ -37,42 +37,43 @@ Partial Class frmRPTStatementOfAccount
         'cbo_dueDate
         '
         Me.cbo_dueDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_dueDate.Font = New System.Drawing.Font("Helvetica", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_dueDate.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_dueDate.FormattingEnabled = True
         Me.cbo_dueDate.Location = New System.Drawing.Point(111, 7)
         Me.cbo_dueDate.Name = "cbo_dueDate"
-        Me.cbo_dueDate.Size = New System.Drawing.Size(209, 22)
+        Me.cbo_dueDate.Size = New System.Drawing.Size(209, 23)
         Me.cbo_dueDate.TabIndex = 30
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(11, 10)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(94, 14)
+        Me.Label2.Size = New System.Drawing.Size(95, 14)
         Me.Label2.TabIndex = 28
         Me.Label2.Text = "Select Due Date:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(12, 104)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(144, 14)
+        Me.Label1.Size = New System.Drawing.Size(147, 14)
         Me.Label1.TabIndex = 26
         Me.Label1.Text = "Select Destination Folder:"
         '
         'cmd_browse
         '
+        Me.cmd_browse.BackColor = System.Drawing.Color.White
         Me.cmd_browse.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_browse.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_browse.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_browse.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_browse.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_browse.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_browse.ForeColor = System.Drawing.Color.Black
         Me.cmd_browse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_browse.Location = New System.Drawing.Point(285, 117)
@@ -80,12 +81,12 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_browse.Size = New System.Drawing.Size(35, 30)
         Me.cmd_browse.TabIndex = 25
         Me.cmd_browse.Text = "....."
-        Me.cmd_browse.UseVisualStyleBackColor = True
+        Me.cmd_browse.UseVisualStyleBackColor = False
         '
         'txt_FilePath
         '
         Me.txt_FilePath.Enabled = False
-        Me.txt_FilePath.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_FilePath.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_FilePath.ForeColor = System.Drawing.Color.Black
         Me.txt_FilePath.Location = New System.Drawing.Point(15, 122)
         Me.txt_FilePath.Name = "txt_FilePath"
@@ -94,11 +95,12 @@ Partial Class frmRPTStatementOfAccount
         '
         'cmd_GenerateReport
         '
+        Me.cmd_GenerateReport.BackColor = System.Drawing.Color.White
         Me.cmd_GenerateReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenerateReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenerateReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_GenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_GenerateReport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_GenerateReport.ForeColor = System.Drawing.Color.Black
         Me.cmd_GenerateReport.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_GenerateReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -107,15 +109,16 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_GenerateReport.Size = New System.Drawing.Size(150, 39)
         Me.cmd_GenerateReport.TabIndex = 27
         Me.cmd_GenerateReport.Text = "Generate SOA"
-        Me.cmd_GenerateReport.UseVisualStyleBackColor = True
+        Me.cmd_GenerateReport.UseVisualStyleBackColor = False
         '
         'cmd_PDFExport
         '
+        Me.cmd_PDFExport.BackColor = System.Drawing.Color.White
         Me.cmd_PDFExport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_PDFExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_PDFExport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_PDFExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_PDFExport.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_PDFExport.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_PDFExport.ForeColor = System.Drawing.Color.Black
         Me.cmd_PDFExport.Image = Global.AccountsManagementForms.My.Resources.Resources.PDFIcon22x22
         Me.cmd_PDFExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -124,16 +127,17 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_PDFExport.Size = New System.Drawing.Size(150, 39)
         Me.cmd_PDFExport.TabIndex = 23
         Me.cmd_PDFExport.Text = "Export to PDF"
-        Me.cmd_PDFExport.UseVisualStyleBackColor = True
+        Me.cmd_PDFExport.UseVisualStyleBackColor = False
         '
         'cmd_EmailToParticipants
         '
+        Me.cmd_EmailToParticipants.BackColor = System.Drawing.Color.White
         Me.cmd_EmailToParticipants.Enabled = False
         Me.cmd_EmailToParticipants.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_EmailToParticipants.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_EmailToParticipants.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_EmailToParticipants.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_EmailToParticipants.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_EmailToParticipants.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_EmailToParticipants.ForeColor = System.Drawing.Color.Black
         Me.cmd_EmailToParticipants.Image = Global.AccountsManagementForms.My.Resources.Resources.PostIcon22x22
         Me.cmd_EmailToParticipants.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -142,15 +146,16 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_EmailToParticipants.Size = New System.Drawing.Size(150, 39)
         Me.cmd_EmailToParticipants.TabIndex = 22
         Me.cmd_EmailToParticipants.Text = "     Email to Participants"
-        Me.cmd_EmailToParticipants.UseVisualStyleBackColor = True
+        Me.cmd_EmailToParticipants.UseVisualStyleBackColor = False
         '
         'cmd_close
         '
+        Me.cmd_close.BackColor = System.Drawing.Color.White
         Me.cmd_close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_close.ForeColor = System.Drawing.Color.Black
         Me.cmd_close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -159,15 +164,16 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_close.Size = New System.Drawing.Size(184, 39)
         Me.cmd_close.TabIndex = 21
         Me.cmd_close.Text = "Close"
-        Me.cmd_close.UseVisualStyleBackColor = True
+        Me.cmd_close.UseVisualStyleBackColor = False
         '
         'cmd_preview
         '
+        Me.cmd_preview.BackColor = System.Drawing.Color.White
         Me.cmd_preview.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_preview.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_preview.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_preview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_preview.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_preview.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_preview.ForeColor = System.Drawing.Color.Black
         Me.cmd_preview.Image = Global.AccountsManagementForms.My.Resources.Resources.FileSearchIcon22x22
         Me.cmd_preview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -176,13 +182,13 @@ Partial Class frmRPTStatementOfAccount
         Me.cmd_preview.Size = New System.Drawing.Size(150, 39)
         Me.cmd_preview.TabIndex = 20
         Me.cmd_preview.Text = "Preview"
-        Me.cmd_preview.UseVisualStyleBackColor = True
+        Me.cmd_preview.UseVisualStyleBackColor = False
         '
         'frmRPTStatementOfAccount
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(335, 254)
         Me.Controls.Add(Me.cbo_dueDate)
         Me.Controls.Add(Me.Label2)

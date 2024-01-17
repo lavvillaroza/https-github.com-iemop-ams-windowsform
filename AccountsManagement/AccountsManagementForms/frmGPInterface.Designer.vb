@@ -22,8 +22,8 @@ Partial Class frmGPInterface
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.gb_TransType = New System.Windows.Forms.GroupBox()
         Me.rb_WhTaxAdj = New System.Windows.Forms.RadioButton()
         Me.rb_SPA = New System.Windows.Forms.RadioButton()
@@ -431,6 +431,7 @@ Partial Class frmGPInterface
         '
         'cmd_search
         '
+        Me.cmd_search.BackColor = System.Drawing.Color.White
         Me.cmd_search.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_search.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -444,7 +445,7 @@ Partial Class frmGPInterface
         Me.cmd_search.Size = New System.Drawing.Size(168, 39)
         Me.cmd_search.TabIndex = 5
         Me.cmd_search.Text = "Search"
-        Me.cmd_search.UseVisualStyleBackColor = True
+        Me.cmd_search.UseVisualStyleBackColor = False
         '
         'cmd_close
         '
@@ -482,6 +483,7 @@ Partial Class frmGPInterface
         '
         'cmd_UpdateGPRef
         '
+        Me.cmd_UpdateGPRef.BackColor = System.Drawing.Color.White
         Me.cmd_UpdateGPRef.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_UpdateGPRef.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_UpdateGPRef.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -492,7 +494,7 @@ Partial Class frmGPInterface
         Me.cmd_UpdateGPRef.Name = "cmd_UpdateGPRef"
         Me.cmd_UpdateGPRef.Size = New System.Drawing.Size(35, 30)
         Me.cmd_UpdateGPRef.TabIndex = 38
-        Me.cmd_UpdateGPRef.UseVisualStyleBackColor = True
+        Me.cmd_UpdateGPRef.UseVisualStyleBackColor = False
         '
         'Label4
         '
@@ -517,6 +519,7 @@ Partial Class frmGPInterface
         '
         'cmd_Details1
         '
+        Me.cmd_Details1.BackColor = System.Drawing.Color.White
         Me.cmd_Details1.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Details1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Details1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -530,7 +533,7 @@ Partial Class frmGPInterface
         Me.cmd_Details1.Size = New System.Drawing.Size(150, 39)
         Me.cmd_Details1.TabIndex = 18
         Me.cmd_Details1.Text = "Report Details"
-        Me.cmd_Details1.UseVisualStyleBackColor = True
+        Me.cmd_Details1.UseVisualStyleBackColor = False
         '
         'grp_Details
         '
@@ -748,17 +751,17 @@ Partial Class frmGPInterface
         Me.dgv_ViewJV.AllowUserToAddRows = False
         Me.dgv_ViewJV.AllowUserToDeleteRows = False
         Me.dgv_ViewJV.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_ViewJV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_ViewJV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_ViewJV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_ViewJV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_ViewJV.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.dgv_ViewJV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_ViewJV.Location = New System.Drawing.Point(6, 15)
         Me.dgv_ViewJV.Name = "dgv_ViewJV"
@@ -769,6 +772,7 @@ Partial Class frmGPInterface
         '
         'cmd_GenReport
         '
+        Me.cmd_GenReport.BackColor = System.Drawing.Color.White
         Me.cmd_GenReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_GenReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_GenReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -782,10 +786,11 @@ Partial Class frmGPInterface
         Me.cmd_GenReport.Size = New System.Drawing.Size(150, 39)
         Me.cmd_GenReport.TabIndex = 44
         Me.cmd_GenReport.Text = "Journal Voucher"
-        Me.cmd_GenReport.UseVisualStyleBackColor = True
+        Me.cmd_GenReport.UseVisualStyleBackColor = False
         '
         'cmd_Post
         '
+        Me.cmd_Post.BackColor = System.Drawing.Color.White
         Me.cmd_Post.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Post.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Post.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -799,19 +804,20 @@ Partial Class frmGPInterface
         Me.cmd_Post.Size = New System.Drawing.Size(150, 39)
         Me.cmd_Post.TabIndex = 45
         Me.cmd_Post.Text = "Post To GP"
-        Me.cmd_Post.UseVisualStyleBackColor = True
+        Me.cmd_Post.UseVisualStyleBackColor = False
         '
         'frmGPInterface
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1116, 618)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmGPInterface"
         Me.Text = "Journal Posting Interface"
         Me.gb_TransType.ResumeLayout(False)

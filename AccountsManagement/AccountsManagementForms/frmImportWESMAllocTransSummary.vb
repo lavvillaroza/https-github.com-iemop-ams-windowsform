@@ -9,13 +9,13 @@ Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 Imports WESMLib.Auth.Lib
 
-Public Class frmImportWBTransactionSummaryBIRR
+Public Class frmImportWESMAllocTransSummary
     Private _WBTSummaryHelper As New ImportWESMTransSummaryHelper
     Private _WBillHelper As WESMBillHelper
     Private cts As CancellationTokenSource
     Private Sub frmImportWBTransactionSummaryBIRR_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-            Me.MdiParent = MainForm
-            Me.txt_BillingRemarks.MaxLength = 300
+        Me.MdiParent = MainForm
+        Me.txt_BillingRemarks.MaxLength = 300
         _WBillHelper = WESMBillHelper.GetInstance
     End Sub
 
@@ -268,255 +268,255 @@ Public Class frmImportWBTransactionSummaryBIRR
     End Sub
 
     Private Function GenerateJournalVoucherForEnergy(ByVal listItems As List(Of WESMBill), ByVal WithholdingTax As Decimal) As JournalVoucher
-            Dim result As New JournalVoucher
-            Try
-                Dim jvDetails As New List(Of JournalVoucherDetails)
-                Dim jvDetail As JournalVoucherDetails
-
-                Dim signatories As New DocSignatories
-
-                Try
-                    signatories = (From x In _WBillHelper.GetSignatories()
-                                   Where x.DocCode = EnumDocCode.JV.ToString()
-                                   Select x).First()
-                Catch ex As Exception
-                    Throw New ApplicationException("No Signatories for Journal Voucher")
-                End Try
-
-
-                'Get the Total AR
-                Dim totalAR = (From x In listItems
-                               Where x.Amount < 0
-                               Select x.Amount).Sum()
-
-                'Get the Total AP
-                Dim totalAP = (From x In listItems
-                               Where x.Amount > 0
-                               Select x.Amount).Sum()
-
-                totalAP = Math.Round(totalAP, 2)
-                totalAR = Math.Round(totalAR, 2)
-                WithholdingTax = Math.Round(WithholdingTax, 2)
-
-                'Get the Total NSS
-                Dim totalNSS = Math.Abs(totalAP + totalAR - WithholdingTax)
-
-                'Entry for Accounts Receivable
-                If totalAR <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.CreditCode
-                        .Debit = Math.Abs(totalAR)
-                        .Credit = 0
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If WithholdingTax <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.EWTPayable
-                        .Debit = 0
-                        .Credit = Math.Abs(WithholdingTax)
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                'Entry for Accounts Payable
-                If totalAP <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.DebitCode
-                        .Debit = 0
-                        .Credit = totalAP
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                'Check where NSS should be place
-                If totalNSS <> 0 Then
-                    If totalAP + Math.Abs(WithholdingTax) > Math.Abs(totalAR) Then
-                        jvDetail = New JournalVoucherDetails
-                        With jvDetail
-                            .AccountCode = AMModule.NSSCode
-                            .Debit = Math.Abs(totalNSS)
-                            .Credit = 0
-                        End With
-                        jvDetails.Add(jvDetail)
-                    Else
-                        jvDetail = New JournalVoucherDetails
-                        With jvDetail
-                            .AccountCode = AMModule.NSSCode
-                            .Debit = 0
-                            .Credit = Math.Abs(totalNSS)
-                        End With
-                        jvDetails.Add(jvDetail)
-                    End If
-                End If
-
-                'Create the JV Main
-                With result
-                    .PostedType = EnumPostedType.U.ToString()
-                    .JVDetails = jvDetails
-                    .CheckedBy = signatories.Signatory_1
-                    .ApprovedBy = signatories.Signatory_2
-                End With
-            Catch ex As Exception
-                Throw New ApplicationException(ex.Message)
-            End Try
-
-            Return result
-        End Function
-
-        Private Function GenerateJournalVoucherForMarketFees(ByVal listItems As List(Of WESMBill)) As JournalVoucher
-
-            Dim result As New JournalVoucher
+        Dim result As New JournalVoucher
+        Try
             Dim jvDetails As New List(Of JournalVoucherDetails)
             Dim jvDetail As JournalVoucherDetails
 
+            Dim signatories As New DocSignatories
+
             Try
-                'Get the signatories
-                Dim signatories = (From x In _WBillHelper.GetSignatories()
-                                   Where x.DocCode = EnumDocCode.JV.ToString()
-                                   Select x).First()
-
-                'Get the Total AR Market Fees
-                Dim totalMFAR = (From x In listItems
-                                 Where x.ChargeType = EnumChargeType.MF And x.Amount < 0
-                                 Select x.Amount).Sum()
-
-                'Get the Total AP Market Fees
-                Dim totalMFAP = (From x In listItems
-                                 Where x.ChargeType = EnumChargeType.MF And x.Amount > 0
-                                 Select x.Amount).Sum()
-
-                'Get the Total AR Vat on Market Fees
-                Dim totalMFVAR = (From x In listItems
-                                  Where x.ChargeType = EnumChargeType.MFV And x.Amount < 0
-                                  Select x.Amount).Sum()
-
-                'Get the Total AP Vat on Market Fees
-                Dim totalMFVAP = (From x In listItems
-                                  Where x.ChargeType = EnumChargeType.MFV And x.Amount > 0
-                                  Select x.Amount).Sum()
-
-
-                'Comment by Vloody 03/25/2018
-                'Since the Summary of Accounting Books is per WESM Bill
-                'The negative and positive should have a separate entries
-
-                If totalMFAR <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.MarketTransFeesCode
-                        .Debit = 0
-                        .Credit = Math.Abs(totalMFAR)
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If totalMFVAR <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.MarketFeesOutputTaxCode
-                        .Debit = 0
-                        .Credit = Math.Abs(totalMFVAR)
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If totalMFAR <> 0 Or totalMFVAR <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.CreditCode
-                        .Debit = Math.Abs(totalMFAR + totalMFVAR)
-                        .Credit = 0
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If totalMFAP <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.MarketTransFeesCode
-                        .Debit = totalMFAP
-                        .Credit = 0
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If totalMFVAP <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.MarketFeesOutputTaxCode
-                        .Debit = totalMFVAP
-                        .Credit = 0
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                If totalMFAP <> 0 Or totalMFVAP <> 0 Then
-                    jvDetail = New JournalVoucherDetails
-                    With jvDetail
-                        .AccountCode = AMModule.DebitCode
-                        .Debit = 0
-                        .Credit = totalMFAP + totalMFVAP
-                    End With
-                    jvDetails.Add(jvDetail)
-                End If
-
-                'Create the JV Main
-                With result
-                    .PostedType = EnumPostedType.U.ToString()
-                    .JVDetails = jvDetails
-                    .CheckedBy = signatories.Signatory_1
-                    .ApprovedBy = signatories.Signatory_2
-                End With
+                signatories = (From x In _WBillHelper.GetSignatories()
+                               Where x.DocCode = EnumDocCode.JV.ToString()
+                               Select x).First()
             Catch ex As Exception
-                Throw New ApplicationException(ex.Message)
+                Throw New ApplicationException("No Signatories for Journal Voucher")
             End Try
 
-            Return result
-        End Function
 
-        Private Function GenerateGPPosted(ByVal billingPeriod As CalendarBillingPeriod, ByVal settlementRun As String,
+            'Get the Total AR
+            Dim totalAR = (From x In listItems
+                           Where x.Amount < 0
+                           Select x.Amount).Sum()
+
+            'Get the Total AP
+            Dim totalAP = (From x In listItems
+                           Where x.Amount > 0
+                           Select x.Amount).Sum()
+
+            totalAP = Math.Round(totalAP, 2)
+            totalAR = Math.Round(totalAR, 2)
+            WithholdingTax = Math.Round(WithholdingTax, 2)
+
+            'Get the Total NSS
+            Dim totalNSS = Math.Abs(totalAP + totalAR - WithholdingTax)
+
+            'Entry for Accounts Receivable
+            If totalAR <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.CreditCode
+                    .Debit = Math.Abs(totalAR)
+                    .Credit = 0
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If WithholdingTax <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.EWTPayable
+                    .Debit = 0
+                    .Credit = Math.Abs(WithholdingTax)
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            'Entry for Accounts Payable
+            If totalAP <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.DebitCode
+                    .Debit = 0
+                    .Credit = totalAP
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            'Check where NSS should be place
+            If totalNSS <> 0 Then
+                If totalAP + Math.Abs(WithholdingTax) > Math.Abs(totalAR) Then
+                    jvDetail = New JournalVoucherDetails
+                    With jvDetail
+                        .AccountCode = AMModule.NSSCode
+                        .Debit = Math.Abs(totalNSS)
+                        .Credit = 0
+                    End With
+                    jvDetails.Add(jvDetail)
+                Else
+                    jvDetail = New JournalVoucherDetails
+                    With jvDetail
+                        .AccountCode = AMModule.NSSCode
+                        .Debit = 0
+                        .Credit = Math.Abs(totalNSS)
+                    End With
+                    jvDetails.Add(jvDetail)
+                End If
+            End If
+
+            'Create the JV Main
+            With result
+                .PostedType = EnumPostedType.U.ToString()
+                .JVDetails = jvDetails
+                .CheckedBy = signatories.Signatory_1
+                .ApprovedBy = signatories.Signatory_2
+            End With
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+
+    Private Function GenerateJournalVoucherForMarketFees(ByVal listItems As List(Of WESMBill)) As JournalVoucher
+
+        Dim result As New JournalVoucher
+        Dim jvDetails As New List(Of JournalVoucherDetails)
+        Dim jvDetail As JournalVoucherDetails
+
+        Try
+            'Get the signatories
+            Dim signatories = (From x In _WBillHelper.GetSignatories()
+                               Where x.DocCode = EnumDocCode.JV.ToString()
+                               Select x).First()
+
+            'Get the Total AR Market Fees
+            Dim totalMFAR = (From x In listItems
+                             Where x.ChargeType = EnumChargeType.MF And x.Amount < 0
+                             Select x.Amount).Sum()
+
+            'Get the Total AP Market Fees
+            Dim totalMFAP = (From x In listItems
+                             Where x.ChargeType = EnumChargeType.MF And x.Amount > 0
+                             Select x.Amount).Sum()
+
+            'Get the Total AR Vat on Market Fees
+            Dim totalMFVAR = (From x In listItems
+                              Where x.ChargeType = EnumChargeType.MFV And x.Amount < 0
+                              Select x.Amount).Sum()
+
+            'Get the Total AP Vat on Market Fees
+            Dim totalMFVAP = (From x In listItems
+                              Where x.ChargeType = EnumChargeType.MFV And x.Amount > 0
+                              Select x.Amount).Sum()
+
+
+            'Comment by Vloody 03/25/2018
+            'Since the Summary of Accounting Books is per WESM Bill
+            'The negative and positive should have a separate entries
+
+            If totalMFAR <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.MarketTransFeesCode
+                    .Debit = 0
+                    .Credit = Math.Abs(totalMFAR)
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If totalMFVAR <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.MarketFeesOutputTaxCode
+                    .Debit = 0
+                    .Credit = Math.Abs(totalMFVAR)
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If totalMFAR <> 0 Or totalMFVAR <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.CreditCode
+                    .Debit = Math.Abs(totalMFAR + totalMFVAR)
+                    .Credit = 0
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If totalMFAP <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.MarketTransFeesCode
+                    .Debit = totalMFAP
+                    .Credit = 0
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If totalMFVAP <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.MarketFeesOutputTaxCode
+                    .Debit = totalMFVAP
+                    .Credit = 0
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            If totalMFAP <> 0 Or totalMFVAP <> 0 Then
+                jvDetail = New JournalVoucherDetails
+                With jvDetail
+                    .AccountCode = AMModule.DebitCode
+                    .Debit = 0
+                    .Credit = totalMFAP + totalMFVAP
+                End With
+                jvDetails.Add(jvDetail)
+            End If
+
+            'Create the JV Main
+            With result
+                .PostedType = EnumPostedType.U.ToString()
+                .JVDetails = jvDetails
+                .CheckedBy = signatories.Signatory_1
+                .ApprovedBy = signatories.Signatory_2
+            End With
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+
+    Private Function GenerateGPPosted(ByVal billingPeriod As CalendarBillingPeriod, ByVal settlementRun As String,
                                       ByVal dueDate As Date, ByVal chargeType As EnumChargeType, ByVal itemJV As JournalVoucher) _
                                       As WESMBillGPPosted
-            Dim result As New WESMBillGPPosted
-            Dim totalDocumentAmount As Decimal = 0, totalCredit As Decimal = 0
+        Dim result As New WESMBillGPPosted
+        Dim totalDocumentAmount As Decimal = 0, totalCredit As Decimal = 0
 
-            Try
-                For Each item In itemJV.JVDetails
-                    totalDocumentAmount += item.Debit
-                    totalCredit += item.Credit
-                Next
+        Try
+            For Each item In itemJV.JVDetails
+                totalDocumentAmount += item.Debit
+                totalCredit += item.Credit
+            Next
 
-                'For testing only
-                If totalDocumentAmount <> totalCredit Then
-                    Throw New ApplicationException("Debit and credit are not equal!")
-                End If
+            'For testing only
+            If totalDocumentAmount <> totalCredit Then
+                Throw New ApplicationException("Debit and credit are not equal!")
+            End If
 
-                With result
-                    .BillingPeriod = billingPeriod.BillingPeriod
-                    .SettlementRun = settlementRun
-                    .DueDate = dueDate
-                    .Charge = chargeType
-                    .DocumentAmount = totalDocumentAmount
-                    .Posted = 0
-                    .PostType = EnumPostedType.U.ToString()
-                End With
+            With result
+                .BillingPeriod = billingPeriod.BillingPeriod
+                .SettlementRun = settlementRun
+                .DueDate = dueDate
+                .Charge = chargeType
+                .DocumentAmount = totalDocumentAmount
+                .Posted = 0
+                .PostType = EnumPostedType.U.ToString()
+            End With
 
-            Catch ex As Exception
-                Throw New ApplicationException(ex.Message)
-            End Try
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
 
-            Return result
-        End Function
+        Return result
+    End Function
 
-        Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-            Me.Close()
-        End Sub
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
+    End Sub
 
 #End Region
 
-    End Class
+End Class

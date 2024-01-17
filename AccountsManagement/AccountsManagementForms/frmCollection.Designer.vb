@@ -884,7 +884,6 @@ Partial Class frmCollection
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1262, 644)
         Me.ControlBox = False
         Me.Controls.Add(Me.gpFake)

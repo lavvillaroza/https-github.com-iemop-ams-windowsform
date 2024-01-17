@@ -167,7 +167,7 @@ Partial Class MainForm
         Me.AccountingCodes_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AccountingCodes_TSMenuItem.ForeColor = System.Drawing.Color.Black
         Me.AccountingCodes_TSMenuItem.Name = "AccountingCodes_TSMenuItem"
-        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AccountingCodes_TSMenuItem.Text = "Libraries"
         '
         'AccountingCodeToolStripMenuItem
@@ -248,7 +248,7 @@ Partial Class MainForm
         'LogoutToolStripMenuItem
         '
         Me.LogoutToolStripMenuItem.Name = "LogoutToolStripMenuItem"
-        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.LogoutToolStripMenuItem.Text = "Logout"
         '
         'SOAP_TSMenuItem
@@ -271,7 +271,6 @@ Partial Class MainForm
         Me.WESMBillToolStripMenuItem.Name = "WESMBillToolStripMenuItem"
         Me.WESMBillToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
         Me.WESMBillToolStripMenuItem.Text = "WESM Bill From Flat File"
-        Me.WESMBillToolStripMenuItem.Visible = False
         '
         'WESMSalesAndPurchasedToolStripMenuItem
         '
@@ -913,7 +912,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(920, 704)
@@ -925,7 +924,7 @@ Partial Class MainForm
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Accounts Management System (LVM v4.1.c1d0960) "
+        Me.Text = "Accounts Management System (LVM v4.1.997c1d9) "
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()

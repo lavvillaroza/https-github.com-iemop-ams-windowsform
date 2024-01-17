@@ -78,6 +78,7 @@ Partial Class frmWESMInvoice
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -91,10 +92,11 @@ Partial Class frmWESMInvoice
         Me.btnClose.Size = New System.Drawing.Size(140, 39)
         Me.btnClose.TabIndex = 26
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnDownload
         '
+        Me.btnDownload.BackColor = System.Drawing.Color.White
         Me.btnDownload.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnDownload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnDownload.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -108,7 +110,7 @@ Partial Class frmWESMInvoice
         Me.btnDownload.Size = New System.Drawing.Size(140, 39)
         Me.btnDownload.TabIndex = 27
         Me.btnDownload.Text = "Export to PDF"
-        Me.btnDownload.UseVisualStyleBackColor = True
+        Me.btnDownload.UseVisualStyleBackColor = False
         '
         'btnOpen
         '
@@ -168,6 +170,7 @@ Partial Class frmWESMInvoice
         '
         'btnRefresh
         '
+        Me.btnRefresh.BackColor = System.Drawing.Color.White
         Me.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -181,10 +184,11 @@ Partial Class frmWESMInvoice
         Me.btnRefresh.Size = New System.Drawing.Size(140, 39)
         Me.btnRefresh.TabIndex = 6
         Me.btnRefresh.Text = "&Refresh"
-        Me.btnRefresh.UseVisualStyleBackColor = True
+        Me.btnRefresh.UseVisualStyleBackColor = False
         '
         'btnShowReport
         '
+        Me.btnShowReport.BackColor = System.Drawing.Color.White
         Me.btnShowReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnShowReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnShowReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -198,7 +202,7 @@ Partial Class frmWESMInvoice
         Me.btnShowReport.Size = New System.Drawing.Size(140, 39)
         Me.btnShowReport.TabIndex = 25
         Me.btnShowReport.Text = "Generate Report"
-        Me.btnShowReport.UseVisualStyleBackColor = True
+        Me.btnShowReport.UseVisualStyleBackColor = False
         '
         'chckList
         '
@@ -262,7 +266,7 @@ Partial Class frmWESMInvoice
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(349, 501)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

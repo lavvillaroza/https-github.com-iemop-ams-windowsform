@@ -111,6 +111,7 @@ Partial Class frmWBSAdjustmentPerBatchAdd
         'btn_Cancel
         '
         Me.btn_Cancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Cancel.BackColor = System.Drawing.Color.White
         Me.btn_Cancel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_Cancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Cancel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -124,11 +125,12 @@ Partial Class frmWBSAdjustmentPerBatchAdd
         Me.btn_Cancel.Size = New System.Drawing.Size(110, 39)
         Me.btn_Cancel.TabIndex = 9
         Me.btn_Cancel.Text = "&Cancel"
-        Me.btn_Cancel.UseVisualStyleBackColor = True
+        Me.btn_Cancel.UseVisualStyleBackColor = False
         '
         'btn_Create
         '
         Me.btn_Create.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Create.BackColor = System.Drawing.Color.White
         Me.btn_Create.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_Create.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Create.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -142,7 +144,7 @@ Partial Class frmWBSAdjustmentPerBatchAdd
         Me.btn_Create.Size = New System.Drawing.Size(110, 39)
         Me.btn_Create.TabIndex = 8
         Me.btn_Create.Text = "&Create"
-        Me.btn_Create.UseVisualStyleBackColor = True
+        Me.btn_Create.UseVisualStyleBackColor = False
         '
         'TableLayoutPanel2
         '

@@ -47,7 +47,7 @@ Partial Class frmSLPrudentialPerParticipant
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.dtp_To)
         Me.GroupBox1.Controls.Add(Me.dtp_From)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 157)
         Me.GroupBox1.Name = "GroupBox1"
@@ -59,18 +59,18 @@ Partial Class frmSLPrudentialPerParticipant
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(50, 46)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(25, 14)
+        Me.Label2.Size = New System.Drawing.Size(23, 14)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "To:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(33, 23)
         Me.Label1.Name = "Label1"
@@ -81,7 +81,7 @@ Partial Class frmSLPrudentialPerParticipant
         'dtp_To
         '
         Me.dtp_To.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtp_To.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_To.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_To.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_To.Location = New System.Drawing.Point(81, 49)
         Me.dtp_To.Name = "dtp_To"
@@ -91,7 +91,7 @@ Partial Class frmSLPrudentialPerParticipant
         'dtp_From
         '
         Me.dtp_From.CalendarFont = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtp_From.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtp_From.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtp_From.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtp_From.Location = New System.Drawing.Point(81, 21)
         Me.dtp_From.Name = "dtp_From"
@@ -100,11 +100,12 @@ Partial Class frmSLPrudentialPerParticipant
         '
         'cmd_Close
         '
+        Me.cmd_Close.BackColor = System.Drawing.Color.White
         Me.cmd_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_Close.Location = New System.Drawing.Point(331, 120)
@@ -112,15 +113,16 @@ Partial Class frmSLPrudentialPerParticipant
         Me.cmd_Close.Size = New System.Drawing.Size(145, 39)
         Me.cmd_Close.TabIndex = 9
         Me.cmd_Close.Text = "Close"
-        Me.cmd_Close.UseVisualStyleBackColor = True
+        Me.cmd_Close.UseVisualStyleBackColor = False
         '
         'cmd_Generate
         '
+        Me.cmd_Generate.BackColor = System.Drawing.Color.White
         Me.cmd_Generate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Generate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Generate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_Generate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_Generate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Generate.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_Generate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmd_Generate.Location = New System.Drawing.Point(331, 30)
@@ -128,7 +130,7 @@ Partial Class frmSLPrudentialPerParticipant
         Me.cmd_Generate.Size = New System.Drawing.Size(145, 39)
         Me.cmd_Generate.TabIndex = 8
         Me.cmd_Generate.Text = "Generate"
-        Me.cmd_Generate.UseVisualStyleBackColor = True
+        Me.cmd_Generate.UseVisualStyleBackColor = False
         '
         'GroupBox2
         '
@@ -138,7 +140,7 @@ Partial Class frmSLPrudentialPerParticipant
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Controls.Add(Me.Label3)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox2.Name = "GroupBox2"
@@ -150,7 +152,7 @@ Partial Class frmSLPrudentialPerParticipant
         'txtName
         '
         Me.txtName.BackColor = System.Drawing.Color.LemonChiffon
-        Me.txtName.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtName.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtName.ForeColor = System.Drawing.Color.Black
         Me.txtName.Location = New System.Drawing.Point(116, 71)
         Me.txtName.Multiline = True
@@ -161,18 +163,18 @@ Partial Class frmSLPrudentialPerParticipant
         'ddlParticipantID
         '
         Me.ddlParticipantID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ddlParticipantID.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ddlParticipantID.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ddlParticipantID.ForeColor = System.Drawing.Color.Black
         Me.ddlParticipantID.FormattingEnabled = True
         Me.ddlParticipantID.Location = New System.Drawing.Point(114, 43)
         Me.ddlParticipantID.Name = "ddlParticipantID"
-        Me.ddlParticipantID.Size = New System.Drawing.Size(190, 20)
+        Me.ddlParticipantID.Size = New System.Drawing.Size(190, 22)
         Me.ddlParticipantID.TabIndex = 8
         '
         'txtIDNumber
         '
         Me.txtIDNumber.BackColor = System.Drawing.Color.LemonChiffon
-        Me.txtIDNumber.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtIDNumber.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtIDNumber.ForeColor = System.Drawing.Color.Black
         Me.txtIDNumber.Location = New System.Drawing.Point(114, 18)
         Me.txtIDNumber.Name = "txtIDNumber"
@@ -183,7 +185,7 @@ Partial Class frmSLPrudentialPerParticipant
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(68, 75)
         Me.Label5.Name = "Label5"
@@ -194,18 +196,18 @@ Partial Class frmSLPrudentialPerParticipant
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(25, 46)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(82, 14)
+        Me.Label4.Size = New System.Drawing.Size(81, 14)
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "Participant ID:"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(41, 20)
         Me.Label3.Name = "Label3"
@@ -220,7 +222,7 @@ Partial Class frmSLPrudentialPerParticipant
         Me.btn_ExportToCSV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_ExportToCSV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_ExportToCSV.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_ExportToCSV.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ExportToCSV.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_ExportToCSV.ForeColor = System.Drawing.Color.Black
         Me.btn_ExportToCSV.Image = Global.AccountsManagementForms.My.Resources.Resources.CSVIconColored22x22
         Me.btn_ExportToCSV.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -235,7 +237,7 @@ Partial Class frmSLPrudentialPerParticipant
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(486, 238)
         Me.Controls.Add(Me.btn_ExportToCSV)
         Me.Controls.Add(Me.GroupBox2)

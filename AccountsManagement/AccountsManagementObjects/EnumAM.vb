@@ -516,8 +516,8 @@ Public Enum EnumAMSModulesFinal
     CollEditCollectionDefaultInterest = 18
     CollPostDailyCollectionsWindow = 19
     CollPostManualCollectionsWindow = 20
-    PaymentAllocationWindow = 21
-    PaymentAllocationHistoryViewWindow = 22
+    PayAllocateCollectionsWindow = 21
+    PayViewAllocatedCollectionsWindow = 22
     MonEarnedInterestWindow = 23
     MonNSSWindow = 24
     MonPrudentialRepWindow = 25

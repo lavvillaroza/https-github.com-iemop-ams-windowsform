@@ -49,6 +49,7 @@ Partial Class frmSettings
         'btnRefresh
         '
         Me.btnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefresh.BackColor = System.Drawing.Color.White
         Me.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnRefresh.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
@@ -61,11 +62,12 @@ Partial Class frmSettings
         Me.btnRefresh.Size = New System.Drawing.Size(110, 39)
         Me.btnRefresh.TabIndex = 4
         Me.btnRefresh.Text = "&Refresh"
-        Me.btnRefresh.UseVisualStyleBackColor = True
+        Me.btnRefresh.UseVisualStyleBackColor = False
         '
         'btnSave
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSave.BackColor = System.Drawing.Color.White
         Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
@@ -78,11 +80,12 @@ Partial Class frmSettings
         Me.btnSave.Size = New System.Drawing.Size(110, 39)
         Me.btnSave.TabIndex = 3
         Me.btnSave.Text = "&Save"
-        Me.btnSave.UseVisualStyleBackColor = True
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'btnEdit
         '
         Me.btnEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnEdit.BackColor = System.Drawing.Color.White
         Me.btnEdit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnEdit.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
@@ -95,7 +98,7 @@ Partial Class frmSettings
         Me.btnEdit.Size = New System.Drawing.Size(110, 39)
         Me.btnEdit.TabIndex = 2
         Me.btnEdit.Text = "&Edit"
-        Me.btnEdit.UseVisualStyleBackColor = True
+        Me.btnEdit.UseVisualStyleBackColor = False
         '
         'Label1
         '
@@ -255,6 +258,7 @@ Partial Class frmSettings
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.CheckedBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control
@@ -268,13 +272,13 @@ Partial Class frmSettings
         Me.btnClose.Size = New System.Drawing.Size(110, 39)
         Me.btnClose.TabIndex = 17
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'frmSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(907, 552)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnClose)

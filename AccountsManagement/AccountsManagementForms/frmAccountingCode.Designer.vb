@@ -206,6 +206,7 @@ Partial Class frmAccountingCode
         '
         'btn_New
         '
+        Me.btn_New.BackColor = System.Drawing.Color.White
         Me.btn_New.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btn_New.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_New.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -218,10 +219,11 @@ Partial Class frmAccountingCode
         Me.btn_New.Size = New System.Drawing.Size(40, 30)
         Me.btn_New.TabIndex = 3
         Me.ToolTip1.SetToolTip(Me.btn_New, "Add New Record")
-        Me.btn_New.UseVisualStyleBackColor = True
+        Me.btn_New.UseVisualStyleBackColor = False
         '
         'btn_Edit
         '
+        Me.btn_Edit.BackColor = System.Drawing.Color.White
         Me.btn_Edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btn_Edit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_Edit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -234,7 +236,7 @@ Partial Class frmAccountingCode
         Me.btn_Edit.Size = New System.Drawing.Size(40, 30)
         Me.btn_Edit.TabIndex = 4
         Me.ToolTip1.SetToolTip(Me.btn_Edit, "Edit Record")
-        Me.btn_Edit.UseVisualStyleBackColor = True
+        Me.btn_Edit.UseVisualStyleBackColor = False
         '
         'txtSearch
         '
@@ -247,6 +249,7 @@ Partial Class frmAccountingCode
         '
         'btn_Del
         '
+        Me.btn_Del.BackColor = System.Drawing.Color.White
         Me.btn_Del.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btn_Del.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_Del.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -259,10 +262,11 @@ Partial Class frmAccountingCode
         Me.btn_Del.Size = New System.Drawing.Size(40, 30)
         Me.btn_Del.TabIndex = 5
         Me.ToolTip1.SetToolTip(Me.btn_Del, "Delete Record")
-        Me.btn_Del.UseVisualStyleBackColor = True
+        Me.btn_Del.UseVisualStyleBackColor = False
         '
         'btn_refresh
         '
+        Me.btn_refresh.BackColor = System.Drawing.Color.White
         Me.btn_refresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btn_refresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_refresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -275,11 +279,12 @@ Partial Class frmAccountingCode
         Me.btn_refresh.Size = New System.Drawing.Size(40, 30)
         Me.btn_refresh.TabIndex = 6
         Me.ToolTip1.SetToolTip(Me.btn_refresh, "Refresh")
-        Me.btn_refresh.UseVisualStyleBackColor = True
+        Me.btn_refresh.UseVisualStyleBackColor = False
         '
         'cmd_close
         '
         Me.cmd_close.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_close.BackColor = System.Drawing.Color.White
         Me.cmd_close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -293,13 +298,13 @@ Partial Class frmAccountingCode
         Me.cmd_close.Size = New System.Drawing.Size(121, 39)
         Me.cmd_close.TabIndex = 8
         Me.cmd_close.Text = "Close"
-        Me.cmd_close.UseVisualStyleBackColor = True
+        Me.cmd_close.UseVisualStyleBackColor = False
         '
         'frmAccountingCode
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(657, 451)
         Me.Controls.Add(Me.cmd_close)
         Me.Controls.Add(Me.GroupBox2)

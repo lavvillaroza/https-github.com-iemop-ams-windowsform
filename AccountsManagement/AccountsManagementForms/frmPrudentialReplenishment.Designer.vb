@@ -139,6 +139,7 @@ Partial Class frmPrudentialReplenishment
         '
         'btnReplenishment
         '
+        Me.btnReplenishment.BackColor = System.Drawing.Color.White
         Me.btnReplenishment.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnReplenishment.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnReplenishment.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -152,10 +153,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnReplenishment.Size = New System.Drawing.Size(169, 39)
         Me.btnReplenishment.TabIndex = 42
         Me.btnReplenishment.Text = "       &Input Replenishment"
-        Me.btnReplenishment.UseVisualStyleBackColor = True
+        Me.btnReplenishment.UseVisualStyleBackColor = False
         '
         'btnSearchReplenishment
         '
+        Me.btnSearchReplenishment.BackColor = System.Drawing.Color.White
         Me.btnSearchReplenishment.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSearchReplenishment.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSearchReplenishment.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -169,10 +171,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnSearchReplenishment.Size = New System.Drawing.Size(110, 39)
         Me.btnSearchReplenishment.TabIndex = 43
         Me.btnSearchReplenishment.Text = "   S&earch"
-        Me.btnSearchReplenishment.UseVisualStyleBackColor = True
+        Me.btnSearchReplenishment.UseVisualStyleBackColor = False
         '
         'btnSave
         '
+        Me.btnSave.BackColor = System.Drawing.Color.White
         Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -186,10 +189,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnSave.Size = New System.Drawing.Size(120, 39)
         Me.btnSave.TabIndex = 45
         Me.btnSave.Text = "   &Save"
-        Me.btnSave.UseVisualStyleBackColor = True
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'btnJV
         '
+        Me.btnJV.BackColor = System.Drawing.Color.White
         Me.btnJV.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnJV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnJV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -203,10 +207,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnJV.Size = New System.Drawing.Size(169, 39)
         Me.btnJV.TabIndex = 46
         Me.btnJV.Text = "      &Journal Voucher (Draft)"
-        Me.btnJV.UseVisualStyleBackColor = True
+        Me.btnJV.UseVisualStyleBackColor = False
         '
         'btnPostToGP
         '
+        Me.btnPostToGP.BackColor = System.Drawing.Color.White
         Me.btnPostToGP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnPostToGP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnPostToGP.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -220,10 +225,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnPostToGP.Size = New System.Drawing.Size(120, 39)
         Me.btnPostToGP.TabIndex = 47
         Me.btnPostToGP.Text = "    &Post To GP"
-        Me.btnPostToGP.UseVisualStyleBackColor = True
+        Me.btnPostToGP.UseVisualStyleBackColor = False
         '
         'btnSummaryReport
         '
+        Me.btnSummaryReport.BackColor = System.Drawing.Color.White
         Me.btnSummaryReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSummaryReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSummaryReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -237,10 +243,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnSummaryReport.Size = New System.Drawing.Size(169, 39)
         Me.btnSummaryReport.TabIndex = 50
         Me.btnSummaryReport.Text = "      &Summary Report (Draft)"
-        Me.btnSummaryReport.UseVisualStyleBackColor = True
+        Me.btnSummaryReport.UseVisualStyleBackColor = False
         '
         'btnEdit
         '
+        Me.btnEdit.BackColor = System.Drawing.Color.White
         Me.btnEdit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -254,12 +261,13 @@ Partial Class frmPrudentialReplenishment
         Me.btnEdit.Size = New System.Drawing.Size(110, 39)
         Me.btnEdit.TabIndex = 48
         Me.btnEdit.Text = "&Modify"
-        Me.btnEdit.UseVisualStyleBackColor = True
+        Me.btnEdit.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
         Me.btnSearch.AccessibleName = ""
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.BackColor = System.Drawing.Color.White
         Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
@@ -271,10 +279,11 @@ Partial Class frmPrudentialReplenishment
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(35, 30)
         Me.btnSearch.TabIndex = 40
-        Me.btnSearch.UseVisualStyleBackColor = True
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -287,13 +296,13 @@ Partial Class frmPrudentialReplenishment
         Me.btnClose.Size = New System.Drawing.Size(120, 39)
         Me.btnClose.TabIndex = 56
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'frmPrudentialReplenishment
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1112, 467)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnSummaryReport)

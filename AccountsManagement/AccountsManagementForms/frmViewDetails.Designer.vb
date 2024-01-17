@@ -61,7 +61,7 @@ Partial Class frmViewDetails
         Me.gb_totalColl.Controls.Add(Me.txt_tEnergyCollection)
         Me.gb_totalColl.Controls.Add(Me.Label7)
         Me.gb_totalColl.Controls.Add(Me.Label6)
-        Me.gb_totalColl.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gb_totalColl.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gb_totalColl.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.gb_totalColl.Location = New System.Drawing.Point(9, 495)
         Me.gb_totalColl.Name = "gb_totalColl"
@@ -73,65 +73,65 @@ Partial Class frmViewDetails
         'txt_tDICollection
         '
         Me.txt_tDICollection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_tDICollection.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_tDICollection.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_tDICollection.ForeColor = System.Drawing.Color.Black
         Me.txt_tDICollection.Location = New System.Drawing.Point(380, 72)
         Me.txt_tDICollection.Name = "txt_tDICollection"
         Me.txt_tDICollection.ReadOnly = True
-        Me.txt_tDICollection.Size = New System.Drawing.Size(274, 23)
+        Me.txt_tDICollection.Size = New System.Drawing.Size(274, 22)
         Me.txt_tDICollection.TabIndex = 28
         Me.txt_tDICollection.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(35, 76)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(179, 14)
+        Me.Label1.Size = New System.Drawing.Size(182, 14)
         Me.Label1.TabIndex = 27
         Me.Label1.Text = "Total Default Interest Collection:"
         '
         'txt_tVATCollection
         '
         Me.txt_tVATCollection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_tVATCollection.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_tVATCollection.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_tVATCollection.ForeColor = System.Drawing.Color.Black
         Me.txt_tVATCollection.Location = New System.Drawing.Point(380, 43)
         Me.txt_tVATCollection.Name = "txt_tVATCollection"
         Me.txt_tVATCollection.ReadOnly = True
-        Me.txt_tVATCollection.Size = New System.Drawing.Size(274, 23)
+        Me.txt_tVATCollection.Size = New System.Drawing.Size(274, 22)
         Me.txt_tVATCollection.TabIndex = 26
         Me.txt_tVATCollection.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txt_tEnergyCollection
         '
         Me.txt_tEnergyCollection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txt_tEnergyCollection.Font = New System.Drawing.Font("Helvetica", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_tEnergyCollection.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_tEnergyCollection.ForeColor = System.Drawing.Color.Black
         Me.txt_tEnergyCollection.Location = New System.Drawing.Point(380, 14)
         Me.txt_tEnergyCollection.Name = "txt_tEnergyCollection"
         Me.txt_tEnergyCollection.ReadOnly = True
-        Me.txt_tEnergyCollection.Size = New System.Drawing.Size(274, 23)
+        Me.txt_tEnergyCollection.Size = New System.Drawing.Size(274, 22)
         Me.txt_tEnergyCollection.TabIndex = 25
         Me.txt_tEnergyCollection.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Black
         Me.Label7.Location = New System.Drawing.Point(94, 47)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(120, 14)
+        Me.Label7.Size = New System.Drawing.Size(118, 14)
         Me.Label7.TabIndex = 2
         Me.Label7.Text = "Total VAT Collection:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(79, 18)
         Me.Label6.Name = "Label6"
@@ -142,11 +142,12 @@ Partial Class frmViewDetails
         'cmd_ExportToExcel
         '
         Me.cmd_ExportToExcel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_ExportToExcel.BackColor = System.Drawing.Color.White
         Me.cmd_ExportToExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_ExportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_ExportToExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_ExportToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_ExportToExcel.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_ExportToExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_ExportToExcel.ForeColor = System.Drawing.Color.Black
         Me.cmd_ExportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.cmd_ExportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -155,7 +156,7 @@ Partial Class frmViewDetails
         Me.cmd_ExportToExcel.Size = New System.Drawing.Size(204, 39)
         Me.cmd_ExportToExcel.TabIndex = 29
         Me.cmd_ExportToExcel.Text = "Export to Excel"
-        Me.cmd_ExportToExcel.UseVisualStyleBackColor = True
+        Me.cmd_ExportToExcel.UseVisualStyleBackColor = False
         Me.cmd_ExportToExcel.Visible = False
         '
         'cmd_ToCSV
@@ -165,7 +166,7 @@ Partial Class frmViewDetails
         Me.cmd_ToCSV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_ToCSV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_ToCSV.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_ToCSV.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_ToCSV.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_ToCSV.ForeColor = System.Drawing.Color.Black
         Me.cmd_ToCSV.Image = Global.AccountsManagementForms.My.Resources.Resources.execute
         Me.cmd_ToCSV.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -184,7 +185,7 @@ Partial Class frmViewDetails
         Me.cmd_viewDetails.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_viewDetails.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.cmd_viewDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmd_viewDetails.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmd_viewDetails.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_viewDetails.ForeColor = System.Drawing.Color.Black
         Me.cmd_viewDetails.Image = Global.AccountsManagementForms.My.Resources.Resources.close
         Me.cmd_viewDetails.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -199,11 +200,12 @@ Partial Class frmViewDetails
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -212,13 +214,13 @@ Partial Class frmViewDetails
         Me.btnClose.Size = New System.Drawing.Size(155, 39)
         Me.btnClose.TabIndex = 11
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'frmViewDetails
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(711, 661)
         Me.Controls.Add(Me.cmd_ExportToExcel)
         Me.Controls.Add(Me.cmd_ToCSV)
@@ -226,7 +228,7 @@ Partial Class frmViewDetails
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.dgridView)
         Me.Controls.Add(Me.gb_totalColl)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmViewDetails"

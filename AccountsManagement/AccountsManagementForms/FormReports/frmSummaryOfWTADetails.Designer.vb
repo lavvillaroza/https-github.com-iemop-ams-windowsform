@@ -44,7 +44,7 @@ Partial Class frmSummaryOfWTADetails
         '
         'ctrl_statusStrip
         '
-        Me.ctrl_statusStrip.BackColor = System.Drawing.Color.White
+        Me.ctrl_statusStrip.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelCR})
         Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 451)
         Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
@@ -138,6 +138,7 @@ Partial Class frmSummaryOfWTADetails
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -151,10 +152,11 @@ Partial Class frmSummaryOfWTADetails
         Me.btnClose.Size = New System.Drawing.Size(146, 39)
         Me.btnClose.TabIndex = 27
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btn_ExportToExcel
         '
+        Me.btn_ExportToExcel.BackColor = System.Drawing.Color.White
         Me.btn_ExportToExcel.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btn_ExportToExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_ExportToExcel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -167,7 +169,7 @@ Partial Class frmSummaryOfWTADetails
         Me.btn_ExportToExcel.Size = New System.Drawing.Size(146, 39)
         Me.btn_ExportToExcel.TabIndex = 16
         Me.btn_ExportToExcel.Text = "Export to Excel"
-        Me.btn_ExportToExcel.UseVisualStyleBackColor = True
+        Me.btn_ExportToExcel.UseVisualStyleBackColor = False
         '
         'gbox_Participants
         '
@@ -194,7 +196,7 @@ Partial Class frmSummaryOfWTADetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(332, 473)
         Me.Controls.Add(Me.TableLayoutPanel_Main)
         Me.Controls.Add(Me.ctrl_statusStrip)

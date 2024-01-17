@@ -49,6 +49,7 @@ Partial Class frmPrudentialInterest
         '
         'btnSummaryReport
         '
+        Me.btnSummaryReport.BackColor = System.Drawing.Color.White
         Me.btnSummaryReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSummaryReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSummaryReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -62,10 +63,11 @@ Partial Class frmPrudentialInterest
         Me.btnSummaryReport.Size = New System.Drawing.Size(169, 39)
         Me.btnSummaryReport.TabIndex = 49
         Me.btnSummaryReport.Text = "      &Summary Report (Draft)"
-        Me.btnSummaryReport.UseVisualStyleBackColor = True
+        Me.btnSummaryReport.UseVisualStyleBackColor = False
         '
         'btnClose
         '
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -78,10 +80,11 @@ Partial Class frmPrudentialInterest
         Me.btnClose.Size = New System.Drawing.Size(110, 39)
         Me.btnClose.TabIndex = 55
         Me.btnClose.Text = "&Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'btnEdit
         '
+        Me.btnEdit.BackColor = System.Drawing.Color.White
         Me.btnEdit.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnEdit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnEdit.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -95,10 +98,11 @@ Partial Class frmPrudentialInterest
         Me.btnEdit.Size = New System.Drawing.Size(110, 39)
         Me.btnEdit.TabIndex = 48
         Me.btnEdit.Text = "    &Modify"
-        Me.btnEdit.UseVisualStyleBackColor = True
+        Me.btnEdit.UseVisualStyleBackColor = False
         '
         'btnPostToGP
         '
+        Me.btnPostToGP.BackColor = System.Drawing.Color.White
         Me.btnPostToGP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnPostToGP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnPostToGP.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -112,10 +116,11 @@ Partial Class frmPrudentialInterest
         Me.btnPostToGP.Size = New System.Drawing.Size(120, 39)
         Me.btnPostToGP.TabIndex = 47
         Me.btnPostToGP.Text = "     &Post To GP"
-        Me.btnPostToGP.UseVisualStyleBackColor = True
+        Me.btnPostToGP.UseVisualStyleBackColor = False
         '
         'btnSearchInterest
         '
+        Me.btnSearchInterest.BackColor = System.Drawing.Color.White
         Me.btnSearchInterest.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSearchInterest.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSearchInterest.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -129,10 +134,11 @@ Partial Class frmPrudentialInterest
         Me.btnSearchInterest.Size = New System.Drawing.Size(110, 39)
         Me.btnSearchInterest.TabIndex = 43
         Me.btnSearchInterest.Text = "     &Search"
-        Me.btnSearchInterest.UseVisualStyleBackColor = True
+        Me.btnSearchInterest.UseVisualStyleBackColor = False
         '
         'btnJV
         '
+        Me.btnJV.BackColor = System.Drawing.Color.White
         Me.btnJV.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnJV.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnJV.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -146,10 +152,11 @@ Partial Class frmPrudentialInterest
         Me.btnJV.Size = New System.Drawing.Size(169, 39)
         Me.btnJV.TabIndex = 46
         Me.btnJV.Text = "      &Journal Voucher (Draft)"
-        Me.btnJV.UseVisualStyleBackColor = True
+        Me.btnJV.UseVisualStyleBackColor = False
         '
         'btnInterest
         '
+        Me.btnInterest.BackColor = System.Drawing.Color.White
         Me.btnInterest.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnInterest.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnInterest.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -163,10 +170,11 @@ Partial Class frmPrudentialInterest
         Me.btnInterest.Size = New System.Drawing.Size(120, 39)
         Me.btnInterest.TabIndex = 42
         Me.btnInterest.Text = "     &Input Interest"
-        Me.btnInterest.UseVisualStyleBackColor = True
+        Me.btnInterest.UseVisualStyleBackColor = False
         '
         'btnSave
         '
+        Me.btnSave.BackColor = System.Drawing.Color.White
         Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -180,7 +188,7 @@ Partial Class frmPrudentialInterest
         Me.btnSave.Size = New System.Drawing.Size(110, 39)
         Me.btnSave.TabIndex = 45
         Me.btnSave.Text = "    &Save"
-        Me.btnSave.UseVisualStyleBackColor = True
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'Label5
         '
@@ -276,6 +284,7 @@ Partial Class frmPrudentialInterest
         '
         Me.btnSearch.AccessibleName = ""
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.BackColor = System.Drawing.Color.White
         Me.btnSearch.BackgroundImage = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
         Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
@@ -287,13 +296,13 @@ Partial Class frmPrudentialInterest
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(26, 24)
         Me.btnSearch.TabIndex = 51
-        Me.btnSearch.UseVisualStyleBackColor = True
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'frmPrudentialInterest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1094, 512)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnSummaryReport)

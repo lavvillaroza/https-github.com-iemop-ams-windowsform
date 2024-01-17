@@ -42,7 +42,7 @@ Partial Class frmAccountingCodeMgt
         Me.rb_active.AutoSize = True
         Me.rb_active.Location = New System.Drawing.Point(119, 155)
         Me.rb_active.Name = "rb_active"
-        Me.rb_active.Size = New System.Drawing.Size(53, 16)
+        Me.rb_active.Size = New System.Drawing.Size(56, 18)
         Me.rb_active.TabIndex = 37
         Me.rb_active.TabStop = True
         Me.rb_active.Text = "Active"
@@ -51,7 +51,7 @@ Partial Class frmAccountingCodeMgt
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(10, 155)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(45, 14)
@@ -63,7 +63,7 @@ Partial Class frmAccountingCodeMgt
         Me.lbl_addEdit.AutoSize = True
         Me.lbl_addEdit.Location = New System.Drawing.Point(116, 208)
         Me.lbl_addEdit.Name = "lbl_addEdit"
-        Me.lbl_addEdit.Size = New System.Drawing.Size(0, 12)
+        Me.lbl_addEdit.Size = New System.Drawing.Size(0, 14)
         Me.lbl_addEdit.TabIndex = 32
         '
         'txt_desc
@@ -78,20 +78,20 @@ Partial Class frmAccountingCodeMgt
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(10, 40)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(75, 14)
+        Me.Label7.Size = New System.Drawing.Size(76, 14)
         Me.Label7.TabIndex = 30
         Me.Label7.Text = "Description: "
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(10, 208)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 14)
+        Me.Label6.Size = New System.Drawing.Size(71, 14)
         Me.Label6.TabIndex = 29
         Me.Label6.Text = "Updated By:"
         '
@@ -100,23 +100,23 @@ Partial Class frmAccountingCodeMgt
         Me.lbl_dcomm.AutoSize = True
         Me.lbl_dcomm.Location = New System.Drawing.Point(116, 184)
         Me.lbl_dcomm.Name = "lbl_dcomm"
-        Me.lbl_dcomm.Size = New System.Drawing.Size(0, 12)
+        Me.lbl_dcomm.Size = New System.Drawing.Size(0, 14)
         Me.lbl_dcomm.TabIndex = 28
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(10, 184)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(83, 14)
+        Me.Label4.Size = New System.Drawing.Size(82, 14)
         Me.Label4.TabIndex = 27
         Me.Label4.Text = "Updated Date:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(10, 14)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(104, 14)
@@ -136,7 +136,7 @@ Partial Class frmAccountingCodeMgt
         Me.rb_inactive.AutoSize = True
         Me.rb_inactive.Location = New System.Drawing.Point(189, 155)
         Me.rb_inactive.Name = "rb_inactive"
-        Me.rb_inactive.Size = New System.Drawing.Size(61, 16)
+        Me.rb_inactive.Size = New System.Drawing.Size(62, 18)
         Me.rb_inactive.TabIndex = 38
         Me.rb_inactive.TabStop = True
         Me.rb_inactive.Text = "Inactive"
@@ -180,9 +180,9 @@ Partial Class frmAccountingCodeMgt
         '
         'frmAccountingCodeMgt
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(306, 311)
         Me.ControlBox = False
         Me.Controls.Add(Me.rb_active)
@@ -198,7 +198,7 @@ Partial Class frmAccountingCodeMgt
         Me.Controls.Add(Me.lbl_dcomm)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmAccountingCodeMgt"

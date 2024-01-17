@@ -33,7 +33,7 @@ Partial Class frmImportCSVInsert
         '
         Me.GroupBox1.Controls.Add(Me.txtDirectory)
         Me.GroupBox1.Controls.Add(Me.btnOpenFile)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(28, 33)
         Me.GroupBox1.Name = "GroupBox1"
@@ -48,7 +48,7 @@ Partial Class frmImportCSVInsert
         Me.txtDirectory.Location = New System.Drawing.Point(6, 22)
         Me.txtDirectory.Name = "txtDirectory"
         Me.txtDirectory.ReadOnly = True
-        Me.txtDirectory.Size = New System.Drawing.Size(373, 21)
+        Me.txtDirectory.Size = New System.Drawing.Size(373, 20)
         Me.txtDirectory.TabIndex = 2
         '
         'btnOpenFile
@@ -86,6 +86,7 @@ Partial Class frmImportCSVInsert
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(486, 166)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnImport)

@@ -85,7 +85,7 @@ Partial Class frmPaymentNewOffsetting
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Details.Controls.Add(Me.dgv_ARAPDetails)
-        Me.GB_Details.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GB_Details.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Details.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GB_Details.Location = New System.Drawing.Point(3, 248)
         Me.GB_Details.Name = "GB_Details"
@@ -106,7 +106,7 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ARAPDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -115,8 +115,8 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ARAPDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
@@ -126,7 +126,7 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ARAPDetails.Name = "dgv_ARAPDetails"
         Me.dgv_ARAPDetails.RowHeadersVisible = False
         Me.dgv_ARAPDetails.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dgv_ARAPDetails.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_ARAPDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_ARAPDetails.Size = New System.Drawing.Size(914, 167)
@@ -138,7 +138,7 @@ Partial Class frmPaymentNewOffsetting
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Main.Controls.Add(Me.dgv_ShareOnInvoice)
-        Me.GB_Main.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GB_Main.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Main.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GB_Main.Location = New System.Drawing.Point(3, 3)
         Me.GB_Main.Name = "GB_Main"
@@ -159,7 +159,7 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ShareOnInvoice.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -168,8 +168,8 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ShareOnInvoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
@@ -179,7 +179,7 @@ Partial Class frmPaymentNewOffsetting
         Me.dgv_ShareOnInvoice.Name = "dgv_ShareOnInvoice"
         Me.dgv_ShareOnInvoice.RowHeadersVisible = False
         Me.dgv_ShareOnInvoice.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dgv_ShareOnInvoice.RowsDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv_ShareOnInvoice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_ShareOnInvoice.Size = New System.Drawing.Size(914, 167)
@@ -291,7 +291,7 @@ Partial Class frmPaymentNewOffsetting
         '
         Me.txtbox_TotalAmountShareARAP.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.txtbox_TotalAmountShareARAP.BackColor = System.Drawing.SystemColors.Info
-        Me.txtbox_TotalAmountShareARAP.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAmountShareARAP.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAmountShareARAP.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAmountShareARAP.Location = New System.Drawing.Point(404, 16)
         Me.txtbox_TotalAmountShareARAP.Name = "txtbox_TotalAmountShareARAP"
@@ -305,7 +305,7 @@ Partial Class frmPaymentNewOffsetting
         '
         Me.txtbox_TotalAmountShareARAPBalance.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.txtbox_TotalAmountShareARAPBalance.BackColor = System.Drawing.SystemColors.Info
-        Me.txtbox_TotalAmountShareARAPBalance.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAmountShareARAPBalance.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAmountShareARAPBalance.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAmountShareARAPBalance.Location = New System.Drawing.Point(752, 16)
         Me.txtbox_TotalAmountShareARAPBalance.Name = "txtbox_TotalAmountShareARAPBalance"
@@ -319,7 +319,7 @@ Partial Class frmPaymentNewOffsetting
         '
         Me.txtbox_TotalAmountOffsetAPAR.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.txtbox_TotalAmountOffsetAPAR.BackColor = System.Drawing.SystemColors.Info
-        Me.txtbox_TotalAmountOffsetAPAR.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAmountOffsetAPAR.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAmountOffsetAPAR.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAmountOffsetAPAR.Location = New System.Drawing.Point(578, 16)
         Me.txtbox_TotalAmountOffsetAPAR.Name = "txtbox_TotalAmountOffsetAPAR"
@@ -345,7 +345,7 @@ Partial Class frmPaymentNewOffsetting
         '
         Me.txtbox_TotalAmountAllocARAP.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.txtbox_TotalAmountAllocARAP.BackColor = System.Drawing.SystemColors.Info
-        Me.txtbox_TotalAmountAllocARAP.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtbox_TotalAmountAllocARAP.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbox_TotalAmountAllocARAP.ForeColor = System.Drawing.Color.Black
         Me.txtbox_TotalAmountAllocARAP.Location = New System.Drawing.Point(752, 17)
         Me.txtbox_TotalAmountAllocARAP.Name = "txtbox_TotalAmountAllocARAP"
@@ -372,7 +372,7 @@ Partial Class frmPaymentNewOffsetting
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(935, 554)
         Me.ControlBox = False
         Me.Controls.Add(Me.TableLayoutPanel1)

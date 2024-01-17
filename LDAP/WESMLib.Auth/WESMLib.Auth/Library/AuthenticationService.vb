@@ -201,13 +201,21 @@ Namespace WESMLib.Auth.Lib
         'Validate Access String
         Public Function HasAccess(access As String) As Boolean
             Dim ret = False
-            Dim countAccess As Integer = _accessList.Count
+            Dim countAccess As Integer = (From x In _accessList Where x = access Select x).Count()
             If countAccess <> 0 Then
                 ret = True
             End If
             Return ret
         End Function
 
+        Public Function AMSAccess() As Boolean
+            Dim ret = False
+            Dim countAccess As Integer = _accessList.Count()
+            If countAccess <> 0 Then
+                ret = True
+            End If
+            Return ret
+        End Function
         'Authenticate User's Credential
         Public Function AuthUserCredentials(userId As String, password As String, appName As String) As Boolean
             Try
@@ -226,7 +234,7 @@ Namespace WESMLib.Auth.Lib
                     '    userId = userId.ToLower & "@iemop.ph"
                     'End If
                     LoadAccessList(userId)
-                    If HasAccess(AccessWindow) Then
+                    If AMSAccess() Then
                         _userLogged = userId
                         _isAuth = True
                         Return True

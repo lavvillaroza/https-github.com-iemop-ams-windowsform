@@ -76,7 +76,7 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.dgv_WBSPerBatchMain.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -87,7 +87,7 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.dgv_WBSPerBatchMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRefID, Me.colBillingPeriodNo, Me.colWESMBillBatchNo, Me.colChargeType, Me.colARAdjustedWithholdingTax, Me.colAPAdjustedWithholdingTAX, Me.colUpdatedBy, Me.colUpdatedDate, Me.colAction})
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
@@ -181,7 +181,7 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.btn_Refresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Refresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Refresh.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Refresh.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Refresh.ForeColor = System.Drawing.Color.Black
         Me.btn_Refresh.Image = Global.AccountsManagementForms.My.Resources.Resources.RefreshGreenIcon22x22
         Me.btn_Refresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -200,7 +200,7 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Close.ForeColor = System.Drawing.Color.Black
         Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -219,7 +219,7 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.btn_Add.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btn_Add.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btn_Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Add.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Add.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Add.ForeColor = System.Drawing.Color.Black
         Me.btn_Add.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
         Me.btn_Add.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -230,18 +230,18 @@ Partial Class frmWBSAdjustmentPerBatchMain
         Me.btn_Add.Text = "&Adjustment"
         Me.btn_Add.UseVisualStyleBackColor = False
         '
-        'frmWESMBillSummaryAdjustmentPerBatchMain
+        'frmWBSAdjustmentPerBatchMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(986, 369)
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        Me.Name = "frmWESMBillSummaryAdjustmentPerBatchMain"
+        Me.Name = "frmWBSAdjustmentPerBatchMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Withholding Tax Adjustment (Management)"
         Me.TableLayoutPanel1.ResumeLayout(False)

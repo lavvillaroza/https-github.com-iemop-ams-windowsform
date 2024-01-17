@@ -94,7 +94,7 @@ Partial Class frmViewCollectionNotice
         Me.DGV_Previous.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -104,15 +104,15 @@ Partial Class frmViewCollectionNotice
         Me.DGV_Previous.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.BillingPeriod, Me.prevInvNumber, Me.prevInvoiceDate, Me.DueDat, Me.Energy, Me.EnergyVAT, Me.MF, Me.colDefaultInterest, Me.Total, Me.UpdatedBy, Me.UpdatedDate})
         Me.DGV_Previous.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Previous.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.DGV_Previous.Location = New System.Drawing.Point(3, 17)
+        Me.DGV_Previous.Location = New System.Drawing.Point(3, 16)
         Me.DGV_Previous.MultiSelect = False
         Me.DGV_Previous.Name = "DGV_Previous"
         Me.DGV_Previous.ReadOnly = True
         Me.DGV_Previous.RowHeadersVisible = False
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGV_Previous.RowsDefaultCellStyle = DataGridViewCellStyle10
         Me.DGV_Previous.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DGV_Previous.Size = New System.Drawing.Size(876, 163)
+        Me.DGV_Previous.Size = New System.Drawing.Size(876, 164)
         Me.DGV_Previous.TabIndex = 0
         '
         'BillingPeriod
@@ -120,7 +120,7 @@ Partial Class frmViewCollectionNotice
         Me.BillingPeriod.HeaderText = "Billing Period"
         Me.BillingPeriod.Name = "BillingPeriod"
         Me.BillingPeriod.ReadOnly = True
-        Me.BillingPeriod.Width = 95
+        Me.BillingPeriod.Width = 96
         '
         'prevInvNumber
         '
@@ -159,7 +159,7 @@ Partial Class frmViewCollectionNotice
         Me.Energy.HeaderText = "Energy"
         Me.Energy.Name = "Energy"
         Me.Energy.ReadOnly = True
-        Me.Energy.Width = 69
+        Me.Energy.Width = 70
         '
         'EnergyVAT
         '
@@ -181,7 +181,7 @@ Partial Class frmViewCollectionNotice
         Me.MF.HeaderText = "Market Fees"
         Me.MF.Name = "MF"
         Me.MF.ReadOnly = True
-        Me.MF.Width = 87
+        Me.MF.Width = 93
         '
         'colDefaultInterest
         '
@@ -191,7 +191,7 @@ Partial Class frmViewCollectionNotice
         Me.colDefaultInterest.HeaderText = "Default Interest"
         Me.colDefaultInterest.Name = "colDefaultInterest"
         Me.colDefaultInterest.ReadOnly = True
-        Me.colDefaultInterest.Width = 104
+        Me.colDefaultInterest.Width = 107
         '
         'Total
         '
@@ -202,14 +202,14 @@ Partial Class frmViewCollectionNotice
         Me.Total.HeaderText = "Total"
         Me.Total.Name = "Total"
         Me.Total.ReadOnly = True
-        Me.Total.Width = 59
+        Me.Total.Width = 58
         '
         'UpdatedBy
         '
         Me.UpdatedBy.HeaderText = "Updated By"
         Me.UpdatedBy.Name = "UpdatedBy"
         Me.UpdatedBy.ReadOnly = True
-        Me.UpdatedBy.Width = 87
+        Me.UpdatedBy.Width = 86
         '
         'UpdatedDate
         '
@@ -231,7 +231,7 @@ Partial Class frmViewCollectionNotice
         Me.DGV_Current.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -243,7 +243,7 @@ Partial Class frmViewCollectionNotice
         Me.DGV_Current.Name = "DGV_Current"
         Me.DGV_Current.ReadOnly = True
         Me.DGV_Current.RowHeadersVisible = False
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGV_Current.RowsDefaultCellStyle = DataGridViewCellStyle20
         Me.DGV_Current.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGV_Current.Size = New System.Drawing.Size(876, 144)
@@ -254,13 +254,14 @@ Partial Class frmViewCollectionNotice
         Me.currBPeriod.HeaderText = "BillingPeriod"
         Me.currBPeriod.Name = "currBPeriod"
         Me.currBPeriod.ReadOnly = True
+        Me.currBPeriod.Width = 101
         '
         'currInvoice
         '
         Me.currInvoice.HeaderText = "InvoiceNumber"
         Me.currInvoice.Name = "currInvoice"
         Me.currInvoice.ReadOnly = True
-        Me.currInvoice.Width = 112
+        Me.currInvoice.Width = 115
         '
         'currInvDate
         '
@@ -270,7 +271,7 @@ Partial Class frmViewCollectionNotice
         Me.currInvDate.HeaderText = "InvoiceDate"
         Me.currInvDate.Name = "currInvDate"
         Me.currInvDate.ReadOnly = True
-        Me.currInvDate.Width = 94
+        Me.currInvDate.Width = 95
         '
         'currDueDate
         '
@@ -291,7 +292,7 @@ Partial Class frmViewCollectionNotice
         Me.currEnergy.HeaderText = "Energy"
         Me.currEnergy.Name = "currEnergy"
         Me.currEnergy.ReadOnly = True
-        Me.currEnergy.Width = 69
+        Me.currEnergy.Width = 70
         '
         'currVatEnergy
         '
@@ -302,7 +303,7 @@ Partial Class frmViewCollectionNotice
         Me.currVatEnergy.HeaderText = "VATonEnergy"
         Me.currVatEnergy.Name = "currVatEnergy"
         Me.currVatEnergy.ReadOnly = True
-        Me.currVatEnergy.Width = 105
+        Me.currVatEnergy.Width = 104
         '
         'currMF
         '
@@ -313,7 +314,7 @@ Partial Class frmViewCollectionNotice
         Me.currMF.HeaderText = "MarketFees"
         Me.currMF.Name = "currMF"
         Me.currMF.ReadOnly = True
-        Me.currMF.Width = 92
+        Me.currMF.Width = 98
         '
         'colDefultInterest
         '
@@ -323,7 +324,7 @@ Partial Class frmViewCollectionNotice
         Me.colDefultInterest.HeaderText = "Default Interest"
         Me.colDefultInterest.Name = "colDefultInterest"
         Me.colDefultInterest.ReadOnly = True
-        Me.colDefultInterest.Width = 104
+        Me.colDefultInterest.Width = 107
         '
         'currTotal
         '
@@ -334,14 +335,14 @@ Partial Class frmViewCollectionNotice
         Me.currTotal.HeaderText = "Total"
         Me.currTotal.Name = "currTotal"
         Me.currTotal.ReadOnly = True
-        Me.currTotal.Width = 59
+        Me.currTotal.Width = 58
         '
         'currUpdatedBy
         '
         Me.currUpdatedBy.HeaderText = "UpdatedBy"
         Me.currUpdatedBy.Name = "currUpdatedBy"
         Me.currUpdatedBy.ReadOnly = True
-        Me.currUpdatedBy.Width = 91
+        Me.currUpdatedBy.Width = 90
         '
         'currUpdateDate
         '
@@ -353,7 +354,7 @@ Partial Class frmViewCollectionNotice
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.DGV_Previous)
-        Me.GroupBox1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(9, 87)
         Me.GroupBox1.Name = "GroupBox1"
@@ -365,7 +366,7 @@ Partial Class frmViewCollectionNotice
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.DGV_Current)
-        Me.GroupBox2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.GroupBox2.Location = New System.Drawing.Point(9, 275)
         Me.GroupBox2.Name = "GroupBox2"
@@ -377,36 +378,36 @@ Partial Class frmViewCollectionNotice
         'cbo_ParticipantId
         '
         Me.cbo_ParticipantId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_ParticipantId.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_ParticipantId.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_ParticipantId.FormattingEnabled = True
         Me.cbo_ParticipantId.Location = New System.Drawing.Point(143, 27)
         Me.cbo_ParticipantId.Name = "cbo_ParticipantId"
-        Me.cbo_ParticipantId.Size = New System.Drawing.Size(121, 20)
+        Me.cbo_ParticipantId.Size = New System.Drawing.Size(121, 22)
         Me.cbo_ParticipantId.TabIndex = 4
         '
         'cbo_RefNo
         '
         Me.cbo_RefNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbo_RefNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbo_RefNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbo_RefNo.FormattingEnabled = True
         Me.cbo_RefNo.Location = New System.Drawing.Point(143, 52)
         Me.cbo_RefNo.Name = "cbo_RefNo"
-        Me.cbo_RefNo.Size = New System.Drawing.Size(121, 20)
+        Me.cbo_RefNo.Size = New System.Drawing.Size(121, 22)
         Me.cbo_RefNo.TabIndex = 5
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(55, 28)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(82, 14)
+        Me.Label1.Size = New System.Drawing.Size(81, 14)
         Me.Label1.TabIndex = 8
         Me.Label1.Text = "Participant ID:"
         '
         'txt_SearchNo
         '
-        Me.txt_SearchNo.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_SearchNo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_SearchNo.ForeColor = System.Drawing.Color.Gray
         Me.txt_SearchNo.Location = New System.Drawing.Point(685, 11)
         Me.txt_SearchNo.Name = "txt_SearchNo"
@@ -417,16 +418,17 @@ Partial Class frmViewCollectionNotice
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(28, 54)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(109, 14)
+        Me.Label2.Size = New System.Drawing.Size(114, 14)
         Me.Label2.TabIndex = 9
         Me.Label2.Text = "Reference Number:"
         '
         'cmd_close
         '
         Me.cmd_close.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmd_close.BackColor = System.Drawing.Color.White
         Me.cmd_close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -438,7 +440,7 @@ Partial Class frmViewCollectionNotice
         Me.cmd_close.Size = New System.Drawing.Size(171, 36)
         Me.cmd_close.TabIndex = 10
         Me.cmd_close.Text = "   Close"
-        Me.cmd_close.UseVisualStyleBackColor = True
+        Me.cmd_close.UseVisualStyleBackColor = False
         '
         'btnSearchSOA
         '
@@ -455,6 +457,7 @@ Partial Class frmViewCollectionNotice
         '
         'cmd_genReport
         '
+        Me.cmd_genReport.BackColor = System.Drawing.Color.White
         Me.cmd_genReport.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_genReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_genReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -466,10 +469,11 @@ Partial Class frmViewCollectionNotice
         Me.cmd_genReport.Size = New System.Drawing.Size(158, 36)
         Me.cmd_genReport.TabIndex = 12
         Me.cmd_genReport.Text = "     Generate Report"
-        Me.cmd_genReport.UseVisualStyleBackColor = True
+        Me.cmd_genReport.UseVisualStyleBackColor = False
         '
         'cmd_Refresh
         '
+        Me.cmd_Refresh.BackColor = System.Drawing.Color.White
         Me.cmd_Refresh.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_Refresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_Refresh.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -481,10 +485,11 @@ Partial Class frmViewCollectionNotice
         Me.cmd_Refresh.Size = New System.Drawing.Size(111, 36)
         Me.cmd_Refresh.TabIndex = 11
         Me.cmd_Refresh.Text = "   Refresh"
-        Me.cmd_Refresh.UseVisualStyleBackColor = True
+        Me.cmd_Refresh.UseVisualStyleBackColor = False
         '
         'cmd_search
         '
+        Me.cmd_search.BackColor = System.Drawing.Color.White
         Me.cmd_search.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.cmd_search.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.cmd_search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
@@ -496,13 +501,13 @@ Partial Class frmViewCollectionNotice
         Me.cmd_search.Size = New System.Drawing.Size(111, 36)
         Me.cmd_search.TabIndex = 7
         Me.cmd_search.Text = "   Search"
-        Me.cmd_search.UseVisualStyleBackColor = True
+        Me.cmd_search.UseVisualStyleBackColor = False
         '
         'frmViewCollectionNotice
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(901, 499)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.cmd_close)
@@ -516,7 +521,7 @@ Partial Class frmViewCollectionNotice
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.cmd_Refresh)
         Me.Controls.Add(Me.cmd_search)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmViewCollectionNotice"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

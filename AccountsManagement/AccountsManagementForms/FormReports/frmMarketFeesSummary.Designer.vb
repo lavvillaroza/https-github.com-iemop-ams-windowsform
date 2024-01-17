@@ -66,20 +66,21 @@ Partial Class frmMarketFeesSummary
         '
         'btnLoad
         '
+        Me.btnLoad.BackColor = System.Drawing.Color.White
         Me.btnLoad.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnLoad.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnLoad.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLoad.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLoad.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLoad.ForeColor = System.Drawing.Color.Black
         Me.btnLoad.Image = Global.AccountsManagementForms.My.Resources.Resources.magnifyingglassvector22x22
         Me.btnLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnLoad.Location = New System.Drawing.Point(685, 24)
         Me.btnLoad.Name = "btnLoad"
-        Me.btnLoad.Size = New System.Drawing.Size(145, 39)
+        Me.btnLoad.Size = New System.Drawing.Size(95, 39)
         Me.btnLoad.TabIndex = 12
         Me.btnLoad.Text = "     Search"
-        Me.btnLoad.UseVisualStyleBackColor = True
+        Me.btnLoad.UseVisualStyleBackColor = False
         '
         'DGridView
         '
@@ -234,11 +235,12 @@ Partial Class frmMarketFeesSummary
         'btnGenerate
         '
         Me.btnGenerate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnGenerate.BackColor = System.Drawing.Color.White
         Me.btnGenerate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnGenerate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnGenerate.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnGenerate.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGenerate.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGenerate.ForeColor = System.Drawing.Color.Black
         Me.btnGenerate.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.btnGenerate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -247,16 +249,17 @@ Partial Class frmMarketFeesSummary
         Me.btnGenerate.Size = New System.Drawing.Size(145, 39)
         Me.btnGenerate.TabIndex = 15
         Me.btnGenerate.Text = "Generate Report"
-        Me.btnGenerate.UseVisualStyleBackColor = True
+        Me.btnGenerate.UseVisualStyleBackColor = False
         '
         'btnClose
         '
         Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnClose.BackColor = System.Drawing.Color.White
         Me.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
         Me.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
         Me.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -265,7 +268,7 @@ Partial Class frmMarketFeesSummary
         Me.btnClose.Size = New System.Drawing.Size(145, 39)
         Me.btnClose.TabIndex = 14
         Me.btnClose.Text = "Close"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
@@ -282,7 +285,7 @@ Partial Class frmMarketFeesSummary
         Me.rbTransaction.AutoSize = True
         Me.rbTransaction.Location = New System.Drawing.Point(129, 19)
         Me.rbTransaction.Name = "rbTransaction"
-        Me.rbTransaction.Size = New System.Drawing.Size(107, 16)
+        Me.rbTransaction.Size = New System.Drawing.Size(107, 18)
         Me.rbTransaction.TabIndex = 1
         Me.rbTransaction.TabStop = True
         Me.rbTransaction.Text = "Transaction Date"
@@ -293,7 +296,7 @@ Partial Class frmMarketFeesSummary
         Me.rbAllocation.AutoSize = True
         Me.rbAllocation.Location = New System.Drawing.Point(18, 19)
         Me.rbAllocation.Name = "rbAllocation"
-        Me.rbAllocation.Size = New System.Drawing.Size(95, 16)
+        Me.rbAllocation.Size = New System.Drawing.Size(97, 18)
         Me.rbAllocation.TabIndex = 0
         Me.rbAllocation.TabStop = True
         Me.rbAllocation.Text = "&Allocation Date"
@@ -322,10 +325,10 @@ Partial Class frmMarketFeesSummary
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(207, 23)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(52, 14)
+        Me.Label2.Size = New System.Drawing.Size(50, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Date To:"
         '
@@ -340,7 +343,7 @@ Partial Class frmMarketFeesSummary
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(6, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(66, 14)
@@ -349,9 +352,9 @@ Partial Class frmMarketFeesSummary
         '
         'frmMarketFeesSummary
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1036, 484)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
@@ -359,7 +362,7 @@ Partial Class frmMarketFeesSummary
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.DGridView)
         Me.Controls.Add(Me.btnLoad)
-        Me.Font = New System.Drawing.Font("Helvetica", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmMarketFeesSummary"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
