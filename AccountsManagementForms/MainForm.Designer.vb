@@ -49,6 +49,9 @@ Partial Class MainForm
         Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReserveTransactionSummaryFromCRSSDBToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintingOfWESMInvoiceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintingOfWESMTransactionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PostingWESMBillToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -167,7 +170,7 @@ Partial Class MainForm
         Me.AccountingCodes_TSMenuItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AccountingCodes_TSMenuItem.ForeColor = System.Drawing.Color.Black
         Me.AccountingCodes_TSMenuItem.Name = "AccountingCodes_TSMenuItem"
-        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AccountingCodes_TSMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.AccountingCodes_TSMenuItem.Text = "Libraries"
         '
         'AccountingCodeToolStripMenuItem
@@ -248,7 +251,7 @@ Partial Class MainForm
         'LogoutToolStripMenuItem
         '
         Me.LogoutToolStripMenuItem.Name = "LogoutToolStripMenuItem"
-        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LogoutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.LogoutToolStripMenuItem.Text = "Logout"
         '
         'SOAP_TSMenuItem
@@ -261,7 +264,7 @@ Partial Class MainForm
         '
         'ToolStripMenuItem8
         '
-        Me.ToolStripMenuItem8.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WESMBillToolStripMenuItem, Me.WESMSalesAndPurchasedToolStripMenuItem, Me.WESMBillExtractionFromCRSSDBToolStripMenuItem, Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem, Me.WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem, Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem})
+        Me.ToolStripMenuItem8.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WESMBillToolStripMenuItem, Me.WESMSalesAndPurchasedToolStripMenuItem, Me.WESMBillExtractionFromCRSSDBToolStripMenuItem, Me.WESMBillsAggregateInvoicesMappingToolStripMenuItem, Me.WESMBillTransactionSummaryFetchFromCRSSDBToolStripMenuItem, Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem, Me.ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem, Me.ReserveTransactionSummaryFromCRSSDBToolStripMenuItem, Me.ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem})
         Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
         Me.ToolStripMenuItem8.Size = New System.Drawing.Size(273, 22)
         Me.ToolStripMenuItem8.Text = "Upload"
@@ -270,7 +273,7 @@ Partial Class MainForm
         '
         Me.WESMBillToolStripMenuItem.Name = "WESMBillToolStripMenuItem"
         Me.WESMBillToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
-        Me.WESMBillToolStripMenuItem.Text = "WESM Bill From Flat File"
+        Me.WESMBillToolStripMenuItem.Text = "WESM And Reserve Bill From Flat File (Market Fees Final)"
         '
         'WESMSalesAndPurchasedToolStripMenuItem
         '
@@ -305,6 +308,24 @@ Partial Class MainForm
         Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem.Name = "WESMTransactionSummaryFromCRSSDBToolStripMenuItem"
         Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
         Me.WESMTransactionSummaryFromCRSSDBToolStripMenuItem.Text = "WESM Transaction Summary From CRSS DB"
+        '
+        'ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem
+        '
+        Me.ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem.Name = "ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem"
+        Me.ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
+        Me.ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem.Text = "Reserve Transaction Allocation Summary From Flat File"
+        '
+        'ReserveTransactionSummaryFromCRSSDBToolStripMenuItem
+        '
+        Me.ReserveTransactionSummaryFromCRSSDBToolStripMenuItem.Name = "ReserveTransactionSummaryFromCRSSDBToolStripMenuItem"
+        Me.ReserveTransactionSummaryFromCRSSDBToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
+        Me.ReserveTransactionSummaryFromCRSSDBToolStripMenuItem.Text = "Reserve Transaction Summary From CRSS DB"
+        '
+        'ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem
+        '
+        Me.ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem.Name = "ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem"
+        Me.ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem.Size = New System.Drawing.Size(404, 22)
+        Me.ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem.Text = "Reserve Bill From Flat File (Market Fees Prelim)"
         '
         'PrintingOfWESMInvoiceToolStripMenuItem
         '
@@ -523,7 +544,6 @@ Partial Class MainForm
         Me.SPAToolStripMenuItem.Name = "SPAToolStripMenuItem"
         Me.SPAToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.SPAToolStripMenuItem.Text = "Special Payment Agreement"
-        Me.SPAToolStripMenuItem.Visible = False
         '
         'WESMBillSummaryToolStripMenuItem
         '
@@ -1047,4 +1067,7 @@ Partial Class MainForm
     Friend WithEvents WithholdingVATCertificateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WVAT_TagAlloc_ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SummaryofWTADetails As ToolStripMenuItem
+    Friend WithEvents ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ReserveTransactionSummaryFromCRSSDBToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem As ToolStripMenuItem
 End Class

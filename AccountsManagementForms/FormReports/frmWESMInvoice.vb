@@ -248,8 +248,7 @@ Public Class frmWESMInvoice
                       Select x).First()
 
             Dim bpValue As String = bp.EndDate.ToString("MMMyyyy").ToUpper
-            fileName = bp.BillingPeriod & "" & Me.ddlSTLRun.Text & "-"
-
+            fileName = bp.BillingPeriod & "" & Me.ddlSTLRun.Text.Replace("R", "F") & "-"
 
             For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
                 Dim participant = Me.chckList.CheckedItems(cnt).ToString()
@@ -295,18 +294,28 @@ Public Class frmWESMInvoice
                     expReport.SetParameterValue("paramSystemGeneratedMsg", systemGeneratedMessage)
 
                     Dim stlRun As String = Me.ddlSTLRun.Text
-                    If stlRun.Length <> 1 Then
-                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
-                                           participant & "_TS-WAD-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                    If stlRun.StartsWith("R") Then
+                        If fileType = EnumFileType.MarketFees Then
+                            fileTypeValue = "RMF"
+                        End If
+                        If stlRun.Length <> 1 Then
+                            expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                                               participant & "_TS-RAD-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                        Else
+                            expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                                               participant & "_TS-RF-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                        End If
                     Else
-                        expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
-                                           participant & "_TS-WF-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                        If stlRun.Length <> 1 Then
+                            expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                                               participant & "_TS-WAD-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                        Else
+                            expReport.ExportToDisk(ExportFormatType.PortableDocFormat, Me.txtDestination.Text & "\" &
+                                               participant & "_TS-WF-" & fileName & seletectedInvoice.Replace("FS-W", "") & "_" & fileTypeValue & ".pdf")
+                        End If
                     End If
-
-
                     expReport.Close()
                     expReport.Dispose()
-
                 Next
             Next
 

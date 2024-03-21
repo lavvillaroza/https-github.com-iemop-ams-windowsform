@@ -201,10 +201,12 @@ Public Class frmBillParticipants
             End If
         End With
         ProgressThread.Show("Please wait while exporting.")
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+
+
         Try
-            xlApp = New Excel.Application
-            xlWorkBook = xlApp.Workbooks.Add()
-            xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
             Dim _ParticipantsArrList As Object(,) = New Object(,) {}
             ReDim _ParticipantsArrList(listOfParticipants.Count + 1, 31)
             _ParticipantsArrList(0, 0) = "ID_NUMBER"

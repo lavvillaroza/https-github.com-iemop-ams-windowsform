@@ -131,13 +131,17 @@
     <Compile Include="BRCollectionReport.vb" />
     <Compile Include="BRCollectionReportSellerParticipant.vb" />
     <Compile Include="BRCollectionReportSalesDetails.vb" />
+    <Compile Include="ImportRTAFromCRSS.vb" />
     <Compile Include="ImportWTAFromCRSS.vb" />
     <Compile Include="EWTTaggedAllocated.vb" />
     <Compile Include="PaymentTag.vb" />
     <Compile Include="PaymentTagDetails.vb" />
     <Compile Include="ProgressClass.vb" />
+    <Compile Include="ReserveCategoryCode.vb" />
     <Compile Include="SellerBuyerInformation.vb" />
+    <Compile Include="ReserveTransAllocactionSummary.vb" />
     <Compile Include="WESMBillAllocCoverSummary.vb" />
+    <Compile Include="ReserveTransAllocationDetails.vb" />
     <Compile Include="WESMBillAllocDisaggDetails.vb" />
     <Compile Include="WESMBillFileOutput.vb" />
     <Compile Include="WESMBillSTLIDMapping.vb" />

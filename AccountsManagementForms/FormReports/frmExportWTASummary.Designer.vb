@@ -32,10 +32,10 @@ Partial Class frmExportWTASummary
         '
         'ddlDueDate
         '
-        Me.ddlDueDate.BackColor = System.Drawing.Color.DimGray
+        Me.ddlDueDate.BackColor = System.Drawing.Color.White
         Me.ddlDueDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ddlDueDate.FormattingEnabled = True
-        Me.ddlDueDate.Location = New System.Drawing.Point(7, 21)
+        Me.ddlDueDate.Location = New System.Drawing.Point(15, 36)
         Me.ddlDueDate.Name = "ddlDueDate"
         Me.ddlDueDate.Size = New System.Drawing.Size(233, 24)
         Me.ddlDueDate.TabIndex = 4
@@ -47,9 +47,9 @@ Partial Class frmExportWTASummary
         Me.grpSearch.Controls.Add(Me.cmd_Close)
         Me.grpSearch.Controls.Add(Me.ddlDueDate)
         Me.grpSearch.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpSearch.Location = New System.Drawing.Point(12, 12)
+        Me.grpSearch.Location = New System.Drawing.Point(25, 12)
         Me.grpSearch.Name = "grpSearch"
-        Me.grpSearch.Size = New System.Drawing.Size(257, 150)
+        Me.grpSearch.Size = New System.Drawing.Size(261, 201)
         Me.grpSearch.TabIndex = 5
         Me.grpSearch.TabStop = False
         '
@@ -75,7 +75,7 @@ Partial Class frmExportWTASummary
         Me.cmd_ExportInExcel.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_ExportInExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExportDocumentsColored22x22
         Me.cmd_ExportInExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmd_ExportInExcel.Location = New System.Drawing.Point(7, 51)
+        Me.cmd_ExportInExcel.Location = New System.Drawing.Point(16, 100)
         Me.cmd_ExportInExcel.Name = "cmd_ExportInExcel"
         Me.cmd_ExportInExcel.Size = New System.Drawing.Size(232, 37)
         Me.cmd_ExportInExcel.TabIndex = 11
@@ -93,7 +93,7 @@ Partial Class frmExportWTASummary
         Me.cmd_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmd_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.cmd_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmd_Close.Location = New System.Drawing.Point(8, 94)
+        Me.cmd_Close.Location = New System.Drawing.Point(17, 143)
         Me.cmd_Close.Name = "cmd_Close"
         Me.cmd_Close.Size = New System.Drawing.Size(232, 37)
         Me.cmd_Close.TabIndex = 9
@@ -105,7 +105,7 @@ Partial Class frmExportWTASummary
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(277, 166)
+        Me.ClientSize = New System.Drawing.Size(306, 225)
         Me.Controls.Add(Me.grpSearch)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False

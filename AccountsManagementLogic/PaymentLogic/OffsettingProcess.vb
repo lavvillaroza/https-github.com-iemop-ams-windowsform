@@ -273,7 +273,7 @@ Public Class OffsettingProcess
                         .ChargeType = Item.ChargeType
                         .OffsettingSequence = Item.OffsettingSequence
                         .WESMBillBatchNo = Item.WESMBillBatchNo
-                        If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
+                        If .InvoiceNumber.Contains("TS-") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                             .AllowOffsetToAR = False
                         ElseIf .InvoiceNumber.Contains("INV") And .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                             .AllowOffsetToAR = False
@@ -347,7 +347,7 @@ Public Class OffsettingProcess
                     .ChargeType = Item.ChargeType
                     .OffsettingSequence = Item.OffsettingSequence
                     .WESMBillBatchNo = Item.WESMBillBatchNo
-                    If .InvoiceNumber.Contains("TS-W") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
+                    If .InvoiceNumber.Contains("TS-") And Not .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                         .AllowOffsetToAR = False
                     ElseIf .InvoiceNumber.Contains("INV") And .InvoiceNumber.ToUpper.Contains("-ADJ") Then
                         .AllowOffsetToAR = False
@@ -2038,7 +2038,7 @@ Public Class OffsettingProcess
                         EnergyShareTotal = Math.Round((TotalShareAmount / 1.05) + (TotalShareAmount / 1.05) * 0.12, 2, MidpointRounding.AwayFromZero)
                         ActualMFOffsetAmount = Math.Round(TotalShareAmount / 1.05, 2, MidpointRounding.AwayFromZero) * -1
                         ActualMFVOffsetAmount = Math.Round(ActualMFOffsetAmount * 0.12, 2, MidpointRounding.AwayFromZero)
-                    End If                    
+                    End If
                 ElseIf ParticipantsInfo.MarketFeesWHTax <> 0 And ParticipantsInfo.MarketFeesWHVAT = 0 Then
                     If MFVOffsetAmount = 0 Then
                         EnergyShareTotal = Math.Round((TotalShareAmount / 0.98), 2, MidpointRounding.AwayFromZero)
@@ -2068,7 +2068,7 @@ Public Class OffsettingProcess
 
                 MFOffsetAmount = Math.Round(EnergyShareTotal * EnergyShareRatioMF, 2, MidpointRounding.AwayFromZero) * -1
                 MFVOffsetAmount = Math.Round(EnergyShareTotal * EnergyShareRatioMFV, 2, MidpointRounding.AwayFromZero) * -1
-                
+
                 'Correction of Value added by lance 11/06/2019
                 If Math.Abs(MFOffsetAmount + MFVOffsetAmount) <> EnergyShareTotal Then
                     Dim GetMFadj As Decimal = MFOffsetAmount - ActualMFOffsetAmount
@@ -2080,13 +2080,13 @@ Public Class OffsettingProcess
                         If GetMFadj <> 0 Then
                             MFOffsetAmount = MFOffsetAmount - GetMFadj
                         End If
-                    Else                        
+                    Else
                         If GetMFadj <> 0 Then
                             MFOffsetAmount = MFOffsetAmount - GetMFadj
                         End If
                     End If
                 End If
-                
+
                 MFWHTaxAmount = Math.Round(Math.Abs(MFOffsetAmount) * ParticipantsInfo.MarketFeesWHTax, 2)
                 MFWHTaxDefaultAmount = Math.Round(Math.Abs(MFDefaultInterestAmount) * ParticipantsInfo.MarketFeesWHTax, 2)
                 MFVWHVATAmount = Math.Round(Math.Abs(MFOffsetAmount) * ParticipantsInfo.MarketFeesWHVAT, 2)
@@ -2207,7 +2207,6 @@ Public Class OffsettingProcess
         Return ret
 
     End Function
-
 #End Region
 
 #Region "Functions For Offsetting MF and MFVAT FIT"

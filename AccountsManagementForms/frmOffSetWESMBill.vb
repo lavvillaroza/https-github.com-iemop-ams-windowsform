@@ -323,7 +323,14 @@ Public Class frmOffSetWESMBill
                 listWTACSummary = WBillHelper.GetListWESMTransCoverSummary(billingPeriod, stlrun, dueDate)
                 For Each item In listWTACSummary.Where(Function(x) x.NetPurchase <> 0).ToList
                     For Each dtlItem In item.ListWBAllocDisDetails
-                        Dim getWTACSummaryItemAP = listWTACSummary.Where(Function(x) x.BillingID = dtlItem.BillingID And x.NetSellerBuyerTag.ToUpper Like "*SELLER").FirstOrDefault
+                        Dim getWTACSummaryItemAP As WESMBillAllocCoverSummary = New WESMBillAllocCoverSummary
+                        If stlrun = "R" Then
+                            getWTACSummaryItemAP = listWTACSummary.
+                                Where(Function(x) x.BillingID = dtlItem.BillingID And x.NetSellerBuyerTag.ToUpper Like "*SELLER" And x.Region = item.Region And x.ReserveCategory = item.ReserveCategory).
+                                FirstOrDefault
+                        Else
+                            getWTACSummaryItemAP = listWTACSummary.Where(Function(x) x.BillingID = dtlItem.BillingID And x.NetSellerBuyerTag.ToUpper Like "*SELLER").FirstOrDefault
+                        End If
 
                         If getWTACSummaryItemAP Is Nothing Then
                             Throw New Exception("No WESM Transaction Covery Summary found for BillingID:" & dtlItem.BillingID)
@@ -479,10 +486,19 @@ Public Class frmOffSetWESMBill
 
             For Each item In listCharge
                 If item = EnumChargeType.E Or item = EnumChargeType.EV Then
-                    'Save the generated offsetting
-                    WBillHelper.SaveP2PC2COffseting(billingPeriod, listFinalOffset, listFinalWESMBillSummary, listWTDSumary, listFinalJournalVoucher,
-                                                    listFinalDMCM, listFinalGPPosted, itemOffsettingResult.DMCMNo, itemOffsettingResult.JVNo,
-                                                    itemOffsettingResult.OffsetNo, itemOffsettingResult.WESMBillSummaryNo, dueDate, newDueDate, stlrun, EnumChargeType.E)
+                    If stlrun.Contains("R") Then
+                        'Save the generated offsetting
+                        WBillHelper.SaveP2PC2COffsetingReserve(billingPeriod, listFinalOffset, listFinalWESMBillSummary, listWTDSumary, listFinalJournalVoucher,
+                                                        listFinalDMCM, listFinalGPPosted, itemOffsettingResult.DMCMNo, itemOffsettingResult.JVNo,
+                                                        itemOffsettingResult.OffsetNo, itemOffsettingResult.WESMBillSummaryNo, dueDate, newDueDate,
+                                                        stlrun, EnumChargeType.E, listWTACSummary)
+                    ElseIf stlrun.Contains("F") Then
+                        'Save the generated offsetting
+                        WBillHelper.SaveP2PC2COffseting(billingPeriod, listFinalOffset, listFinalWESMBillSummary, listWTDSumary, listFinalJournalVoucher,
+                                                        listFinalDMCM, listFinalGPPosted, itemOffsettingResult.DMCMNo, itemOffsettingResult.JVNo,
+                                                        itemOffsettingResult.OffsetNo, itemOffsettingResult.WESMBillSummaryNo, dueDate, newDueDate, stlrun, EnumChargeType.E)
+                    End If
+
                     Exit For
                 ElseIf item = EnumChargeType.MF Or item = EnumChargeType.MFV Then
                     'Save the generated offsetting
@@ -943,6 +959,8 @@ Public Class frmOffSetWESMBill
 
         Return dt
     End Function
+
+
 
 #End Region
 

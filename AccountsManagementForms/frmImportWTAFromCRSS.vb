@@ -16,7 +16,6 @@ Public Class frmImportWTAFromCRSS
     Private TotalCheckedCheckBoxes As Integer = 0
     Private cts As CancellationTokenSource
     Private newProgress As New ProgressClass
-
     Private Async Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
         Dim CountWESMBillExist As Integer = 0
         Dim ans As MsgBoxResult
@@ -124,12 +123,10 @@ Public Class frmImportWTAFromCRSS
             tc_Viewer.Enabled = True
         End Try
     End Sub
-
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
         ToolStripStatus_LabelMsg.Text = _ProgressMsg.ProgressMsg
         ctrl_statusStrip.Refresh()
     End Sub
-
     Private Sub frmImportWTAFromCRSS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
         Try
@@ -145,11 +142,9 @@ Public Class frmImportWTAFromCRSS
         Next
         Me.dgv_WTAList.Rows.Clear()
     End Sub
-
     Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
         Me.RefreshDueDateList()
     End Sub
-
 #Region "Functions/Methods"
     Private Function GenerateGPPosted(ByVal billingPeriod As CalendarBillingPeriod, ByVal settlementRun As String,
                                           ByVal dueDate As Date, ByVal chargeType As EnumChargeType, ByVal itemJV As JournalVoucher) _
@@ -371,7 +366,6 @@ Public Class frmImportWTAFromCRSS
         End If
     End Sub
 #End Region
-
     Private Sub btn_Close_Click(sender As Object, e As EventArgs) Handles btn_Close.Click
         If cts IsNot Nothing Then
             cts.Cancel()

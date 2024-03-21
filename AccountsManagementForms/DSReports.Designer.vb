@@ -26012,6 +26012,14 @@ Partial Public Class DSReport
         
         Private columnGENX_AMOUNT As Global.System.Data.DataColumn
         
+        Private columnAS_NONPAYMENT As Global.System.Data.DataColumn
+        
+        Private columnRES_AMOUNT_ADJ As Global.System.Data.DataColumn
+        
+        Private columnREGION As Global.System.Data.DataColumn
+        
+        Private columnRESERVE_CATEGORY As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Sub New()
@@ -26264,6 +26272,38 @@ Partial Public Class DSReport
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public ReadOnly Property AS_NONPAYMENTColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnAS_NONPAYMENT
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public ReadOnly Property RES_AMOUNT_ADJColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRES_AMOUNT_ADJ
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public ReadOnly Property REGIONColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnREGION
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public ReadOnly Property RESERVE_CATEGORYColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRESERVE_CATEGORY
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -26327,9 +26367,13 @@ Partial Public Class DSReport
                     ByVal MARKET_FEES_RATE As Decimal,  _
                     ByVal REMARKS As String,  _
                     ByVal SPOT_QTY As Decimal,  _
-                    ByVal GENX_AMOUNT As Decimal) As WESMBillTransCoverSummaryRow
+                    ByVal GENX_AMOUNT As Decimal,  _
+                    ByVal AS_NONPAYMENT As Decimal,  _
+                    ByVal RES_AMOUNT_ADJ As Decimal,  _
+                    ByVal _REGION As String,  _
+                    ByVal RESERVE_CATEGORY As String) As WESMBillTransCoverSummaryRow
             Dim rowWESMBillTransCoverSummaryRow As WESMBillTransCoverSummaryRow = CType(Me.NewRow,WESMBillTransCoverSummaryRow)
-            Dim columnValuesArray() As Object = New Object() {TRANSACTION_NO, TRANSACTION_DATE, BILLING_PERIOD_START, BILLING_PERIOD_END, DUE_DATE, STL_ID, FULL_NAME, BUSINESS_STYLE, ADDRESS, BILLING_ID, VATABLE_SALES, ZERO_RATED_SALES, ZERO_RATED_ECOZONES_SALES, NET_SALES, VATABLE_PURCHASES, ZERO_RATED_PURCHASES, ZERO_RATED_ECOZONES_PURCHASES, NET_PURCHASES, VAT_ON_SALES, VAT_ON_PURCHASES, EWT, NSS_FLOWBACK, GMR_SMR, MARKET_FEES_RATE, REMARKS, SPOT_QTY, GENX_AMOUNT}
+            Dim columnValuesArray() As Object = New Object() {TRANSACTION_NO, TRANSACTION_DATE, BILLING_PERIOD_START, BILLING_PERIOD_END, DUE_DATE, STL_ID, FULL_NAME, BUSINESS_STYLE, ADDRESS, BILLING_ID, VATABLE_SALES, ZERO_RATED_SALES, ZERO_RATED_ECOZONES_SALES, NET_SALES, VATABLE_PURCHASES, ZERO_RATED_PURCHASES, ZERO_RATED_ECOZONES_PURCHASES, NET_PURCHASES, VAT_ON_SALES, VAT_ON_PURCHASES, EWT, NSS_FLOWBACK, GMR_SMR, MARKET_FEES_RATE, REMARKS, SPOT_QTY, GENX_AMOUNT, AS_NONPAYMENT, RES_AMOUNT_ADJ, _REGION, RESERVE_CATEGORY}
             rowWESMBillTransCoverSummaryRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowWESMBillTransCoverSummaryRow)
             Return rowWESMBillTransCoverSummaryRow
@@ -26379,6 +26423,10 @@ Partial Public Class DSReport
             Me.columnREMARKS = MyBase.Columns("REMARKS")
             Me.columnSPOT_QTY = MyBase.Columns("SPOT_QTY")
             Me.columnGENX_AMOUNT = MyBase.Columns("GENX_AMOUNT")
+            Me.columnAS_NONPAYMENT = MyBase.Columns("AS_NONPAYMENT")
+            Me.columnRES_AMOUNT_ADJ = MyBase.Columns("RES_AMOUNT_ADJ")
+            Me.columnREGION = MyBase.Columns("REGION")
+            Me.columnRESERVE_CATEGORY = MyBase.Columns("RESERVE_CATEGORY")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -26438,6 +26486,17 @@ Partial Public Class DSReport
             MyBase.Columns.Add(Me.columnSPOT_QTY)
             Me.columnGENX_AMOUNT = New Global.System.Data.DataColumn("GENX_AMOUNT", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnGENX_AMOUNT)
+            Me.columnAS_NONPAYMENT = New Global.System.Data.DataColumn("AS_NONPAYMENT", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnAS_NONPAYMENT)
+            Me.columnRES_AMOUNT_ADJ = New Global.System.Data.DataColumn("RES_AMOUNT_ADJ", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRES_AMOUNT_ADJ)
+            Me.columnREGION = New Global.System.Data.DataColumn("REGION", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnREGION.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "REGIONColumn")
+            Me.columnREGION.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnREGION")
+            Me.columnREGION.ExtendedProperties.Add("Generator_UserColumnName", "REGION")
+            MyBase.Columns.Add(Me.columnREGION)
+            Me.columnRESERVE_CATEGORY = New Global.System.Data.DataColumn("RESERVE_CATEGORY", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRESERVE_CATEGORY)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -49008,6 +49067,69 @@ Partial Public Class DSReport
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Property AS_NONPAYMENT() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableWESMBillTransCoverSummary.AS_NONPAYMENTColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'AS_NONPAYMENT' in table 'WESMBillTransCoverSummary' is DBNu"& _ 
+                            "ll.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWESMBillTransCoverSummary.AS_NONPAYMENTColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Property RES_AMOUNT_ADJ() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableWESMBillTransCoverSummary.RES_AMOUNT_ADJColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'RES_AMOUNT_ADJ' in table 'WESMBillTransCoverSummary' is DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWESMBillTransCoverSummary.RES_AMOUNT_ADJColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Property _REGION() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableWESMBillTransCoverSummary.REGIONColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'REGION' in table 'WESMBillTransCoverSummary' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWESMBillTransCoverSummary.REGIONColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Property RESERVE_CATEGORY() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableWESMBillTransCoverSummary.RESERVE_CATEGORYColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'RESERVE_CATEGORY' in table 'WESMBillTransCoverSummary' is D"& _ 
+                            "BNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableWESMBillTransCoverSummary.RESERVE_CATEGORYColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Function IsTRANSACTION_NONull() As Boolean
             Return Me.IsNull(Me.tableWESMBillTransCoverSummary.TRANSACTION_NOColumn)
         End Function
@@ -49328,6 +49450,54 @@ Partial Public Class DSReport
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Public Sub SetGENX_AMOUNTNull()
             Me(Me.tableWESMBillTransCoverSummary.GENX_AMOUNTColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Function IsAS_NONPAYMENTNull() As Boolean
+            Return Me.IsNull(Me.tableWESMBillTransCoverSummary.AS_NONPAYMENTColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Sub SetAS_NONPAYMENTNull()
+            Me(Me.tableWESMBillTransCoverSummary.AS_NONPAYMENTColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Function IsRES_AMOUNT_ADJNull() As Boolean
+            Return Me.IsNull(Me.tableWESMBillTransCoverSummary.RES_AMOUNT_ADJColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Sub SetRES_AMOUNT_ADJNull()
+            Me(Me.tableWESMBillTransCoverSummary.RES_AMOUNT_ADJColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Function Is_REGIONNull() As Boolean
+            Return Me.IsNull(Me.tableWESMBillTransCoverSummary.REGIONColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Sub Set_REGIONNull()
+            Me(Me.tableWESMBillTransCoverSummary.REGIONColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Function IsRESERVE_CATEGORYNull() As Boolean
+            Return Me.IsNull(Me.tableWESMBillTransCoverSummary.RESERVE_CATEGORYColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
+        Public Sub SetRESERVE_CATEGORYNull()
+            Me(Me.tableWESMBillTransCoverSummary.RESERVE_CATEGORYColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

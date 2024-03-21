@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports System.Threading.Tasks
 Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 
@@ -24,11 +25,21 @@ Public Class frmSummaryOfWTADetails
             If Me.ddlYear_cmb.SelectedIndex = -1 Then
                 Exit Sub
             End If
-            Me.chkLB_Participants.Items.Clear()
+
             _SOWTADHelper.WTAListOfMPByYear(Me.ddlYear_cmb.Text)
-            For Each item In _SOWTADHelper.ListofWTAPerMP
-                Me.chkLB_Participants.Items.Add(item.Key)
+            Dim listofParticipants As New List(Of String)
+            For Each item In _SOWTADHelper.ListofSellerTransNoPerMP
+                listofParticipants.Add(item.Key)
             Next
+            For Each item In _SOWTADHelper.ListofBuyerTransNoPerMP
+                listofParticipants.Add(item.Key)
+            Next
+
+            Me.chkLB_Participants.Items.Clear()
+            For Each item In listofParticipants.Distinct.OrderBy(Function(x) x).Distinct.ToList()
+                Me.chkLB_Participants.Items.Add(item)
+            Next
+
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
@@ -49,7 +60,7 @@ Public Class frmSummaryOfWTADetails
         Me.Close()
     End Sub
 
-    Private Sub btn_ExportToExcel_Click(sender As Object, e As EventArgs) Handles btn_ExportToExcel.Click
+    Private Async Sub btn_ExportToExcel_Click(sender As Object, e As EventArgs) Handles btn_ExportToExcel.Click
         Dim sFolderDialog As New FolderBrowserDialog
         Dim TargetPath As String = ""
         Dim SelectedYear As String = Me.ddlYear_cmb.Text
@@ -81,7 +92,9 @@ Public Class frmSummaryOfWTADetails
             UpdateProgress(newProgress)
 
             For Each ParticipantID In Me.chkLB_Participants.CheckedItems
-                _SOWTADHelper.GenerateWTADetailsSummaryReport(TargetPath, ParticipantID, SelectedYear, progressIndicator, cts.Token)
+                Await Task.Run(Sub()
+                                   _SOWTADHelper.GenerateWTADetailsSummaryReport(TargetPath, ParticipantID, SelectedYear, progressIndicator, cts.Token)
+                               End Sub)
             Next
 
             getTimeEnd = DateTime.Now()
@@ -106,4 +119,5 @@ Public Class frmSummaryOfWTADetails
             Me.ToolStripStatusLabelCR.Text = "Ready..."
         End Try
     End Sub
+
 End Class

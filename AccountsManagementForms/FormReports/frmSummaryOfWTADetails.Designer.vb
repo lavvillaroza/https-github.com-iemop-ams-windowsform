@@ -46,7 +46,7 @@ Partial Class frmSummaryOfWTADetails
         '
         Me.ctrl_statusStrip.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabelCR})
-        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 451)
+        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 450)
         Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
         Me.ctrl_statusStrip.Size = New System.Drawing.Size(332, 22)
         Me.ctrl_statusStrip.TabIndex = 9
@@ -197,7 +197,7 @@ Partial Class frmSummaryOfWTADetails
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(332, 473)
+        Me.ClientSize = New System.Drawing.Size(332, 472)
         Me.Controls.Add(Me.TableLayoutPanel_Main)
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

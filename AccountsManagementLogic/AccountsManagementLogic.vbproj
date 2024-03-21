@@ -132,6 +132,8 @@
     <Compile Include="BRCollectionReportHelper.vb" />
     <Compile Include="DocPrintingCounterHelper.vb" />
     <Compile Include="EWTTaggedAllocReportHelper.vb" />
+    <Compile Include="ImportReservedFromCRSSDBHelper.vb" />
+    <Compile Include="ImportReserveTransAllocFlatFileHelper.vb" />
     <Compile Include="ImportWTAFromCRSSDBHelper.vb" />
     <Compile Include="PaymentLogic\APAllocationProcessNew.vb" />
     <Compile Include="PaymentTaggingHelper.vb" />

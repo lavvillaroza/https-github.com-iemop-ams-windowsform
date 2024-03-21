@@ -113,7 +113,7 @@ Public Class frmImportWESMBillFlatfile
                 Exit Sub
             End If
 
-            If UCase(fnameSplit2(0).ToString) <> "INV" And UCase(fnameSplit2(0).ToString) <> "MF" Then
+            If UCase(fnameSplit2(0).ToString) <> "MF" And UCase(fnameSplit2(0).ToString) <> "MFR" Then
                 MsgBox("Invalid Transaction Type found! Please choose another file.", MsgBoxStyle.Critical, "Invalid")
                 Exit Sub
             End If
@@ -124,14 +124,10 @@ Public Class frmImportWESMBillFlatfile
             End If
 
             FileBillingPd = CInt(fnameSplit(1).ToString)
-            FileSettlementRun = CStr(fnameSplit(2).ToString)
+            FileSettlementRun = If(UCase(fnameSplit2(0).ToString) = "MF", CStr(fnameSplit(2).ToString), CStr(fnameSplit(2).ToString).Replace("F", "R"))
             BillType = CStr(fnameSplit2(0).ToString)
 
-            If UCase(fnameSplit2(0).ToString) = "INV" Then
-                fileType = EnumFileType.Energy
-            ElseIf UCase(fnameSplit2(0).ToString) = "MF" Then
-                fileType = EnumFileType.MarketFees
-            End If
+            fileType = EnumFileType.MarketFees
 
             Dim listWesmBill = UtiImporter.ImportWESMBill(FileBillingPd, FileSettlementRun, PathFolder, FileName)
             Dim listWESMInvoice = UtiImporter.ImportWESMInvoice(FileBillingPd, FileSettlementRun, fileType, _
@@ -172,24 +168,12 @@ Public Class frmImportWESMBillFlatfile
             End If
             'End check Participants
 
-            If UCase(fnameSplit2(0).ToString) = "INV" Then
-                fileChargeType = EnumChargeType.E
-
-                Dim items = (From x In listWESMInvoice Join y In listCharges On x.ChargeID Equals y.ChargeId _
-                             Where (y.cIDType = EnumChargeType.MF Or y.cIDType = EnumChargeType.MFV) _
-                             Select y.ChargeId Distinct).ToList()
-                If items.Count > 0 Then
-                    MsgBox("Invalid Charge ID Type " & items(0), MsgBoxStyle.Exclamation, "Invalid")
-                    Exit Sub
-                End If
-
-            ElseIf UCase(fnameSplit2(0).ToString) = "MF" Then
+            If UCase(fnameSplit2(0).ToString) = "MF" Or UCase(fnameSplit2(0).ToString) = "MFR" Then
                 fileChargeType = EnumChargeType.MF
 
-                Dim items = (From x In listWESMInvoice Join y In listCharges On x.ChargeID Equals y.ChargeId _
-                             Where (y.cIDType = EnumChargeType.E Or y.cIDType = EnumChargeType.EV) _
+                Dim items = (From x In listWESMInvoice Join y In listCharges On x.ChargeID Equals y.ChargeId
+                             Where (y.cIDType = EnumChargeType.E Or y.cIDType = EnumChargeType.EV)
                              Select y.ChargeId Distinct).ToList()
-
                 If items.Count > 0 Then
                     MsgBox("Invalid Charge ID Type " & items(0), MsgBoxStyle.Exclamation, "Invalid")
                     Exit Sub
@@ -221,48 +205,6 @@ Public Class frmImportWESMBillFlatfile
                 End If
             Next
 
-            If UCase(fnameSplit2(0).ToString) = "INV" Then
-
-                'Check if the summation of VAT on Energy is equal to zero
-                Dim Vat = (From x In listWesmBill _
-                           Where x.ChargeType = EnumChargeType.EV _
-                           Select x.Amount).Sum()
-
-                If Vat <> 0 Then                    
-                    If MessageBox.Show("Summation of VAT on Energy is not equal to zero. Do you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
-                        Exit Sub
-                    End If
-                End If
-
-                Dim AP = (From x In listWesmBill _
-                          Where x.Amount > 0 _
-                          Select x.Amount).Sum()
-
-                Dim AR = (From x In listWesmBill _
-                          Where x.Amount < 0 _
-                          Select x.Amount).Sum()
-
-                Dim TotalEWT = UtiImporter.TotalEWT
-                Dim NSS = AP + AR - TotalEWT
-                Dim NSSRA = UtiImporter.GetNSSRA(FileBillingPd, FileSettlementRun, PathFolder, FileName)
-
-
-                'Compare NSSRA line item from AP minus AR.
-                If NSS <> NSSRA Then                
-                    If MessageBox.Show("Total AP and AR:" & vbTab & vbTab & FormatNumber(NSS, 2) & vbCrLf & _
-                                       "Total EWT:" & vbTab & vbTab & FormatNumber(TotalEWT, 2) & vbCrLf & _
-                                       "Total NSS Retention Adjustment:" & vbTab & vbTab & FormatNumber(NSSRA, 2) & vbCrLf & vbCrLf & _
-                                       "NSS and NSSRA line item are not equal! " & _
-                                       "If you wish to continue, please click yes to save the data.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
-                        Exit Sub
-                    End If
-                Else
-                    MsgBox("Total AP and AR:" & vbTab & vbTab & vbTab & FormatNumber(NSS, 2) & vbCrLf & _
-                           "Total EWT:" & vbTab & vbTab & vbTab & FormatNumber(TotalEWT, 2) & vbCrLf & _
-                           "Total NSS Retention Adjustment:" & vbTab & FormatNumber(NSSRA, 2) & vbCrLf, MsgBoxStyle.Information, "NSS")
-                End If
-            End If
-
             'Check if there is existing records
             CountWESMBillExist = WBillHelper.GetWESMBillCount(FileBillingPd, FileSettlementRun, fileChargeType)
 
@@ -284,11 +226,7 @@ Public Class frmImportWESMBillFlatfile
                 ProgressThread.Show("Please wait while processing.")
                 
                 Dim itemJV As JournalVoucher
-                If fileChargeType = EnumChargeType.E Then
-                    itemJV = Me.GenerateJournalVoucherForEnergy(listWesmBill, UtiImporter.TotalEWT)
-                Else
-                    itemJV = Me.GenerateJournalVoucherForMarketFees(listWesmBill)
-                End If
+                itemJV = Me.GenerateJournalVoucherForMarketFees(listWesmBill)
 
                 Dim itemGP = Me.GenerateGPPosted(selectedBP, FileSettlementRun, listWesmBill(0).DueDate, _
                                                  fileChargeType, itemJV)
@@ -518,154 +456,7 @@ Public Class frmImportWESMBillFlatfile
                 End With
                 jvDetails.Add(jvDetail)
             End If
-            
-            'If Math.Abs(totalMFAR + totalMFVAR) > totalMFAP + totalMFVAP Then
-            '    If totalMFAP + totalMFVAP = 0 Then
-            '        'Entry for AR Market Fees
-            '        If totalMFAR <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketTransFeesCode
-            '                .Debit = 0
-            '                .Credit = Math.Abs(totalMFAR)
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
 
-            '        'Entry for AR Vat on Market Fees
-            '        If totalMFVAR <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketFeesOutputTaxCode
-            '                .Debit = 0
-            '                .Credit = Math.Abs(totalMFVAR)
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for Accounts Receivable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.CreditCode
-            '            .Debit = Math.Abs(totalMFAR + totalMFVAR)
-            '            .Credit = 0
-            '        End With
-            '        jvDetails.Add(jvDetail)
-            '    Else
-            '        'Entry for AP Market Fees
-            '        If totalMFAP <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketTransFeesCode
-            '                .Debit = 0
-            '                .Credit = Math.Abs(totalMFAR + totalMFAP)
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for AP Vat on Market Fees
-            '        If totalMFVAP <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketFeesOutputTaxCode
-            '                .Debit = 0
-            '                .Credit = Math.Abs(totalMFVAR + totalMFVAP)
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for Accounts Payable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.DebitCode
-            '            .Debit = 0
-            '            .Credit = totalMFAP + totalMFVAP
-            '        End With
-            '        jvDetails.Add(jvDetail)
-
-            '        'Entry for Accounts Receivable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.CreditCode
-            '            .Debit = Math.Abs(totalMFAR + totalMFVAR)
-            '            .Credit = 0
-            '        End With
-            '        jvDetails.Add(jvDetail)
-            '    End If
-            'Else
-            '    If totalMFAR + totalMFVAR = 0 Then
-            '        'Entry for AP Market Fees
-            '        If totalMFAP <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketTransFeesCode
-            '                .Debit = totalMFAP
-            '                .Credit = 0
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for AP Vat on Market Fees
-            '        If totalMFVAP <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketFeesOutputTaxCode
-            '                .Debit = totalMFVAP
-            '                .Credit = 0
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for Accounts Payable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.DebitCode
-            '            .Debit = 0
-            '            .Credit = totalMFAP + totalMFVAP
-            '        End With
-            '        jvDetails.Add(jvDetail)
-            '    Else
-            '        'Entry for AR Market Fees
-            '        If totalMFAR <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketTransFeesCode
-            '                .Debit = totalMFAR + totalMFAP
-            '                .Credit = 0
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for AR Vat on Market Fees
-            '        If totalMFVAR <> 0 Then
-            '            jvDetail = New JournalVoucherDetails
-            '            With jvDetail
-            '                .AccountCode = AMModule.MarketFeesOutputTaxCode
-            '                .Debit = totalMFVAR + totalMFVAP
-            '                .Credit = 0
-            '            End With
-            '            jvDetails.Add(jvDetail)
-            '        End If
-
-            '        'Entry for Accounts Receivable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.CreditCode
-            '            .Debit = Math.Abs(totalMFAR + totalMFVAR)
-            '            .Credit = 0
-            '        End With
-            '        jvDetails.Add(jvDetail)
-
-            '        'Entry for Accounts Payable
-            '        jvDetail = New JournalVoucherDetails
-            '        With jvDetail
-            '            .AccountCode = AMModule.DebitCode
-            '            .Debit = 0
-            '            .Credit = totalMFAP + totalMFVAP
-            '        End With
-            '        jvDetails.Add(jvDetail)
-            '    End If
-            'End If
 
             'Create the JV Main
             With result

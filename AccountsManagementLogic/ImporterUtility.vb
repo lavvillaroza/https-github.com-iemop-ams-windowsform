@@ -175,22 +175,22 @@ Public Class ImporterUtility
                 Throw New ApplicationException("There must be only one Invoice Date in Invoice File")
             End If
 
-            Dim tmpList = From x In listWESMBill Group x By _
-                          x.IDNumber, x.RegistrationID, x.ChargeType _
-                          Into _
-                          Amount = Sum(x.Amount) _
-                          Select New With {.BillingPeriod = FileBillingPd, .IDNumber = IDNumber, _
-                                           .RegistrationID = RegistrationID, _
-                                           .Amount = Amount, .ChargeType = ChargeType, _
+            Dim tmpList = From x In listWESMBill Group x By
+                          x.IDNumber, x.RegistrationID, x.ChargeType
+                          Into
+                          Amount = Sum(x.Amount)
+                          Select New With {.BillingPeriod = FileBillingPd, .IDNumber = IDNumber,
+                                           .RegistrationID = RegistrationID,
+                                           .Amount = Amount, .ChargeType = ChargeType,
                                            .SettlementRun = FileSTLRun}
 
             For Each item In tmpList
                 Dim selectedItem = item
 
-                Dim itemWESMBill = (From x In listWESMBill _
-                                    Where x.IDNumber = selectedItem.IDNumber And _
-                                    x.RegistrationID = selectedItem.RegistrationID And _
-                                    x.ChargeType = selectedItem.ChargeType _
+                Dim itemWESMBill = (From x In listWESMBill
+                                    Where x.IDNumber = selectedItem.IDNumber And
+                                    x.RegistrationID = selectedItem.RegistrationID And
+                                    x.ChargeType = selectedItem.ChargeType
                                     Select x).First()
 
                 Dim itemNewWESMBill As New WESMBill

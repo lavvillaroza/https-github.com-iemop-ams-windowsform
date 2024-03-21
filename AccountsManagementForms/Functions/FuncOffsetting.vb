@@ -755,7 +755,7 @@ Public Class FuncOffsetting
                         .BalanceType = EnumBalanceType.AR
                     End If
 
-                    If item.InvoiceNumber.Contains("TS-W") Then
+                    If item.InvoiceNumber.Contains("TS-") Then
                         .NoOffset = True
                     End If
                 End With

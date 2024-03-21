@@ -492,7 +492,7 @@ Public Class frmCollectionMgt
 
             'Get the WESM Bill Summary for collection
             Dim items = WBillHelper.GetWESMBillSummaryForCollectionAllocation(PaidTo)
-            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-W") And Not c.INVDMCMNo.ToUpper Like "*-ADJ*").OrderBy(Function(z) z.INVDMCMNo).
+            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-") And Not c.INVDMCMNo.ToUpper Like "*-ADJ*").OrderBy(Function(z) z.INVDMCMNo).
                                                                   Select(Function(x) x.INVDMCMNo).Distinct.ToList
 
             If getListofInvoiceForBIRRuling.Count <> 0 Then
@@ -1375,7 +1375,7 @@ Public Class frmCollectionMgt
         If e.NewValue = CheckState.Checked Then
             'Get the WESM Bill Summary for collection
             Dim items = WBillHelper.GetWESMBillSummaryForCollectionAllocation(PaidTo)
-            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-W")).OrderBy(Function(z) z.INVDMCMNo).Select(Function(x) x.INVDMCMNo).Distinct.ToList
+            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-")).OrderBy(Function(z) z.INVDMCMNo).Select(Function(x) x.INVDMCMNo).Distinct.ToList
 
             If getListofInvoiceForBIRRuling.Count <> 0 Then
                 Dim transItems = WBillHelper.GetListWESMTransCoverSummary2(getListofInvoiceForBIRRuling)
@@ -1692,13 +1692,15 @@ Public Class frmCollectionMgt
 
             If selectedDay >= 25 And selectedDay <= 31 And CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) <> CDate(SystemDate.ToString("MM/dd/yyyy")) Then
                 ans = MsgBox("Do you really want to apply this as advanced collecion?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Save")
-
                 If ans = MsgBoxResult.No Then
                     Exit Function
                 End If
             ElseIf selectedDay < 25 And CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) > CDate(SystemDate.ToString("MM/dd/yyyy")) Then
-                MsgBox("Collection date must not be later than date today!", MsgBoxStyle.Critical, "Invalid")
-                Exit Function
+                'MsgBox("Collection date must not be later than date today!", MsgBoxStyle.Critical, "Invalid")
+                ans = MsgBox("Do you really want to apply this as advanced collecion?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Save")
+                If ans = MsgBoxResult.No Then
+                    Exit Function
+                End If
             End If
 
             'If CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) > CDate(SystemDate.ToString("MM/dd/yyyy")) Then
@@ -3701,7 +3703,7 @@ Public Class frmCollectionMgt
                 For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
-                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-") Then
                         Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
@@ -3744,7 +3746,7 @@ Public Class frmCollectionMgt
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
                     If ChargeType = EnumChargeType.E Then
-                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
+                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-") Then
                             Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                             Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
                             With Me.DGridView.Rows(i)
@@ -3824,6 +3826,7 @@ Public Class frmCollectionMgt
             End If
         End If
     End Sub
+
 #End Region
 
 End Class

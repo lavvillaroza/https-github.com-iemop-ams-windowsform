@@ -119,4 +119,30 @@ Public Class NpgsqlDAL
     End Function
 #End Region
 
+#Region "ExecuteSelectQueryReturningDataReader"
+    Public Async Function ExecuteSelectQueryReturningDataReaderAsync(ByVal _SQL As String) As Threading.Tasks.Task(Of DataReport)
+        Dim report As New DataReport
+        Me._myReader = Nothing
+        Try
+            Me.OpenConnection()
+            Try
+                Me._myCommand = New NpgsqlCommand(_SQL, _conn)
+                Me._myReader = Await Me._myCommand.ExecuteReaderAsync(CommandBehavior.CloseConnection)
+                report.ReturnedIDatareader = Me._myReader
+            Catch ex As Exception
+                report.ErrorMessage = ex.Message
+                If Me._conn.State <> ConnectionState.Closed Then
+                    Me._conn.Close()
+                End If
+                Me._myCommand.Dispose()
+            End Try
+        Catch ex As Exception
+            report.ErrorMessage = ex.Message
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+        End Try
+        Return report
+    End Function
+#End Region
 End Class

@@ -4401,6 +4401,11 @@ Public Class WESMBillHelper
                     item.SpotQty = CDec(.Item("SPOT_QTY"))
                     item.MarketFeesRate = CDec(.Item("MARKET_FEES_RATE"))
                     item.Remarks = CStr(.Item("REMARKS"))
+                    item.ReserveCategory = If(IsDBNull(.Item("RESERVE_CATEGORY")), "", CStr(.Item("RESERVE_CATEGORY")))
+                    item.Region = If(IsDBNull(.Item("REGION")), "", CStr(.Item("REGION")))
+                    item.ASNonPayment = CDec(.Item("AS_NONPAYMENT"))
+                    item.ReserveAmountAdj = CDec(.Item("RESERVE_AMOUNT_ADJ"))
+
                     item.ListWBAllocDisDetails = GetWBAllocDisDetails(CLng(.Item("SUMMARY_ID")))
                     result.Add(item)
                 End With
@@ -15145,6 +15150,421 @@ Public Class WESMBillHelper
     End Sub
 #End Region
 
+#Region "Saving Parent to Parent/Child to Child Offsetting Reserve"
+    Public Sub SaveP2PC2COffsetingReserve(ByVal billingPeriod As Integer, ByVal listOffset As List(Of OffsetP2PC2CDetails),
+                                   ByVal listWESMBillSummary As List(Of WESMBillSummary), ByVal listWTDSumary As List(Of WESMTransDetailsSummary),
+                                   ByVal listJournalVoucher As List(Of JournalVoucher), ByVal listDMCM As List(Of DebitCreditMemo),
+                                   ByVal listGPPosted As List(Of WESMBillGPPosted), ByVal DMCMNo As Long, ByVal JVNo As Long,
+                                   ByVal OffsetNo As Long, ByVal WESMBillSummaryNo As Long, ByVal DueDate As Date, ByVal NewDueDate As Date, ByVal StlRun As String,
+                                   ByVal chargeType As EnumChargeType, ByVal listRTACoverSummary As List(Of WESMBillAllocCoverSummary))
+        Dim dicOffsetNo As New Dictionary(Of String, String)
+        Dim dicDMCMNo As New Dictionary(Of Long, Long)
+        Dim dicJV As New Dictionary(Of Long, Long)
+        Dim dicWESMBillSummaryNo As New Dictionary(Of Long, Long)
+        Dim report As New DataReport
+        Dim ds As New DataSet
+        Dim listSQL As New List(Of String)
+        Dim row As DataRow
+
+        Try
+            Dim dtGPPosted As New DataTable
+            dtGPPosted.TableName = "AM_WESM_BILL_GP_POSTED"
+            With dtGPPosted.Columns
+                .Add("BILLING_PERIOD", GetType(Integer))
+                .Add("STL_RUN", GetType(String))
+                .Add("CHARGE_TYPE", GetType(String))
+                .Add("DUE_DATE", GetType(Date))
+                .Add("DOCUMENT_AMOUNT", GetType(Decimal))
+                .Add("BATCH_CODE", GetType(String))
+                .Add("REMARKS", GetType(String))
+                .Add("UPDATED_BY", GetType(String))
+                .Add("POSTED_TYPE", GetType(String))
+                .Add("AM_JV_NO", GetType(Long))
+            End With
+            dtGPPosted.AcceptChanges()
+
+            Dim dtOffset As New DataTable
+            dtOffset.TableName = "AM_OFFSET_P2PC2C_DETAILS"
+            With dtOffset.Columns
+                .Add("OFFSET_NO", GetType(String))
+                .Add("TRANS_DATE", GetType(Date))
+                .Add("AM_CODE", GetType(String))
+                .Add("INVOICE_NO", GetType(String))
+                .Add("AM_DMCM_NO", GetType(Long))
+                .Add("GROUP_NO", GetType(Long))
+                .Add("UPDATED_BY", GetType(String))
+            End With
+            dtOffset.AcceptChanges()
+
+            Dim dtWESMBillSummary As New DataTable
+            dtWESMBillSummary.TableName = "AM_WESM_BILL_SUMMARY"
+            With dtWESMBillSummary.Columns
+                .Add("BILLING_PERIOD", GetType(Integer))
+                .Add("ID_NUMBER", GetType(String))
+                .Add("CHARGE_TYPE", GetType(String))
+                .Add("DUE_DATE", GetType(Date))
+                .Add("NEW_DUEDATE", GetType(Date))
+                .Add("BEGINNING_BALANCE", GetType(Decimal))
+                .Add("ENDING_BALANCE", GetType(Decimal))
+                .Add("ENERGY_WITHHOLD", GetType(Decimal))
+                .Add("ID_TYPE", GetType(String))
+                .Add("IS_MFWTAX_DEDUCTED", GetType(String))
+                .Add("INV_DM_CM", GetType(String))
+                .Add("SUMMARY_TYPE", GetType(String))
+                .Add("WESMBILL_SUMMARY_NO", GetType(Long))
+                .Add("WESMBILL_BATCH_NO", GetType(Long))
+                .Add("ENERGY_WITHHOLD_STATUS", GetType(Integer))
+                .Add("SPA_NO", GetType(Long))
+                .Add("UPDATED_BY", GetType(String))
+                .Add("BALANCE_TYPE", GetType(String))
+                .Add("NO_OFFSET", GetType(Integer))
+            End With
+            dtWESMBillSummary.AcceptChanges()
+
+            Dim dtDMCM As New DataTable
+            dtDMCM.TableName = "AM_DMCM"
+            With dtDMCM.Columns
+                .Add("AM_DMCM_NO", GetType(Long))
+                .Add("AM_JV_NO", GetType(Long))
+                .Add("BILLING_PERIOD", GetType(Integer))
+                .Add("DUE_DATE", GetType(Date))
+                .Add("ID_NUMBER", GetType(String))
+                .Add("TRANS_TYPE", GetType(Integer))
+                .Add("EWT", GetType(Decimal))
+                .Add("EWV", GetType(Decimal))
+                .Add("VATABLE", GetType(Decimal))
+                .Add("VAT", GetType(Decimal))
+                .Add("VAT_EXEMPT", GetType(Decimal))
+                .Add("VAT_ZERO_RATED", GetType(Decimal))
+                .Add("TOTAL_AMOUNT_DUE", GetType(Decimal))
+                .Add("PARTICULARS", GetType(String))
+                .Add("CHARGE_TYPE", GetType(String))
+                .Add("PREPARED_BY", GetType(String))
+                .Add("CHECKED_BY", GetType(String))
+                .Add("APPROVED_BY", GetType(String))
+                .Add("UPDATED_BY", GetType(String))
+            End With
+            dtDMCM.AcceptChanges()
+
+            Dim dtDMCMDetails As New DataTable
+            dtDMCMDetails.TableName = "AM_DMCM_DETAILS"
+            With dtDMCMDetails.Columns
+                .Add("AM_DMCM_NO", GetType(Long))
+                .Add("ACCT_CODE", GetType(String))
+                .Add("DEBIT", GetType(String))
+                .Add("CREDIT", GetType(String))
+                .Add("INV_DM_CM", GetType(String))
+                .Add("SUMMARY_TYPE", GetType(String))
+                .Add("IS_COMPUTE", GetType(Integer))
+                .Add("ID_NUMBER", GetType(String))
+                .Add("UPDATED_BY", GetType(String))
+            End With
+            dtDMCMDetails.AcceptChanges()
+
+            Dim dtJV As New DataTable
+            dtJV.TableName = "AM_JV"
+            With dtJV.Columns
+                .Add("AM_JV_NO", GetType(Long))
+                .Add("BATCH_CODE", GetType(String))
+                .Add("STATUS", GetType(Integer))
+                .Add("PREPARED_BY", GetType(String))
+                .Add("CHECKED_BY", GetType(String))
+                .Add("APPROVED_BY", GetType(String))
+                .Add("UPDATED_BY", GetType(String))
+                .Add("POSTED_TYPE", GetType(String))
+            End With
+            dtJV.AcceptChanges()
+
+            Dim dtJVDetails As New DataTable
+            dtJVDetails.TableName = "AM_JV_DETAILS"
+            With dtJVDetails.Columns
+                .Add("AM_JV_NO", GetType(Long))
+                .Add("ACCT_CODE", GetType(String))
+                .Add("DEBIT", GetType(Decimal))
+                .Add("CREDIT", GetType(Decimal))
+                .Add("UPDATED_BY", GetType(String))
+            End With
+            dtJVDetails.AcceptChanges()
+
+            'Generate Sequence ID for Offset No
+            dicOffsetNo.Add("0", "0")
+            For cnt As Long = 1 To OffsetNo
+                dicOffsetNo.Add(cnt.ToString(), EnumPostedType.O.ToString() & "-" & Me.GetSequenceID("SEQ_AM_BATCH_CODE").ToString())
+            Next
+
+            'Generate Sequence ID for DMCM No
+            dicDMCMNo.Add(0, 0)
+            For cnt As Long = 1 To DMCMNo
+                dicDMCMNo.Add(cnt, Me.GetSequenceID("SEQ_AM_DMCM_NO"))
+            Next
+
+            'Generate Sequence ID for Journal Voucher No
+            dicJV.Add(0, 0)
+            For cnt As Long = 1 To JVNo
+                dicJV.Add(cnt, Me.GetSequenceID("SEQ_AM_JV_NO"))
+            Next
+
+            'Genrate the Sequence ID for WESM Bill Sumamry
+            dicWESMBillSummaryNo.Add(0, 0)
+            For cnt As Long = 1 To WESMBillSummaryNo
+                dicWESMBillSummaryNo.Add(cnt, Me.GetSequenceID("SEQ_AM_WESMBILL_SUMMARY_NO"))
+            Next
+
+            '******************** Save Offsetting *****************************
+            For Each itemOffset In listOffset
+                With itemOffset
+                    row = dtOffset.NewRow()
+                    row("OFFSET_NO") = dicOffsetNo(.OffsetNumber)
+                    row("TRANS_DATE") = Date.Now
+                    row("AM_CODE") = .AMCode
+                    row("INVOICE_NO") = .InvoiceNumber
+                    row("AM_DMCM_NO") = dicDMCMNo(.DMCMNumber)
+                    row("GROUP_NO") = dicWESMBillSummaryNo(.WESMBillSummaryNo)
+                    row("UPDATED_BY") = Me.UserName
+                    dtOffset.Rows.Add(row)
+                End With
+            Next
+            dtOffset.AcceptChanges()
+
+            '******************** Save DMCM *****************************
+            For Each itemDMCM In listDMCM
+                With itemDMCM
+                    row = dtDMCM.NewRow()
+                    row("AM_DMCM_NO") = dicDMCMNo(.DMCMNumber)
+                    row("AM_JV_NO") = dicJV(.JVNumber)
+                    row("ID_NUMBER") = .IDNumber
+                    row("BILLING_PERIOD") = .BillingPeriod
+                    row("DUE_DATE") = NewDueDate 'Change ".DueDate" with the selected duedate by the user
+                    row("TRANS_TYPE") = .TransType
+                    row("EWT") = .EWT
+                    row("EWV") = .EWV
+                    row("VATABLE") = .Vatable
+                    row("VAT") = .VAT
+                    row("VAT_EXEMPT") = .VATExempt
+                    row("VAT_ZERO_RATED") = .VatZeroRated
+                    row("TOTAL_AMOUNT_DUE") = .TotalAmountDue
+                    row("PARTICULARS") = .Particulars
+                    row("CHARGE_TYPE") = .ChargeType.ToString()
+                    row("PREPARED_BY") = Me.UserName
+                    row("CHECKED_BY") = .CheckedBy
+                    row("APPROVED_BY") = .ApprovedBy
+                    row("UPDATED_BY") = Me.UserName
+                    dtDMCM.Rows.Add(row)
+                End With
+
+                'Data for DMCM Details
+                For Each itemDMCMDetails In itemDMCM.DMCMDetails
+                    With itemDMCMDetails
+                        row = dtDMCMDetails.NewRow()
+                        row("AM_DMCM_NO") = dicDMCMNo(.DMCMNumber)
+                        row("ACCT_CODE") = .AccountCode
+                        row("DEBIT") = .Debit
+                        row("CREDIT") = .Credit
+                        row("INV_DM_CM") = .InvDMCMNo
+                        row("SUMMARY_TYPE") = .SummaryType
+                        row("ID_NUMBER") = .IDNumber.IDNumber
+                        row("IS_COMPUTE") = .IsComputed
+                        row("UPDATED_BY") = Me.UserName
+                        dtDMCMDetails.Rows.Add(row)
+                    End With
+                Next
+                dtDMCMDetails.AcceptChanges()
+            Next
+            dtDMCM.AcceptChanges()
+
+            '******************** Save Journal Voucher *****************************
+            For Each itemJV In listJournalVoucher
+                row = dtJV.NewRow()
+                row("AM_JV_NO") = dicJV(itemJV.JVNumber)
+                row("BATCH_CODE") = dicOffsetNo(itemJV.BatchCode)
+                row("STATUS") = 1
+                row("PREPARED_BY") = Me.UserName
+                row("CHECKED_BY") = itemJV.CheckedBy
+                row("APPROVED_BY") = itemJV.ApprovedBy
+                row("UPDATED_BY") = Me.UserName
+                row("POSTED_TYPE") = itemJV.PostedType
+                dtJV.Rows.Add(row)
+                dtJV.AcceptChanges()
+
+                'Data for Journal Voucher Details
+                For Each itemJVDetails In itemJV.JVDetails
+                    With itemJVDetails
+                        row = dtJVDetails.NewRow()
+                        row("AM_JV_NO") = dicJV(itemJV.JVNumber)
+                        row("ACCT_CODE") = .AccountCode
+                        row("DEBIT") = .Debit
+                        row("CREDIT") = .Credit
+                        row("UPDATED_BY") = Me.UserName
+                        dtJVDetails.Rows.Add(row)
+                    End With
+                Next
+                dtJVDetails.AcceptChanges()
+            Next
+
+            '******************** Save WESM Bill GP Posted *****************************
+            For Each itemGPPosted In listGPPosted
+                With itemGPPosted
+                    'Data for GP Posted
+                    row = dtGPPosted.NewRow()
+                    row("BILLING_PERIOD") = .BillingPeriod
+                    row("STL_RUN") = .SettlementRun
+                    row("CHARGE_TYPE") = .Charge.ToString()
+                    row("DUE_DATE") = .DueDate
+                    row("DOCUMENT_AMOUNT") = .DocumentAmount
+                    row("BATCH_CODE") = dicOffsetNo(.BatchCode)
+                    row("REMARKS") = .Remarks & " and Batch Code = " & dicOffsetNo(.BatchCode) & ")."
+                    row("UPDATED_BY") = Me.UserName
+                    row("POSTED_TYPE") = .PostType
+                    row("AM_JV_NO") = dicJV(.JVNumber)
+                    dtGPPosted.Rows.Add(row)
+                End With
+            Next
+            dtGPPosted.AcceptChanges()
+
+            '******************** Save WESM Bill Summary *****************************
+            'Dim DistinctDueDate As List(Of Date) = listWESMBillSummary.Select(Function(x) x.DueDate).Distinct.ToList()
+            'Dim dicWESMBillBatchNo As New Dictionary(Of Date, Long)
+            'If DistinctDueDate.Count >= 1 Then
+            '    For Each item In DistinctDueDate
+            '        If Not dicWESMBillBatchNo.ContainsKey(item) Then
+            '            'Generate the Sequence ID for WESM Bill Summary Batch No
+            '            Dim WESMBillBatchNo As Long = Me.GetSequenceID("SEQ_AM_WESMBILL_BATCH_NO")
+            '            dicWESMBillBatchNo.Add(item, WESMBillBatchNo)
+            '        End If
+            '    Next
+            'End If
+
+            'Added By Lance as of 03/07/2024 for reserve separation of batch no considering the region and reserve category
+            Dim DistinctGroup = (From x In listRTACoverSummary
+                                 Select New With {Key .DueDate = x.DueDate,
+                                                  Key .ReserveCategory = x.ReserveCategory,
+                                                  Key .Region = x.Region}).Distinct().ToList()
+
+            Dim dicWESMBillBatchNo As New Dictionary(Of String, Long)
+            If DistinctGroup.Count >= 1 Then
+                For Each item In DistinctGroup
+                    Dim key As String = item.DueDate & "|" & item.Region & "|" & item.ReserveCategory
+                    If Not dicWESMBillBatchNo.ContainsKey(key) Then
+                        'Generate the Sequence ID for WESM Bill Summary Batch No
+                        Dim WESMBillBatchNo As Long = Me.GetSequenceID("SEQ_AM_WESMBILL_BATCH_NO")
+                        dicWESMBillBatchNo.Add(key, WESMBillBatchNo)
+                    End If
+                Next
+            End If
+
+            For Each itemWESMBillSummary In listWESMBillSummary
+                Dim getRTACoverySummary As WESMBillAllocCoverSummary = listRTACoverSummary.Where(Function(x) x.TransactionNo = itemWESMBillSummary.INVDMCMNo).FirstOrDefault()
+                If getRTACoverySummary Is Nothing Then
+                    Throw New Exception("Error!" & itemWESMBillSummary.INVDMCMNo & " is not found in RTA Summary.")
+                End If
+
+                Dim createKey As String = getRTACoverySummary.DueDate & "|" & getRTACoverySummary.Region & "|" & getRTACoverySummary.ReserveCategory
+                With itemWESMBillSummary
+                    'Data for GP Posted
+                    row = dtWESMBillSummary.NewRow()
+                    row("BILLING_PERIOD") = .BillPeriod
+                    row("ID_NUMBER") = .IDNumber.IDNumber
+                    row("CHARGE_TYPE") = .ChargeType
+                    row("DUE_DATE") = NewDueDate 'Change ".DueDate" with the selected duedate by the user
+                    row("NEW_DUEDATE") = NewDueDate 'Change ".DueDate" with the selected duedate by the user
+                    row("BEGINNING_BALANCE") = .BeginningBalance
+                    row("ENDING_BALANCE") = .EndingBalance
+                    row("ENERGY_WITHHOLD") = .EnergyWithhold
+                    row("ID_TYPE") = .IDType
+                    row("IS_MFWTAX_DEDUCTED") = .IsMFWTaxDeducted
+
+                    If .SummaryType = EnumSummaryType.DMCM Then
+                        row("INV_DM_CM") = CStr(dicDMCMNo(CLng(.INVDMCMNo)))
+                    Else
+                        row("INV_DM_CM") = .INVDMCMNo
+                    End If
+
+                    row("SUMMARY_TYPE") = .SummaryType
+                    row("WESMBILL_SUMMARY_NO") = dicWESMBillSummaryNo(.WESMBillSummaryNo)
+                    row("WESMBILL_BATCH_NO") = dicWESMBillBatchNo(createKey)
+                    row("ENERGY_WITHHOLD_STATUS") = .EnergyWithholdStatus
+                    row("SPA_NO") = 0
+                    row("UPDATED_BY") = Me.UserName
+                    row("BALANCE_TYPE") = .BalanceType.ToString
+                    row("NO_OFFSET") = If(.NoOffset = True, 1, 0)
+                    dtWESMBillSummary.Rows.Add(row)
+                End With
+            Next
+
+            dtWESMBillSummary.AcceptChanges()
+
+            'Add the tables in dataset
+            With ds.Tables
+                .Add(dtJV)
+                .Add(dtJVDetails)
+                .Add(dtDMCM)
+                .Add(dtDMCMDetails)
+                .Add(dtOffset)
+                .Add(dtWESMBillSummary)
+                .Add(dtGPPosted)
+            End With
+            ds.AcceptChanges()
+
+            'Change ".DueDate" with the selected duedate by the user in AM_WESM_Bill
+            Dim Sql As String
+            If chargeType = EnumChargeType.E Then
+                If StlRun.Contains(";") Then
+                    Dim splitSTLrun = StlRun.Split(CChar(";"))
+                    Dim counter As Integer = 0
+                    For Each sitem In splitSTLrun
+                        Sql = "UPDATE AM_WESM_BILL SET DUE_DATE = TO_DATE('" & NewDueDate & "','MM/dd/yyyy') " &
+                      "WHERE BILLING_PERIOD = " & billingPeriod & " AND DUE_DATE = TO_DATE('" & DueDate & "','MM/dd/yyyy') " &
+                      "AND STL_RUN ='" & sitem & "' AND CHARGE_TYPE IN ('" & EnumChargeType.E.ToString() & "','" & EnumChargeType.EV.ToString() & "')"
+                        listSQL.Add(Sql)
+                    Next
+                Else
+                    Sql = "UPDATE AM_WESM_BILL SET DUE_DATE = TO_DATE('" & NewDueDate & "','MM/dd/yyyy') " &
+                      "WHERE BILLING_PERIOD = " & billingPeriod & " AND DUE_DATE = TO_DATE('" & DueDate & "','MM/dd/yyyy') " &
+                      "AND STL_RUN ='" & StlRun & "' AND CHARGE_TYPE IN ('" & EnumChargeType.E.ToString() & "', '" & EnumChargeType.EV.ToString() & "')"
+                    listSQL.Add(Sql)
+                End If
+
+                If listWTDSumary.Count <> 0 Then
+                    For Each item In listWTDSumary
+                        Sql = "INSERT INTO AM_WESM_TRANS_DETAILS_SUMMARY(BUYER_TRANS_NO,BUYER_BILLING_ID,SELLER_TRANS_NO,SELLER_BILLING_ID,DUE_DATE,NEW_DUE_DATE,ORIG_AMOUNT_ENERGY,OBIN_ENERGY," & vbNewLine _
+                                            & "ORIG_AMOUNT_VAT,OBIN_VAT,ORIG_AMOUNT_EWT,OBIN_EWT,UPDATED_DATE,UPDATED_BY)" & vbNewLine _
+                            & "SELECT '" & item.BuyerTransNo & "', '" & item.BuyerBillingID & "', '" & item.SellerTransNo & "', '" & item.SellerBillingID & "', TO_DATE('" & item.DueDate.ToShortDateString & "','MM/DD/yyyy')," & vbNewLine _
+                            & "TO_DATE('" & item.NewDueDate.ToShortDateString & "','MM/DD/yyyy')," & item.OrigBalanceInEnergy & "," & item.OutstandingBalanceInEnergy & "," & item.OrigBalanceInVAT & vbNewLine _
+                            & "," & item.OutstandingBalanceInVAT & "," & item.OrigBalanceInEWT & "," & item.OutstandingBalanceInEWT & ",SYSDATE,'" & AMModule.UserName & "' FROM DUAL"
+                        listSQL.Add(Sql)
+                    Next
+                End If
+            Else
+                If StlRun.Contains(";") Then
+                    Dim splitSTLrun = StlRun.Split(CChar(";"))
+                    Dim counter As Integer = 0
+                    For Each sitem In splitSTLrun
+                        Sql = "UPDATE AM_WESM_BILL SET DUE_DATE = TO_DATE('" & NewDueDate & "','MM/dd/yyyy') " &
+                       "WHERE BILLING_PERIOD = " & billingPeriod & " AND DUE_DATE = TO_DATE('" & DueDate & "','MM/dd/yyyy') " &
+                       "AND STL_RUN ='" & sitem & "' AND CHARGE_TYPE IN ('" & EnumChargeType.MF.ToString() & "','" & EnumChargeType.MFV.ToString() & "')"
+                        listSQL.Add(Sql)
+                    Next
+                Else
+                    Sql = "UPDATE AM_WESM_BILL SET DUE_DATE = TO_DATE('" & NewDueDate & "','MM/dd/yyyy') " &
+                      "WHERE BILLING_PERIOD = " & billingPeriod & " AND DUE_DATE = TO_DATE('" & DueDate & "','MM/dd/yyyy') " &
+                      "AND STL_RUN ='" & StlRun & "' AND CHARGE_TYPE IN ('" & EnumChargeType.MF.ToString() & "','" & EnumChargeType.MFV.ToString() & "')"
+                    listSQL.Add(Sql)
+                End If
+            End If
+
+            listSQL.TrimExcess()
+
+            report = Me.DataAccess.ExecuteSaveQuery(listSQL, ds)
+
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+    End Sub
+#End Region
+
 #Region "Save Accounting Code"
     Public Sub SaveAccountingCode(ByVal item As AccountingCode, ByVal tag As Boolean)
         Dim report As New DataReport
@@ -20837,12 +21257,12 @@ Public Class WESMBillHelper
             '                  & "WHERE B.BALANCE_TYPE = 'AR' AND A.ENDING_BALANCE <= 0 AND A.PAYMENT_NO  = " & PaymentNo & " AND B.CHARGE_TYPE ='" & ChargeType.ToString() & "'"
 
             'added by lance for historical of CAP Summary 06/05/2020 FROM B.ID_NUMBER TO A.ID_NUMBER
-            Sql = "SELECT A.*, B.CHARGE_TYPE, B.INV_DM_CM, C.ID_NUMBER, C.PARTICIPANT_ID, B.WESMBILL_BATCH_NO, D.REMARKS " _
+            SQL = "SELECT A.*, B.CHARGE_TYPE, B.INV_DM_CM, C.ID_NUMBER, C.PARTICIPANT_ID, B.WESMBILL_BATCH_NO, D.REMARKS " _
                               & "FROM AM_PAYMENT_NEW_WBS_NOTRANS A " _
                               & "LEFT JOIN AM_WESM_BILL_SUMMARY B ON A.WESMBILL_SUMMARY_NO = B.WESMBILL_SUMMARY_NO " _
                               & "LEFT JOIN AM_PARTICIPANTS C ON C.ID_NUMBER = A.ID_NUMBER " _
                               & "LEFT JOIN AM_WESM_BILL D ON D.INVOICE_NO = B.INV_DM_CM AND D.CHARGE_TYPE = B.CHARGE_TYPE " _
-                              & "WHERE B.BALANCE_TYPE = 'AR' AND A.ENDING_BALANCE <= 0 AND A.PAYMENT_NO  = " & PaymentNo & " AND B.CHARGE_TYPE ='" & ChargeType.ToString() & "'"
+                              & "WHERE B.BALANCE_TYPE = 'AR' AND A.ENDING_BALANCE < 0 AND A.PAYMENT_NO  = " & PaymentNo & " AND B.CHARGE_TYPE ='" & ChargeType.ToString() & "'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -32958,4 +33378,45 @@ Public Class WESMBillHelper
         End Try
         Return result
     End Function
+
+#Region "Get Reserve Category"
+    Public Function GetListReserveCategoryCode() As Dictionary(Of String, String)
+        Dim dicReserveCategoryCode As New Dictionary(Of String, String)
+        Dim report As New DataReport
+        Dim SQL As String
+        Try
+            SQL = "SELECT * FROM AM_RESERVE_CATEGORY_CODE"
+            report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            dicReserveCategoryCode = Me.GetListReserveCategoryCode(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return dicReserveCategoryCode
+    End Function
+
+    Private Function GetListReserveCategoryCode(ByVal dr As IDataReader) As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)
+        Try
+            While dr.Read()
+                With dr
+                    If result.ContainsKey(CStr(.Item("CODE"))) Then
+                        result.Add(CStr(.Item("CODE")), CStr(.Item("DESCRIPTION")))
+                    End If
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
 End Class

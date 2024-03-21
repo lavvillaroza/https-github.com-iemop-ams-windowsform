@@ -89,4 +89,24 @@
         End Set
     End Property
 
+    Private _ReserveCategory As String
+    Public Property ReserveCategory() As String
+        Get
+            Return _ReserveCategory
+        End Get
+        Set(ByVal value As String)
+            _ReserveCategory = value.ToUpper
+        End Set
+    End Property
+
+    Private _Region As String
+    Public Property Region() As String
+        Get
+            Return _Region
+        End Get
+        Set(ByVal value As String)
+            _Region = value.ToUpper
+        End Set
+    End Property
+
 End Class

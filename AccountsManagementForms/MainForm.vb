@@ -1013,7 +1013,7 @@ Public Class MainForm
                 MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-            frmImportWESMAllocTransSummary.Show()
+            frmImportWESMTransAllocSummary.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
@@ -1038,7 +1038,7 @@ Public Class MainForm
                 MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-            frmImportWESMAllocTransSummaryPrelim.Show()
+            frmImportWESMTransAllocSummaryFlatFile.Show()
         Catch ex As Exception
             MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
         End Try
@@ -1172,5 +1172,39 @@ Public Class MainForm
         End Try
     End Sub
 
+    Private Sub ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReserveTransactionAllocationSummaryFromFlatFilePOrFToolStripMenuItem.Click
+        Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+            frmImportReserveTransAllocFlatFile.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
+    Private Sub ReserveTransactionSummaryFromCRSSDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReserveTransactionSummaryFromCRSSDBToolStripMenuItem.Click
+        Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+            frmImportReservedFromCRSS.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReseveBillFromFlatFileMarketFeesPrelimToolStripMenuItem.Click
+        Try
+            If Not _Login.HasAccess(EnumAMSModulesFinal.SAPUploadWESMBillWindow.ToString) Then
+                MessageBox.Show("You're not authorized to access this window! Please contact the administrator.", "System Message!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+            frmImportReserveMFFlatFile.Show()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class

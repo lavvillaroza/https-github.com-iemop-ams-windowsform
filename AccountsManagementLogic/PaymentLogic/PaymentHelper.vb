@@ -4063,8 +4063,13 @@ Public Class PaymentHelper
                     End If
 
                     If GetEndingBalanceMFV Is Nothing Then
-                        MFArr(RowIndex, 8) = 0
-                        MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance
+                        If GetNewEndingBalanceMFV Is Nothing Then
+                            MFArr(RowIndex, 8) = 0
+                            MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance
+                        Else
+                            MFArr(RowIndex, 8) = GetNewEndingBalanceMFV.EndingBalance
+                            MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance + GetNewEndingBalanceMFV.EndingBalance
+                        End If
                     ElseIf GetEndingBalanceMF Is Nothing Then
                         MFArr(RowIndex, 8) = GetEndingBalanceMFV.EndingBalance
                         MFArr(RowIndex, 9) = GetEndingBalanceMFV.EndingBalance
@@ -4889,7 +4894,7 @@ Public Class PaymentHelper
         Dim getWESMBillsSummaryForEnergy As List(Of WESMBillSummary) = Me.WESMBillSummaryList.Where(Function(x) (x.EndingBalance - x.EnergyWithhold) < 0 _
                                                                                                     And x.ChargeType = EnumChargeType.E _
                                                                                                     And x.BalanceType = EnumBalanceType.AR _
-                                                                                                    And x.INVDMCMNo.StartsWith("TS-W") _
+                                                                                                    And x.INVDMCMNo.StartsWith("TS-") _
                                                                                                     And Not x.INVDMCMNo.ToUpper Like "*-ADJ*").ToList()
         For Each MP In DistinctListofMPwithShare
             Dim getOffsetOnDeferredEnergy As Decimal = 0D

@@ -299,8 +299,8 @@ Public Class APAllocationProcess
             Select Case item.ChargeType
                 Case EnumChargeType.MF
                     Dim MFAmount As Decimal = item.EndingBalance
-                    Dim MFWHTaxAmount As Decimal = Math.Round(item.BeginningBalance * AMParticipantsInfo.MarketFeesWHTax * -1, 2)
-                    Dim MFVWHVATAmount As Decimal = Math.Round(item.BeginningBalance * AMParticipantsInfo.MarketFeesWHVAT * -1, 2)
+                    Dim MFWHTaxAmount As Decimal = 0 'Math.Round(item.BeginningBalance * AMParticipantsInfo.MarketFeesWHTax * -1, 2) 'Disabled as of 01/25/2024
+                    Dim MFVWHVATAmount As Decimal = 0 'Math.Round(item.BeginningBalance * AMParticipantsInfo.MarketFeesWHVAT * -1, 2) 'Disabled as of 01/25/2024
                     Dim MFAmountTotal As Decimal = MFAmount - (MFWHTaxAmount + MFVWHVATAmount)
                     Dim APAllocationOnMFWHTax As New APAllocation
                     Dim APAllocationOnMF As New APAllocation
@@ -730,15 +730,15 @@ Public Class APAllocationProcess
 
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
 
-        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") _
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-") _
                                                                                       And Not x.InvoiceNumber.ToUpper Like "*-ADJ*") _
                                                                                       .OrderByDescending(Function(x) x.AllocationAmount) _
                                                                                       .OrderBy(Function(x) x.InvoiceNumber) _
                                                                                       .ThenBy(Function(x) x.CollectionType) _
                                                                                       .ToList
 
-        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
-                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-")).ToList
         'Get the WTA Details Summary for current AR List
         Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)
         For Each itemAR In getBIRRulingInvoiceList
@@ -792,9 +792,6 @@ Public Class APAllocationProcess
                                     CashShareOnEnergy += getdiff
                                 End If
                             End If
-                            If itemAP.INVDMCMNo = "TS-WF-191F-0000343" Then
-                                Debug.Print(CashShareOnEnergy)
-                            End If
                         ElseIf itemAR.CollectionType = EnumCollectionType.DefaultInterestOnEnergy Then
                             CashShareOnEnergy = Me.ComputeAllocation(Math.Abs(getWTDSummaryItemAP.OrigBalanceInEnergy), originalTotalAmountOfAP, Math.Abs(itemAR.AllocationAmount))
                         End If
@@ -815,9 +812,6 @@ Public Class APAllocationProcess
                 End Select
                 APAllocationListPerBP.Add(CreatedItem_Energy)
             Next
-            If itemAR.InvoiceNumber = "TS-WF-188F-0182" Then
-                Dim x0 = 0
-            End If
             Dim totalAPAllocationAmount As Decimal = APAllocationListPerBP.Select(Function(x) x.AllocationAmount).Sum()
             If Math.Abs(itemAR.AllocationAmount) <> totalAPAllocationAmount Then
                 Dim getDiff As Decimal = Math.Abs(itemAR.AllocationAmount) - totalAPAllocationAmount
@@ -986,8 +980,8 @@ Public Class APAllocationProcess
         Dim getBPNo As Integer = listWESMBillSummaryPerWBatch.Select(Function(x) x.BillPeriod).Distinct.FirstOrDefault
 
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
-        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
-        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-")).ToList
         Dim cListWESMBillSummaryPerWBatch As List(Of WESMBillSummary) = listWESMBillSummaryPerWBatch
 
         Dim getWTDSummary As List(Of WESMTransDetailsSummary) = New List(Of WESMTransDetailsSummary)

@@ -22,6 +22,7 @@ Imports AccountsManagementDataAccess
 Imports Excel = Microsoft.Office.Interop.Excel
 Imports System.Threading.Tasks
 Imports Microsoft.Office.Interop.Excel
+Imports System.IO
 
 Public Class BIRAccessToRecordHelper
     Public Sub New()
@@ -117,7 +118,7 @@ Public Class BIRAccessToRecordHelper
             Dim SQL As String = "SELECT * FROM AM_WESM_BILL " _
                               & "WHERE DUE_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
                               & "AND DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
-                              & "AND (INVOICE_NO LIKE 'TS-W%' OR INVOICE_NO LIKE 'FS-W%') AND NOT UPPER(INVOICE_NO) LIKE '%ADJ%'"
+                              & "AND (INVOICE_NO LIKE 'TS-%' OR INVOICE_NO LIKE 'FS-W%') AND NOT UPPER(INVOICE_NO) LIKE '%ADJ%'"
 
             report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -850,7 +851,7 @@ Public Class BIRAccessToRecordHelper
                 MFPaid(i, 0) = MonthName(getWESMBillMF.DueDate.Month) & " " & getWESMBillMF.DueDate.Year.ToString()
                 MFPaid(i, 1) = ""
                 MFPaid(i, 2) = getWESMBillMF.Amount
-                MFPaid(i, 3) = IIf(getWESMBillMFV Is Nothing, 0, getWESMBillMFV.Amount)
+                MFPaid(i, 3) = If(getWESMBillMFV Is Nothing, 0, getWESMBillMFV.Amount)
                 Dim totalAmountPaidInMF As Decimal = getCollectionHisListMF.Select(Function(x) x.Amount).Sum() + getOffsetHisListMF.Select(Function(x) x.AllocationAmount).Sum()
                 Dim totalAmountPaidInMFV As Decimal = getCollectionHisListMFV.Select(Function(x) x.Amount).Sum() + getOffsetHisListMFV.Select(Function(x) x.AllocationAmount).Sum()
                 MFPaid(i, 4) = totalAmountPaidInMF + totalAmountPaidInMFV
@@ -942,8 +943,9 @@ Public Class BIRAccessToRecordHelper
                 xlAmountPaid.Value = amountPaid
             End If
 
-            Dim FileName As String = ParticipantInfo.ParticipantID & "_BATR_" & dateFrom.ToString("MMMyyyy") & "-" & dateTo.ToString("MMMyyyy")
-            xlWorkBook.SaveAs(TargetPathFolder & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbookMacroEnabled, misValue, misValue, misValue, misValue,
+            Dim FileName As String = TargetPathFolder & "\" & ParticipantInfo.ParticipantID & "_BATR_" & dateFrom.ToString("MMMyyyy") & "-" & dateTo.ToString("MMMyyyy") & ".xlsm"
+            FileName = FileExistIncrementer(FileName)
+            xlWorkBook.SaveAs(FileName, Excel.XlFileFormat.xlOpenXMLWorkbookMacroEnabled, misValue, misValue, misValue, misValue,
                         Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -971,6 +973,16 @@ Public Class BIRAccessToRecordHelper
             GC.Collect()
         End Try
     End Sub
+    Public Shared Function FileExistIncrementer(ByVal orginialFileName As String) As String
+        Dim counter As Integer = 0
+        Dim NewFileName As String = orginialFileName
+        While File.Exists(NewFileName)
+            counter = counter + 1
+            NewFileName = String.Format("{0}\{1}{2}{3}", Path.GetDirectoryName(orginialFileName), Path.GetFileNameWithoutExtension(orginialFileName), " (" & counter.ToString() & ")", Path.GetExtension(orginialFileName))
+        End While
+        Return NewFileName
+    End Function
+
     Public Function GetReportCreatedCount() As Integer
         Return ReportCreatedCount
     End Function

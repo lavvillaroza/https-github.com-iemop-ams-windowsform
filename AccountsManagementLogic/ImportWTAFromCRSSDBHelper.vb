@@ -1007,7 +1007,7 @@ Public Class ImportWTAFromCRSSDBHelper
                                   & "'" & item.WHT & "', '" & item.ITH & "', '" & item.NetSellerBuyerTag & "', '" & item.TransactionNo & "', TO_DATE('" & item.TransactionDate.ToShortDateString & "','MM/DD/YYYY'), " & vbNewLine _
                                   & "TO_DATE('" & item.DueDate.ToShortDateString & "','MM/DD/YYYY'), " & item.VatableSales & ", " & item.ZeroRatedSales & ", " & item.ZeroRatedEcoZoneSales & ", " & item.VatablePurchases & vbNewLine _
                                   & ", " & item.ZeroRatedPurchases & ", " & item.NSSFlowBack & ", " & item.VatOnSales & ", " & item.VatOnPurchases & ", " & item.EWTSales & ", " & item.EWTPurchases & vbNewLine _
-                                  & ", 0, " & item.GMR & ", " & item.MarketFeesRate & ", '" & item.Remarks & "', 'FLATFILE'," & item.SpotQty & "," & item.GenXAmount & "," & item.ZeroRatedEcoZonePurchases & " FROM DUAL"
+                                  & ", 0, " & item.GMR & ", " & item.MarketFeesRate & ", '" & item.Remarks & "', 'CRSS DB'," & item.SpotQty & "," & item.GenXAmount & "," & item.ZeroRatedEcoZonePurchases & " FROM DUAL"
             listSQL.Add(SQL)
             For Each dtl In item.ListWBAllocDisDetails
                 SQL = "INSERT INTO AM_WESM_ALLOC_DISAGG_DETAILS(SUMMARY_ID,BILLING_PERIOD,BILLING_ID,FACILITY_TYPE,WHT,ITH,NON_VATABLE_TAG,ZERO_RATED_TAG, NET_SELLER_BUYER_TAG,VATABLE_SALES,ZERO_RATED_SALES,ZERO_RATED_ECOZONE_SALES," & vbNewLine _

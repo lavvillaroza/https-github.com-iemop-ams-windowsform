@@ -161,6 +161,46 @@
         End Set
     End Property
 
+    Private _ReserveCategory As String
+    Public Property ReserveCategory() As String
+        Get
+            Return _ReserveCategory
+        End Get
+        Set(ByVal value As String)
+            _ReserveCategory = value
+        End Set
+    End Property
+
+    Private _Region As String
+    Public Property Region() As String
+        Get
+            Return _Region
+        End Get
+        Set(ByVal value As String)
+            _Region = value
+        End Set
+    End Property
+
+    Private _ASNonPayment As Decimal
+    Public Property ASNonPayment() As Decimal
+        Get
+            Return _ASNonPayment
+        End Get
+        Set(ByVal value As Decimal)
+            _ASNonPayment = value
+        End Set
+    End Property
+
+    Private _ReserveAmountAdj As Decimal
+    Public Property ReserveAmountAdj() As Decimal
+        Get
+            Return _ReserveAmountAdj
+        End Get
+        Set(ByVal value As Decimal)
+            _ReserveAmountAdj = value
+        End Set
+    End Property
+
     Private _TotalSales As Decimal
     Public ReadOnly Property TotalSales() As Decimal
         Get

@@ -568,7 +568,7 @@ Public Class WHTaxCertificateSTLHelper
             Dim SQL As String = "SELECT DISTINCT A.*, B.PARTICIPANT_ID, B.FULL_NAME, B.PARTICIPANT_ADDRESS, A.ENERGY_WITHHOLD, TO_DATE('" & remittance.ToShortDateString & "','MM/DD/yyyy') AS ALLOCATION_DATE " & vbNewLine _
                                & "FROM AM_WESM_BILL_SUMMARY A " & vbNewLine _
                                & "INNER JOIN AM_PARTICIPANTS B ON B.ID_NUMBER = A.ID_NUMBER " & vbNewLine _
-                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'E' AND A.ID_NUMBER = '" & idNumber & "' AND INV_DM_CM LIKE 'TS-W%' AND NOT INV_DM_CM LIKE '%ADJ%'"
+                               & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'E' AND A.ID_NUMBER = '" & idNumber & "' AND INV_DM_CM LIKE 'TS-%' AND NOT INV_DM_CM LIKE '%ADJ%'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -592,7 +592,7 @@ Public Class WHTaxCertificateSTLHelper
                                & "INNER JOIN AM_COLLECTION_ALLOCATION D ON D.AM_REF_NO = A.INV_DM_CM AND D.WESMBILL_SUMMARY_NO = A.WESMBILL_SUMMARY_NO " & vbNewLine _
                                & "INNER JOIN AM_PAYMENT_NEW E ON E.ALLOCATION_DATE = D.ALLOCATION_DATE " & vbNewLine _
                                & "WHERE A.ENDING_BALANCE < 0 AND A.CHARGE_TYPE = 'E' AND A.ID_NUMBER = '" & idNumber & "' " & vbNewLine _
-                               & "AND E.REMITTANCE_DATE = TO_DATE('" & remittanceDate & "', 'mm/dd/yyyy') AND INV_DM_CM LIKE 'TS-W%' AND NOT INV_DM_CM LIKE '%ADJ%'"
+                               & "AND E.REMITTANCE_DATE = TO_DATE('" & remittanceDate & "', 'mm/dd/yyyy') AND INV_DM_CM LIKE 'TS-%' AND NOT INV_DM_CM LIKE '%ADJ%'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then

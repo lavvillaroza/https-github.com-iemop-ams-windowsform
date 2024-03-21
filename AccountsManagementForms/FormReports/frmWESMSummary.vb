@@ -119,7 +119,7 @@ Public Class frmWESMSummary
                 getWESMBillFromDB = Me.WBillHelper.GetWESMBills(CDate(dtFrom.Value), CDate(dtTo.Value), CStr(getIDNumber))
             End If
 
-            If getWESMInvoices.Count = 0 Or (getWESMTransSummary.Count = 0 And getWESMBillFromDB.Count = 0) Then
+            If getWESMInvoices.Count = 0 And (getWESMTransSummary.Count = 0 And getWESMBillFromDB.Count = 0) Then
                 ProgressThread.Close()
                 MsgBox("No records found", MsgBoxStyle.Exclamation, "System Message")
                 Exit Sub
@@ -378,14 +378,22 @@ Public Class frmWESMSummary
 
             If Not getWESMBillBaseAmount Is Nothing Then
                 WBSArr(RowIndex, 9) = getWESMBillBaseAmount.Amount
-                WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                If getWESMBills.Select(Function(x) x.SettlementRun).First.Contains("R") Then
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "RESERVE", "MFR")
+                Else
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                End If
             Else
                 WBSArr(RowIndex, 9) = 0
             End If
 
             If Not getWESMBillVATAmount Is Nothing Then
                 WBSArr(RowIndex, 10) = getWESMBillVATAmount.Amount
-                WBSArr(RowIndex, 13) = If(getWESMBillVATAmount.ChargeType = EnumChargeType.EV, "ENERGY", "MF")
+                If getWESMBills.Select(Function(x) x.SettlementRun).First.Contains("R") Then
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "RESERVE", "MFR")
+                Else
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                End If
             Else
                 WBSArr(RowIndex, 10) = 0
             End If

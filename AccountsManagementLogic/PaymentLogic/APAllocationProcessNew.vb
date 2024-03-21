@@ -757,15 +757,15 @@ Public Class APAllocationProcessNew
 
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
 
-        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") _
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-") _
                                                                                       And Not x.InvoiceNumber.ToUpper Like "*-ADJ*") _
                                                                                       .OrderByDescending(Function(x) x.AllocationAmount) _
                                                                                       .OrderBy(Function(x) x.InvoiceNumber) _
                                                                                       .ThenBy(Function(x) x.CollectionType) _
                                                                                       .ToList
 
-        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
-                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-") And x.InvoiceNumber.ToUpper Like "*-ADJ*") _
+                                                                                             Or Not x.InvoiceNumber.StartsWith("TS-")).ToList
 
         For Each itemAR In getBIRRulingInvoiceList
             Dim APAllocationListPerBP As New List(Of APAllocation)
@@ -975,8 +975,8 @@ Public Class APAllocationProcessNew
         Dim getBPNo As Integer = listWESMBillSummaryPerWBatch.Select(Function(x) x.BillPeriod).Distinct.FirstOrDefault
 
         Dim getTotalEndingBalance As Decimal = listWESMBillSummaryPerWBatch.Select(Function(x) x.EndingBalance).Sum()
-        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-W") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
-        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-W") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-W")).ToList
+        Dim getBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) x.InvoiceNumber.StartsWith("TS-") And Not x.InvoiceNumber.ToUpper Like "*-ADJ*").ToList
+        Dim getNonBIRRulingInvoiceList As List(Of ARCollection) = listARCollection.Where(Function(x) (x.InvoiceNumber.StartsWith("TS-") And x.InvoiceNumber.ToUpper Like "*-ADJ*") Or Not x.InvoiceNumber.StartsWith("TS-")).ToList
         Dim cListWESMBillSummaryPerWBatch As List(Of WESMBillSummary) = listWESMBillSummaryPerWBatch
 
         For Each itemAR In getBIRRulingInvoiceList
