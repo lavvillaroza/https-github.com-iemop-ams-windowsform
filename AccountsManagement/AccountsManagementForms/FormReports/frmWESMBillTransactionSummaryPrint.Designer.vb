@@ -25,8 +25,8 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnExportToExcel = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
-        Me.btnExportToPDF = New System.Windows.Forms.Button()
         Me.chckList = New System.Windows.Forms.CheckedListBox()
+        Me.btnExportToPDF = New System.Windows.Forms.Button()
         Me.chckAll = New System.Windows.Forms.CheckBox()
         Me.ddlBillingPeriod = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -49,9 +49,9 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.ddlSTLRun)
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 7)
+        Me.GroupBox1.Location = New System.Drawing.Point(11, 7)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(494, 303)
+        Me.GroupBox1.Size = New System.Drawing.Size(494, 254)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         '
@@ -66,7 +66,7 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.btnExportToExcel.ForeColor = System.Drawing.Color.Black
         Me.btnExportToExcel.Image = Global.AccountsManagementForms.My.Resources.Resources.ExcelIcon22x22
         Me.btnExportToExcel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnExportToExcel.Location = New System.Drawing.Point(19, 209)
+        Me.btnExportToExcel.Location = New System.Drawing.Point(19, 142)
         Me.btnExportToExcel.Name = "btnExportToExcel"
         Me.btnExportToExcel.Size = New System.Drawing.Size(228, 39)
         Me.btnExportToExcel.TabIndex = 28
@@ -84,12 +84,21 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.btnClose.ForeColor = System.Drawing.Color.Black
         Me.btnClose.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseIconRed22x22
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnClose.Location = New System.Drawing.Point(19, 254)
+        Me.btnClose.Location = New System.Drawing.Point(19, 187)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(228, 39)
         Me.btnClose.TabIndex = 26
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
+        '
+        'chckList
+        '
+        Me.chckList.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chckList.FormattingEnabled = True
+        Me.chckList.Location = New System.Drawing.Point(253, 19)
+        Me.chckList.Name = "chckList"
+        Me.chckList.Size = New System.Drawing.Size(228, 229)
+        Me.chckList.TabIndex = 3
         '
         'btnExportToPDF
         '
@@ -102,21 +111,12 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.btnExportToPDF.ForeColor = System.Drawing.Color.Black
         Me.btnExportToPDF.Image = Global.AccountsManagementForms.My.Resources.Resources.PDFIcon22x22
         Me.btnExportToPDF.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnExportToPDF.Location = New System.Drawing.Point(19, 164)
+        Me.btnExportToPDF.Location = New System.Drawing.Point(19, 97)
         Me.btnExportToPDF.Name = "btnExportToPDF"
         Me.btnExportToPDF.Size = New System.Drawing.Size(228, 39)
         Me.btnExportToPDF.TabIndex = 27
         Me.btnExportToPDF.Text = "Export to PDF"
         Me.btnExportToPDF.UseVisualStyleBackColor = False
-        '
-        'chckList
-        '
-        Me.chckList.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chckList.FormattingEnabled = True
-        Me.chckList.Location = New System.Drawing.Point(253, 19)
-        Me.chckList.Name = "chckList"
-        Me.chckList.Size = New System.Drawing.Size(228, 274)
-        Me.chckList.TabIndex = 3
         '
         'chckAll
         '
@@ -170,7 +170,7 @@ Partial Class frmWESMBillTransactionSummaryPrint
         'ctrl_statusStrip
         '
         Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg})
-        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 328)
+        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 270)
         Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
         Me.ctrl_statusStrip.Size = New System.Drawing.Size(516, 22)
         Me.ctrl_statusStrip.TabIndex = 59
@@ -190,7 +190,7 @@ Partial Class frmWESMBillTransactionSummaryPrint
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(516, 350)
+        Me.ClientSize = New System.Drawing.Size(516, 292)
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -198,7 +198,7 @@ Partial Class frmWESMBillTransactionSummaryPrint
         Me.MinimizeBox = False
         Me.Name = "frmWESMBillTransactionSummaryPrint"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "WTA Summary Print Management"
+        Me.Text = "WTA And RTA Print Management"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ctrl_statusStrip.ResumeLayout(False)

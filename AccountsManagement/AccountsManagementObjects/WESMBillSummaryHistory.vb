@@ -25,9 +25,9 @@ Public Class WESMBillSummaryHistory
         Me.New(0, 0, "", Nothing, 0, Nothing, Nothing, Nothing)
     End Sub
 
-    Public Sub New(ByVal WESMBillSummaryNo As Long, ByVal CollectionNumber As Long, _
-                    ByVal PaymentBatchCode As String, ByVal DueDate As Date, ByVal Amount As Decimal, _
-                    ByVal CollectionType As EnumCollectionType, ByVal Status As EnumStatus, ByVal PaymentType As EnumPaymentType)
+    Public Sub New(ByVal WESMBillSummaryNo As Long, ByVal CollectionNumber As Long,
+                    ByVal PaymentBatchCode As String, ByVal DueDate As Date, ByVal Amount As Decimal,
+                    ByVal CollectionType As EnumCollectionType, ByVal Status As EnumStatus, ByVal PaymentType As EnumPaymentNewType)
         Me._WESMBillSummaryNo = WESMBillSummaryNo
         Me._CollectionNumber = CollectionNumber
         Me._PaymentBatchCode = PaymentBatchCode
@@ -118,12 +118,12 @@ Public Class WESMBillSummaryHistory
 #End Region
 
 #Region "Payment Type"
-    Private _PaymentType As EnumPaymentType
-    Public Property PaymentType() As EnumPaymentType
+    Private _PaymentType As EnumPaymentNewType
+    Public Property PaymentType() As EnumPaymentNewType
         Get
             Return _PaymentType
         End Get
-        Set(ByVal value As EnumPaymentType)
+        Set(ByVal value As EnumPaymentNewType)
             _PaymentType = value
         End Set
     End Property

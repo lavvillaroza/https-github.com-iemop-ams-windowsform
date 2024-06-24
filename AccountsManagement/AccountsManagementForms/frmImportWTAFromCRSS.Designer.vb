@@ -22,11 +22,9 @@ Partial Class frmImportWTAFromCRSS
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TLP_Main = New System.Windows.Forms.TableLayoutPanel()
-        Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Panel_Head = New System.Windows.Forms.Panel()
         Me.btn_Close = New System.Windows.Forms.Button()
         Me.btnRefresh = New System.Windows.Forms.Button()
@@ -52,44 +50,30 @@ Partial Class frmImportWTAFromCRSS
         Me.txtbox_stlRun = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtbox_BillingPeriod = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.chkbox_select = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.ctrl_statusStrip = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatus_LabelMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TLP_Main.SuspendLayout()
-        Me.ctrl_statusStrip.SuspendLayout()
         Me.Panel_Head.SuspendLayout()
         Me.tc_Viewer.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.dgv_WTAList, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ctrl_statusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'TLP_Main
         '
         Me.TLP_Main.ColumnCount = 1
         Me.TLP_Main.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TLP_Main.Controls.Add(Me.ctrl_statusStrip, 0, 2)
         Me.TLP_Main.Controls.Add(Me.Panel_Head, 0, 0)
         Me.TLP_Main.Controls.Add(Me.tc_Viewer, 0, 1)
         Me.TLP_Main.Location = New System.Drawing.Point(4, 3)
         Me.TLP_Main.Name = "TLP_Main"
-        Me.TLP_Main.RowCount = 3
+        Me.TLP_Main.RowCount = 2
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP_Main.Size = New System.Drawing.Size(1071, 509)
         Me.TLP_Main.TabIndex = 15
-        '
-        'ctrl_statusStrip
-        '
-        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg})
-        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 489)
-        Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
-        Me.ctrl_statusStrip.Size = New System.Drawing.Size(1071, 20)
-        Me.ctrl_statusStrip.TabIndex = 57
-        Me.ctrl_statusStrip.Text = "StatusStrip1"
-        '
-        'ToolStripStatus_LabelMsg
-        '
-        Me.ToolStripStatus_LabelMsg.Name = "ToolStripStatus_LabelMsg"
-        Me.ToolStripStatus_LabelMsg.Size = New System.Drawing.Size(48, 15)
-        Me.ToolStripStatus_LabelMsg.Text = "Ready..."
         '
         'Panel_Head
         '
@@ -192,7 +176,7 @@ Partial Class frmImportWTAFromCRSS
         Me.tc_Viewer.Location = New System.Drawing.Point(3, 63)
         Me.tc_Viewer.Name = "tc_Viewer"
         Me.tc_Viewer.SelectedIndex = 0
-        Me.tc_Viewer.Size = New System.Drawing.Size(1065, 423)
+        Me.tc_Viewer.Size = New System.Drawing.Size(1065, 443)
         Me.tc_Viewer.TabIndex = 13
         '
         'TabPage1
@@ -201,7 +185,7 @@ Partial Class frmImportWTAFromCRSS
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1057, 397)
+        Me.TabPage1.Size = New System.Drawing.Size(1057, 417)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "List of WESM Transaction Allocation From CRSS"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -212,25 +196,25 @@ Partial Class frmImportWTAFromCRSS
         Me.dgv_WTAList.AllowUserToDeleteRows = False
         Me.dgv_WTAList.AllowUserToResizeColumns = False
         Me.dgv_WTAList.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dgv_WTAList.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dgv_WTAList.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_WTAList.ColumnHeadersHeight = 30
         Me.dgv_WTAList.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colChckBox, Me.colBP, Me.colSTLRun, Me.colGroupID, Me.colTotalNetSales, Me.colTotalEWTSales, Me.colTotalNetPurchases, Me.TotalEWTPurchases, Me.colRemarks})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_WTAList.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_WTAList.DefaultCellStyle = DataGridViewCellStyle4
         Me.dgv_WTAList.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgv_WTAList.Location = New System.Drawing.Point(3, 3)
         Me.dgv_WTAList.Name = "dgv_WTAList"
         Me.dgv_WTAList.ReadOnly = True
         Me.dgv_WTAList.RowHeadersVisible = False
         Me.dgv_WTAList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_WTAList.Size = New System.Drawing.Size(1051, 391)
+        Me.dgv_WTAList.Size = New System.Drawing.Size(1051, 411)
         Me.dgv_WTAList.TabIndex = 17
         '
         'colChckBox
@@ -354,28 +338,44 @@ Partial Class frmImportWTAFromCRSS
         Me.chkbox_select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.chkbox_select.Width = 40
         '
+        'ctrl_statusStrip
+        '
+        Me.ctrl_statusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatus_LabelMsg})
+        Me.ctrl_statusStrip.Location = New System.Drawing.Point(0, 517)
+        Me.ctrl_statusStrip.Name = "ctrl_statusStrip"
+        Me.ctrl_statusStrip.Size = New System.Drawing.Size(1080, 22)
+        Me.ctrl_statusStrip.TabIndex = 58
+        Me.ctrl_statusStrip.Text = "StatusStrip1"
+        '
+        'ToolStripStatus_LabelMsg
+        '
+        Me.ToolStripStatus_LabelMsg.Name = "ToolStripStatus_LabelMsg"
+        Me.ToolStripStatus_LabelMsg.Size = New System.Drawing.Size(48, 17)
+        Me.ToolStripStatus_LabelMsg.Text = "Ready..."
+        '
         'frmImportWTAFromCRSS
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(1080, 520)
+        Me.ClientSize = New System.Drawing.Size(1080, 539)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.TLP_Main)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmImportWTAFromCRSS"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Import WESM Transaction Allocation From CRSS"
         Me.TLP_Main.ResumeLayout(False)
-        Me.TLP_Main.PerformLayout()
-        Me.ctrl_statusStrip.ResumeLayout(False)
-        Me.ctrl_statusStrip.PerformLayout()
         Me.Panel_Head.ResumeLayout(False)
         Me.Panel_Head.PerformLayout()
         Me.tc_Viewer.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.dgv_WTAList, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ctrl_statusStrip.ResumeLayout(False)
+        Me.ctrl_statusStrip.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -386,8 +386,6 @@ Partial Class frmImportWTAFromCRSS
     Friend WithEvents Label2 As Label
     Friend WithEvents cmb_DueDate As ComboBox
     Friend WithEvents tc_Viewer As TabControl
-    Friend WithEvents ctrl_statusStrip As StatusStrip
-    Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents txtbox_Remarks As DataGridViewTextBoxColumn
     Friend WithEvents txtbox_TotalAPAmount As DataGridViewTextBoxColumn
@@ -407,4 +405,6 @@ Partial Class frmImportWTAFromCRSS
     Friend WithEvents TotalEWTPurchases As DataGridViewTextBoxColumn
     Friend WithEvents colRemarks As DataGridViewTextBoxColumn
     Friend WithEvents btn_Close As Button
+    Friend WithEvents ctrl_statusStrip As StatusStrip
+    Friend WithEvents ToolStripStatus_LabelMsg As ToolStripStatusLabel
 End Class

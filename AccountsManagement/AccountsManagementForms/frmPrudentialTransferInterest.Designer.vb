@@ -290,7 +290,6 @@ Partial Class frmPrudentialTransferInterest
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1102, 484)
-        Me.ControlBox = False
         Me.Controls.Add(Me.btnPostToGP)
         Me.Controls.Add(Me.btnSummaryReport)
         Me.Controls.Add(Me.btnSearchReplenishment)
@@ -305,6 +304,8 @@ Partial Class frmPrudentialTransferInterest
         Me.Controls.Add(Me.DGridViewPrudential)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPrudentialTransferInterest"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Transfer Prudential Interest"

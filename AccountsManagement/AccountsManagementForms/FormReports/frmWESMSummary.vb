@@ -105,8 +105,8 @@ Public Class frmWESMSummary
         Dim sFolderDialog As New FolderBrowserDialog
         Dim TargetPath As String = ""
         'Dim SelectedYear As String = Me.ddlYear_cmb.Text
-        Try
-            getWESMBillComputed = New List(Of WESMBill)
+        'Try
+        getWESMBillComputed = New List(Of WESMBill)
             ProgressThread.Show("Please wait while gerating report.")
             If cbo_ParticipantId.SelectedIndex = -1 Then
                 getWESMTransSummary = Me.WBillHelper.GetListWESMTransSummary(CDate(dtFrom.Value), CDate(dtTo.Value), "")
@@ -119,7 +119,7 @@ Public Class frmWESMSummary
                 getWESMBillFromDB = Me.WBillHelper.GetWESMBills(CDate(dtFrom.Value), CDate(dtTo.Value), CStr(getIDNumber))
             End If
 
-            If getWESMInvoices.Count = 0 Or (getWESMTransSummary.Count = 0 And getWESMBillFromDB.Count = 0) Then
+            If getWESMInvoices.Count = 0 And (getWESMTransSummary.Count = 0 And getWESMBillFromDB.Count = 0) Then
                 ProgressThread.Close()
                 MsgBox("No records found", MsgBoxStyle.Exclamation, "System Message")
                 Exit Sub
@@ -245,10 +245,10 @@ Public Class frmWESMSummary
             End If
             ProgressThread.Close()
             MessageBox.Show("Generating Reports are successfully.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Catch ex As Exception
-            ProgressThread.Close()
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        'Catch ex As Exception
+        '    ProgressThread.Close()
+        '    MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        'End Try
 
     End Sub
 
@@ -358,6 +358,7 @@ Public Class frmWESMSummary
         Dim getDistinctTransNo As List(Of String) = (From x In WESMBillList Select x.InvoiceNumber Distinct).ToList
 
         For Each item In getDistinctTransNo
+            Debug.Print(item)
             Dim getWESMBills As List(Of WESMBill) = (From x In WESMBillList Where x.InvoiceNumber = item Select x).ToList
             Dim getAMParticipantInfo = (From x In getAMParticipants Where x.IDNumber = getWESMBills.Select(Function(y) y.IDNumber).First Select x).FirstOrDefault
 
@@ -378,14 +379,30 @@ Public Class frmWESMSummary
 
             If Not getWESMBillBaseAmount Is Nothing Then
                 WBSArr(RowIndex, 9) = getWESMBillBaseAmount.Amount
-                WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                If getWESMBills.Select(Function(x) x.SettlementRun).First.Contains("R") Then
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "RESERVE", "MFR")
+                Else
+                    WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                End If
             Else
                 WBSArr(RowIndex, 9) = 0
             End If
 
             If Not getWESMBillVATAmount Is Nothing Then
                 WBSArr(RowIndex, 10) = getWESMBillVATAmount.Amount
-                WBSArr(RowIndex, 13) = If(getWESMBillVATAmount.ChargeType = EnumChargeType.EV, "ENERGY", "MF")
+                If getWESMBillBaseAmount Is Nothing Then
+                    If getWESMBills.Select(Function(x) x.SettlementRun).First.Contains("R") Then
+                        WBSArr(RowIndex, 13) = If(getWESMBillVATAmount.ChargeType = EnumChargeType.EV, "RESERVE", "MFR")
+                    Else
+                        WBSArr(RowIndex, 13) = If(getWESMBillVATAmount.ChargeType = EnumChargeType.EV, "ENERGY", "MF")
+                    End If
+                Else
+                    If getWESMBills.Select(Function(x) x.SettlementRun).First.Contains("R") Then
+                        WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "RESERVE", "MFR")
+                    Else
+                        WBSArr(RowIndex, 13) = If(getWESMBillBaseAmount.ChargeType = EnumChargeType.E, "ENERGY", "MF")
+                    End If
+                End If
             Else
                 WBSArr(RowIndex, 10) = 0
             End If

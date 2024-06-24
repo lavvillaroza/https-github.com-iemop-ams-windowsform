@@ -30,6 +30,7 @@ Imports WESMLib.Auth.Lib
 
 
 Public Class frmCollection
+    Private _WTAInstallmentHelper As WTAInstallmentHelper
     Private WBillHelper As WESMBillHelper
     Private BFactory As BusinessFactory
 
@@ -63,7 +64,8 @@ Public Class frmCollection
 
     Private Sub frmCollection_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.MdiParent = MainForm
-        Try            
+        Try
+            _WTAInstallmentHelper = New WTAInstallmentHelper
             WBillHelper = WESMBillHelper.GetInstance()
             WBillHelper.ConnectionString = AMModule.ConnectionString
             WBillHelper.UserName = AMModule.UserName
@@ -93,7 +95,7 @@ Public Class frmCollection
 
             Me.EnableControls(False, True, False, False, False, False)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Errror")            
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Errror")
         End Try
     End Sub
 
@@ -169,42 +171,42 @@ Public Class frmCollection
             End If
 
             If Not typeAllocation.HasValue And Not typeStatus.HasValue And Not IsPosted.HasValue Then
-                collectionItems = (From x In result _
+                collectionItems = (From x In result
                                    Select x).ToList()
 
             ElseIf Not typeAllocation.HasValue And typeStatus.HasValue And Not IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.Status = typeStatus _
+                collectionItems = (From x In result
+                                   Where x.Status = typeStatus
                                    Select x).ToList()
 
             ElseIf Not typeAllocation.HasValue And typeStatus.HasValue And IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.Status = typeStatus And x.IsPosted = IsPosted _
+                collectionItems = (From x In result
+                                   Where x.Status = typeStatus And x.IsPosted = IsPosted
                                    Select x).ToList()
 
             ElseIf Not typeAllocation.HasValue And Not typeStatus.HasValue And IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.IsPosted = IsPosted _
+                collectionItems = (From x In result
+                                   Where x.IsPosted = IsPosted
                                    Select x).ToList()
 
             ElseIf typeAllocation.HasValue And Not typeStatus.HasValue And Not IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.AllocationType = typeAllocation _
+                collectionItems = (From x In result
+                                   Where x.AllocationType = typeAllocation
                                    Select x).ToList()
 
             ElseIf typeAllocation.HasValue And typeStatus.HasValue And Not IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.AllocationType = typeAllocation And x.Status = typeStatus _
+                collectionItems = (From x In result
+                                   Where x.AllocationType = typeAllocation And x.Status = typeStatus
                                    Select x).ToList()
 
             ElseIf typeAllocation.HasValue And typeStatus.HasValue And IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.AllocationType = typeAllocation And x.Status = typeStatus And x.IsPosted = IsPosted _
+                collectionItems = (From x In result
+                                   Where x.AllocationType = typeAllocation And x.Status = typeStatus And x.IsPosted = IsPosted
                                    Select x).ToList()
 
             ElseIf typeAllocation.HasValue And Not typeStatus.HasValue And IsPosted.HasValue Then
-                collectionItems = (From x In result _
-                                   Where x.AllocationType = typeAllocation And x.IsPosted = IsPosted _
+                collectionItems = (From x In result
+                                   Where x.AllocationType = typeAllocation And x.IsPosted = IsPosted
                                    Select x).ToList()
             End If
 
@@ -240,7 +242,7 @@ Public Class frmCollection
 
             Me.EnableControls(False, True, False, False, False, False)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")            
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
 
@@ -324,7 +326,7 @@ Public Class frmCollection
             Me.EnableControlsMaintenance()
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")           
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
 
@@ -381,7 +383,7 @@ Public Class frmCollection
             Me.EnableControlsMaintenance()
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")           
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
 
@@ -470,12 +472,12 @@ Public Class frmCollection
 
             'Check if Allocation Date is already exist in AM_PAYMENT
             If WBillHelper.GetCountAMPayment(Me._AllocationDate) <> 0 Then
-                MsgBox(Me._AllocationDate.ToString("MM/dd/yyyy") & " was already use in Payment Allocation. " & _
+                MsgBox(Me._AllocationDate.ToString("MM/dd/yyyy") & " was already use in Payment Allocation. " &
                        "Please select another allocaton date!", MsgBoxStyle.Exclamation, "Invalid Date")
                 Exit Sub
             End If
 
-            Dim listDates = (From x In Me.GetUnAllocatedCollectionsOnTheGrid() _
+            Dim listDates = (From x In Me.GetUnAllocatedCollectionsOnTheGrid()
                              Select x.CollectionDate Distinct Order By CollectionDate).ToList()
 
 
@@ -495,7 +497,7 @@ Public Class frmCollection
             'Get the WESM Bill Summary for allocation
             Dim listWESMBillSummary = WBillHelper.GetWESMBillSummaryForCollectionAllocation()
 
-            Dim listDatesSummary = (From x In listWESMBillSummary _
+            Dim listDatesSummary = (From x In listWESMBillSummary
                                     Select x.NewDueDate Distinct Order By NewDueDate).ToList()
 
             'Check if the due dates are greater than allocation date
@@ -523,18 +525,18 @@ Public Class frmCollection
             Me._CollectionOfResult = item.GenerateCollectionAllocation()
 
             'Add the collections for drawdown
-            Dim itemsDrawdown = From x In Me._CollectionOfResult.ListCollections _
-                                Where x.CollectionCategory = EnumCollectionCategory.Drawdown _
+            Dim itemsDrawdown = From x In Me._CollectionOfResult.ListCollections
+                                Where x.CollectionCategory = EnumCollectionCategory.Drawdown
                                 Select x
 
             'Create the temporary DMCM. This will use for previewing the DMCM report
-            Me._ListDMCM = Me.BFactory.GenerateCollectionDMCM(Me._CollectionOfResult.ListCollections, _
-                                                              Me.WBillHelper.GetSignatories("DMCM").First, _
+            Me._ListDMCM = Me.BFactory.GenerateCollectionDMCM(Me._CollectionOfResult.ListCollections,
+                                                              Me.WBillHelper.GetSignatories("DMCM").First,
                                                               Me.WBillHelper.GetDailyInterestRate())
 
             'Create the temporary DMCM Drawdown. This will use for previewing the DMCM report
-            Me._ListDMCMDrawdown = Me.BFactory.GenerateDMCMDrawdown(Me._CollectionOfResult.ListCollections, _
-                                                                    Me.WBillHelper.GetSignatories("DMCM").First, _
+            Me._ListDMCMDrawdown = Me.BFactory.GenerateDMCMDrawdown(Me._CollectionOfResult.ListCollections,
+                                                                    Me.WBillHelper.GetSignatories("DMCM").First,
                                                                     Me.WBillHelper.GetDailyInterestRate())
 
             'Display the drawdown
@@ -545,8 +547,8 @@ Public Class frmCollection
                 With Me.DGridViewCollection.Rows(index)
                     Dim colNumber = CLng(.Cells("colID").Value)
 
-                    Dim itemCol = (From x In Me._CollectionOfResult.ListCollections _
-                                   Where x.CollectionNumber = colNumber _
+                    Dim itemCol = (From x In Me._CollectionOfResult.ListCollections
+                                   Where x.CollectionNumber = colNumber
                                    Select x).ToList()
 
                     If itemCol.Count > 0 Then
@@ -557,7 +559,7 @@ Public Class frmCollection
                         .Cells("colStatus").Value = EnumCollectionStatus.PreAllocated
                         .Cells("colAllocate").Value = True
                         .Cells("colAllocate").ReadOnly = True
-                    End If                   
+                    End If
 
                 End With
             Next
@@ -573,7 +575,7 @@ Public Class frmCollection
 
         Catch ex As Exception
             ProgressThread.Close()
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)           
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
         Finally
             ProgressThread.Close()
@@ -582,7 +584,7 @@ Public Class frmCollection
 
     Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
         'Try
-        Dim listAllocDate = (From x In Me._CollectionOfResult.ListCollections _
+        Dim listAllocDate = (From x In Me._CollectionOfResult.ListCollections
                              Select x.AllocationDate Distinct).ToList()
 
         If listAllocDate.Count > 1 Then
@@ -618,17 +620,17 @@ Public Class frmCollection
         Dim listPRHistoryFinal As New List(Of PrudentialHistory)
         Dim listMonitoringFinal As New List(Of CollectionMonitoring)
 
-        Dim listExcessCollection = (From x In Me._CollectionOfResult.ListCollectionMonitoring _
+        Dim listExcessCollection = (From x In Me._CollectionOfResult.ListCollectionMonitoring
                                     Select x).ToList()
 
-        Dim listPR = (From x In Me._CollectionOfResult.ListPrudentials _
+        Dim listPR = (From x In Me._CollectionOfResult.ListPrudentials
                       Select x).ToList()
 
-        Dim listPRHistory = (From x In Me._CollectionOfResult.ListPrudentialsHistory _
+        Dim listPRHistory = (From x In Me._CollectionOfResult.ListPrudentialsHistory
                              Select x).ToList()
 
-        Dim cntExcess = (From x In listExcessCollection _
-                         Where x.TransType = EnumCollectionMonitoringType.TransferToExcessCollection _
+        Dim cntExcess = (From x In listExcessCollection
+                         Where x.TransType = EnumCollectionMonitoringType.TransferToExcessCollection
                          Select x).Count()
 
         If cntExcess > 0 Then
@@ -679,38 +681,38 @@ Public Class frmCollection
             End If
 
             'Generate DMCM Setup
-            Dim listDMCMSetup = Me.BFactory.GenerateCollectionDMCM(.ListCollections, _
-                                                                   Me.WBillHelper.GetSignatories("DMCM").First, _
+            Dim listDMCMSetup = Me.BFactory.GenerateCollectionDMCM(.ListCollections,
+                                                                   Me.WBillHelper.GetSignatories("DMCM").First,
                                                                    Me.WBillHelper.GetDailyInterestRate())
 
             'Generate the Official Receipt
             Dim listOR = Me.BFactory.GenerateCollectionOR(.ListCollections, listMonitoringFinal, listWESMBillSalesAndPurchases, New AMParticipants)
 
             'Generate the DMCM Drawdown
-            Dim listDMCMDrawdown = Me.BFactory.GenerateDMCMDrawdown(.ListCollections, _
-                                                                    Me.WBillHelper.GetSignatories("DMCM").First, _
+            Dim listDMCMDrawdown = Me.BFactory.GenerateDMCMDrawdown(.ListCollections,
+                                                                    Me.WBillHelper.GetSignatories("DMCM").First,
                                                                     Me.WBillHelper.GetDailyInterestRate())
 
             'Generate the FTF
-            Dim listFTF = Me.BFactory.GenerateCollectionFTF(selectedAllocationDate, listMonitoringFinal, _
+            Dim listFTF = Me.BFactory.GenerateCollectionFTF(selectedAllocationDate, listMonitoringFinal,
                                                             .ListCollections, Me.WBillHelper.GetSignatories("FTF").First)
 
             'Generate Journal Voucher
-            Dim itemJV = Me.BFactory.GenerateCollectionJournalVoucher(listDMCMSetup, listDMCMDrawdown, listOR, listFTF, _
-                                                                      Me.WBillHelper.GetSignatories("JV").First, _
+            Dim itemJV = Me.BFactory.GenerateCollectionJournalVoucher(listDMCMSetup, listDMCMDrawdown, listOR, listFTF,
+                                                                      Me.WBillHelper.GetSignatories("JV").First,
                                                                       JVDate)
 
             'Generate the GP Posted
             Dim itemGPPosted = Me.BFactory.GenerateCollectionGPPosted(itemJV)
 
-            
+
 
             'Generate the EFT
             Dim listEFT = Me.BFactory.GenerateCollectionEFT(listMonitoringFinal)
 
             'Save of data
-            WBillHelper.SaveCollectionAllocations(.ListWESMBillSummaries, .ListCollections, _
-                                                  listMonitoringFinal, listPRFinal, listPRHistoryFinal, _
+            WBillHelper.SaveCollectionAllocations(.ListWESMBillSummaries, .ListCollections,
+                                                  listMonitoringFinal, listPRFinal, listPRHistoryFinal,
                                                   listFTF, itemJV, itemGPPosted, listDMCMSetup, listDMCMDrawdown, listOR, listEFT)
 
             'Update collections in Me._ListOfCollections
@@ -734,8 +736,8 @@ Public Class frmCollection
         Next
 
         'Get the drawdowns
-        Dim itemsDrawdown = (From x In Me._CollectionOfResult.ListCollections _
-                             Where x.CollectionCategory = EnumCollectionCategory.Drawdown _
+        Dim itemsDrawdown = (From x In Me._CollectionOfResult.ListCollections
+                             Where x.CollectionCategory = EnumCollectionCategory.Drawdown
                              Select x).ToList()
 
         'Display on the grid the drawdowns
@@ -810,9 +812,9 @@ Public Class frmCollection
                         .Cells("colStatus").Value = EnumCollectionStatus.NotAllocated
                         .Cells("colDateAllocated").Value = ""
                         .Cells("colAllocate").Value = False
-                        .Cells("colAllocate").ReadOnly = True                        
+                        .Cells("colAllocate").ReadOnly = True
                     End If
-                    
+
                 End With
             Next
 
@@ -827,7 +829,7 @@ Public Class frmCollection
 
             Me.EnableControls(False, True, False, False, False, False)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")            
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
 
@@ -849,7 +851,7 @@ Public Class frmCollection
         Next
     End Sub
 
-    Private Sub btnPrintSummary_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPrintSummary.Click        
+    Private Sub btnPrintSummary_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPrintSummary.Click
         Try
             ProgressThread.Show("Please wait while processing Summary Report.")
             Dim TotalCash As Decimal = 0, TotalDrawdown As Decimal = 0
@@ -861,9 +863,9 @@ Public Class frmCollection
             Dim DocumentDate As String = SystemDate.ToString("MM/dd/yyyy") 'SystemDate.ToString("MM/dd/yyyy") 
 
             'Generate collection summary for manual
-            Dim dt = BFactory.GenerateCollectionSummary("C-XXX", 1, Me._CollectionOfResult.ListCollections, _
-                                                        Me._CollectionOfResult.ListCollectionMonitoring, Me._AMParticipants, _
-                                                        New List(Of DebitCreditMemo), Signatories, TotalCash, _
+            Dim dt = BFactory.GenerateCollectionSummary("C-XXX", 1, Me._CollectionOfResult.ListCollections,
+                                                        Me._CollectionOfResult.ListCollectionMonitoring, Me._AMParticipants,
+                                                        New List(Of DebitCreditMemo), Signatories, TotalCash,
                                                         TotalDrawdown, New DSReport.CollectionSummaryDataTable, DocumentDate)
 
             If dt.Rows.Count = 0 Then
@@ -879,11 +881,11 @@ Public Class frmCollection
             End With
         Catch ex As Exception
             ProgressThread.Close()
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)           
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub btnJV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnJV.Click        
+    Private Sub btnJV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnJV.Click
         Try
             If Me._CollectionOfResult.ListCollections.Count = 0 Then
                 MsgBox("Nothing to view!", MsgBoxStyle.Exclamation, "No data")
@@ -912,15 +914,15 @@ Public Class frmCollection
                 Dim listDMCMDrawdown = BFactory.GenerateDMCMDrawdown(.ListCollections, SignatoriesDMCM, dicDailyInterest)
 
                 'Generate the Fund Transfer Form
-                Dim listFTF = Me.BFactory.GenerateCollectionFTF(Me._AllocationDate, .ListCollectionMonitoring, .ListCollections, _
+                Dim listFTF = Me.BFactory.GenerateCollectionFTF(Me._AllocationDate, .ListCollectionMonitoring, .ListCollections,
                                                                 Me.WBillHelper.GetSignatories("FTF").First)
 
                 'Generate Journal Voucher
-                Dim itemJV = BFactory.GenerateCollectionJournalVoucher(listDMCMSetup, listDMCMDrawdown, listOR, listFTF, _
+                Dim itemJV = BFactory.GenerateCollectionJournalVoucher(listDMCMSetup, listDMCMDrawdown, listOR, listFTF,
                                                                        SignatoriesJV, SystemDate)
 
                 'Generate dataset for Journal voucher
-                Dim ds = BFactory.GenerateJournalVoucherReport(Me._ListAccountingCodes, itemJV, New DSReport.JournalVoucherDataTable, _
+                Dim ds = BFactory.GenerateJournalVoucherReport(Me._ListAccountingCodes, itemJV, New DSReport.JournalVoucherDataTable,
                                                                New DSReport.JournalVoucherDetailsDataTable, New DSReport.AccountingCodeDataTable)
 
                 Dim frmViewer As New frmReportViewer()
@@ -932,7 +934,7 @@ Public Class frmCollection
             End With
         Catch ex As Exception
             ProgressThread.Close()
-            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)                       
+            MessageBox.Show(ex.Message, "System Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -950,14 +952,14 @@ Public Class frmCollection
                         Exit Sub
                     End If
 
-                    Dim colStatus = CType(System.Enum.Parse(GetType(EnumCollectionStatus), _
-                                                            CStr(Me.DGridViewCollection.CurrentRow.Cells("colStatus").Value)),  _
+                    Dim colStatus = CType(System.Enum.Parse(GetType(EnumCollectionStatus),
+                                                            CStr(Me.DGridViewCollection.CurrentRow.Cells("colStatus").Value)),
                                                             EnumCollectionStatus)
 
                     Dim itemDMCM As New DebitCreditMemo
                     If colStatus = EnumCollectionStatus.PreAllocated Then
-                        itemDMCM = (From x In Me._ListDMCM _
-                                    Where x.DMCMNumber = dmcmNo _
+                        itemDMCM = (From x In Me._ListDMCM
+                                    Where x.DMCMNumber = dmcmNo
                                     Select x).First()
                     Else
                         itemDMCM = WBillHelper.GetDebitCreditMemoMain(dmcmNo).First()
@@ -987,7 +989,7 @@ Public Class frmCollection
                     ProgressThread.Show("Please wait while processing.")
 
                     'Get the datasource for the report
-                    Dim dt = BFactory.GenerateDMCMReport1(listDMCMNo, New DSReport.DebitCreditMemoDataTable, listDMCMMain, _
+                    Dim dt = BFactory.GenerateDMCMReport1(listDMCMNo, New DSReport.DebitCreditMemoDataTable, listDMCMMain,
                                                          listAccountCodes, listParticipants, signatory, listWESMBillSalesAndPurchased)
 
                     Dim frmViewer As New frmReportViewer()
@@ -998,12 +1000,12 @@ Public Class frmCollection
                     End With
 
                 Case 10
-                    Dim summaryType = CType(System.Enum.Parse(GetType(EnumSummaryType), _
+                    Dim summaryType = CType(System.Enum.Parse(GetType(EnumSummaryType),
                                       CStr(Me.DGridViewAllocCollections.Rows(e.RowIndex).Cells("colSummaryType").Value)), EnumSummaryType)
 
                     Dim invDMCMNo = CStr(Me.DGridViewAllocCollections.Rows(e.RowIndex).Cells("colInvDMCMNo").Value)
 
-                    Dim chargeType = CType(System.Enum.Parse(GetType(EnumChargeType), _
+                    Dim chargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                      CStr(Me.DGridViewAllocCollections.Rows(e.RowIndex).Cells("colChargeType").Value)), EnumChargeType)
 
                     Dim isDMCMChanged = CInt(Me.DGridViewAllocCollections.Rows(e.RowIndex).Cells("colIsDMCMChanged").Value)
@@ -1043,8 +1045,8 @@ Public Class frmCollection
 
 
                         'Get the dataset for WESM Invoice
-                        Dim ds = BFactory.GenerateWESMInvoice(New DSReport.WESMInvoiceDataTable, New DSReport.WESMInvoiceDetailsDataTable, _
-                                                              listWESMInvoice, listWESMSalesAndPurchased, Me._AMParticipants, _
+                        Dim ds = BFactory.GenerateWESMInvoice(New DSReport.WESMInvoiceDataTable, New DSReport.WESMInvoiceDetailsDataTable,
+                                                              listWESMInvoice, listWESMSalesAndPurchased, Me._AMParticipants,
                                                               Me._ListCharges, Me._ListCalendar, particpantID, Signatory, fileType)
 
                         Dim frmViewer As New frmReportViewer()
@@ -1061,8 +1063,8 @@ Public Class frmCollection
                         If isDMCMChanged = 0 Then
                             itemDMCM = WBillHelper.GetDebitCreditMemoMain(CLng(invDMCMNo))
                         Else
-                            itemDMCM = (From x In Me._ListDMCM _
-                                        Where x.DMCMNumber = CLng(invDMCMNo) _
+                            itemDMCM = (From x In Me._ListDMCM
+                                        Where x.DMCMNumber = CLng(invDMCMNo)
                                         Select x).ToList()
                         End If
 
@@ -1081,7 +1083,7 @@ Public Class frmCollection
         Catch ex As Exception
             ProgressThread.Close()
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try        
+        End Try
     End Sub
 
     Private Sub DGridViewCollection_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGridViewCollection.CellContentClick
@@ -1132,16 +1134,16 @@ Public Class frmCollection
                             .ShowDialog()
                         End With
                     ElseIf dmcmNo <> 0 Then
-                        Dim colStatus = CType(System.Enum.Parse(GetType(EnumCollectionStatus), _
-                                                                CStr(Me.DGridViewCollection.CurrentRow.Cells("colStatus").Value)),  _
+                        Dim colStatus = CType(System.Enum.Parse(GetType(EnumCollectionStatus),
+                                                                CStr(Me.DGridViewCollection.CurrentRow.Cells("colStatus").Value)),
                                                                 EnumCollectionStatus)
 
                         Dim listDMCMMain As New List(Of DebitCreditMemo)
                         Dim itemDMCM As New DebitCreditMemo
 
                         If colStatus = EnumCollectionStatus.PreAllocated Then
-                            itemDMCM = (From x In Me._ListDMCMDrawdown _
-                                        Where x.DMCMNumber = dmcmNo _
+                            itemDMCM = (From x In Me._ListDMCMDrawdown
+                                        Where x.DMCMNumber = dmcmNo
                                         Select x).First()
 
                         Else
@@ -1171,7 +1173,7 @@ Public Class frmCollection
                         ProgressThread.Show("Please wait while processing OR Report.")
 
                         'Get the datasource for the report
-                        Dim dt = BFactory.GenerateDMCMReport1(listDMCMNo, New DSReport.DebitCreditMemoDataTable, listDMCMMain, _
+                        Dim dt = BFactory.GenerateDMCMReport1(listDMCMNo, New DSReport.DebitCreditMemoDataTable, listDMCMMain,
                                                              listAccountCodes, listParticipants, signatory, listWESMBillSalesAndPurchased)
 
                         Dim frmViewer As New frmReportViewer()
@@ -1185,7 +1187,7 @@ Public Class frmCollection
 
         Catch ex As Exception
             ProgressThread.Close()
-            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)        
+            MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -1200,7 +1202,7 @@ Public Class frmCollection
         Me.DisplayCollectionAllocationOnGrid()
     End Sub
 
-    Private Sub btnUnTag_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUnTag.Click
+    Private Async Sub btnUnTag_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUnTag.Click
         'If Not _Login.HasAccess(EnumAMSModules.AMS_UntagCollectionWindow.ToString) Then
         '    MessageBox.Show("Access Denied", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
         '    _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModules.AMS_UntagCollectionWindow.ToString, "Access Untag Collection Window", "", "", CType(EnumColorCode.Red, ColorCode), EnumLogType.NoAccess.ToString, AMModule.UserName)        
@@ -1226,21 +1228,21 @@ Public Class frmCollection
             End If
 
             'Get the collection monitoring
-            Dim listColMon = WBillHelper.GetCollectionMonitoring(item.CollectionNumber, _
+            Dim listColMon = WBillHelper.GetCollectionMonitoring(item.CollectionNumber,
                                                                  EnumCollectionMonitoringType.TransferToHeldCollection)
             'Check if the held collection where already tag
             If listColMon.Count > 0 Then
                 If listColMon.First.CollectionNoTag <> 0 And item.ORNo <> 0 Then
                     Dim itemCollection = WBillHelper.GetCollections(listColMon.First.CollectionNoTag).First()
 
-                    MsgBox("The held collection of the selected collection was applied in OR " & itemCollection.ORNo.ToString() & "!, " & _
+                    MsgBox("The held collection of the selected collection was applied in OR " & itemCollection.ORNo.ToString() & "!, " &
                            "Please delete first OR Number", MsgBoxStyle.Exclamation, "Denied")
                     Exit Sub
                 End If
             End If
 
             'Get the list of invoices that within the collection allocation for untagging - updated by lance 05/28/2019
-            Dim dicCollAlloc As Dictionary(Of Long, Date) = WBillHelper.GetDicCollectionAllocation(CStr(Me.DGridViewCollection.CurrentRow.Cells("colDateAllocated").Value), CLng(Me.DGridViewCollection.CurrentRow.Cells("colID").Value))            
+            Dim dicCollAlloc As Dictionary(Of Long, Date) = WBillHelper.GetDicCollectionAllocation(CStr(Me.DGridViewCollection.CurrentRow.Cells("colDateAllocated").Value), CLng(Me.DGridViewCollection.CurrentRow.Cells("colID").Value))
             For Each dicItem As KeyValuePair(Of Long, Date) In dicCollAlloc
                 Dim getCollAllocList As Dictionary(Of Long, Long) = WBillHelper.GetCollectionAllocationList(CStr(Me.DGridViewCollection.CurrentRow.Cells("colDateAllocated").Value), CLng(Me.DGridViewCollection.CurrentRow.Cells("colID").Value), dicItem.Value)
                 If getCollAllocList.ContainsKey(dicItem.Key) Then
@@ -1259,10 +1261,23 @@ Public Class frmCollection
 
             'Get the WESM Bill Summary History
             Dim listWESMBillSummaryHistory = WBillHelper.GetWESMBillSummaryHistory(item.CollectionNumber)
-            Dim listCollectionMonitoring = WBillHelper.GetCollectionMonitoring(item.CollectionNumber)
-            If item.CollectionCategory = EnumCollectionCategory.Cash Then                
-                WBillHelper.UnTagCashCollection(item, listWESMBillSummaryHistory, listCollectionMonitoring)
 
+            'Added by LAVV as of 06/20/2024
+            Dim listofWTAInstallment As New List(Of WTAInstallment)
+            For Each wbsHis In listWESMBillSummaryHistory
+                Dim wtaInstallment As WTAInstallment = Await _WTAInstallmentHelper.GetWTAInstallmentByWBSNoAsync(wbsHis.WESMBillSummaryNo)
+                If wtaInstallment.WTAINO <> 0 Then
+                    listofWTAInstallment.Add(wtaInstallment)
+                End If
+            Next
+
+            Dim listofWTAInstallmentHistory As List(Of WTAInstallmentHistory) = Await _WTAInstallmentHelper.GetWTAInstallmentHisAsync(listofWTAInstallment, item.CollectionDate, item.CollectionNumber)
+            Await _WTAInstallmentHelper.UntagPaidWTAInstallmentHistory(listofWTAInstallment, listofWTAInstallmentHistory)
+            'END
+
+            Dim listCollectionMonitoring = WBillHelper.GetCollectionMonitoring(item.CollectionNumber)
+            If item.CollectionCategory = EnumCollectionCategory.Cash Then
+                WBillHelper.UnTagCashCollection(item, listWESMBillSummaryHistory, listCollectionMonitoring)
                 With Me.DGridViewCollection.CurrentRow
                     .Cells("colPrudentialReplenishment").Value = 0
                     .Cells("colHeld").Value = 0
@@ -1296,7 +1311,7 @@ Public Class frmCollection
             Me.EnableControls(False, True, False, False, False, False)
             Me.EnableControlsMaintenance()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")           
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
 
@@ -1308,11 +1323,11 @@ Public Class frmCollection
             'Get all participants whether in-actice
             Dim listParticipants = Me.WBillHelper.GetAMParticipantsAll()
 
-            Dim items = From x In collectionItems Join y In listParticipants _
-                        On x.IDNumber Equals y.IDNumber _
-                        Select x.CollectionNumber, x.ORNo, x.DMCMNumber, x.CollectionDate, x.IDNumber, y.ParticipantID, _
-                               x.CollectedAmount, x.CollectedPrudential, x.CollectedHeld, x.CollectionCategory, _
-                               x.AllocationType, x.Status, x.IsPosted, x.AllocationDate, x.DailyBatchCode _
+            Dim items = From x In collectionItems Join y In listParticipants
+                        On x.IDNumber Equals y.IDNumber
+                        Select x.CollectionNumber, x.ORNo, x.DMCMNumber, x.CollectionDate, x.IDNumber, y.ParticipantID,
+                               x.CollectedAmount, x.CollectedPrudential, x.CollectedHeld, x.CollectionCategory,
+                               x.AllocationType, x.Status, x.IsPosted, x.AllocationDate, x.DailyBatchCode
                         Order By ParticipantID
 
             For Each item In items
@@ -1327,13 +1342,13 @@ Public Class frmCollection
                 End If
 
                 With item
-                    Me.DGridViewCollection.Rows.Add(.CollectionNumber, .ORNo, .DMCMNumber, createdDocument, _
-                                                    FormatDateTime(.CollectionDate, DateFormat.ShortDate), _
-                                                    .IDNumber, .ParticipantID, .CollectedAmount, _
-                                                    .CollectedPrudential, .CollectedHeld, _
-                                                    (.CollectedAmount + .CollectedHeld - .CollectedPrudential), _
-                                                    .CollectionCategory, .AllocationType, .Status, False, _
-                                                    .IsPosted, If(.AllocationDate <> New Date(), .AllocationDate.ToString("MM/dd/yyyy"), ""), _
+                    Me.DGridViewCollection.Rows.Add(.CollectionNumber, .ORNo, .DMCMNumber, createdDocument,
+                                                    FormatDateTime(.CollectionDate, DateFormat.ShortDate),
+                                                    .IDNumber, .ParticipantID, .CollectedAmount,
+                                                    .CollectedPrudential, .CollectedHeld,
+                                                    (.CollectedAmount + .CollectedHeld - .CollectedPrudential),
+                                                    .CollectionCategory, .AllocationType, .Status, False,
+                                                    .IsPosted, If(.AllocationDate <> New Date(), .AllocationDate.ToString("MM/dd/yyyy"), ""),
                                                     .DailyBatchCode)
                 End With
             Next
@@ -1360,21 +1375,21 @@ Public Class frmCollection
             Exit Sub
         End If
 
-        Dim status = CType(System.Enum.Parse(GetType(EnumCollectionStatus), _
+        Dim status = CType(System.Enum.Parse(GetType(EnumCollectionStatus),
                      CStr(Me.DGridViewCollection.CurrentRow.Cells("colStatus").Value)), EnumCollectionStatus)
 
         Dim items = New List(Of CollectionAllocation)
 
         If status = EnumCollectionStatus.PreAllocated Then
-            items = (From x In Me._CollectionOfResult.ListCollectionAllocation _
-                     Where x.CollectionNumber = colNumber _
+            items = (From x In Me._CollectionOfResult.ListCollectionAllocation
+                     Where x.CollectionNumber = colNumber
                      Select x Order By x.CollectionType).ToList()
 
         ElseIf itemCol.Status = EnumCollectionStatus.Allocated Then
             Dim itemsCollectionAllocation = WBillHelper.GetCollectionAllocation(colNumber)
 
-            items = (From x In itemsCollectionAllocation _
-                     Where x.CollectionNumber = colNumber _
+            items = (From x In itemsCollectionAllocation
+                     Where x.CollectionNumber = colNumber
                      Select x Order By x.CollectionType).ToList()
         Else
             Exit Sub
@@ -1407,10 +1422,10 @@ Public Class frmCollection
 
 
 
-                Me.DGridViewAllocCollections.Rows.Add(.DMCMNumber, DMCMValue, .WESMBillSummaryNo.WESMBillSummaryNo, .CollectionNumber, _
-                                                      .ReferenceNumber, .ReferenceType, .WESMBillSummaryNo.ChargeType, _
-                                                      .BillingPeriod, .CollectionType.ToString(), DueDate.ToString("MM/dd/yyyy"), _
-                                                      ReferenceNumber, _
+                Me.DGridViewAllocCollections.Rows.Add(.DMCMNumber, DMCMValue, .WESMBillSummaryNo.WESMBillSummaryNo, .CollectionNumber,
+                                                      .ReferenceNumber, .ReferenceType, .WESMBillSummaryNo.ChargeType,
+                                                      .BillingPeriod, .CollectionType.ToString(), DueDate.ToString("MM/dd/yyyy"),
+                                                      ReferenceNumber,
                                                       .EndingBalance, .Amount, .IsDMCMChanged)
             End With
         Next
@@ -1418,8 +1433,8 @@ Public Class frmCollection
         Dim listColMon As New List(Of CollectionMonitoring)
 
         If status = EnumCollectionStatus.PreAllocated Then
-            listColMon = (From x In Me._CollectionOfResult.ListCollectionMonitoring _
-                          Where x.CollectionNo = colNumber _
+            listColMon = (From x In Me._CollectionOfResult.ListCollectionMonitoring
+                          Where x.CollectionNo = colNumber
                           Select x).ToList()
         Else
             listColMon = WBillHelper.GetCollectionMonitoring(colNumber)
@@ -1427,14 +1442,14 @@ Public Class frmCollection
 
 
         'Exclude drawdown in displaying of collection allocation
-        Dim listColMonFinal = From x In listColMon _
-                              Where x.TransType <> EnumCollectionMonitoringType.TransferToPRDrawdown _
+        Dim listColMonFinal = From x In listColMon
+                              Where x.TransType <> EnumCollectionMonitoringType.TransferToPRDrawdown
                               Select x
 
         For Each item In listColMonFinal
             With item
-                Me.DGridViewAllocCollections.Rows.Add("", "", "", .CollectionNo, "", "", "", _
-                                                      "", .TransType.ToString(), "", _
+                Me.DGridViewAllocCollections.Rows.Add("", "", "", .CollectionNo, "", "", "",
+                                                      "", .TransType.ToString(), "",
                                                       "", "", .Amount, "")
             End With
         Next
@@ -1449,8 +1464,8 @@ Public Class frmCollection
                 Dim item As New Collection
 
                 With Me.DGridViewCollection.Rows(row)
-                    If CBool(.Cells("colAllocate").Value) = True And _
-                            CType(System.Enum.Parse(GetType(EnumCollectionCategory), CStr(.Cells("colType").Value)),  _
+                    If CBool(.Cells("colAllocate").Value) = True And
+                            CType(System.Enum.Parse(GetType(EnumCollectionCategory), CStr(.Cells("colType").Value)),
                             EnumCollectionCategory) = EnumCollectionCategory.Cash Then
 
                         item.CollectionNumber = CLng(.Cells("colID").Value)
@@ -1483,8 +1498,8 @@ Public Class frmCollection
         Return result
     End Function
 
-    Private Sub EnableControls(ByVal vFake As Boolean, ByVal vAllocateCollection As Boolean, _
-                               ByVal vSave As Boolean, ByVal vRollBack As Boolean, ByVal vCollectionSummary As Boolean, _
+    Private Sub EnableControls(ByVal vFake As Boolean, ByVal vAllocateCollection As Boolean,
+                               ByVal vSave As Boolean, ByVal vRollBack As Boolean, ByVal vCollectionSummary As Boolean,
                                ByVal vJV As Boolean)
         Me.gpFake.Visible = vFake
         Me.btnAllocate.Enabled = vAllocateCollection
@@ -1538,32 +1553,32 @@ Public Class frmCollection
 
         listColAlloc.TrimExcess()
 
-        Dim totalDIMF = (From x In listColAlloc _
-                         Where x.CollectionType = EnumCollectionType.DefaultInterestOnMF _
+        Dim totalDIMF = (From x In listColAlloc
+                         Where x.CollectionType = EnumCollectionType.DefaultInterestOnMF
                          Select x.Amount).Sum()
 
-        Dim totalDIVatOnMF = (From x In listColAlloc _
-                              Where x.CollectionType = EnumCollectionType.DefaultInterestOnVatOnMF _
+        Dim totalDIVatOnMF = (From x In listColAlloc
+                              Where x.CollectionType = EnumCollectionType.DefaultInterestOnVatOnMF
                               Select x.Amount).Sum()
 
-        Dim totalMF = (From x In listColAlloc _
-                       Where x.CollectionType = EnumCollectionType.MarketFees _
+        Dim totalMF = (From x In listColAlloc
+                       Where x.CollectionType = EnumCollectionType.MarketFees
                        Select x.Amount).Sum()
 
-        Dim totalVatOnMF = (From x In listColAlloc _
-                            Where x.CollectionType = EnumCollectionType.VatOnMarketFees _
+        Dim totalVatOnMF = (From x In listColAlloc
+                            Where x.CollectionType = EnumCollectionType.VatOnMarketFees
                             Select x.Amount).Sum()
 
-        Dim totalDIEnergy = (From x In listColAlloc _
-                             Where x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy _
+        Dim totalDIEnergy = (From x In listColAlloc
+                             Where x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy
                              Select x.Amount).Sum()
 
-        Dim totalEnergy = (From x In listColAlloc _
-                           Where x.CollectionType = EnumCollectionType.Energy _
+        Dim totalEnergy = (From x In listColAlloc
+                           Where x.CollectionType = EnumCollectionType.Energy
                            Select x.Amount).Sum()
 
-        Dim totalVatOnEnergy = (From x In listColAlloc _
-                                Where x.CollectionType = EnumCollectionType.VatOnEnergy _
+        Dim totalVatOnEnergy = (From x In listColAlloc
+                                Where x.CollectionType = EnumCollectionType.VatOnEnergy
                                 Select x.Amount).Sum()
 
         Me.txtTotalDIMF.Text = FormatNumber(totalDIMF, 2)
@@ -1585,8 +1600,8 @@ Public Class frmCollection
         'Get the accounting codes
         Dim listAcctgCodes = WBillHelper.GetAccountingCodes()
 
-        Dim items = (From x In itemDetails Join y In listAcctgCodes _
-                     On x.AccountCode Equals y.AccountCode _
+        Dim items = (From x In itemDetails Join y In listAcctgCodes
+                     On x.AccountCode Equals y.AccountCode
                      Select x, y).ToList()
 
         For Each item In items

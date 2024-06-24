@@ -237,22 +237,21 @@ Public Class SummaryofOutstandingBalancesHelper
         'Start Energy Outstanding Balances ****************************************************************************************************************************************************
         Dim ForEnergyOB As New List(Of WESMBillSummary)
         If SelectAll = True Then
-            ForEnergyOB = (From x In Me.WESMBillSummaryList _
+            ForEnergyOB = (From x In Me.WESMBillSummaryList
                            Where x.ChargeType = EnumChargeType.E _
                            And x.EndingBalance <> 0 _
                            Or (x.EnergyWithholdStatus <> EnumEnergyWithholdStatus.PaidEWT _
-                                And x.EndingBalance = 0) _
+                                And x.EndingBalance = 0 And x.ChargeType = EnumChargeType.E)
                            Select x).ToList
         Else
-            ForEnergyOB = (From x In Me.WESMBillSummaryList _
+            ForEnergyOB = (From x In Me.WESMBillSummaryList
                            Where x.ChargeType = EnumChargeType.E _
                            And x.EndingBalance <> 0 _
                            Or (x.EnergyWithholdStatus <> EnumEnergyWithholdStatus.PaidEWT _
-                                And x.EndingBalance = 0) _
-                           And x.DueDate = CDate(SelectedDueDate.ToShortDateString) _
+                                And x.EndingBalance = 0 And x.ChargeType = EnumChargeType.E) _
+                           And x.DueDate = CDate(SelectedDueDate.ToShortDateString)
                            Select x).ToList
         End If
- 
 
         Dim DistinctEBP = (From x In ForEnergyOB
                             Order By x.WESMBillBatchNo, x.BillPeriod, x.DueDate

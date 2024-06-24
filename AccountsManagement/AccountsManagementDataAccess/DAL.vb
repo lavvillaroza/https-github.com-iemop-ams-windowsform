@@ -467,7 +467,7 @@ Public Class DAL
             savetransaction.Rollback()
         Catch exCancel As OperationCanceledException
             savetransaction.Rollback()
-            report.ErrorMessage = "Saving in db is requested to cancel!"
+            report.ErrorMessage = "Saving data is requested to cancel!"
         Catch ex2 As Exception
             savetransaction.Rollback()
             report.ErrorMessage = ex2.Message & vbNewLine & errMsg
@@ -482,11 +482,10 @@ Public Class DAL
         End Try
         Return report
     End Function
-
 #End Region
 
-#Region "ExecuteSaveQuery"
-    Public Function ExecuteSaveQueryAsync(ByVal _ListSQL As List(Of String), ByVal taskProgress As IProgress(Of Integer)) As DataReport
+#Region "ExecuteSaveQueryAsync"
+    Public Async Function ExecuteSaveQueryAsync(ByVal _ListSQL As List(Of String)) As Tasks.Task(Of DataReport)
         Dim saveTransaction As OracleTransaction = Nothing
         Dim report As New DataReport
         Dim errMsg As String = ""
@@ -494,13 +493,10 @@ Public Class DAL
             Me.OpenConnection()
         Catch ex As Exception
             report.ErrorMessage = ex.Message
-
             If Me._conn.State <> ConnectionState.Closed Then
                 Me._conn.Close()
             End If
-
             Me._conn.Dispose()
-
             Return report
         End Try
 
@@ -514,9 +510,8 @@ Public Class DAL
                 Me._myCommand.Connection = Me._conn
                 Me._myCommand.CommandText = _SQL
                 Me._myCommand.Transaction = saveTransaction
-                Me._myCommand.ExecuteNonQuery()
+                Await Me._myCommand.ExecuteNonQueryAsync()
             Next
-
             saveTransaction.Commit()
         Catch ex As ApplicationException
             report.ErrorMessage = ex.Message & vbNewLine & errMsg
@@ -537,6 +532,75 @@ Public Class DAL
             End If
             _ListSQL = Nothing
             saveTransaction.Dispose()
+            Me._myCommand.Dispose()
+            Me._conn.Dispose()
+        End Try
+        Return report
+    End Function
+
+    Public Async Function ExecuteSaveQueryAsync(ByVal _ListSQL As List(Of String), ByVal progress As IProgress(Of ProgressClass),
+                                   ByVal ct As CancellationToken) As Tasks.Task(Of DataReport)
+        Dim savetransaction As OracleTransaction = Nothing
+        Dim report As New DataReport
+        Dim errMsg As String = ""
+        Dim newProgress As ProgressClass = New ProgressClass
+        Try
+            Me.OpenConnection()
+        Catch ex As Exception
+            report.ErrorMessage = ex.Message
+
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+
+            Me._conn.Dispose()
+
+            Return report
+        End Try
+
+        Try
+            savetransaction = Me._conn.BeginTransaction()
+            Dim cnt As Integer = 0
+            For Each _SQL As String In _ListSQL
+                If ct.IsCancellationRequested Then
+                    Throw New OperationCanceledException
+                End If
+                cnt += 1
+                errMsg = cnt.ToString & " " & _SQL
+                Me._myCommand = New OracleCommand()
+                Me._myCommand.Connection = Me._conn
+                Me._myCommand.CommandText = _SQL
+                Me._myCommand.Transaction = savetransaction
+                Await Me._myCommand.ExecuteNonQueryAsync()
+                If (cnt Mod 1000) = 0 Then
+                    Dim percent As Decimal = Math.Round(CDec(cnt / _ListSQL.Count()), 2)
+                    newProgress.ProgressMsg = "Executing SQL scripts for saving: " & percent.ToString("P")
+                    progress.Report(newProgress)
+                End If
+            Next
+            savetransaction.Commit()
+        Catch ex As ApplicationException
+            savetransaction.Rollback()
+            report.ErrorMessage = ex.Message & vbNewLine & errMsg
+        Catch ex1 As OracleException
+            If ex1.Number = 1756 Then
+                report.ErrorMessage = "Single quote is not allowed. Please remove all single quote in all fields"
+            Else
+                report.ErrorMessage = ex1.Message & vbNewLine & errMsg
+            End If
+            savetransaction.Rollback()
+        Catch exCancel As OperationCanceledException
+            savetransaction.Rollback()
+            report.ErrorMessage = "Saving data is requested to cancel!"
+        Catch ex2 As Exception
+            savetransaction.Rollback()
+            report.ErrorMessage = ex2.Message & vbNewLine & errMsg
+        Finally
+            If Me._conn.State <> ConnectionState.Closed Then
+                Me._conn.Close()
+            End If
+            _ListSQL = Nothing
+            savetransaction.Dispose()
             Me._myCommand.Dispose()
             Me._conn.Dispose()
         End Try

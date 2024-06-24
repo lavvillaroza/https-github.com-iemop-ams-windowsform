@@ -244,7 +244,6 @@ Partial Class frmPrudentialRefund
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1105, 351)
-        Me.ControlBox = False
         Me.Controls.Add(Me.btnGenerateFTF)
         Me.Controls.Add(Me.BtnJVEFT)
         Me.Controls.Add(Me.BtnJVClosing)
@@ -255,6 +254,8 @@ Partial Class frmPrudentialRefund
         Me.Controls.Add(Me.btnSave)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPrudentialRefund"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Requirements Refund"

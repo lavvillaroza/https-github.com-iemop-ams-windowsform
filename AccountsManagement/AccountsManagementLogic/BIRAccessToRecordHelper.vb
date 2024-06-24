@@ -22,6 +22,7 @@ Imports AccountsManagementDataAccess
 Imports Excel = Microsoft.Office.Interop.Excel
 Imports System.Threading.Tasks
 Imports Microsoft.Office.Interop.Excel
+Imports System.IO
 
 Public Class BIRAccessToRecordHelper
     Public Sub New()
@@ -117,7 +118,7 @@ Public Class BIRAccessToRecordHelper
             Dim SQL As String = "SELECT * FROM AM_WESM_BILL " _
                               & "WHERE DUE_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(dateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
                               & "AND DUE_DATE <= TO_DATE('" & CDate(FormatDateTime(dateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
-                              & "AND (INVOICE_NO LIKE 'TS-W%' OR INVOICE_NO LIKE 'FS-W%') AND NOT UPPER(INVOICE_NO) LIKE '%ADJ%'"
+                              & "AND (INVOICE_NO LIKE 'TS-%' OR INVOICE_NO LIKE 'FS-%' OR INVOICE_NO LIKE 'SI-%') AND NOT UPPER(INVOICE_NO) LIKE '%ADJ%'"
 
             report = Await Me.DataAccess.ExecuteSelectQueryReturningDataReaderAsync(SQL)
             If report.ErrorMessage.Length <> 0 Then
@@ -292,7 +293,7 @@ Public Class BIRAccessToRecordHelper
                     item.DueDate = CDate(.Item("DUE_DATE"))
                     item.Amount = CDec(.Item("AMOUNT"))
                     If CLng(.Item("COLLECTION_NO")) = 0 And (CLng(.Item("PAYMENT_NO")) <> 0 Or CLng(.Item("CERTIFICATE_NO")) <> 0) Then
-                        item.PaymentType = CType(System.Enum.Parse(GetType(EnumPaymentType), CStr(.Item("PAYMENT_TYPE").ToString)), EnumPaymentType)
+                        item.PaymentType = CType(System.Enum.Parse(GetType(EnumPaymentNewType), CStr(.Item("PAYMENT_TYPE").ToString)), EnumPaymentNewType)
                     End If
                     If CLng(.Item("COLLECTION_NO")) <> 0 And CLng(.Item("PAYMENT_NO")) = 0 Then
                         item.CollectionType = CType(System.Enum.Parse(GetType(EnumCollectionType), CStr(.Item("COLLECTION_TYPE").ToString)), EnumCollectionType)
@@ -695,6 +696,9 @@ Public Class BIRAccessToRecordHelper
         SalesOfMP(UBound(SalesOfMP, 1), 0) = "Total"
         If rowCountInSales > 0 Then
             For Each Item In GetSalesOfMP
+                If Item.TransactionNo = "TS-WF-198F-0002601" Then
+                    Dim x0 = 0
+                End If
                 Dim getWESMBillEnergy = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
                 Dim getWESMBillVAT = (From x In WESMBillList Where x.InvoiceNumber = Item.TransactionNo And x.ChargeType = EnumChargeType.EV Select x).FirstOrDefault
                 Dim getWESMBIllSummaryEnergy = (From x In WESMBillSummaryList Where x.INVDMCMNo = Item.TransactionNo And x.ChargeType = EnumChargeType.E Select x).FirstOrDefault
@@ -703,12 +707,12 @@ Public Class BIRAccessToRecordHelper
 
                 Dim getWESMBillSummaryHisListEnergy As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
                 If Not getWESMBIllSummaryEnergy Is Nothing Then
-                    getWESMBillSummaryHisListEnergy = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryEnergy.WESMBillSummaryNo And x.PaymentType = EnumPaymentType.PaymentEnergy Select x).ToList()
+                    getWESMBillSummaryHisListEnergy = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryEnergy.WESMBillSummaryNo And x.PaymentType = EnumPaymentNewType.Energy Select x).ToList()
                 End If
 
                 Dim getWESMBillSummaryHisListVAT As List(Of WESMBillSummaryHistory) = New List(Of WESMBillSummaryHistory)
                 If Not getWESMBIllSummaryVAT Is Nothing Then
-                    getWESMBillSummaryHisListVAT = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryVAT.WESMBillSummaryNo And x.PaymentType = EnumPaymentType.PaymentEnergyVAT Select x).ToList()
+                    getWESMBillSummaryHisListVAT = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryVAT.WESMBillSummaryNo And x.PaymentType = EnumPaymentNewType.VatOnEnergy Select x).ToList()
                 End If
 
                 i += 1
@@ -721,8 +725,8 @@ Public Class BIRAccessToRecordHelper
                 SalesOfMP(i, 5) = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
                 SalesOfMP(i, 6) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
 
-                Dim ActualRemittedInEnergy As Decimal = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) - CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
-                Dim ActualRemittedInVAT As Decimal = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount) - CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
+                Dim ActualRemittedInEnergy As Decimal = CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
+                Dim ActualRemittedInVAT As Decimal = CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
 
                 SalesOfMP(i, 7) = ActualRemittedInEnergy
                 SalesOfMP(i, 8) = ActualRemittedInVAT
@@ -789,8 +793,8 @@ Public Class BIRAccessToRecordHelper
                 PurchasesOfMP(i, 5) = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
                 PurchasesOfMP(i, 6) = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount)
 
-                Dim ActualAmountPaidInEnergy As Decimal = If(getWESMBillEnergy Is Nothing, 0, getWESMBillEnergy.Amount) + CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
-                Dim ActualAmountPaidInVAT As Decimal = If(getWESMBillVAT Is Nothing, 0, getWESMBillVAT.Amount) + CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
+                Dim ActualAmountPaidInEnergy As Decimal = CDec(getWESMBillSummaryHisListEnergy.Select(Function(x) x.Amount).Sum())
+                Dim ActualAmountPaidInVAT As Decimal = CDec(getWESMBillSummaryHisListVAT.Select(Function(x) x.Amount).Sum())
 
                 PurchasesOfMP(i, 7) = ActualAmountPaidInEnergy
                 PurchasesOfMP(i, 8) = ActualAmountPaidInVAT
@@ -842,17 +846,19 @@ Public Class BIRAccessToRecordHelper
                 Dim getOffsetHisListMFV As List(Of ARCollection) = New List(Of ARCollection)
                 If Not getWESMBIllSummaryMFV Is Nothing Then
                     getWESMBillSummaryHisListMFV = (From x In WESMBillSummaryHisList Where x.WESMBillSummaryNo = getWESMBIllSummaryMFV.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
-                    getCollectionHisListMFV = (From x In MFCollectionList Where x.WESMBillSummaryNo.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
-                    getOffsetHisListMFV = (From x In MFOffsetFromPaymentList Where x.WESMBillSummaryNo = getWESMBIllSummaryMF.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
+                    getCollectionHisListMFV = (From x In MFCollectionList Where x.WESMBillSummaryNo.WESMBillSummaryNo = getWESMBIllSummaryMFV.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
+                    getOffsetHisListMFV = (From x In MFOffsetFromPaymentList Where x.WESMBillSummaryNo = getWESMBIllSummaryMFV.WESMBillSummaryNo And x.CollectionType = EnumCollectionType.VatOnMarketFees Select x).ToList()
                 End If
 
                 i += 1
                 MFPaid(i, 0) = MonthName(getWESMBillMF.DueDate.Month) & " " & getWESMBillMF.DueDate.Year.ToString()
                 MFPaid(i, 1) = ""
                 MFPaid(i, 2) = getWESMBillMF.Amount
-                MFPaid(i, 3) = IIf(getWESMBillMFV Is Nothing, 0, getWESMBillMFV.Amount)
+                MFPaid(i, 3) = If(getWESMBillMFV Is Nothing, 0, getWESMBillMFV.Amount)
+
                 Dim totalAmountPaidInMF As Decimal = getCollectionHisListMF.Select(Function(x) x.Amount).Sum() + getOffsetHisListMF.Select(Function(x) x.AllocationAmount).Sum()
                 Dim totalAmountPaidInMFV As Decimal = getCollectionHisListMFV.Select(Function(x) x.Amount).Sum() + getOffsetHisListMFV.Select(Function(x) x.AllocationAmount).Sum()
+
                 MFPaid(i, 4) = totalAmountPaidInMF + totalAmountPaidInMFV
                 If Not getCollectionHisListMF Is Nothing Then
                     Dim currDate As Date = getCollectionHisListMF.Select(Function(x) x.AllocationDate).OrderByDescending(Function(x) x).FirstOrDefault()
@@ -942,8 +948,9 @@ Public Class BIRAccessToRecordHelper
                 xlAmountPaid.Value = amountPaid
             End If
 
-            Dim FileName As String = ParticipantInfo.ParticipantID & "_BATR_" & dateFrom.ToString("MMMyyyy") & "-" & dateTo.ToString("MMMyyyy")
-            xlWorkBook.SaveAs(TargetPathFolder & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbookMacroEnabled, misValue, misValue, misValue, misValue,
+            Dim FileName As String = TargetPathFolder & "\" & ParticipantInfo.ParticipantID & "_BATR_" & dateFrom.ToString("MMMyyyy") & "-" & dateTo.ToString("MMMyyyy") & ".xlsm"
+            FileName = FileExistIncrementer(FileName)
+            xlWorkBook.SaveAs(FileName, Excel.XlFileFormat.xlOpenXMLWorkbookMacroEnabled, misValue, misValue, misValue, misValue,
                         Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
         Catch ex As Exception
             Throw New Exception(ex.Message)
@@ -971,6 +978,16 @@ Public Class BIRAccessToRecordHelper
             GC.Collect()
         End Try
     End Sub
+    Public Shared Function FileExistIncrementer(ByVal orginialFileName As String) As String
+        Dim counter As Integer = 0
+        Dim NewFileName As String = orginialFileName
+        While File.Exists(NewFileName)
+            counter = counter + 1
+            NewFileName = String.Format("{0}\{1}{2}{3}", Path.GetDirectoryName(orginialFileName), Path.GetFileNameWithoutExtension(orginialFileName), " (" & counter.ToString() & ")", Path.GetExtension(orginialFileName))
+        End While
+        Return NewFileName
+    End Function
+
     Public Function GetReportCreatedCount() As Integer
         Return ReportCreatedCount
     End Function

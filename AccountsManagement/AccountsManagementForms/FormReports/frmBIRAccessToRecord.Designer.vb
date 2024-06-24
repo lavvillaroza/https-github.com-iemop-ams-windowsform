@@ -165,7 +165,7 @@ Partial Class frmBIRAccessToRecord
         Me.dtp_TransTo.Name = "dtp_TransTo"
         Me.dtp_TransTo.Size = New System.Drawing.Size(120, 21)
         Me.dtp_TransTo.TabIndex = 35
-        Me.dtp_TransTo.Value = New Date(2023, 12, 6, 16, 6, 14, 0)
+        Me.dtp_TransTo.Value = New Date(2024, 1, 19, 0, 0, 0, 0)
         '
         'Label2
         '
@@ -184,7 +184,7 @@ Partial Class frmBIRAccessToRecord
         Me.dtp_TransFrom.Name = "dtp_TransFrom"
         Me.dtp_TransFrom.Size = New System.Drawing.Size(120, 21)
         Me.dtp_TransFrom.TabIndex = 33
-        Me.dtp_TransFrom.Value = New Date(2023, 12, 6, 16, 6, 14, 0)
+        Me.dtp_TransFrom.Value = New Date(2024, 1, 19, 0, 0, 0, 0)
         '
         'btn_ExportToExcel
         '

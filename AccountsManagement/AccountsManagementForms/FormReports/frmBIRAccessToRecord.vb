@@ -5,7 +5,7 @@ Imports System.Threading
 Imports AccountsManagementLogic
 Imports AccountsManagementObjects
 Imports WESMLib.Auth.Lib
-
+Imports System.Threading.Tasks
 
 Public Class frmBIRAccessToRecord
     Private _BIRAccessHelper As BIRAccessToRecordHelper
@@ -59,7 +59,7 @@ Public Class frmBIRAccessToRecord
         End Try
     End Sub
 
-    Private Sub btn_ExportToExcel_Click(sender As Object, e As EventArgs) Handles btn_ExportToExcel.Click
+    Private Async Sub btn_ExportToExcel_Click(sender As Object, e As EventArgs) Handles btn_ExportToExcel.Click
         Dim sFolderDialog As New FolderBrowserDialog
         Dim TargetPath As String = ""
         Dim dateFrom As Date = dtp_TransFrom.Value()
@@ -86,7 +86,12 @@ Public Class frmBIRAccessToRecord
             For Each participantID In Me.chkLB_Participants.CheckedItems
                 ToolStripStatusLabelCR.Text = "Generating BIR Access To Record report for " & participantID
                 ctrl_statusStrip.Refresh()
-                _BIRAccessHelper.GenerateBIRAcessToRecordReport(TargetPath, participantID, getStartDate, getEndDate)
+                If participantID = "" Then
+                    Dim x0 = 0
+                End If
+                Await Task.Run(Sub()
+                                   _BIRAccessHelper.GenerateBIRAcessToRecordReport(TargetPath, participantID, getStartDate, getEndDate)
+                               End Sub)
             Next
             If _BIRAccessHelper.GetReportCreatedCount = 0 Then
                 ProgressThread.Close()

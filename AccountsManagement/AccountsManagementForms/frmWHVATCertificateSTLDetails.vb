@@ -8,10 +8,11 @@ Imports System.Threading
 Imports System.Threading.Tasks
 
 Public Class frmWHVATCertificateSTLDetails
-    Public _WHVatCertSTLHelper As WHVATCertificateSTLHelper
+    Public _WHVCSHelper As WHVATCertificateSTLHelper
     Public _ViewCertificate As Boolean = False
     Public _CertificateNo As Long = 0
     Private cts As CancellationTokenSource
+    Private listofWHVATCertificateDetails As List(Of WHVATCertificateDetails)
     Private Sub frmWHVATCertificateSTLDetails_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If _ViewCertificate = True Then
             Me.FillDataForViewing()
@@ -27,11 +28,10 @@ Public Class frmWHVATCertificateSTLDetails
         ctrl_statusStrip.Refresh()
     End Sub
 
-    Private Sub FillDataForViewing()
+    Private Async Sub FillDataForViewing()
         Try
             ProgressThread.Show("Please wait while preparing the view of WESM Transaction.")
-
-            Dim getSelectedCertificateNo As WHVATCertificateSTL = _WHVatCertSTLHelper.GetWHVATCertStl(_CertificateNo)
+            Dim getSelectedCertificateNo As WHVATCertificateSTL = Await _WHVCSHelper.GetWHVATCertStlAsync(_CertificateNo)
 
             Me.ddlRemittanceDate.Items.Clear()
             Me.ddlRemittanceDate.Items.Add(getSelectedCertificateNo.RemittanceDate)
@@ -74,11 +74,11 @@ Public Class frmWHVATCertificateSTLDetails
         End Try
     End Sub
 
-
-    Private Sub FillRemittanceDateSelection()
+    Private Async Sub FillRemittanceDateSelection()
         Try
             ddlRemittanceDate.Items.Clear()
-            For Each item In Me._WHVatCertSTLHelper.InitializeListOfRemittanceDate()
+            Dim listofRemittanceDate As List(Of AllocationDate) = Await _WHVCSHelper.InitializeListOfRemittanceDate()
+            For Each item In listofRemittanceDate
                 ddlRemittanceDate.Items.Add(item.RemittanceDate.ToShortDateString)
             Next
             ddlRemittanceDate.SelectedIndex = -1
@@ -87,16 +87,17 @@ Public Class frmWHVATCertificateSTLDetails
         End Try
     End Sub
 
-    Private Sub btn_Allocate_Click(sender As Object, e As EventArgs) Handles btn_Commit.Click
+    Private Async Sub btn_Allocate_Click(sender As Object, e As EventArgs) Handles btn_Commit.Click
         Try
             Dim ListWHTCertCollectionTagged As New List(Of WHVATCertificateDetails)
             ProgressThread.Show("Please wait while processing the allocation...")
 
             For Each row As DataGridViewRow In dgTagging.Rows
                 If CDec(row.Cells("colTagAmountAR").Value) > 0 Then
-                    Dim itemWHVCertCollectionTagged As New WHVATCertificateDetails
                     Dim invoiceNo As String = CStr(row.Cells("colTransactionNoAR").Value)
-                    itemWHVCertCollectionTagged = (From x In _WHVatCertSTLHelper.FetchListWHVATCertDetails Where x.WESMBillSummary.INVDMCMNo = invoiceNo Select x).First
+                    Dim itemWHVCertCollectionTagged As WHVATCertificateDetails = New WHVATCertificateDetails
+
+                    itemWHVCertCollectionTagged = listofWHVATCertificateDetails.Where(Function(x) x.WESMBillSummary.INVDMCMNo = invoiceNo).First
                     itemWHVCertCollectionTagged.AmountTagged = CDec(row.Cells("colTagAmountAR").Value)
                     itemWHVCertCollectionTagged.NewEndingBalance = CDec(row.Cells("colNewEndingBalanceAR").Value)
                     ListWHTCertCollectionTagged.Add(itemWHVCertCollectionTagged)
@@ -108,7 +109,10 @@ Public Class frmWHVATCertificateSTLDetails
             collectionDate = CDate(FormatDateTime(CDate(Me.ddlRemittanceDate.SelectedItem.ToString()), DateFormat.ShortDate))
 
             Dim participantID As String = CStr(Me.ddlParticipantID.SelectedItem.ToString())
-            _WHVatCertSTLHelper.GenerateNewWHVATCertTagAlloc(collectionDate, participantID, ListWHTCertCollectionTagged)
+
+            Await Task.Run(Sub()
+                               _WHVCSHelper.GenerateNewWHVATCertTagAlloc(collectionDate, participantID, ListWHTCertCollectionTagged)
+                           End Sub)
 
             Me.FillDGViews()
             Me.btnSave.Enabled = True
@@ -123,7 +127,8 @@ Public Class frmWHVATCertificateSTLDetails
     Private Sub FillDGViews()
         Me.dgTagging.Rows.Clear()
         Me.dgTagging.Columns(10).ReadOnly = True
-        For Each item In _WHVatCertSTLHelper.NewWHVATCertSTL.TagDetails
+        Dim _NewWHVATCertif As WHVATCertificateSTL = _WHVCSHelper.NewWHVATCertifStl
+        For Each item In _NewWHVATCertif.TagDetails
             Me.dgTagging.Columns("colFullyPaid").Visible = False
             Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
@@ -132,10 +137,9 @@ Public Class frmWHVATCertificateSTLDetails
         Next
 
         Me.FormatTextBoxForDGVTagging()
-
         Me.dgAllocation.Rows.Clear()
         Me.dgAllocation.Columns(8).ReadOnly = True
-        For Each item In _WHVatCertSTLHelper.NewWHVatCertSTL.AllocationDetails
+        For Each item In _NewWHVATCertif.AllocationDetails
             Me.dgAllocation.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                   item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                   item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"),
@@ -178,14 +182,15 @@ Public Class frmWHVATCertificateSTLDetails
         Try
             mainTLP.Enabled = False
             cts = New CancellationTokenSource
-            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
-            Dim ask = MessageBox.Show("Do you really want to save?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-            If ask = DialogResult.No Then
+
+            Dim askMsg = MessageBox.Show("Do you really want to save?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If askMsg = DialogResult.No Then
                 Exit Sub
             End If
-
             ProgressThread.Show("Please wait while saving...")
-            Await Task.Run(Sub() _WHVatCertSTLHelper.SaveWHVATTransaction(progressIndicator, cts.Token))
+
+            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
+            Await _WHVCSHelper.SaveNewWHVATCertifAsync(progressIndicator, cts.Token)
 
             ProgressThread.Close()
             MessageBox.Show("Successfully saved!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -207,7 +212,7 @@ Public Class frmWHVATCertificateSTLDetails
         End Try
     End Sub
 
-    Private Sub ddlParticipantID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlParticipantID.SelectedIndexChanged
+    Private Async Sub ddlParticipantID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlParticipantID.SelectedIndexChanged
         Try
             If ddlParticipantID.SelectedIndex = -1 Then
                 Exit Sub
@@ -220,17 +225,16 @@ Public Class frmWHVATCertificateSTLDetails
             Dim selectedIDNumber As String = CStr(ddlParticipantID.Text)
             Dim selectedRemittanceDate As Date = CDate(ddlRemittanceDate.Text)
             ProgressThread.Show("Please wait while preparing the list of WESM Transaction.")
-            _WHVatCertSTLHelper.GetWESMBillSummaryWHVAT(selectedIDNumber, selectedRemittanceDate)
+            listofWHVATCertificateDetails = Await _WHVCSHelper.GetWESMBillsSummaryForTaggingWHVATAsync(selectedIDNumber, selectedRemittanceDate)
 
-            Dim getWESMBillSummaryForSelectedID As List(Of WHVATCertificateDetails) = (From x In _WHVatCertSTLHelper.FetchListWHVATCertDetails Where x.WESMBillSummary.IDNumber.IDNumber = selectedIDNumber Select x).ToList
             Me.dgTagging.Rows.Clear()
-            If getWESMBillSummaryForSelectedID.Count = 0 Then
+            If listofWHVATCertificateDetails.Count = 0 Then
                 ProgressThread.Close()
                 MessageBox.Show("No available WVAT to tag!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
 
-            For Each item In getWESMBillSummaryForSelectedID
+            For Each item In listofWHVATCertificateDetails
                 Me.dgTagging.Rows.Add(item.WESMBillSummary.WESMBillSummaryNo, item.WESMBillSummary.WESMBillBatchNo.ToString("d5"), item.WESMBillSummary.BillPeriod.ToString,
                                           item.WESMBillSummary.IDNumber.IDNumber.ToString, item.WESMBillSummary.INVDMCMNo, item.WESMBillSummary.DueDate.ToString("MM/dd/yyyy"),
                                           item.WESMBillSummary.OrigNewDueDate.ToString("MM/dd/yyyy"), FormatNumber(item.WESMBillSummary.OrigEndingBalance, UseParensForNegativeNumbers:=TriState.True),
@@ -245,20 +249,23 @@ Public Class frmWHVATCertificateSTLDetails
         End Try
     End Sub
 
-    Private Sub FillParticipantsSelection()
+    Private Async Sub FillParticipantsSelection()
         Try
             If ddlRemittanceDate.SelectedIndex = -1 Then
                 Exit Sub
             End If
 
             Dim selectedRemittanceDate As Date = CDate(ddlRemittanceDate.Text)
-            Dim listOfParticipant As List(Of String) = Me._WHVatCertSTLHelper.GetListOfParticipants(selectedRemittanceDate)
+            Dim listOfParticipant As List(Of String) = Await Me._WHVCSHelper.GetListOfParticipantsAsync(selectedRemittanceDate)
+
             ddlParticipantID.Text = ""
             ddlParticipantID.Items.Clear()
+
             For Each item In listOfParticipant
                 ddlParticipantID.Items.Add(item)
             Next
             ddlParticipantID.SelectedIndex = -1
+
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

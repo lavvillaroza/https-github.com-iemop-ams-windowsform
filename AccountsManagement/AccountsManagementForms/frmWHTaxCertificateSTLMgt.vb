@@ -61,7 +61,7 @@ Public Class frmWHTaxCertificateSTLMgt
         End Try
     End Sub
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+    Private Async Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         Try
             MainPanel.Enabled = False
             newProgress = New ProgressClass With {.ProgressMsg = "Please wait while searching..."}
@@ -71,7 +71,13 @@ Public Class frmWHTaxCertificateSTLMgt
             Dim notAllocated As Boolean = CBool(chkbox_Allocated.Checked)
             Dim notUntagged As Boolean = CBool(chkbox_Untagged.Checked)
 
-            _WHTaxCertSTLHelper.SearchByDateRangeForWTCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
+            'Dim listofWHTaxCertificate As List(Of WHTaxCertificateSTL) = New List(Of WHTaxCertificateSTL)
+            'listofWHTaxCertificate = Await _WHTaxCertSTLHelper.GetListOfWTCertStl(dateFrom, dateTo, notAllocated, notUntagged)
+
+            Await Task.Run(Sub()
+                               _WHTaxCertSTLHelper.SearchByDateRangeForWTCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
+                           End Sub)
+
             If _WHTaxCertSTLHelper.ViewListOfWHTCertSTL.Count <> 0 Then
                 PutDataInDisplayGrid(_WHTaxCertSTLHelper.ViewListOfWHTCertSTL)
             Else
@@ -128,7 +134,7 @@ Public Class frmWHTaxCertificateSTLMgt
             Dim i As Integer = Me.DGridViewCollection.CurrentRow.Index
             Dim certifNo As Long = CLng(Me.DGridViewCollection.Rows(i).Cells(0).Value)
 
-            newProgress = New ProgressClass With {.ProgressMsg = "Viewing CertificateNo:" & certifNo.ToString("N0")}
+            newProgress = New ProgressClass With {.ProgressMsg = "Viewing CertificateNo:" & certifNo.ToString("d7")}
             UpdateProgress(newProgress)
 
             Dim frmWTCertColTag As New frmWHTaxCertificateSTLDetails
@@ -152,9 +158,19 @@ Public Class frmWHTaxCertificateSTLMgt
             Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
             Dim rowCounter As Integer = 0
+            Dim dicRemittanceDate As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)
+
             For Each row As DataGridViewRow In DGridViewCollection.Rows
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
                     rowCounter += 1
+                    Dim remittanceDate As String = CDate(row.Cells("colRemittanceDate").Value).ToShortDateString()
+                    If Not dicRemittanceDate.ContainsKey(remittanceDate) Then
+                        dicRemittanceDate.Add(remittanceDate, rowCounter)
+                        If rowCounter > 1 Then
+                            MessageBox.Show("Multiple remittance dates are not permitted!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Exit Sub
+                        End If
+                    End If
                 End If
             Next
 
@@ -185,7 +201,7 @@ Public Class frmWHTaxCertificateSTLMgt
                     Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
                     getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
 
-                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
+                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("d7")}
                     UpdateProgress(newProgress)
 
                     Await Task.Run(Sub() _WHTaxCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))

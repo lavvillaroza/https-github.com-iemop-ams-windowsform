@@ -346,7 +346,7 @@ Partial Class frmOffSetWESMBill
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "frmOffSetWESMBill"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Offset WESM Bills"
+        Me.Text = "Finalize WESM/Reserve Bills"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.gpChargeType.ResumeLayout(False)

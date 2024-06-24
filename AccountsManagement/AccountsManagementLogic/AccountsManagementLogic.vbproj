@@ -132,6 +132,8 @@
     <Compile Include="BRCollectionReportHelper.vb" />
     <Compile Include="DocPrintingCounterHelper.vb" />
     <Compile Include="EWTTaggedAllocReportHelper.vb" />
+    <Compile Include="ImportReservedFromCRSSDBHelper.vb" />
+    <Compile Include="ImportReserveTransAllocFlatFileHelper.vb" />
     <Compile Include="ImportWTAFromCRSSDBHelper.vb" />
     <Compile Include="PaymentLogic\APAllocationProcessNew.vb" />
     <Compile Include="PaymentTaggingHelper.vb" />
@@ -181,8 +183,10 @@
     <Compile Include="WBSChangeParentIdHelper.vb" />
     <Compile Include="WESMBillsExemptionHelper.vb" />
     <Compile Include="WESMBillTransSummaryPrintHelper.vb" />
+    <Compile Include="WHTaxCertificateSTLHelperNew.vb" />
     <Compile Include="WHTaxCertificateSTLHelper.vb" />
     <Compile Include="WHVATCertificateSTLHelper.vb" />
+    <Compile Include="WTAInstallmentHelper.vb" />
     <Compile Include="WVATTaggedAllocReportHelper.vb" />
   </ItemGroup>
   <ItemGroup>

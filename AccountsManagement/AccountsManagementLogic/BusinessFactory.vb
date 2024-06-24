@@ -898,8 +898,8 @@ Public Class BusinessFactory
                     Case EnumCollectionType.Energy
                         Try
                             If selectedItem.WESMBillSummaryNo.SummaryType = EnumSummaryType.INV Then
-                                If Left(selectedItem.ReferenceNumber, 3) = "INV" Or Left(selectedItem.ReferenceNumber, 3) = "FSW" Or Left(selectedItem.ReferenceNumber, 4) = "TS-W" _
-                                    Or (selectedItem.ReferenceNumber.Contains("FS-W") And selectedItem.ReferenceNumber.Contains("-ADJ")) Then
+                                If Left(selectedItem.ReferenceNumber, 3) = "INV" Or Left(selectedItem.ReferenceNumber, 3) = "FSW" Or Left(selectedItem.ReferenceNumber, 3) = "TS-" _
+                                    Or (selectedItem.ReferenceNumber.Contains("FS-W") And selectedItem.ReferenceNumber.Contains("-ADJ")) Or selectedItem.ReferenceNumber.Contains("SI-") Then
                                     Vatable = selectedItem.Amount
                                 Else
 
@@ -1847,6 +1847,119 @@ Public Class BusinessFactory
     End Function
 #End Region
 
+#Region "GenerateWESMInvoicePrelim"
+    Public Function GenerateWESMInvoicePrelim(ByVal DatatableInvoiceMain As DataTable, ByVal DatatableInvoiceDetails As DataTable,
+                                         ByVal ListWESMInvoice As List(Of WESMInvoice),
+                                         ByVal ListParticipants As List(Of AMParticipants), ByVal ListCharges As List(Of ChargeId),
+                                         ByVal ListCalendar As List(Of CalendarBillingPeriod),
+                                         ByVal ListSelectedParticipants As List(Of String),
+                                         ByVal Signatory As DocSignatories,
+                                         ByVal FileType As EnumFileType) As DataSet
+
+        Dim ds As New DataSet
+
+        Try
+            For Each item In ListSelectedParticipants
+                Dim participant = item
+                'Get the distinct invoices
+                Dim listInvoice = From x In ListWESMInvoice Join y In ListParticipants
+                                  On x.IDNumber Equals y.IDNumber
+                                  Select x.InvoiceNumber Distinct
+
+                For Each itemInvoice In listInvoice
+                    Dim selectedInvoice = itemInvoice
+                    Dim billedTo As String, billingDate As String
+                    Dim SalesVatable As Decimal = 0, SalesZeroRated As Decimal = 0, SalesZeroRatedEcoZone As Decimal = 0, VatOnSales As Decimal = 0
+                    Dim PurchasesVatable As Decimal = 0, PurchasesZeroRated As Decimal = 0, PurchasesZeroRatedEcoZone As Decimal = 0, VatOnPurchases As Decimal = 0
+                    Dim GMRValue As Decimal = 0D, NSSRA As Decimal = 0, WTAX As Decimal = 0
+
+                    Dim listData = From w In ListWESMInvoice Join x In ListParticipants On
+                              w.IDNumber Equals x.IDNumber Join y In ListCharges On
+                              w.ChargeID Equals y.ChargeId Join z In ListCalendar On
+                              w.BillingPeriod Equals z.BillingPeriod Join v In ListParticipants On
+                              w.RegistrationID Equals v.IDNumber
+                                   Where x.ParticipantID = participant And w.InvoiceNumber = selectedInvoice
+                                   Select New With {.IDNumber = w.IDNumber, .RegistrationID = w.RegistrationID, .ParticipantID = x.ParticipantID, .BillingAddress = x.BillingAddress,
+                                               .ParticipantName = x.FullName, .ForTheAccountName = v.FullName, .GenLoad = x.GenLoad,
+                                               .InvoiceNumber = w.InvoiceNumber, .InvoiceDate = w.InvoiceDate, .StartDate = z.StartDate,
+                                               .EndDate = z.EndDate, .DueDate = w.DueDate, .ChargeId = y.ChargeId, .Description = y.Description,
+                                               .cIDType = y.cIDType, .Quantity = w.Quantity, .Amount = w.Amount, .MarketFeesRate = w.MarketFeesRate,
+                                               .Remarks = w.Remarks, .BusinessStyle = x.BusinessStyle}
+                    If listData.Count = 0 Then
+                        Continue For
+                    End If
+
+
+
+                    Dim rowMain = DatatableInvoiceMain.NewRow()
+                    With listData.First
+                        If .IDNumber = .RegistrationID Then
+                            billedTo = .IDNumber & vbCrLf & .ParticipantName & vbCrLf & .BillingAddress
+                        Else
+                            billedTo = .IDNumber & vbCrLf & .ParticipantName & vbCrLf & .BillingAddress & vbCrLf &
+                                  vbCrLf & "For the account of:" & vbCrLf & .ForTheAccountName
+                        End If
+
+                        billingDate = .StartDate.ToString("MMM dd") & " - " &
+                                      .EndDate.ToString("MMM dd, yyyy")
+
+                        rowMain("ID_NUMBER") = .IDNumber
+                        rowMain("BUSINESS_STYLE") = .BusinessStyle
+                        rowMain("BILLED_TO") = billedTo
+                        rowMain("BILL_NUMBER") = .InvoiceNumber
+                        rowMain("INVOICE_DATE") = .InvoiceDate
+                        rowMain("BILLING_PERIOD") = billingDate
+                        rowMain("DUE_DATE") = .DueDate
+                        rowMain("PARTICIPANT_ID") = .ParticipantID
+                        rowMain("SALES_VATABLE") = SalesVatable
+                        rowMain("SALES_ZERO_RATED") = SalesZeroRated
+                        rowMain("SALES_VAT_ON_ENERGY") = VatOnSales
+                        rowMain("PURCHASES_VATABLE") = PurchasesVatable
+                        rowMain("PURCHASES_ZERO_RATED") = PurchasesZeroRated
+                        rowMain("PURCHASES_VAT_ON_ENERGY") = VatOnPurchases
+                        rowMain("GMR") = GMRValue
+                        rowMain("MARKET_FEE_RATE") = .MarketFeesRate
+                        rowMain("REMARKS") = .Remarks
+                        rowMain("SIGNATORY1") = Signatory.Signatory_1
+                        rowMain("POSITION1") = Signatory.Position_1
+                        rowMain("SIGNATORY2") = Signatory.Signatory_2
+                        rowMain("POSITION2") = Signatory.Position_2
+                        rowMain("SIGNATORY3") = Signatory.Signatory_3
+                        rowMain("POSITION3") = Signatory.Position_3
+                        rowMain("NSSRA") = NSSRA
+                        rowMain("SALES_ZERO_RATED_ECOZONE") = SalesZeroRatedEcoZone
+                        rowMain("PURCHASES_ZERO_RATED_ECOZONE") = PurchasesZeroRatedEcoZone
+                        rowMain("REPORT_BIR") = AMModule.BIRPermitNumber
+                        rowMain("WTAX") = WTAX
+                        DatatableInvoiceMain.Rows.Add(rowMain)
+                        DatatableInvoiceMain.AcceptChanges()
+                    End With
+
+                    For Each i In listData
+                        Dim rowDetails = DatatableInvoiceDetails.NewRow()
+                        rowDetails("BILL_NUMBER") = i.InvoiceNumber
+                        rowDetails("DESCRIPTION") = i.Description
+                        rowDetails("QUANTITY") = i.Quantity
+                        rowDetails("AMOUNT") = i.Amount
+
+                        DatatableInvoiceDetails.Rows.Add(rowDetails)
+                        DatatableInvoiceDetails.AcceptChanges()
+                    Next
+                Next
+            Next
+
+            ds.Tables.Add(DatatableInvoiceMain)
+            ds.Tables.Add(DatatableInvoiceDetails)
+            ds.AcceptChanges()
+
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return ds
+    End Function
+#End Region
+
 #Region "GeneratePrudentialReport"
     Public Function GeneratePrudentialReport(ByVal ListPrudentialHistory As List(Of PrudentialHistory), ByVal JVNumber As Long, _
                                              ByVal Signatory As DocSignatories, ByVal dt As DataTable) As DataTable
@@ -2005,10 +2118,14 @@ Public Class BusinessFactory
 
             AMModule.RegionType = CStr(dicSettings("AMSRegion").Value)
 
-            'BIR Ruling COnfig
+            'BIR Ruling Config
             AMModule.BIRRulingPrefix = CStr(dicSettings("BIRRulingPrefix").Value)
             AMModule.BRImplementedBPNo = CLng(dicSettings("BRImplementedBPNo").Value)
             AMModule.AmountDiffValue = CDec(dicSettings("AmountDiffValue").Value)
+
+            'WTA Installment Config
+            AMModule.WTAInstallmentStartDate = CDate(dicSettings("WTAInstallmentStartDate").Value)
+            AMModule.WTAInstallmentTerms = CStr(dicSettings("WTAInstallmentTerms").Value)
 
         Catch ex As Exception
             Throw New ApplicationException(ex.Message)

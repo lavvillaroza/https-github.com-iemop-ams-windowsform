@@ -37,7 +37,7 @@ Public Class frmBRCollectionReportMgt
         End Try
     End Sub
 
-    Private Async Sub btnAdd_Click(sender As Object, e As EventArgs) 
+    Private Async Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         'Selection of allocation date
         Dim frm As New frmBRCollectionReportAdd
         With frm
@@ -168,5 +168,6 @@ Public Class frmBRCollectionReportMgt
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
 
 End Class

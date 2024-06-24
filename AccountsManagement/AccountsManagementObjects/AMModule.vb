@@ -137,4 +137,7 @@
 
     Public AmountDiffValue As Decimal
 
+    Public WTAInstallmentStartDate As Date
+    Public WTAInstallmentTerms As String
+
 End Module

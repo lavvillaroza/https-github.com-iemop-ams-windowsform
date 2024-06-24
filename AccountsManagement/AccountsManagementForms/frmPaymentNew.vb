@@ -163,7 +163,7 @@ Public Class frmPaymentNew
             Dim _Colls As New List(Of PaymentNew)
             Dim _ARAlloc As New List(Of DataTable)
             Dim _PaymentProformaEntries As New PaymentProformaEntries
-            Dim progressIndctr As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
+            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
             cts = New CancellationTokenSource
             Me.Timer1.Start()
@@ -181,7 +181,7 @@ Public Class frmPaymentNew
 
             Me.PaymntHelper = New PaymentHelper 'PaymentHelper.GetInstance()
             Me.PaymntHelper.SetCTS(cts.Token)
-            Me.PaymntHelper.SetProgress(progressIndctr)
+            Me.paymntHelper.SetProgress(progressIndicator)
 
             Await Task.Run(Sub() Me.PaymntHelper.InitializeObject(SelectedAllocationDate))
             Await Task.Run(Sub() PaymntHelper.GetARCollections())
@@ -1539,8 +1539,10 @@ Public Class frmPaymentNew
 
                 getTimeStart = wBillHelper.GetSystemDateTime
                 Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
+                paymntHelper.SetCTS(cts.Token)
+                paymntHelper.SetProgress(progressIndicator)
 
-                Await Task.Run(Sub() paymntHelper.SavePaymentProcess(progressIndicator, cts.Token))
+                Await Task.Run(Sub() paymntHelper.SavePaymentProcess())
 
                 getTimeEnd = wBillHelper.GetSystemDateTime
                 _Login.InsertLog(CDate(SystemDate.ToString("MM/dd/yyyy")), "Accounts Management System", EnumAMSModulesFinal.PayAllocateCollectionsWindow.ToString, "", "Saving allocation date " & paymntHelper._PayAllocDate.CollAllocationDate.ToShortDateString, "", CType(EnumColorCode.Green, ColorCode), EnumLogType.SuccesffullySaved.ToString, AMModule.UserName)
@@ -1654,4 +1656,5 @@ Public Class frmPaymentNew
         Dim elapsed As TimeSpan = Me.StopWatch.Elapsed
         tsslbl_timer.Text = "Timer: " & String.Format("{0:00}:{1:00}:{2:00}", Math.Floor(elapsed.TotalHours), elapsed.Minutes, elapsed.Seconds)
     End Sub
+
 End Class

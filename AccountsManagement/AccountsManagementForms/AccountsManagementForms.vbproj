@@ -490,16 +490,34 @@
     <Compile Include="frmImportCSVInsert.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmImportWESMAllocTransSummary.Designer.vb">
-      <DependentUpon>frmImportWESMAllocTransSummary.vb</DependentUpon>
+    <Compile Include="frmImportReservedFromCRSS.Designer.vb">
+      <DependentUpon>frmImportReservedFromCRSS.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmImportWESMAllocTransSummary.vb">
+    <Compile Include="frmImportReservedFromCRSS.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmImportWESMAllocTransSummaryPrelim.Designer.vb">
-      <DependentUpon>frmImportWESMAllocTransSummaryPrelim.vb</DependentUpon>
+    <Compile Include="frmImportReserveMFFlatFile.Designer.vb">
+      <DependentUpon>frmImportReserveMFFlatFile.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmImportWESMAllocTransSummaryPrelim.vb">
+    <Compile Include="frmImportReserveMFFlatFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportWESMTransAllocSummary.Designer.vb">
+      <DependentUpon>frmImportWESMTransAllocSummary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportWESMTransAllocSummary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportReserveTransAllocFlatFile.Designer.vb">
+      <DependentUpon>frmImportReserveTransAllocFlatFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportReserveTransAllocFlatFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportWESMTransAllocSummaryFlatFile.Designer.vb">
+      <DependentUpon>frmImportWESMTransAllocSummaryFlatFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportWESMTransAllocSummaryFlatFile.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmImportWESMBillFromCRSS.Designer.vb">
@@ -971,6 +989,36 @@
     <Compile Include="frmWHVATCertificateSTLDetails.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmWTAInstallmentDueDate.Designer.vb">
+      <DependentUpon>frmWTAInstallmentDueDate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWTAInstallmentDueDate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWTAInstallmentMgt.Designer.vb">
+      <DependentUpon>frmWTAInstallmentMgt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWTAInstallmentMgt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWTAInstallmentMgtView.Designer.vb">
+      <DependentUpon>frmWTAInstallmentMgtView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWTAInstallmentMgtView.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWTAInstallmentTerms.Designer.vb">
+      <DependentUpon>frmWTAInstallmentTerms.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWTAInstallmentTerms.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWTAInstallmentTermsView.Designer.vb">
+      <DependentUpon>frmWTAInstallmentTermsView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWTAInstallmentTermsView.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Functions\FuncAutoCollectionAllocation.vb" />
     <Compile Include="Functions\FuncAutoCollectionAllocationResult.vb" />
     <Compile Include="Functions\FuncGenerateWESMBillSummaryTransactionAP.vb" />
@@ -1030,6 +1078,20 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\RPTReserveTransAllocationSummary.vb">
+      <DependentUpon>RPTReserveTransAllocationSummary.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPTReserveTransAllocationSummaryPrelim.vb">
+      <DependentUpon>RPTReserveTransAllocationSummaryPrelim.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\RPTWESMBillTransCoverSummaryPrelim.vb">
       <DependentUpon>RPTWESMBillTransCoverSummaryPrelim.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1063,6 +1125,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RPTOfficialReceiptNewRePrint.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RPTWESMInvoicePrelim.vb">
+      <DependentUpon>RPTWESMInvoicePrelim.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\SPASummaryReport.vb">
       <AutoGen>True</AutoGen>
@@ -1298,6 +1367,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RPTStatementOfAccount.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\SubRPTReserveBillTransAllocDetails.vb">
+      <DependentUpon>SubRPTReserveBillTransAllocDetails.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\SubRPTWESMBillTransAllocDetails.vb">
       <AutoGen>True</AutoGen>
@@ -1630,11 +1706,20 @@
     <EmbeddedResource Include="frmImportCSVInsert.resx">
       <DependentUpon>frmImportCSVInsert.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmImportWESMAllocTransSummary.resx">
-      <DependentUpon>frmImportWESMAllocTransSummary.vb</DependentUpon>
+    <EmbeddedResource Include="frmImportReservedFromCRSS.resx">
+      <DependentUpon>frmImportReservedFromCRSS.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmImportWESMAllocTransSummaryPrelim.resx">
-      <DependentUpon>frmImportWESMAllocTransSummaryPrelim.vb</DependentUpon>
+    <EmbeddedResource Include="frmImportReserveMFFlatFile.resx">
+      <DependentUpon>frmImportReserveMFFlatFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportWESMTransAllocSummary.resx">
+      <DependentUpon>frmImportWESMTransAllocSummary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportReserveTransAllocFlatFile.resx">
+      <DependentUpon>frmImportReserveTransAllocFlatFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportWESMTransAllocSummaryFlatFile.resx">
+      <DependentUpon>frmImportWESMTransAllocSummaryFlatFile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportWESMBillFromCRSS.resx">
       <DependentUpon>frmImportWESMBillFromCRSS.vb</DependentUpon>
@@ -1910,6 +1995,21 @@
     <EmbeddedResource Include="frmWHVATCertificateSTLDetails.resx">
       <DependentUpon>frmWHVATCertificateSTLDetails.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmWTAInstallmentDueDate.resx">
+      <DependentUpon>frmWTAInstallmentDueDate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWTAInstallmentMgt.resx">
+      <DependentUpon>frmWTAInstallmentMgt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWTAInstallmentMgtView.resx">
+      <DependentUpon>frmWTAInstallmentMgtView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWTAInstallmentTerms.resx">
+      <DependentUpon>frmWTAInstallmentTerms.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWTAInstallmentTermsView.resx">
+      <DependentUpon>frmWTAInstallmentTermsView.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -1941,6 +2041,16 @@
       <LastGenOutput>RPTBIRCollectionReportSummary.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RPTReserveTransAllocationSummary.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPTReserveTransAllocationSummary.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RPTReserveTransAllocationSummaryPrelim.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPTReserveTransAllocationSummaryPrelim.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\RPTWESMBillTransCoverSummaryPrelim.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RPTWESMBillTransCoverSummaryPrelim.vb</LastGenOutput>
@@ -1964,6 +2074,11 @@
     <EmbeddedResource Include="Reports\RPTOfficialReceiptNewRePrint.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RPTOfficialReceiptNewRePrint.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RPTWESMInvoicePrelim.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPTWESMInvoicePrelim.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SPASummaryReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -2129,6 +2244,11 @@
     <EmbeddedResource Include="Reports\RPTStatementOfAccount.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RPTStatementOfAccount.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SubRPTReserveBillTransAllocDetails.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SubRPTReserveBillTransAllocDetails.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SubRPTWESMBillTransAllocDetails.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -706,6 +706,142 @@ Public Class ImportWESMTransSummaryPrelimHelper
     End Function
 
 
+    Public Function PrintReserveTransactionSummary(ByVal dtableCover As DataTable, ByVal dtableDtl As DataTable,
+                                                ByVal bpNo As Integer, ByVal stlRun As String,
+                                                ByVal participant As String, ByVal calendarBP As CalendarBillingPeriod,
+                                                ByVal participantInfo As AMParticipants,
+                                                ByVal wesmTransactionSummary As WESMBillAllocCoverSummary) As DataSet
+        Dim ret As New DataSet
+
+        Dim rowMain = dtableCover.NewRow()
+        rowMain("TRANSACTION_NO") = "TS-RF-211R-0000001"
+        rowMain("TRANSACTION_DATE") = CDate("02/11/2024")
+        rowMain("BILLING_PERIOD_START") = CDate(calendarBP.StartDate.ToShortDateString)
+        rowMain("BILLING_PERIOD_END") = CDate(calendarBP.EndDate.ToShortDateString)
+        rowMain("DUE_DATE") = CDate("02/25/2024")
+        rowMain("STL_ID") = "KINGENE"
+        rowMain("FULL_NAME") = participantInfo.FullName
+        rowMain("BUSINESS_STYLE") = participantInfo.BusinessStyle
+        rowMain("ADDRESS") = If(participantInfo.BillingAddress.ToString.Length = 0, participantInfo.ParticipantAddress, participantInfo.BillingAddress)
+        rowMain("BILLING_ID") = "KINGENE"
+        rowMain("VATABLE_SALES") = 2187.18
+        rowMain("ZERO_RATED_SALES") = 0
+        rowMain("ZERO_RATED_ECOZONES_SALES") = 0
+        rowMain("NET_SALES") = 0
+        rowMain("VATABLE_PURCHASES") = 0
+        rowMain("ZERO_RATED_PURCHASES") = 0
+        rowMain("ZERO_RATED_ECOZONES_PURCHASES") = 0
+        rowMain("NET_PURCHASES") = 0
+        rowMain("VAT_ON_SALES") = 262.46
+        rowMain("VAT_ON_PURCHASES") = 0
+        rowMain("EWT") = -43.74
+        rowMain("NSS_FLOWBACK") = 0
+        rowMain("GMR_SMR") = 0
+        rowMain("SPOT_QTY") = 0
+        rowMain("MARKET_FEES_RATE") = 0
+        rowMain("REMARKS") = ""
+        rowMain("GENX_AMOUNT") = 0
+        dtableCover.Rows.Add(rowMain)
+        dtableCover.AcceptChanges()
+
+
+        Dim rowDtl = dtableDtl.NewRow()
+        rowDtl("SELLER_BUYER_ID") = "KINGENE"
+        rowDtl("FULL_NAME") = participantInfo.FullName
+        rowDtl("BILLING_ID") = "ANECO"
+        rowDtl("STL_ID") = "ANECO"
+        rowDtl("FACILITY_TYPE") = "LOAD"
+        rowDtl("WHT_TAG") = "Y"
+        rowDtl("ITH_TAG") = "Y  "
+        rowDtl("NON_VATABLE_TAG") = "N"
+        rowDtl("ZERO_RATED_TAG") = "N"
+        rowDtl("NET_SELLER_BUYER_TAG") = "Buyer"
+        rowDtl("VATABLE_SALES") = 1222.27
+        rowDtl("ZERO_RATED_SALES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_SALES") = 0
+        rowDtl("VAT_ON_SALES") = 146.67
+        rowDtl("VATABLE_PURCHASES") = 0
+        rowDtl("ZERO_RATED_PURCHASES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_PURCHASES") = 0
+        rowDtl("VAT_ON_PURCHASES") = 0
+        rowDtl("EWT") = -24.45
+        rowDtl("BILLING_PERIOD") = CInt(calendarBP.BillingPeriod)
+        rowDtl("BILLING_PERIOD_START") = CDate(calendarBP.StartDate.ToShortDateString)
+        rowDtl("BILLING_PERIOD_END") = CDate(calendarBP.EndDate.ToShortDateString)
+        rowDtl("STL_RUN") = stlRun
+        rowDtl("DUE_DATE") = CDate("02/25/2024")
+        dtableDtl.Rows.Add(rowDtl)
+        dtableDtl.AcceptChanges()
+
+
+        rowDtl = dtableDtl.NewRow()
+        rowDtl("SELLER_BUYER_ID") = "KINGENE"
+        rowDtl("FULL_NAME") = participantInfo.FullName
+        rowDtl("BILLING_ID") = "APEX"
+        rowDtl("STL_ID") = "APEX"
+        rowDtl("FACILITY_TYPE") = "LOAD"
+        rowDtl("WHT_TAG") = "Y"
+        rowDtl("ITH_TAG") = "Y  "
+        rowDtl("NON_VATABLE_TAG") = "N"
+        rowDtl("ZERO_RATED_TAG") = "N"
+        rowDtl("NET_SELLER_BUYER_TAG") = "Buyer"
+        rowDtl("VATABLE_SALES") = 231.66
+        rowDtl("ZERO_RATED_SALES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_SALES") = 0
+        rowDtl("VAT_ON_SALES") = 27.8
+        rowDtl("VATABLE_PURCHASES") = 0
+        rowDtl("ZERO_RATED_PURCHASES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_PURCHASES") = 0
+        rowDtl("VAT_ON_PURCHASES") = 0
+        rowDtl("EWT") = -4.63
+        rowDtl("BILLING_PERIOD") = CInt(calendarBP.BillingPeriod)
+        rowDtl("BILLING_PERIOD_START") = CDate(calendarBP.StartDate.ToShortDateString)
+        rowDtl("BILLING_PERIOD_END") = CDate(calendarBP.EndDate.ToShortDateString)
+        rowDtl("STL_RUN") = stlRun
+        rowDtl("DUE_DATE") = CDate("02/25/2024")
+        dtableDtl.Rows.Add(rowDtl)
+        dtableDtl.AcceptChanges()
+
+
+        rowDtl = dtableDtl.NewRow()
+        rowDtl("SELLER_BUYER_ID") = "KINGENE"
+        rowDtl("FULL_NAME") = participantInfo.FullName
+        rowDtl("BILLING_ID") = "ASELCO"
+        rowDtl("STL_ID") = "ASELCO"
+        rowDtl("FACILITY_TYPE") = "LOAD"
+        rowDtl("WHT_TAG") = "Y"
+        rowDtl("ITH_TAG") = "Y  "
+        rowDtl("NON_VATABLE_TAG") = "N"
+        rowDtl("ZERO_RATED_TAG") = "N"
+        rowDtl("NET_SELLER_BUYER_TAG") = "Buyer"
+        rowDtl("VATABLE_SALES") = 733.25
+        rowDtl("ZERO_RATED_SALES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_SALES") = 0
+        rowDtl("VAT_ON_SALES") = 87.99
+        rowDtl("VATABLE_PURCHASES") = 0
+        rowDtl("ZERO_RATED_PURCHASES") = 0
+        rowDtl("ZERO_RATED_ECOZONES_PURCHASES") = 0
+        rowDtl("VAT_ON_PURCHASES") = 0
+        rowDtl("EWT") = -14.66
+        rowDtl("BILLING_PERIOD") = CInt(calendarBP.BillingPeriod)
+        rowDtl("BILLING_PERIOD_START") = CDate(calendarBP.StartDate.ToShortDateString)
+        rowDtl("BILLING_PERIOD_END") = CDate(calendarBP.EndDate.ToShortDateString)
+        rowDtl("STL_RUN") = stlRun
+        rowDtl("DUE_DATE") = CDate("02/25/2024")
+        dtableDtl.Rows.Add(rowDtl)
+        dtableDtl.AcceptChanges()
+
+        dtableCover.TableName = "WESMBillTransCoverSummary"
+        dtableDtl.TableName = "WESMBillTransAllocDetails"
+
+        ret.Tables.Add(dtableCover)
+        ret.Tables.Add(dtableDtl)
+        ret.AcceptChanges()
+
+        Return ret
+    End Function
+
+
     Public Sub SaveUplodedWESMBill(ByVal calendarBP As CalendarBillingPeriod, ByVal stlRun As String, ByVal chargeType As EnumChargeType,
                                    ByVal filetype As EnumFileType, ByVal itemJV As JournalVoucher, ByVal itemGP As WESMBillGPPosted,
                                    ByVal countWESMBillExist As Integer, ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken)

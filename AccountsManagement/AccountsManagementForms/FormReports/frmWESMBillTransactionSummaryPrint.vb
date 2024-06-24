@@ -118,49 +118,95 @@ Public Class frmWESMBillTransactionSummaryPrint
             Dim ListParticipantInfo As List(Of AMParticipants) = WBHelper.GetAMParticipants()
 
             Dim bpValue As String = getCalendarBP.EndDate.ToString("MMMyyyy").ToUpper
-            Dim fileName As String = "_WTA"
 
-            For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
-                Dim participant = Me.chckList.CheckedItems(cnt).ToString()
-                Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
+            If selectedSTLRun = "F" Then
+                Dim fileName As String = "_WTA"
+                For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
+                    Dim participant = Me.chckList.CheckedItems(cnt).ToString()
+                    Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
 
-                Dim listWESMTransSummary As New List(Of WESMBillAllocCoverSummary)
+                    Dim listWESMTransSummary As New List(Of WESMBillAllocCoverSummary)
 
-                listWESMTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
-                Dim newProgress As ProgressClass = New ProgressClass
-                newProgress.ProgressMsg = "Exporting PDF File/s for " & getParticpantInfo.IDNumber.ToString
-                UpdateProgress(newProgress)
-                Parallel.ForEach(listWESMTransSummary, Sub(WESMTransSummary)
-                                                           Dim ds As DataSet = WBTransSummaryPrintHelper.PrintWESMTransactionSummary(New DSReport.WESMBillTransCoverSummaryDataTable, New DSReport.WESMBillTransAllocDetailsDataTable,
-                                                                                              selectedBPNo, selectedSTLRun, participant, getCalendarBP, getParticpantInfo, WESMTransSummary)
-                                                           Dim expReport = New RPTWESMBillTransCoverSummary
+                    listWESMTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
+                    Dim newProgress As ProgressClass = New ProgressClass
+                    newProgress.ProgressMsg = "Exporting PDF File/s for " & getParticpantInfo.IDNumber.ToString
+                    UpdateProgress(newProgress)
+                    Parallel.ForEach(listWESMTransSummary, Sub(WESMTransSummary)
+                                                               Dim ds As DataSet = WBTransSummaryPrintHelper.PrintWESMTransactionSummary(New DSReport.WESMBillTransCoverSummaryDataTable, New DSReport.WESMBillTransAllocDetailsDataTable,
+                                                                                                  selectedBPNo, selectedSTLRun, participant, getCalendarBP, getParticpantInfo, WESMTransSummary)
+                                                               Dim expReport = New RPTWESMBillTransCoverSummary
 
-                                                           expReport.SetDataSource(ds)
+                                                               expReport.SetDataSource(ds)
 
-                                                           'expReport.ExportToDisk(ExportFormatType.PortableDocFormat, filePath & "\" &
-                                                           '             participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf")
+                                                               'expReport.ExportToDisk(ExportFormatType.PortableDocFormat, filePath & "\" &
+                                                               '             participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf")
 
-                                                           Dim dest As New DiskFileDestinationOptions()
-                                                           dest.DiskFileName = filePath & "\" & participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf"
+                                                               Dim dest As New DiskFileDestinationOptions()
+                                                               dest.DiskFileName = filePath & "\" & participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf"
 
-                                                           Dim formatOpt As New PdfFormatOptions()
-                                                           formatOpt.FirstPageNumber = 0
-                                                           formatOpt.LastPageNumber = 0
-                                                           formatOpt.UsePageRange = False
-                                                           formatOpt.CreateBookmarksFromGroupTree = False
+                                                               Dim formatOpt As New PdfFormatOptions()
+                                                               formatOpt.FirstPageNumber = 0
+                                                               formatOpt.LastPageNumber = 0
+                                                               formatOpt.UsePageRange = False
+                                                               formatOpt.CreateBookmarksFromGroupTree = False
 
-                                                           Dim ex As New ExportOptions()
-                                                           ex.ExportDestinationType = ExportDestinationType.DiskFile
-                                                           ex.ExportDestinationOptions = dest
-                                                           ex.ExportFormatType = ExportFormatType.PortableDocFormat
-                                                           ex.ExportFormatOptions = formatOpt
-                                                           expReport.Export(ex)
+                                                               Dim ex As New ExportOptions()
+                                                               ex.ExportDestinationType = ExportDestinationType.DiskFile
+                                                               ex.ExportDestinationOptions = dest
+                                                               ex.ExportFormatType = ExportFormatType.PortableDocFormat
+                                                               ex.ExportFormatOptions = formatOpt
+                                                               expReport.Export(ex)
 
-                                                           expReport.Close()
-                                                           expReport.Dispose()
-                                                       End Sub)
+                                                               expReport.Close()
+                                                               expReport.Dispose()
+                                                           End Sub)
 
-            Next
+                Next
+            ElseIf selectedSTLRun = "R" Then
+                Dim fileName As String = "_RTA"
+                For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
+                    Dim participant = Me.chckList.CheckedItems(cnt).ToString()
+                    Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
+
+                    Dim listWESMTransSummary As New List(Of WESMBillAllocCoverSummary)
+
+                    listWESMTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
+                    Dim newProgress As ProgressClass = New ProgressClass
+                    newProgress.ProgressMsg = "Exporting PDF File/s for " & getParticpantInfo.IDNumber.ToString
+                    UpdateProgress(newProgress)
+                    Parallel.ForEach(listWESMTransSummary, Sub(WESMTransSummary)
+                                                               Dim ds As DataSet = WBTransSummaryPrintHelper.PrintWESMTransactionSummary(New DSReport.WESMBillTransCoverSummaryDataTable, New DSReport.WESMBillTransAllocDetailsDataTable,
+                                                                                                  selectedBPNo, selectedSTLRun, participant, getCalendarBP, getParticpantInfo, WESMTransSummary)
+                                                               Dim expReport = New RPTReserveTransAllocationSummary
+
+                                                               expReport.SetDataSource(ds)
+
+                                                               'expReport.ExportToDisk(ExportFormatType.PortableDocFormat, filePath & "\" &
+                                                               '             participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf")
+
+                                                               Dim dest As New DiskFileDestinationOptions()
+                                                               dest.DiskFileName = filePath & "\" & participant & "_" & WESMTransSummary.TransactionNo & fileName & ".pdf"
+
+                                                               Dim formatOpt As New PdfFormatOptions()
+                                                               formatOpt.FirstPageNumber = 0
+                                                               formatOpt.LastPageNumber = 0
+                                                               formatOpt.UsePageRange = False
+                                                               formatOpt.CreateBookmarksFromGroupTree = False
+
+                                                               Dim ex As New ExportOptions()
+                                                               ex.ExportDestinationType = ExportDestinationType.DiskFile
+                                                               ex.ExportDestinationOptions = dest
+                                                               ex.ExportFormatType = ExportFormatType.PortableDocFormat
+                                                               ex.ExportFormatOptions = formatOpt
+                                                               expReport.Export(ex)
+
+                                                               expReport.Close()
+                                                               expReport.Dispose()
+                                                           End Sub)
+
+                Next
+            End If
+
 
             ProgressThread.Close()
             MessageBox.Show("Successfully exported!", "System Sucess Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -204,22 +250,38 @@ Public Class frmWESMBillTransactionSummaryPrint
             Dim bpValue As String = getCalendarBP.EndDate.ToString("MMMyyyy").ToUpper
             Dim fileName As String = "_WTA"
 
-            For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
-                Dim participant = Me.chckList.CheckedItems(cnt).ToString()
-                Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
+            If selectedSTLRun.Contains("F") Then
+                For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
+                    Dim participant = Me.chckList.CheckedItems(cnt).ToString()
+                    Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
 
-                Dim listWESMTransSummary As New List(Of WESMBillAllocCoverSummary)
+                    Dim listWESMTransSummary As New List(Of WESMBillAllocCoverSummary)
 
-                listWESMTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
+                    listWESMTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
 
-                Dim newProgress As ProgressClass = New ProgressClass
-                newProgress.ProgressMsg = "Exporting Excel File for " & getParticpantInfo.IDNumber.ToString
-                UpdateProgress(newProgress)
-                Parallel.ForEach(listWESMTransSummary, Sub(WESMTransSummary)
-                                                           CreateWTAperParticipants(filePath, getParticpantInfo, WESMTransSummary)
-                                                       End Sub)
-            Next
+                    Dim newProgress As ProgressClass = New ProgressClass
+                    newProgress.ProgressMsg = "Exporting Excel File for " & getParticpantInfo.IDNumber.ToString
+                    UpdateProgress(newProgress)
+                    Parallel.ForEach(listWESMTransSummary, Sub(WESMTransSummary)
+                                                               CreateWTAperParticipants(filePath, getParticpantInfo, WESMTransSummary)
+                                                           End Sub)
+                Next
+            ElseIf selectedSTLRun.Contains("R") Then
+                For cnt As Integer = 0 To Me.chckList.CheckedItems.Count - 1
+                    Dim participant = Me.chckList.CheckedItems(cnt).ToString()
+                    Dim getParticpantInfo As AMParticipants = (From x In ListParticipantInfo Where x.IDNumber = participant Select x).First
+                    Dim listReserveTransSummary As New List(Of WESMBillAllocCoverSummary)
 
+                    listReserveTransSummary = WBTransSummaryPrintHelper.GetListWESMTransSummaryPerNo(selectedBPNo, selectedSTLRun, participant)
+
+                    Dim newProgress As ProgressClass = New ProgressClass
+                    newProgress.ProgressMsg = "Exporting Excel File for " & getParticpantInfo.IDNumber.ToString
+                    UpdateProgress(newProgress)
+                    Parallel.ForEach(listReserveTransSummary, Sub(ReserveTransSummary)
+                                                                  CreateRTAperParticipants(filePath, getParticpantInfo, ReserveTransSummary)
+                                                              End Sub)
+                Next
+            End If
             ProgressThread.Close()
             MessageBox.Show("Successfully exported!", "System Sucess Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
@@ -296,6 +358,87 @@ Public Class frmWESMBillTransactionSummaryPrint
         releaseObject(xlApp)
     End Sub
 
+    Public Sub CreateRTAperParticipants(ByVal SavingPathName As String, ByVal stlID As AMParticipants, ByVal RTASummaryItem As WESMBillAllocCoverSummary)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet1 As Excel.Worksheet
+        Dim xlRowRange1 As Excel.Range
+        Dim xlRowRange2 As Excel.Range
+        Dim xlWESMDetails As Excel.Range
+
+        Dim GetDateNow As Date = CDate(AMModule.SystemDate.ToShortDateString)
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim colIndex As Integer = 0
+        Dim rowIndex As Integer = 0
+
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+
+        Dim WESMBillSummaryHeader As Object(,) = New Object(,) {}
+        ReDim WESMBillSummaryHeader(2, 17)
+
+        WESMBillSummaryHeader(0, 0) = "BILLING_ID"
+        WESMBillSummaryHeader(0, 1) = RTASummaryItem.BillingID.ToString()
+
+        WESMBillSummaryHeader(1, 0) = "TRANSACTION_NO"
+        WESMBillSummaryHeader(1, 1) = RTASummaryItem.TransactionNo.ToString()
+
+        WESMBillSummaryHeader(0, 3) = "AS_NONPAYMENT"
+        WESMBillSummaryHeader(0, 4) = RTASummaryItem.ASNonPayment
+
+        WESMBillSummaryHeader(1, 3) = "RESERVE_AMOUNT_ADJ"
+        WESMBillSummaryHeader(1, 4) = RTASummaryItem.ReserveAmountAdj
+
+        WESMBillSummaryHeader(2, 0) = "STL ID"
+        WESMBillSummaryHeader(2, 1) = "Billing ID"
+        WESMBillSummaryHeader(2, 2) = "Facility ID"
+        WESMBillSummaryHeader(2, 3) = "WHT Tag"
+        WESMBillSummaryHeader(2, 4) = "NonVatable Tag"
+        WESMBillSummaryHeader(2, 5) = "ZeroRated Tag"
+        WESMBillSummaryHeader(2, 6) = "Vatable Sales"
+        WESMBillSummaryHeader(2, 7) = "ZeroRated Sales"
+        WESMBillSummaryHeader(2, 8) = "ZeroRated Econzone Sales"
+        WESMBillSummaryHeader(2, 9) = "Vat On Sales"
+        WESMBillSummaryHeader(2, 10) = "Vatable Purchases"
+        WESMBillSummaryHeader(2, 11) = "ZeroRated Purchases"
+        WESMBillSummaryHeader(2, 12) = "ZeroRated Econzone Purchases"
+        WESMBillSummaryHeader(2, 13) = "VAT On Purchases"
+        WESMBillSummaryHeader(2, 14) = "EWT"
+        WESMBillSummaryHeader(2, 15) = "Remarks"
+        WESMBillSummaryHeader(2, 16) = "Reserve Category"
+        WESMBillSummaryHeader(2, 17) = "Region"
+
+        xlWorkSheet1 = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+        xlWorkSheet1.Name = RTASummaryItem.TransactionNo.ToString()
+        xlRowRange1 = DirectCast(xlWorkSheet1.Cells(1, 1), Excel.Range)
+        xlRowRange2 = DirectCast(xlWorkSheet1.Cells(3, UBound(WESMBillSummaryHeader, 2) + 1), Excel.Range)
+        xlWESMDetails = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
+        xlWESMDetails.Value = WESMBillSummaryHeader
+        Dim lrow3 As Integer = xlWorkSheet1.Range("A" & xlWorkSheet1.Rows.Count).End(Excel.XlDirection.xlUp).Row + 1
+        If RTASummaryItem.ListWBAllocDisDetails.Count <> 0 Then
+            Dim WESMBillSUmmaryArr As Object(,) = Me.GenerateReserveTransDetailsArray(stlID, RTASummaryItem)
+            xlRowRange1 = DirectCast(xlWorkSheet1.Cells(lrow3, 1), Excel.Range)
+            xlRowRange2 = DirectCast(xlWorkSheet1.Cells(lrow3 + UBound(WESMBillSUmmaryArr, 1), UBound(WESMBillSummaryHeader, 2) + 1), Excel.Range)
+            xlWESMDetails = xlWorkSheet1.Range(xlRowRange1, xlRowRange2)
+            xlWESMDetails.Value = WESMBillSUmmaryArr
+        End If
+        'End ****************************************************************************************************************************************************
+
+        Dim FileName As String
+        FileName = stlID.IDNumber.ToUpper.ToString & "_" & RTASummaryItem.TransactionNo.ToString() & ".xlsx"
+        xlWorkBook.SaveAs(SavingPathName & "\" & FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
+                    Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+        xlWorkBook.Close(False)
+        xlApp.Quit()
+
+        releaseObject(xlWESMDetails)
+        releaseObject(xlRowRange2)
+        releaseObject(xlRowRange1)
+        releaseObject(xlWorkSheet1)
+        releaseObject(xlWorkBook)
+        releaseObject(xlApp)
+    End Sub
+
     Private Function GenerateWESMTransDetailsArray(ByVal stlID As AMParticipants, ByVal WTASummaryItem As WESMBillAllocCoverSummary) As Object(,)
         Dim ret As Object(,) = New Object(,) {}
         Dim ObjDicInvNo As New Dictionary(Of String, Integer)
@@ -326,12 +469,50 @@ Public Class frmWESMBillTransactionSummaryPrint
             WBSArr(RowIndex, 13) = item.VatOnPurchases
             WBSArr(RowIndex, 14) = item.EWT
             WBSArr(RowIndex, 15) = WTASummaryItem.Remarks
+
             RowIndex += 1
         Next
         ret = WBSArr
         Return ret
     End Function
 
+    Private Function GenerateReserveTransDetailsArray(ByVal stlID As AMParticipants, ByVal RTASummaryItem As WESMBillAllocCoverSummary) As Object(,)
+        Dim ret As Object(,) = New Object(,) {}
+        Dim ObjDicInvNo As New Dictionary(Of String, Integer)
+        Dim ObjDicSeq As New Dictionary(Of Integer, Integer)
+        Dim RowIndex As Integer = 0
+        Dim RowCount As Integer = 0
+
+        Dim WBSArr As Object(,) = New Object(,) {}
+
+        RowCount = RTASummaryItem.ListWBAllocDisDetails.Count
+
+        ReDim WBSArr(RowCount, 17)
+
+        For Each item In RTASummaryItem.ListWBAllocDisDetails
+            WBSArr(RowIndex, 0) = item.STLID
+            WBSArr(RowIndex, 1) = item.BillingID
+            WBSArr(RowIndex, 2) = item.FacilityType
+            WBSArr(RowIndex, 3) = item.WHTTag
+            WBSArr(RowIndex, 4) = item.NonVatableTag
+            WBSArr(RowIndex, 5) = item.ZeroRatedTag
+            WBSArr(RowIndex, 6) = item.VatableSales
+            WBSArr(RowIndex, 7) = item.ZeroRatedSales
+            WBSArr(RowIndex, 8) = item.ZeroRatedEcoZoneSales
+            WBSArr(RowIndex, 9) = item.VatOnSales
+            WBSArr(RowIndex, 10) = item.VatablePurchases
+            WBSArr(RowIndex, 11) = item.ZeroRatedPurchases
+            WBSArr(RowIndex, 12) = item.ZeroRatedEcoZonePurchases
+            WBSArr(RowIndex, 13) = item.VatOnPurchases
+            WBSArr(RowIndex, 14) = item.EWT
+            WBSArr(RowIndex, 15) = RTASummaryItem.Remarks
+            WBSArr(RowIndex, 16) = RTASummaryItem.ReserveCategory
+            WBSArr(RowIndex, 17) = RTASummaryItem.Region
+            RowIndex += 1
+        Next
+        ret = WBSArr
+        Return ret
+    End Function
     Private Sub releaseObject(ByVal obj As Object)
         Try
             System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)

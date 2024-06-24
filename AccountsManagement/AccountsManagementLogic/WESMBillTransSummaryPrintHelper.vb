@@ -4,10 +4,15 @@ Imports AccountsManagementDataAccess
 Public Class WESMBillTransSummaryPrintHelper
     Public Sub New()
         'Get the current instance of the dal
+        Me._NpgDataAccess = NpgsqlDAL.GetInstance
+        Me._NpgDataAccess.ConnectionString = AMModule.ConnectionStringCRSS
         Me._WBillHelper = WESMBillHelper.GetInstance
+        Me._WBillHelper.ConnectionString = AMModule.ConnectionString
+
         Me._DataAccess = DAL.GetInstance()
         Me._ListWESMBill = New List(Of WESMBill)
         Me._ListWBAllocCoverSummary = New List(Of WESMBillAllocCoverSummary)
+        Me._ReserveCategoryDic = Me.GetReservedCategoryDic()
     End Sub
 
 #Region "DAL"
@@ -24,6 +29,15 @@ Public Class WESMBillTransSummaryPrintHelper
     Public ReadOnly Property WBillHelper() As WESMBillHelper
         Get
             Return _WBillHelper
+        End Get
+    End Property
+#End Region
+
+#Region "NpgDataAccess"
+    Private _NpgDataAccess As NpgsqlDAL
+    Public ReadOnly Property NpgDataAccess() As NpgsqlDAL
+        Get
+            Return _NpgDataAccess
         End Get
     End Property
 #End Region
@@ -70,13 +84,68 @@ Public Class WESMBillTransSummaryPrintHelper
 
 #End Region
 
+#Region "Get Reserve Category From CRSS DB"
+    Private _ReserveCategoryDic As Dictionary(Of String, String)
+    Public Property ReserveCategoryDic() As Dictionary(Of String, String)
+        Get
+            Return _ReserveCategoryDic
+        End Get
+        Set(ByVal value As Dictionary(Of String, String))
+            _ReserveCategoryDic = value
+        End Set
+    End Property
+
+    Public Function GetReservedCategoryDic() As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)
+        Dim report As New DataReport
+        Dim SQL As String
+
+        Try
+            SQL = "SELECT id, reserve_category_code, reserve_category_name FROM settlement.cfg_rcra"
+
+            report = Me._NpgDataAccess.ExecuteSelectQueryReturningDataReader(SQL)
+            If report.ErrorMessage.Length <> 0 Then
+                Throw New ApplicationException(report.ErrorMessage)
+            End If
+
+            result = Me.GetReservedCategoryDic(report.ReturnedIDatareader)
+        Catch ex As Exception
+            Throw New ApplicationException(ex.Message)
+        End Try
+
+        Return result
+    End Function
+
+    Private Function GetReservedCategoryDic(ByVal dr As IDataReader) As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)
+        Try
+            While dr.Read()
+                With dr
+                    Dim key As String = CStr(Trim(.Item("reserve_category_code")))
+                    Dim val As String = CStr(Trim(If(IsDBNull(.Item("reserve_category_name")), "N/A", .Item("reserve_category_name"))))
+                    If Not result.ContainsKey(key) Then
+                        result.Add(key, val)
+                    End If
+                End With
+            End While
+        Catch ex As ApplicationException
+            Throw New ApplicationException(ex.Message)
+        Finally
+            If Not dr.IsClosed Then
+                dr.Close()
+            End If
+        End Try
+        Return result
+    End Function
+#End Region
+
 #Region "Get List of STL RUn"
     Public Function GetListSTLRun(ByVal bpNo As Integer) As List(Of String)
         Dim ret As New List(Of String)
         Dim report As New DataReport
 
         Try
-            Dim SQL As String = "SELECT DISTINCT STL_RUN, TO_NUMBER(REPLACE(STL_RUN, 'F','')) AS SEQ_STL_RUN FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD =  " & bpNo & " ORDER BY SEQ_STL_RUN DESC"
+            Dim SQL As String = "SELECT DISTINCT STL_RUN, TO_NUMBER(REGEXP_REPLACE(STL_RUN, 'F|R','')) AS SEQ_STL_RUN FROM AM_WESM_ALLOC_COVER_SUMMARY WHERE BILLING_PERIOD =  " & bpNo & " ORDER BY SEQ_STL_RUN DESC"
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
                 Throw New ApplicationException(report.ErrorMessage)
@@ -205,6 +274,10 @@ Public Class WESMBillTransSummaryPrintHelper
                     item.MarketFeesRate = CDec(.Item("MARKET_FEES_RATE"))
                     item.Remarks = CStr(.Item("REMARKS"))
                     item.GenXAmount = CStr(.Item("GENX_AMT"))
+                    item.ASNonPayment = CDec(.Item("AS_NONPAYMENT"))
+                    item.ReserveCategory = CStr(.Item("RESERVE_CATEGORY"))
+                    item.ReserveAmountAdj = CDec(.Item("RESERVE_AMOUNT_ADJ"))
+                    item.Region = CStr(.Item("REGION"))
                     item.ListWBAllocDisDetails = GetWBAllocDisDetails(CLng(.Item("SUMMARY_ID")))
                     result.Add(item)
                 End With
@@ -340,6 +413,14 @@ Public Class WESMBillTransSummaryPrintHelper
             rowMain("MARKET_FEES_RATE") = .MarketFeesRate
             rowMain("REMARKS") = .Remarks
             rowMain("GENX_AMOUNT") = .GenXAmount
+            'Add for Reserve Trans Alloc
+            If stlRun.Contains("R") Then
+                rowMain("AS_NONPAYMENT") = .ASNonPayment
+                rowMain("RESERVE_CATEGORY") = ReserveCategoryDic.Item(.ReserveCategory)
+                rowMain("RES_AMOUNT_ADJ") = .ReserveAmountAdj
+                rowMain("REGION") = .Region
+            End If
+
             dtableCover.Rows.Add(rowMain)
             dtableCover.AcceptChanges()
             Dim counter As Integer = 0
@@ -350,7 +431,7 @@ Public Class WESMBillTransSummaryPrintHelper
                 rowDtl("FULL_NAME") = participantInfo.FullName
                 rowDtl("BILLING_ID") = dtl.BillingID
                 rowDtl("STL_ID") = If(dtl.STLID.Length = 0, "", dtl.STLID)
-                rowDtl("FACILITY_TYPE") = If(dtl.FacilityType.Contains("LOAD"), "LOAD", "GEN")
+                rowDtl("FACILITY_TYPE") = dtl.FacilityType
                 rowDtl("WHT_TAG") = dtl.WHTTag
                 rowDtl("ITH_TAG") = dtl.ITHTag
                 rowDtl("NON_VATABLE_TAG") = dtl.NonVatableTag

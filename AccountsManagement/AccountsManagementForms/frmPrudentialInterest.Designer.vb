@@ -304,7 +304,6 @@ Partial Class frmPrudentialInterest
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1094, 512)
-        Me.ControlBox = False
         Me.Controls.Add(Me.btnSummaryReport)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.btnSearch)
@@ -320,6 +319,7 @@ Partial Class frmPrudentialInterest
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPrudentialInterest"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Interest"

@@ -10,7 +10,7 @@ Imports System.Threading
 
 
 Public Class frmWHVATCertificateSTLMgt
-    Private _WHVatCertSTLHelper As New WHVATCertificateSTLHelper
+    Private _WHVCSHelper As WHVATCertificateSTLHelper
     Private cts As CancellationTokenSource
     Private stopWatch As New Diagnostics.Stopwatch
     Private newProgress As New ProgressClass
@@ -18,6 +18,7 @@ Public Class frmWHVATCertificateSTLMgt
     Private Sub frmWHVatCertificatesSTLMgt_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MdiParent = MainForm
         Me.DGridViewCollection.Rows.Clear()
+        Me._WHVCSHelper = New WHVATCertificateSTLHelper
     End Sub
 
     Private Sub UpdateProgress(_ProgressMsg As ProgressClass)
@@ -33,31 +34,32 @@ Public Class frmWHVATCertificateSTLMgt
 
             Dim frmWTCertColTag As New frmWHVATCertificateSTLDetails
             With frmWTCertColTag
-                ._WHVatCertSTLHelper = _WHVatCertSTLHelper
+                ._WHVCSHelper = _WHVCSHelper
                 .TabControl1.TabPages(1).Hide()
                 .ShowDialog()
             End With
 
-            If _WHVatCertSTLHelper.NewWHVatCertSTL Is Nothing Then
+            Dim addedWHVATCertif As WHVATCertificateSTL = _WHVCSHelper.NewWHVATCertifStl
+            If addedWHVATCertif Is Nothing Then
                 ProgressThread.Close()
                 MessageBox.Show("No added data!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
 
-            If _WHVatCertSTLHelper.NewWHVatCertSTL.CertificateNo = 0 Then
+            If addedWHVATCertif.CertificateNo = 0 Then
                 ProgressThread.Close()
                 MessageBox.Show("Data is not save!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
 
             With DGridViewCollection
-                .Rows.Add(_WHVatCertSTLHelper.NewWHVATCertSTL.CertificateNo.ToString("d7"),
-                          _WHVatCertSTLHelper.NewWHVATCertSTL.RemittanceDate.ToString("MM/dd/yyyy"),
-                          _WHVatCertSTLHelper.NewWHVATCertSTL.BillingIDNumber.IDNumber,
-                          FormatNumber(_WHVatCertSTLHelper.NewWHVATCertSTL.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
+                .Rows.Add(addedWHVATCertif.CertificateNo.ToString("d7"),
+                          addedWHVATCertif.RemittanceDate.ToString("MM/dd/yyyy"),
+                          addedWHVATCertif.BillingIDNumber.IDNumber,
+                          FormatNumber(addedWHVATCertif.CollectedAmount.ToString("0.00"), UseParensForNegativeNumbers:=TriState.True))
                 .RowsDefaultCellStyle.ForeColor = Drawing.Color.Black
             End With
-            _WHVatCertSTLHelper.NewWHVatCertSTL = New WHVATCertificateSTL
+            '_WHVCSHelper._NewWHVATCertifStl = New WHVATCertificateSTL
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
@@ -84,7 +86,7 @@ Public Class frmWHVATCertificateSTLMgt
             ProgressThread.Show("Please wait while loding...")
             Dim frmWTCertColTag As New frmWHVATCertificateSTLDetails
             With frmWTCertColTag
-                ._WHVatCertSTLHelper = _WHVatCertSTLHelper
+                ._WHVCSHelper = _WHVCSHelper
                 ._ViewCertificate = True
                 ._CertificateNo = certifNo
                 ProgressThread.Close()
@@ -101,12 +103,23 @@ Public Class frmWHVATCertificateSTLMgt
             Me.gbMenu1.Enabled = False
             Me.gbMenu2.Enabled = False
             Me.chkbox_SelectAll.Enabled = False
-            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
 
+            Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
+            Dim listofCertNo As List(Of Long) = New List(Of Long)
             Dim rowCounter As Integer = 0
+
+            Dim remittanceDateDic As New Dictionary(Of Date, Date)
             For Each row As DataGridViewRow In DGridViewCollection.Rows
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
                     rowCounter += 1
+
+                    Dim remittanceDate As Date = CDate(row.Cells("colRemittanceDate").Value)
+                    Dim certificateNo As Long = CLng(row.Cells("colCertificateNo").Value)
+                    listofCertNo.Add(certificateNo)
+
+                    If remittanceDateDic.ContainsKey(remittanceDate) Then
+                        remittanceDateDic.Add(remittanceDate, remittanceDate)
+                    End If
                 End If
             Next
 
@@ -115,12 +128,16 @@ Public Class frmWHVATCertificateSTLMgt
                 Exit Sub
             End If
 
-            Dim ask = MessageBox.Show("Do you really want to allocate to AP?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If remittanceDateDic.Count > 1 Then
+                MessageBox.Show("Multiple remittance dates are not permitted to allocate!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            Dim ask = MessageBox.Show("Do you really want to allocate the selected Withholding VAT Certificate/s?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             If ask = DialogResult.No Then
                 Exit Sub
             End If
 
-            Dim getListOfRemittanceDate As New Date
             Dim getTimeStart As New DateTime
             Dim getTimeEnd As New DateTime
             getTimeStart = DateTime.Now()
@@ -132,28 +149,21 @@ Public Class frmWHVATCertificateSTLMgt
             newProgress = New ProgressClass With {.ProgressMsg = "Please wait while preparing."}
             UpdateProgress(newProgress)
 
+            Await Task.Run(Sub() _WHVCSHelper.AllocateListOfTaggedWHVATCertAsync(listofCertNo, remittanceDateDic.Keys.First(), progressIndicator, cts.Token))
+            Await Task.Run(Sub() _WHVCSHelper.SaveSTLNoticeAsync(remittanceDateDic.Keys.First(), progressIndicator, cts.Token))
+
             For Each row As DataGridViewRow In DGridViewCollection.Rows
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
-                    Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
-                    getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
-
-                    newProgress = New ProgressClass With {.ProgressMsg = "Allocating Certificate No:" & certifNo.ToString("N0")}
-                    UpdateProgress(newProgress)
-
-                    Await Task.Run(Sub() _WHVatCertSTLHelper.SaveAllocatedToAp(certifNo, progressIndicator, cts.Token))
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If
             Next
 
-            Await Task.Run(Sub() _WHVatCertSTLHelper.SaveSTLNoticeNew(getListOfRemittanceDate, progressIndicator, cts.Token))
             getTimeEnd = DateTime.Now()
-            cts = Nothing
-
             ProgressThread.Close()
             MessageBox.Show("The processed data have been successfully allocated and saved." & vbNewLine _
-                                & "Date Time Start: " & getTimeStart.ToString("MM/dd/yyyy hh:mm") & vbNewLine _
-                                & "Date Time End: " & getTimeEnd.ToString("MM/dd/yyyy hh:mm"), "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          & "Date Time Start: " & getTimeStart.ToString("MM/dd/yyyy hh:mm") & vbNewLine _
+                          & "Date Time End: " & getTimeEnd.ToString("MM/dd/yyyy hh:mm"), "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As OperationCanceledException
             newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled as requested."}
@@ -212,7 +222,7 @@ Public Class frmWHVATCertificateSTLMgt
                 If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colUntag").Value) = True Then
                     Dim certifNo As Long = CLng(row.Cells("colCertificateNo").Value)
                     getListOfRemittanceDate = CDate(row.Cells("colRemittanceDate").Value)
-                    Await Task.Run(Sub() _WHVatCertSTLHelper.UntagEWTSelected(certifNo, progressIndicator, cts.Token))
+                    Await Task.Run(Sub() _WHVCSHelper.UntagEWTSelected(certifNo, progressIndicator, cts.Token))
                     row.DefaultCellStyle.ForeColor = Drawing.Color.Red
                     row.ReadOnly = True
                 End If
@@ -241,7 +251,7 @@ Public Class frmWHVATCertificateSTLMgt
         End If
     End Sub
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+    Private Async Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         Try
             MainPanel.Enabled = False
             newProgress = New ProgressClass With {.ProgressMsg = "Please wait while searching..."}
@@ -251,9 +261,10 @@ Public Class frmWHVATCertificateSTLMgt
             Dim notAllocated As Boolean = CBool(chkbox_Allocated.Checked)
             Dim notUntagged As Boolean = CBool(chkbox_Untagged.Checked)
 
-            _WHVatCertSTLHelper.SearchByDateRangeForWHVATCertCollection(dateFrom, dateTo, notAllocated, notUntagged)
-            If _WHVatCertSTLHelper.ViewListOfWHVATCertSTL.Count <> 0 Then
-                PutDataInDisplayGrid(_WHVatCertSTLHelper.ViewListOfWHVATCertSTL)
+            Dim listofWHVATCert As List(Of WHVATCertificateSTL) = Await _WHVCSHelper.GetListOfWHVATCertAsync(dateFrom, dateTo, notAllocated, notUntagged)
+
+            If listofWHVATCert.Count <> 0 Then
+                PutDataInDisplayGrid(listofWHVATCert)
             Else
                 MessageBox.Show("No available data found!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -292,4 +303,48 @@ Public Class frmWHVATCertificateSTLMgt
         Next
     End Sub
 
+    Private Sub chkbox_SelectAll_CheckedChanged(sender As Object, e As EventArgs) Handles chkbox_SelectAll.CheckedChanged
+        If chkbox_SelectAll.Checked = True Then
+            Dim rowCounter As Integer = 0
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = False Then
+                    rowCounter += 1
+                End If
+            Next
+
+            If rowCounter = 0 Then
+                MessageBox.Show("No available row to check!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            Dim ask = MessageBox.Show("Do you really want to check all?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If ask = DialogResult.No Then
+                Exit Sub
+            End If
+
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = False Then
+                    row.Cells("colAllocatedToAP").Value = True
+                End If
+            Next
+        Else
+            Dim rowCounter As Integer = 0
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
+                    rowCounter += 1
+                End If
+            Next
+
+            If rowCounter = 0 Then
+                MessageBox.Show("No available row to uncheck!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            For Each row As DataGridViewRow In DGridViewCollection.Rows
+                If row.DefaultCellStyle.ForeColor = Drawing.Color.Black And CBool(row.Cells("colAllocatedToAP").Value) = True Then
+                    row.Cells("colAllocatedToAP").Value = False
+                End If
+            Next
+        End If
+    End Sub
 End Class

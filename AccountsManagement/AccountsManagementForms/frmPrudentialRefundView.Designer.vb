@@ -257,7 +257,6 @@ Partial Class frmPrudentialRefundView
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1121, 434)
-        Me.ControlBox = False
         Me.Controls.Add(Me.DGridViewPrudential)
         Me.Controls.Add(Me.GB_Allocation)
         Me.Controls.Add(Me.btnGenerateFTF)
@@ -267,6 +266,8 @@ Partial Class frmPrudentialRefundView
         Me.Controls.Add(Me.btnJVSetup)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPrudentialRefundView"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Prudential Refund View"

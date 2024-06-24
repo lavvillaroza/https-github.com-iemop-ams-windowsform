@@ -90,7 +90,7 @@ Public Class frmExportWTASummary
         xlWorkBook = xlApp.Workbooks.Add()
 
         Dim WESMBillSummaryHeader1 As Object(,) = New Object(,) {}
-        ReDim WESMBillSummaryHeader1(1, 27)
+        ReDim WESMBillSummaryHeader1(1, 31)
         WESMBillSummaryHeader1(1, 0) = "SUMMARY_ID"
         WESMBillSummaryHeader1(1, 1) = "STL_RUN"
         WESMBillSummaryHeader1(1, 2) = "BILLING_PERIOD"
@@ -119,6 +119,11 @@ Public Class frmExportWTASummary
         WESMBillSummaryHeader1(1, 25) = "GMR"
         WESMBillSummaryHeader1(1, 26) = "GENX_AMT"
         WESMBillSummaryHeader1(1, 27) = "REMARKS"
+        WESMBillSummaryHeader1(1, 28) = "RESERVE_CATEGORY"
+        WESMBillSummaryHeader1(1, 29) = "AS_NONPAYMENT"
+        WESMBillSummaryHeader1(1, 30) = "RESERVE_AMOUNT_ADJ"
+        WESMBillSummaryHeader1(1, 31) = "REGION"
+
 
         'WESM Transaction Allocation Cover Summary sheets
         xlWorkSheet1 = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
@@ -201,7 +206,7 @@ Public Class frmExportWTASummary
         Dim RowCount As Integer = wESMTransAllocList.Count()
 
         Dim WBSArr As Object(,) = New Object(,) {}
-        ReDim WBSArr(RowCount, 27)
+        ReDim WBSArr(RowCount, 31)
 
         For Each item In wESMTransAllocList
             Dim getWTACSummary As WESMBillAllocCoverSummary = item
@@ -233,6 +238,10 @@ Public Class frmExportWTASummary
             WBSArr(RowIndex, 25) = getWTACSummary.GMR
             WBSArr(RowIndex, 26) = getWTACSummary.GenXAmount
             WBSArr(RowIndex, 27) = getWTACSummary.Remarks
+            WBSArr(RowIndex, 28) = getWTACSummary.ReserveCategory
+            WBSArr(RowIndex, 29) = getWTACSummary.ASNonPayment
+            WBSArr(RowIndex, 30) = getWTACSummary.ReserveAmountAdj
+            WBSArr(RowIndex, 31) = getWTACSummary.Region
             RowIndex += 1
         Next
         ret = WBSArr

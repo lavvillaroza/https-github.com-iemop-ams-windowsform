@@ -123,7 +123,7 @@ Partial Class frmImportWESMBillFlatfile
         Me.MinimumSize = New System.Drawing.Size(398, 136)
         Me.Name = "frmImportWESMBillFlatfile"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Upload WESM Bills Transaction Summary"
+        Me.Text = "Upload WESM And Reserve Bill From Flat File (Market Fees Final)"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)

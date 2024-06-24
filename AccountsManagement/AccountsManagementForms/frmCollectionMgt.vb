@@ -96,6 +96,8 @@ Public Class frmCollectionMgt
     Private itemCollectionMonitoring As CollectionMonitoring
     Private panelHeight As Integer
     Private checkAllBox As Boolean = False
+    Private _WTAInstallmentHelper As WTAInstallmentHelper
+    Private _listofWTAInstallment As List(Of WTAInstallment)
     Private Enum EnumORRemarks
         Energy
         VATonEnergy
@@ -108,6 +110,8 @@ Public Class frmCollectionMgt
 
     Private Sub frmCollectionMgt_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
+            _WTAInstallmentHelper = New WTAInstallmentHelper
+            _listofWTAInstallment = New List(Of WTAInstallment)
             WBillHelper = WESMBillHelper.GetInstance()
             WBillHelper.ConnectionString = AMModule.ConnectionString
             WBillHelper.UserName = AMModule.UserName
@@ -492,7 +496,7 @@ Public Class frmCollectionMgt
 
             'Get the WESM Bill Summary for collection
             Dim items = WBillHelper.GetWESMBillSummaryForCollectionAllocation(PaidTo)
-            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-W") And Not c.INVDMCMNo.ToUpper Like "*-ADJ*").OrderBy(Function(z) z.INVDMCMNo).
+            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-") And Not c.INVDMCMNo.ToUpper Like "*-ADJ*").OrderBy(Function(z) z.INVDMCMNo).
                                                                   Select(Function(x) x.INVDMCMNo).Distinct.ToList
 
             If getListofInvoiceForBIRRuling.Count <> 0 Then
@@ -1375,7 +1379,7 @@ Public Class frmCollectionMgt
         If e.NewValue = CheckState.Checked Then
             'Get the WESM Bill Summary for collection
             Dim items = WBillHelper.GetWESMBillSummaryForCollectionAllocation(PaidTo)
-            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-W")).OrderBy(Function(z) z.INVDMCMNo).Select(Function(x) x.INVDMCMNo).Distinct.ToList
+            Dim getListofInvoiceForBIRRuling As List(Of String) = items.Where(Function(c) c.INVDMCMNo.StartsWith("TS-")).OrderBy(Function(z) z.INVDMCMNo).Select(Function(x) x.INVDMCMNo).Distinct.ToList
 
             If getListofInvoiceForBIRRuling.Count <> 0 Then
                 Dim transItems = WBillHelper.GetListWESMTransCoverSummary2(getListofInvoiceForBIRRuling)
@@ -1692,13 +1696,15 @@ Public Class frmCollectionMgt
 
             If selectedDay >= 25 And selectedDay <= 31 And CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) <> CDate(SystemDate.ToString("MM/dd/yyyy")) Then
                 ans = MsgBox("Do you really want to apply this as advanced collecion?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Save")
-
                 If ans = MsgBoxResult.No Then
                     Exit Function
                 End If
             ElseIf selectedDay < 25 And CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) > CDate(SystemDate.ToString("MM/dd/yyyy")) Then
-                MsgBox("Collection date must not be later than date today!", MsgBoxStyle.Critical, "Invalid")
-                Exit Function
+                'MsgBox("Collection date must not be later than date today!", MsgBoxStyle.Critical, "Invalid")
+                ans = MsgBox("Do you really want to apply this as advanced collecion?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Save")
+                If ans = MsgBoxResult.No Then
+                    Exit Function
+                End If
             End If
 
             'If CDate(Me.DTCollection.Value.ToString("MM/dd/yyyy")) > CDate(SystemDate.ToString("MM/dd/yyyy")) Then
@@ -1810,16 +1816,34 @@ Public Class frmCollectionMgt
             With item
                 Select Case .x.ChargeType
                     Case EnumChargeType.E
-
                         chargeType = "Energy"
                         computedEndingBalance = Math.Abs(.x.EndingBalance - .x.EnergyWithhold)
 
                         If item.x.NoDefInt = True Then
                             defaultInterestAmount = 0
                         Else
-                            defaultInterestAmount = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
-                                                                                               CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
-                                                                                               computedEndingBalance, interestRate), 2)
+                            'Newly added by LAVV as of 06/19/2024 for installment computation of default interest
+
+                            If .x.INVDMCMNo.Contains("TS-") Then
+                                Dim _WTAInstallment As WTAInstallment = _WTAInstallmentHelper.GetWTAInstallmentByWBSNoAsync(.x.WESMBillSummaryNo).Result()
+                                If _WTAInstallment Is Nothing Then
+                                    defaultInterestAmount = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
+                                                                                                   CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                                                                   computedEndingBalance, interestRate), 2)
+                                Else
+                                    _listofWTAInstallment.Add(_WTAInstallment)
+                                    For Each term In _WTAInstallment.ListofWTAInstallmentTerm
+                                        Dim termDefaultInterestAmount As Decimal = 0D
+                                        Dim computedTermEndingAmount As Decimal = Math.Abs(term.TermAmount - term.PaidAmount)
+                                        If computedTermEndingAmount <> 0 Then
+                                            termDefaultInterestAmount = Math.Round(BFactory.ComputeDefaultInterest(term.TermDueDate, term.TermNewDueDate,
+                                                                                                   CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                                                                   computedTermEndingAmount, interestRate), 2)
+                                            defaultInterestAmount += termDefaultInterestAmount
+                                        End If
+                                    Next
+                                End If
+                            End If
                         End If
 
                         EnergyWithhold = .x.EnergyWithhold
@@ -1839,6 +1863,14 @@ Public Class frmCollectionMgt
                         chargeType = "VatOnEnergy"
                         EnergyWithhold = 0D
                         totalPayable = Math.Abs(.x.EndingBalance)
+
+                        'Newly added by LAVV as of 06/19/2024 for installment computation of default interest                        
+                        If .x.INVDMCMNo.Contains("TS-") Then
+                            Dim _WTAInstallment As WTAInstallment = _WTAInstallmentHelper.GetWTAInstallmentByWBSNoAsync(.x.WESMBillSummaryNo).Result()
+                            If Not _WTAInstallment Is Nothing Then
+                                _listofWTAInstallment.Add(_WTAInstallment)
+                            End If
+                        End If
 
                         'Format the Invoice Number and DMCM
                         If .x.SummaryType = EnumSummaryType.INV Or .x.SummaryType = EnumSummaryType.SPA Or .x.INVDMCMNo.Length > 15 Then
@@ -2069,7 +2101,7 @@ Public Class frmCollectionMgt
         End If
     End Sub
 
-    Private Function SaveManualCollection(ByVal IDNumber As String, ByRef listCollections As List(Of Collection), _
+    Private Function SaveManualCollection(ByVal IDNumber As String, ByRef listCollections As List(Of Collection),
                                           ByVal allocationDateValue As Date) As Boolean
         Dim listColAllocationCash As New List(Of CollectionAllocation)
         Dim listColAllocationDrawdown As New List(Of CollectionAllocation)
@@ -2079,6 +2111,9 @@ Public Class frmCollectionMgt
         Dim itemCollection As Collection
         Dim PRCollectionNo As Long
 
+        Dim listofWTAInstallmentHis As New List(Of WTAInstallmentHistory) 'Added by LAVV as of 06/19/2024
+        Dim listofWTAInstallment As New List(Of WTAInstallment) 'Added by LAVV as of 06/19/2024
+
         'Clone property ListWESMBillSummaries
         listWesmBillSummariesClone = CType(BFactory.CloneObject(Me.ListWESMBillSummaries), List(Of WESMBillSummary))
 
@@ -2086,7 +2121,7 @@ Public Class frmCollectionMgt
         PRCollectionNo = itemCollection.CollectionNumber + 1
 
         For index As Integer = 0 To Me.DGridView.Rows.Count - 1
-            If CDec(Me.DGridView.Rows(index).Cells("colCash").Value) = 0 And _
+            If CDec(Me.DGridView.Rows(index).Cells("colCash").Value) = 0 And
                CDec(Me.DGridView.Rows(index).Cells("colDrawdown").Value) = 0 Then
 
                 Continue For
@@ -2123,7 +2158,7 @@ Public Class frmCollectionMgt
 
             'Get the values of the variables
             With Me.DGridView.Rows(index)
-                chargeType = CType(System.Enum.Parse(GetType(EnumChargeType), _
+                chargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                  CStr(.Cells("colChargeType").Value)), EnumChargeType)
                 wbSummaryNo1 = CLng(.Cells("colWBSummaryNo1").Value)
                 wbSummaryNo2 = CLng(.Cells("colWBSummaryNo2").Value)
@@ -2149,21 +2184,21 @@ Public Class frmCollectionMgt
                     End With
 
                     'Check if the applied amount is equal to the distributed amount
-                    If totalCashPerItem + totalDrawdownPerItem <> defaultMF + defaultMFV + defaultWithholdTax + defaultWithholdVat + _
+                    If totalCashPerItem + totalDrawdownPerItem <> defaultMF + defaultMFV + defaultWithholdTax + defaultWithholdVat +
                                                                   MFValue + MFVValue + WithholdTaxOnMF + WithholdVatOnMF Then
-                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " & _
+                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " &
                                                        "is not equal to the specified cash and drawdown amount!")
 
                     End If
 
                     'Get the WESM Bill Summary of Market Fees
                     If wbSummaryNo1 <> 0 Then
-                        itemWESMBillSummary1 = (From x In listWesmBillSummariesClone _
-                                                Where x.WESMBillSummaryNo = wbSummaryNo1 _
+                        itemWESMBillSummary1 = (From x In listWesmBillSummariesClone
+                                                Where x.WESMBillSummaryNo = wbSummaryNo1
                                                 Select x).First()
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.MarketFees.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.MarketFees.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2174,12 +2209,12 @@ Public Class frmCollectionMgt
 
                     'Get the WESM Bill Summary of VAT on Market Fees
                     If wbSummaryNo2 <> 0 Then
-                        itemWESMBillSummary2 = (From x In listWesmBillSummariesClone _
-                                                Where x.WESMBillSummaryNo = wbSummaryNo2 _
+                        itemWESMBillSummary2 = (From x In listWesmBillSummariesClone
+                                                Where x.WESMBillSummaryNo = wbSummaryNo2
                                                 Select x).First()
 
                         If itemWESMBillSummary2.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.VatOnMarketFees.ToString() & "-Get " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.VatOnMarketFees.ToString() & "-Get " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " &
                                                  itemWESMBillSummary2.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2187,8 +2222,6 @@ Public Class frmCollectionMgt
                             Throw New ApplicationException("Ending balance becomes positive, contact administrator")
                         End If
                     End If
-
-
 
                     'For Default Interest on Withholding Tax on Market Fees
                     If defaultWithholdTax <> 0 Then
@@ -2243,7 +2276,7 @@ Public Class frmCollectionMgt
                         End With
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.DefaultInterestOnMF.ToString() & " " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.DefaultInterestOnMF.ToString() & " " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2271,7 +2304,7 @@ Public Class frmCollectionMgt
                             .EndingBalance = defaultMFV
                             .DueDate = newDueDate
                             .AllocationDate = allocationDateValue
-                            .CollectionType = EnumCollectionType.WithholdingVatonDefaultInterest
+                            .CollectionType = EnumCollectionType.WithholdingVatOnDefaultInterest
 
                             If newDueDate > CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) Then
                                 .NewDueDate = newDueDate
@@ -2310,7 +2343,7 @@ Public Class frmCollectionMgt
                         End With
 
                         If itemWESMBillSummary2.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.DefaultInterestOnVatOnMF.ToString() & " " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.DefaultInterestOnVatOnMF.ToString() & " " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary2.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2390,7 +2423,7 @@ Public Class frmCollectionMgt
                         End With
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.MarketFees.ToString() & " " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.MarketFees.ToString() & " " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString() & " " & MFValue.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2503,7 +2536,7 @@ Public Class frmCollectionMgt
                         itemWESMBillSummary2.EndingBalance = itemWESMBillSummary2.EndingBalance + MFVValue
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.VatOnMarketFees.ToString() & " " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.VatOnMarketFees.ToString() & " " & itemWESMBillSummary2.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary2.EndingBalance.ToString() & " " & MFVValue.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2538,6 +2571,7 @@ Public Class frmCollectionMgt
                     'Check if the applied amount is equal to the distributed amount
                     Dim TotalTagAmount As Decimal = 0D
 
+
                     If WithholdTaxOnEnergy < 0 Then
                         TotalTagAmount = defaultCashEnergy + cashEnergyVAT + defaultDrawdownEnergy + drawdownEnergy
                     Else
@@ -2545,18 +2579,18 @@ Public Class frmCollectionMgt
                     End If
 
                     If (totalCashPerItem + totalDrawdownPerItem) <> TotalTagAmount Then
-                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " & _
+                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " &
                                                        "is not equal to the specified cash and drawdown amount!")
 
                     End If
 
                     'Get the WESM Bill Summary of Market Fees
-                    itemWESMBillSummary1 = (From x In listWesmBillSummariesClone _
-                                            Where x.WESMBillSummaryNo = wbSummaryNo1 _
+                    itemWESMBillSummary1 = (From x In listWesmBillSummariesClone
+                                            Where x.WESMBillSummaryNo = wbSummaryNo1
                                             Select x).First()
 
                     If itemWESMBillSummary1.EndingBalance > 0 Then
-                        Dim logs As String = EnumCollectionType.Energy.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                        Dim logs As String = EnumCollectionType.Energy.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                              itemWESMBillSummary1.EndingBalance.ToString()
 
                         BFactory.SaveLogFile(logs)
@@ -2590,7 +2624,7 @@ Public Class frmCollectionMgt
                         End With
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.DefaultInterestOnEnergy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.DefaultInterestOnEnergy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2673,12 +2707,11 @@ Public Class frmCollectionMgt
                             End If
                         End With
 
-
                         'Update the WESMBillSummary EndingBalance
                         itemWESMBillSummary1.EndingBalance = itemWESMBillSummary1.EndingBalance + (cashEnergyVAT)
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.Energy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.Energy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString() & " " & cashEnergyVAT.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2723,7 +2756,7 @@ Public Class frmCollectionMgt
                         End With
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.DefaultInterestOnEnergy.ToString() & "-Drawdown " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.DefaultInterestOnEnergy.ToString() & "-Drawdown " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2775,7 +2808,7 @@ Public Class frmCollectionMgt
                         itemWESMBillSummary1.EndingBalance = itemWESMBillSummary1.EndingBalance + drawdownEnergy
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.Energy.ToString() & "-Drawdown " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.Energy.ToString() & "-Drawdown " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                   itemWESMBillSummary1.EndingBalance.ToString() & " " & drawdownEnergy.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2793,6 +2826,102 @@ Public Class frmCollectionMgt
                         listColAllocationDrawdown.Add(itemColAlloc)
                     End If
 
+                    'Added by LAVV as of 06/19/2024                    
+                    Dim getWTAInstallmentByWBSNo As WTAInstallment = _listofWTAInstallment.Where(Function(x) x.WESMBillSummaryNo = wbSummaryNo1).FirstOrDefault
+                    Dim cashPaidAmount As Decimal = cashEnergyVAT
+                    Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
+                    If (defaultCashEnergy <> 0 And cashEnergyVAT <> 0) Or (defaultDrawdownEnergy <> 0 And drawdownEnergy <> 0) Then
+                        If Not getWTAInstallmentByWBSNo Is Nothing Then
+                            For Each term In getWTAInstallmentByWBSNo.ListofWTAInstallmentTerm.OrderBy(Function(x) x.Term)
+                                Dim computedTermEndingAmount As Decimal = Math.Abs(term.TermAmount - term.PaidAmount)
+                                Dim computeDefault As Decimal = 0D
+                                Dim WTAInstallmentHis As New WTAInstallmentHistory
+
+                                If computedTermEndingAmount = 0 Then
+                                    Continue For
+                                End If
+
+                                If cashPaidAmount = 0 Then
+                                    Exit For
+                                End If
+
+                                If term.TermDueDate = term.TermNewDueDate And newDueDate > term.TermNewDueDate Then
+                                    computeDefault = Math.Round(BFactory.ComputeDefaultInterest(term.TermDueDate, term.TermNewDueDate,
+                                                                                               CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                                                               computedTermEndingAmount, interestRate), 2)
+                                End If
+                                If cashPaidAmount > computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = computedTermEndingAmount
+                                        .DefaultAmount = computeDefault
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= computedTermEndingAmount
+                                ElseIf cashPaidAmount <= computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = cashPaidAmount
+                                        .DefaultAmount = computeDefault
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= cashPaidAmount
+                                End If
+                            Next
+                            listofWTAInstallment.Add(getWTAInstallmentByWBSNo)
+                        End If
+                    ElseIf (defaultCashEnergy = 0 And cashEnergyVAT <> 0) Or (defaultDrawdownEnergy = 0 And drawdownEnergy <> 0) Then
+                        If Not getWTAInstallmentByWBSNo Is Nothing Then
+                            For Each term In getWTAInstallmentByWBSNo.ListofWTAInstallmentTerm.OrderBy(Function(x) x.Term)
+                                Dim computedTermEndingAmount As Decimal = Math.Abs(term.TermAmount - term.PaidAmount)
+                                Dim WTAInstallmentHis As New WTAInstallmentHistory
+
+                                If computedTermEndingAmount = 0 Then
+                                    Continue For
+                                End If
+
+                                If cashPaidAmount = 0 Then
+                                    Exit For
+                                End If
+
+                                If cashPaidAmount > computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = computedTermEndingAmount
+                                        .DefaultAmount = 0D
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= computedTermEndingAmount
+                                ElseIf cashPaidAmount <= computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = cashPaidAmount
+                                        .DefaultAmount = 0D
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= cashPaidAmount
+                                End If
+                            Next
+                            listofWTAInstallment.Add(getWTAInstallmentByWBSNo)
+                        End If
+                    End If
+                    'ÉND
                 Case EnumChargeType.EV
                     'Lance Added 09212016
                     With Me.DGridView.Rows(index)
@@ -2802,18 +2931,18 @@ Public Class frmCollectionMgt
 
                     'Check if the applied amount is equal to the distributed amount
                     If totalCashPerItem + totalDrawdownPerItem <> cashEnergyVAT Then
-                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " & _
+                        Throw New ApplicationException("The allocated amount for " & CStr(Me.DGridView.Rows(index).Cells("colInvDMCMNoText").Value) & " " &
                                                        "is not equal to the specified cash and drawdown amount!")
 
                     End If
 
                     'Get the WESM Bill Summary of Market Fees
-                    itemWESMBillSummary1 = (From x In listWesmBillSummariesClone _
-                                            Where x.WESMBillSummaryNo = wbSummaryNo1 _
+                    itemWESMBillSummary1 = (From x In listWesmBillSummariesClone
+                                            Where x.WESMBillSummaryNo = wbSummaryNo1
                                             Select x).First()
 
                     If itemWESMBillSummary1.EndingBalance > 0 Then
-                        Dim logs As String = EnumCollectionType.Energy.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                        Dim logs As String = EnumCollectionType.Energy.ToString() & "-Get " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                              itemWESMBillSummary1.EndingBalance.ToString()
 
                         BFactory.SaveLogFile(logs)
@@ -2848,7 +2977,7 @@ Public Class frmCollectionMgt
 
 
                         If itemWESMBillSummary1.EndingBalance > 0 Then
-                            Dim logs As String = EnumCollectionType.VatOnEnergy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " & _
+                            Dim logs As String = EnumCollectionType.VatOnEnergy.ToString() & "-Cash " & itemWESMBillSummary1.WESMBillSummaryNo.ToString() & " " &
                                                  itemWESMBillSummary1.EndingBalance.ToString() & " " & cashEnergyVAT.ToString()
 
                             BFactory.SaveLogFile(logs)
@@ -2921,12 +3050,12 @@ Public Class frmCollectionMgt
 
 
         If totalDrawdown > 0 Then
-            listPRHistory.Add(New PrudentialHistory(0, New AMParticipants(IDNumber), totalDrawdown, EnumPrudentialTransType.Drawdown, _
+            listPRHistory.Add(New PrudentialHistory(0, New AMParticipants(IDNumber), totalDrawdown, EnumPrudentialTransType.Drawdown,
                                                     CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)), "", 1))
         End If
 
-        Dim participant = (From x In Me.Participants _
-                           Where x.IDNumber = itemCollection.IDNumber _
+        Dim participant = (From x In Me.Participants
+                           Where x.IDNumber = itemCollection.IDNumber
                            Select x).First()
 
         'Generation of the transfering of Excess Collection
@@ -2934,9 +3063,9 @@ Public Class frmCollectionMgt
 
         If (totalExcess > 0 And totalCash <> 0) Or (totalExcess > 0 And CDec(Me.txtAmountCollected.Text) <> 0) Then
             With itemCollection
-                listCollectionMonitoring.Add(New CollectionMonitoring(0, "", .CollectionNumber, allocationDateValue, _
-                                                                      EnumAllocationType.Manual, participant, .ORNo, _
-                                                                      totalExcess, EnumCollectionMonitoringType.TransferToExcessCollection, _
+                listCollectionMonitoring.Add(New CollectionMonitoring(0, "", .CollectionNumber, allocationDateValue,
+                                                                      EnumAllocationType.Manual, participant, .ORNo,
+                                                                      totalExcess, EnumCollectionMonitoringType.TransferToExcessCollection,
                                                                       EnumStatus.Active))
             End With
 
@@ -2956,15 +3085,15 @@ Public Class frmCollectionMgt
 
         'Generate the collection monitoring for drawdown
         If totalDrawdown > 0 Then
-            listCollectionMonitoring.Add(New CollectionMonitoring(0, "", PRCollectionNo, allocationDateValue, _
-                                                                  EnumAllocationType.Manual, participant, 0, _
-                                                                  totalDrawdown, EnumCollectionMonitoringType.TransferToPRDrawdown, _
+            listCollectionMonitoring.Add(New CollectionMonitoring(0, "", PRCollectionNo, allocationDateValue,
+                                                                  EnumAllocationType.Manual, participant, 0,
+                                                                  totalDrawdown, EnumCollectionMonitoringType.TransferToPRDrawdown,
                                                                   EnumStatus.Active))
         End If
 
         For Each item In listCollectionMonitoring
             If item.TransType = EnumCollectionMonitoringType.TransferToPRReplenishment Then
-                listPRHistory.Add(New PrudentialHistory(New AMParticipants(IDNumber), item.Amount, EnumPrudentialTransType.Replenishment, _
+                listPRHistory.Add(New PrudentialHistory(New AMParticipants(IDNumber), item.Amount, EnumPrudentialTransType.Replenishment,
                                                             CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))))
                 totalReplenishment = item.Amount
             End If
@@ -3036,10 +3165,10 @@ Public Class frmCollectionMgt
         Dim listOR = BFactory.GenerateCollectionOR(listCollections, listCollectionMonitoring, listWESMBillSalesAndPurchases, participant)
 
         'Generate DMCM Set-up
-        Dim listDMCMSetup = BFactory.GenerateCollectionDMCM(listCollections, WBillHelper.GetSignatories("DMCM").First(), _
+        Dim listDMCMSetup = BFactory.GenerateCollectionDMCM(listCollections, WBillHelper.GetSignatories("DMCM").First(),
                                                             WBillHelper.GetDailyInterestRate())
         'Generate the DMCM Drawdown
-        Dim listDMCMDrawdown = BFactory.GenerateDMCMDrawdown(listCollections, WBillHelper.GetSignatories("DMCM").First(), _
+        Dim listDMCMDrawdown = BFactory.GenerateDMCMDrawdown(listCollections, WBillHelper.GetSignatories("DMCM").First(),
                                                              WBillHelper.GetDailyInterestRate())
 
         'Check if the collection allocated is greater than the collected amount
@@ -3072,8 +3201,13 @@ Public Class frmCollectionMgt
         End If
 
         'Save the collection and collections allocation
-        WBillHelper.SaveCollectionWithCollectionAllocation(listWESMBillSummaries, listCollections, listCollectionMonitoring, _
+        WBillHelper.SaveCollectionWithCollectionAllocation(listWESMBillSummaries, listCollections, listCollectionMonitoring,
                                                            listOR, itemPrudential, listPRHistory, listDMCMSetup, listDMCMDrawdown, chckExistPrudential)
+
+        'Save the WTA Installment History and movement in Balance added by LAVV as o 06/19/2024
+        _WTAInstallmentHelper.SaveWTAInstallmentHistory(listofWTAInstallmentHis, listofWTAInstallment)
+
+
         Return True
     End Function
 
@@ -3322,15 +3456,51 @@ Public Class frmCollectionMgt
         Dim WithholdingTax As Decimal, WithholdingVat As Decimal
         Dim TotalCash As Decimal, TotalEnergyOrVATNetWithholding As Decimal
 
+
+
         'Get daily interest rate
         Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
 
         With Me.DGridView.CurrentRow
+            Dim wbSummaryNo As Long = CLng(.Cells("colWBSummaryNo1").Value)
+            Dim getWTAInstallment As WTAInstallment = _listofWTAInstallment.Where(Function(x) x.WESMBillSummaryNo = wbSummaryNo).FirstOrDefault
+            Dim newDueDate As Date = CDate(.Cells("colNewDueDate").Value)
+
+            Dim invDMCM As String = CStr(.Cells("colInvDMCMNo").Value)
             EndingBalance = Math.Abs(CDec(.Cells("colEndingBalance").Value))
             WithholdingTax = CDec(.Cells("colTaxOrig").Value)
             WithholdingVat = CDec(.Cells("colVatOrig").Value)
             DefaultInterest = CDec(.Cells("colDefaultInterest").Value)
             TotalCash = CDec(.Cells("colCash").Value)
+
+            'Added by LAVV to consider staggered/installment payment as of 06/21/2024
+            'Use term amount when fully paid check box triggered instead the actual outstanding balance in Energy
+            If Not getWTAInstallment Is Nothing Then
+                If Not newDueDate > CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) Then
+                    newDueDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                End If
+                Dim ans As DialogResult = MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If ans = DialogResult.No Then
+                    Exit Sub
+                End If
+                Dim totalTermAmount As Decimal = 0D
+                For Each item In getWTAInstallment.ListofWTAInstallmentTerm
+                    If newDueDate >= item.TermNewDueDate Then
+                        Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
+                        If unpaidAmount <> 0 Then
+                            If TotalCash >= unpaidAmount Then
+                                totalTermAmount += unpaidAmount
+                            End If
+                        End If
+                    ElseIf item.TermNewDueDate > newDueDate Then
+                        Exit For
+                    End If
+                Next
+                If totalTermAmount <> 0 Then
+                    TotalCash = totalTermAmount
+                    .Cells("colCash").Value = totalTermAmount
+                End If
+            End If
 
             'Reset the fields
             .Cells("colCashEnergyAndVAT").Value = 0
@@ -3384,8 +3554,8 @@ Public Class frmCollectionMgt
             End If
 
             'Update the remaining balance
-            .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) - _
-                                                  CDec(.Cells("colCashEnergyAndVAT").Value) - _
+            .Cells("colRemainingBalance").Value = CDec(.Cells("colTotalPayable").Value) -
+                                                  CDec(.Cells("colCashEnergyAndVAT").Value) -
                                                   CDec(.Cells("colCashDefaultEnergy").Value)
         End With
     End Sub
@@ -3403,12 +3573,48 @@ Public Class frmCollectionMgt
         Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
 
         With Me.DGridView.Rows(currRow)
+            Dim wbSummaryNo As Long = CLng(.Cells("colWBSummaryNo1").Value)
+            Dim getWTAInstallment As WTAInstallment = _listofWTAInstallment.Where(Function(x) x.WESMBillSummaryNo = wbSummaryNo).FirstOrDefault
+            Dim newDueDate As Date = CDate(.Cells("colNewDueDate").Value)
+            Dim invDMCM As String = CStr(.Cells("colInvDMCMNo").Value)
+
             EndingBalance = Math.Abs(CDec(.Cells("colEndingBalance").Value))
             WithholdingTax = CDec(.Cells("colTaxOrig").Value)
             WithholdingVat = CDec(.Cells("colVatOrig").Value)
 
             DefaultInterest = CDec(.Cells("colDefaultInterest").Value)
             TotalCash = CDec(.Cells("colCash").Value)
+
+            'Added by LAVV to consider staggered/installment payment as of 06/21/2024
+            'Use term amount when fully paid check box triggered instead the actual outstanding balance in Energy
+            If Not getWTAInstallment Is Nothing Then
+                If Not newDueDate > CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) Then
+                    newDueDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                End If
+
+                Dim ans As DialogResult = MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If ans = DialogResult.No Then
+                    Exit Sub
+                End If
+                Dim totalTermAmount As Decimal = 0D
+                For Each item In getWTAInstallment.ListofWTAInstallmentTerm
+                    If newDueDate >= item.TermNewDueDate Then
+                        Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
+                        If unpaidAmount <> 0 Then
+                            If TotalCash >= unpaidAmount Then
+                                totalTermAmount += unpaidAmount
+                            End If
+                        End If
+                    ElseIf item.TermNewDueDate > newDueDate Then
+                        Exit For
+                    End If
+                Next
+                If totalTermAmount <> 0 Then
+                    TotalCash = totalTermAmount
+                    .Cells("colCash").Value = totalTermAmount
+                End If
+            End If
+
             'Reset the fields
             .Cells("colCashEnergyAndVAT").Value = 0
             .Cells("colCashDefaultEnergy").Value = 0
@@ -3701,7 +3907,7 @@ Public Class frmCollectionMgt
                 For i As Integer = 0 To Me.DGridView.Rows.Count() - 1
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
-                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
+                    If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-") Then
                         Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
@@ -3744,7 +3950,7 @@ Public Class frmCollectionMgt
                     Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                    CStr(Me.DGridView.Rows(i).Cells("colChargeType").Value)), EnumChargeType)
                     If ChargeType = EnumChargeType.E Then
-                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-W") Then
+                        If CBool(Me.DGridView.Rows(i).Cells("colChckPay").Value) = False And Me.DGridView.Rows(i).Cells("colInvDMCMNo").Value.ToString().Contains("TS-") Then
                             Me.DGridView.Rows(i).Cells("colChckPay").Value = True
                             Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
                             With Me.DGridView.Rows(i)
@@ -3824,6 +4030,10 @@ Public Class frmCollectionMgt
             End If
         End If
     End Sub
+    Private Sub checkAllMethod()
+
+    End Sub
+
 #End Region
 
 End Class

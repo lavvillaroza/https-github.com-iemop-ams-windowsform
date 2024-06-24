@@ -33,16 +33,10 @@ Partial Class frmWHVATCertificateSTLMgt
         Me.chkbox_Untagged = New System.Windows.Forms.CheckBox()
         Me.chkbox_Allocated = New System.Windows.Forms.CheckBox()
         Me.gbMenu1 = New System.Windows.Forms.GroupBox()
-        Me.btn_Close = New System.Windows.Forms.Button()
-        Me.btnUntag = New System.Windows.Forms.Button()
-        Me.btnAllocateToAP = New System.Windows.Forms.Button()
         Me.lblCollectionDate = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtFrom = New System.Windows.Forms.DateTimePicker()
         Me.dtTo = New System.Windows.Forms.DateTimePicker()
-        Me.btnView = New System.Windows.Forms.Button()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.btnAdd = New System.Windows.Forms.Button()
         Me.MainPanel = New System.Windows.Forms.Panel()
         Me.gbMenu2 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -53,6 +47,12 @@ Partial Class frmWHVATCertificateSTLMgt
         Me.colCollectedAmount = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAllocatedToAP = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.colUntag = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.btn_Close = New System.Windows.Forms.Button()
+        Me.btnUntag = New System.Windows.Forms.Button()
+        Me.btnAllocateToAP = New System.Windows.Forms.Button()
+        Me.btnView = New System.Windows.Forms.Button()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.btnAdd = New System.Windows.Forms.Button()
         Me.ctrl_statusStrip.SuspendLayout()
         Me.gbMenu1.SuspendLayout()
         Me.MainPanel.SuspendLayout()
@@ -142,61 +142,6 @@ Partial Class frmWHVATCertificateSTLMgt
         Me.gbMenu1.TabIndex = 29
         Me.gbMenu1.TabStop = False
         '
-        'btn_Close
-        '
-        Me.btn_Close.BackColor = System.Drawing.Color.White
-        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Close.ForeColor = System.Drawing.Color.Black
-        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
-        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Close.Location = New System.Drawing.Point(727, 19)
-        Me.btn_Close.Name = "btn_Close"
-        Me.btn_Close.Size = New System.Drawing.Size(90, 39)
-        Me.btn_Close.TabIndex = 55
-        Me.btn_Close.Text = "   &Cancel"
-        Me.btn_Close.UseVisualStyleBackColor = False
-        '
-        'btnUntag
-        '
-        Me.btnUntag.BackColor = System.Drawing.Color.White
-        Me.btnUntag.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnUntag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnUntag.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnUntag.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnUntag.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUntag.ForeColor = System.Drawing.Color.Black
-        Me.btnUntag.Image = Global.AccountsManagementForms.My.Resources.Resources.TrashCanRedIcon22x22
-        Me.btnUntag.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnUntag.Location = New System.Drawing.Point(631, 19)
-        Me.btnUntag.Name = "btnUntag"
-        Me.btnUntag.Size = New System.Drawing.Size(90, 39)
-        Me.btnUntag.TabIndex = 52
-        Me.btnUntag.Text = "&Untag"
-        Me.btnUntag.UseVisualStyleBackColor = False
-        '
-        'btnAllocateToAP
-        '
-        Me.btnAllocateToAP.BackColor = System.Drawing.Color.White
-        Me.btnAllocateToAP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnAllocateToAP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnAllocateToAP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnAllocateToAP.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnAllocateToAP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAllocateToAP.ForeColor = System.Drawing.Color.Black
-        Me.btnAllocateToAP.Image = Global.AccountsManagementForms.My.Resources.Resources.ArrowRight
-        Me.btnAllocateToAP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAllocateToAP.Location = New System.Drawing.Point(535, 18)
-        Me.btnAllocateToAP.Name = "btnAllocateToAP"
-        Me.btnAllocateToAP.Size = New System.Drawing.Size(90, 39)
-        Me.btnAllocateToAP.TabIndex = 51
-        Me.btnAllocateToAP.Text = "  Allocat&e"
-        Me.btnAllocateToAP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnAllocateToAP.UseVisualStyleBackColor = False
-        '
         'lblCollectionDate
         '
         Me.lblCollectionDate.AutoSize = True
@@ -232,60 +177,6 @@ Partial Class frmWHVATCertificateSTLMgt
         Me.dtTo.Name = "dtTo"
         Me.dtTo.Size = New System.Drawing.Size(104, 20)
         Me.dtTo.TabIndex = 20
-        '
-        'btnView
-        '
-        Me.btnView.BackColor = System.Drawing.Color.White
-        Me.btnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnView.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnView.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnView.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnView.ForeColor = System.Drawing.Color.Black
-        Me.btnView.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
-        Me.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnView.Location = New System.Drawing.Point(439, 18)
-        Me.btnView.Name = "btnView"
-        Me.btnView.Size = New System.Drawing.Size(90, 39)
-        Me.btnView.TabIndex = 8
-        Me.btnView.Text = "  &View"
-        Me.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnView.UseVisualStyleBackColor = False
-        '
-        'btnSearch
-        '
-        Me.btnSearch.BackColor = System.Drawing.Color.White
-        Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSearch.ForeColor = System.Drawing.Color.Black
-        Me.btnSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
-        Me.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSearch.Location = New System.Drawing.Point(256, 27)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(34, 27)
-        Me.btnSearch.TabIndex = 7
-        Me.btnSearch.UseVisualStyleBackColor = False
-        '
-        'btnAdd
-        '
-        Me.btnAdd.BackColor = System.Drawing.Color.White
-        Me.btnAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
-        Me.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
-        Me.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
-        Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAdd.ForeColor = System.Drawing.Color.Black
-        Me.btnAdd.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
-        Me.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAdd.Location = New System.Drawing.Point(343, 18)
-        Me.btnAdd.Name = "btnAdd"
-        Me.btnAdd.Size = New System.Drawing.Size(90, 39)
-        Me.btnAdd.TabIndex = 1
-        Me.btnAdd.Text = "&Add"
-        Me.btnAdd.UseVisualStyleBackColor = False
         '
         'MainPanel
         '
@@ -385,6 +276,115 @@ Partial Class frmWHVATCertificateSTLMgt
         Me.colUntag.Name = "colUntag"
         Me.colUntag.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.colUntag.Width = 80
+        '
+        'btn_Close
+        '
+        Me.btn_Close.BackColor = System.Drawing.Color.White
+        Me.btn_Close.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btn_Close.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btn_Close.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn_Close.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Close.ForeColor = System.Drawing.Color.Black
+        Me.btn_Close.Image = Global.AccountsManagementForms.My.Resources.Resources.CloseRedIcon22x22
+        Me.btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Close.Location = New System.Drawing.Point(727, 19)
+        Me.btn_Close.Name = "btn_Close"
+        Me.btn_Close.Size = New System.Drawing.Size(90, 39)
+        Me.btn_Close.TabIndex = 55
+        Me.btn_Close.Text = "   &Cancel"
+        Me.btn_Close.UseVisualStyleBackColor = False
+        '
+        'btnUntag
+        '
+        Me.btnUntag.BackColor = System.Drawing.Color.White
+        Me.btnUntag.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnUntag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnUntag.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnUntag.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnUntag.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUntag.ForeColor = System.Drawing.Color.Black
+        Me.btnUntag.Image = Global.AccountsManagementForms.My.Resources.Resources.TrashCanRedIcon22x22
+        Me.btnUntag.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnUntag.Location = New System.Drawing.Point(631, 19)
+        Me.btnUntag.Name = "btnUntag"
+        Me.btnUntag.Size = New System.Drawing.Size(90, 39)
+        Me.btnUntag.TabIndex = 52
+        Me.btnUntag.Text = "&Untag"
+        Me.btnUntag.UseVisualStyleBackColor = False
+        '
+        'btnAllocateToAP
+        '
+        Me.btnAllocateToAP.BackColor = System.Drawing.Color.White
+        Me.btnAllocateToAP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btnAllocateToAP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnAllocateToAP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnAllocateToAP.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnAllocateToAP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnAllocateToAP.ForeColor = System.Drawing.Color.Black
+        Me.btnAllocateToAP.Image = Global.AccountsManagementForms.My.Resources.Resources.ArrowRight
+        Me.btnAllocateToAP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAllocateToAP.Location = New System.Drawing.Point(535, 18)
+        Me.btnAllocateToAP.Name = "btnAllocateToAP"
+        Me.btnAllocateToAP.Size = New System.Drawing.Size(90, 39)
+        Me.btnAllocateToAP.TabIndex = 51
+        Me.btnAllocateToAP.Text = "  Allocat&e"
+        Me.btnAllocateToAP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnAllocateToAP.UseVisualStyleBackColor = False
+        '
+        'btnView
+        '
+        Me.btnView.BackColor = System.Drawing.Color.White
+        Me.btnView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btnView.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnView.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnView.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnView.ForeColor = System.Drawing.Color.Black
+        Me.btnView.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIcon22x22
+        Me.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnView.Location = New System.Drawing.Point(439, 18)
+        Me.btnView.Name = "btnView"
+        Me.btnView.Size = New System.Drawing.Size(90, 39)
+        Me.btnView.TabIndex = 8
+        Me.btnView.Text = "  &View"
+        Me.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnView.UseVisualStyleBackColor = False
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.ForeColor = System.Drawing.Color.Black
+        Me.btnSearch.Image = Global.AccountsManagementForms.My.Resources.Resources.SearchIconColored22x22
+        Me.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnSearch.Location = New System.Drawing.Point(256, 27)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(34, 27)
+        Me.btnSearch.TabIndex = 7
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'btnAdd
+        '
+        Me.btnAdd.BackColor = System.Drawing.Color.White
+        Me.btnAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.LightGray
+        Me.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LemonChiffon
+        Me.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control
+        Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnAdd.ForeColor = System.Drawing.Color.Black
+        Me.btnAdd.Image = Global.AccountsManagementForms.My.Resources.Resources.NewGreenIcon22x22
+        Me.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAdd.Location = New System.Drawing.Point(343, 18)
+        Me.btnAdd.Name = "btnAdd"
+        Me.btnAdd.Size = New System.Drawing.Size(90, 39)
+        Me.btnAdd.TabIndex = 1
+        Me.btnAdd.Text = "&Add"
+        Me.btnAdd.UseVisualStyleBackColor = False
         '
         'frmWHVATCertificateSTLMgt
         '

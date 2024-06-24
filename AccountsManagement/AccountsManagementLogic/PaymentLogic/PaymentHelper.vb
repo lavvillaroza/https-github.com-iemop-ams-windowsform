@@ -74,7 +74,7 @@ Public Class PaymentHelper
     Public offsettingIterationCount As Integer
     Private getWESMBillSalesAndPurchases As New List(Of WESMBillSalesAndPurchasedForWT)
     Private getWESMBillParticulars As New Dictionary(Of String, String)
-    Private cts As CancellationToken
+    Private cToken As CancellationToken
     Private progress As IProgress(Of ProgressClass)
 
     Public Sub New()
@@ -233,7 +233,7 @@ Public Class PaymentHelper
         Me.WESMBillSummaryList = (From x In WBillHelper.GetWESMBillSummaryAll(SelectedAllocDate.CollAllocationDate)
                                   Select x).ToList()
 
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
 
@@ -278,7 +278,7 @@ Public Class PaymentHelper
                          Where x.TransactionType = EnumORTransactionType.FinPenAmount
                          Select x).ToList()
 
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
 
@@ -378,7 +378,7 @@ Public Class PaymentHelper
 
 #Region "Set of Cancellation Token"
     Public Sub SetCTS(ByVal ct As CancellationToken)
-        Me.cts = ct
+        Me.cToken = ct
     End Sub
 #End Region
 
@@ -1206,7 +1206,7 @@ Public Class PaymentHelper
 
         ARCollectionsProc = Nothing
         ARCollectionList = Nothing
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
     End Sub
@@ -1263,7 +1263,7 @@ Public Class PaymentHelper
         APAllocationProc = Nothing
         WBillSummaryList = Nothing
 
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
 
@@ -1366,7 +1366,7 @@ Public Class PaymentHelper
         JVFromPaymentEFTCheck = Nothing
         WBillSummaryList = Nothing
 
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
     End Sub
@@ -1454,12 +1454,14 @@ Public Class PaymentHelper
 
         Dim updateGetEnergyNoTransList = (From x In GetEnergyNoTransList Where listofWBBatchNoNoBalEnergy.Contains(x.WESMBillBatchNo) Select x).ToList
         For Each item In updateGetEnergyNoTransList
-            If item.BalanceType = EnumBalanceType.AR Then
-                Me._EnergyNoTransactionARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                                 item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumCollectionType.Energy, item.BillingRemarks))
-            Else
-                Me._EnergyNoTransactionAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                                   item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumPaymentNewType.Energy, item.ChargeType, item.BillingRemarks))
+            If item.EndingBalance <> 0 Then
+                If item.BalanceType = EnumBalanceType.AR Then
+                    Me._EnergyNoTransactionARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                     item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumCollectionType.Energy, item.BillingRemarks))
+                Else
+                    Me._EnergyNoTransactionAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                       item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumPaymentNewType.Energy, item.ChargeType, item.BillingRemarks))
+                End If
             End If
         Next
 
@@ -1478,14 +1480,15 @@ Public Class PaymentHelper
 
         Dim updateGetVATNoTransList = (From x In GetVATNoTransList Where listofWBBatchNoNoBalVAT.Contains(x.WESMBillBatchNo) Select x).ToList
         For Each item In updateGetVATNoTransList
-            If item.BalanceType = EnumBalanceType.AR Then
-                Me._VATNoTransactionARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                             item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumCollectionType.VatOnEnergy, item.BillingRemarks))
-            Else
-                Me._VATNoTransactionAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                             item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumPaymentNewType.VatOnEnergy, item.ChargeType, item.BillingRemarks))
+            If item.EndingBalance <> 0 Then
+                If item.BalanceType = EnumBalanceType.AR Then
+                    Me._VATNoTransactionARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                 item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumCollectionType.VatOnEnergy, item.BillingRemarks))
+                Else
+                    Me._VATNoTransactionAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                 item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, EnumPaymentNewType.VatOnEnergy, item.ChargeType, item.BillingRemarks))
+                End If
             End If
-
         Next
 
         Dim checkBatchIsZeroMF = (From x In GetMFwithVATNoTransList
@@ -1502,25 +1505,28 @@ Public Class PaymentHelper
         Next
         Dim updateGetMFNoTransList = (From x In GetMFwithVATNoTransList Where listofWBBatchNoNoBalMF.Contains(x.WESMBillBatchNo) Select x).ToList
         For Each item In updateGetMFNoTransList
-            If item.BalanceType = EnumBalanceType.AR Then
-                Dim objEnumCollectionType As New EnumCollectionType
-                If item.ChargeType = EnumChargeType.MF Then
-                    objEnumCollectionType = EnumCollectionType.MarketFees
+            If item.EndingBalance <> 0 Then
+                If item.BalanceType = EnumBalanceType.AR Then
+                    Dim objEnumCollectionType As New EnumCollectionType
+                    If item.ChargeType = EnumChargeType.MF Then
+                        objEnumCollectionType = EnumCollectionType.MarketFees
+                    Else
+                        objEnumCollectionType = EnumCollectionType.VatOnMarketFees
+                    End If
+                    Me._MFwithVATNoTransARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                    item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, objEnumCollectionType, item.BillingRemarks))
                 Else
-                    objEnumCollectionType = EnumCollectionType.VatOnMarketFees
+                    Dim objEnumPaymentType As New EnumPaymentNewType
+                    If item.ChargeType = EnumChargeType.MF Then
+                        objEnumPaymentType = EnumPaymentNewType.MarketFees
+                    Else
+                        objEnumPaymentType = EnumPaymentNewType.VatOnMarketFees
+                    End If
+                    Me._MFwithVATNoTransAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
+                                                                    item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, objEnumPaymentType, item.ChargeType, item.BillingRemarks))
                 End If
-                Me._MFwithVATNoTransARList.Add(New ARCollection(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                                item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, objEnumCollectionType, item.BillingRemarks))
-            Else
-                Dim objEnumPaymentType As New EnumPaymentNewType
-                If item.ChargeType = EnumChargeType.MF Then
-                    objEnumPaymentType = EnumPaymentNewType.MarketFees
-                Else
-                    objEnumPaymentType = EnumPaymentNewType.VatOnMarketFees
-                End If
-                Me._MFwithVATNoTransAPList.Add(New APAllocation(item.WESMBillBatchNo, item.BillPeriod, item.IDNumber.IDNumber.ToString, item.IDNumber.ParticipantID, item.INVDMCMNo,
-                                                                item.EndingBalance, item.EnergyWithhold, item.EndingBalance, item.DueDate, item.NewDueDate, item.WESMBillSummaryNo, EnumCollectionCategory.NoTrans, objEnumPaymentType, item.ChargeType, item.BillingRemarks))
             End If
+
         Next
 
         GetWESMBillSummaryWithNoTrans = Nothing
@@ -1575,7 +1581,7 @@ Public Class PaymentHelper
         Dim newProgress As ProgressClass
 
         For Each item In WESMBillSummaryReceivablesList
-            If cts.IsCancellationRequested Then
+            If cToken.IsCancellationRequested Then
                 Throw New OperationCanceledException
             End If
 
@@ -1656,7 +1662,7 @@ Public Class PaymentHelper
         Dim ObjAPDictionary As New Dictionary(Of String, String)
         counter = 0
         For Each item In WESMBillSummaryPayablesList
-            If cts.IsCancellationRequested Then
+            If cToken.IsCancellationRequested Then
                 Throw New OperationCanceledException
             End If
 
@@ -1722,7 +1728,7 @@ Public Class PaymentHelper
         TotalAmountPerWESMBillAP = Nothing
         WESMBillSummaryPayablesListDistinct = Nothing
         ObjAPDictionary = Nothing
-        If cts.IsCancellationRequested Then
+        If cToken.IsCancellationRequested Then
             Throw New OperationCanceledException
         End If
     End Sub
@@ -3782,13 +3788,13 @@ Public Class PaymentHelper
                                                    Where x.CollectionType = EnumCollectionType.Energy _
                                                    Or x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Min(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Min()
 
                     Dim MaxOffsetSeq As Integer = (From x In GetCollectionList
                                                    Where x.CollectionType = EnumCollectionType.Energy _
                                                    Or x.CollectionType = EnumCollectionType.DefaultInterestOnEnergy _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Max(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Max()
 
                     'Ending Balance before collection
                     Dim GetEndingBalanceEnergy As ARCollection = (From x In GetCollectionList
@@ -3884,12 +3890,12 @@ Public Class PaymentHelper
                     Dim MinOffsetSeq As Integer = (From x In GetCollectionList
                                                    Where x.CollectionType = EnumCollectionType.VatOnEnergy _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Min(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Min()
 
                     Dim MaxOffsetSeq As Integer = (From x In GetCollectionList
                                                    Where x.CollectionType = EnumCollectionType.VatOnEnergy _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Max(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Max()
 
                     'Ending Balance before collection
                     Dim GetEndingBalanceVAT As ARCollection = (From x In GetCollectionList
@@ -3947,13 +3953,13 @@ Public Class PaymentHelper
                                                    Where (x.CollectionType = EnumCollectionType.MarketFees _
                                                           Or x.CollectionType = EnumCollectionType.VatOnMarketFees) _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Min(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Min()
 
                     Dim MaxOffsetSeq As Integer = (From x In GetCollectionList
                                                    Where (x.CollectionType = EnumCollectionType.MarketFees _
                                                           Or x.CollectionType = EnumCollectionType.VatOnMarketFees) _
                                                    Or x.CollectionType = EnumCollectionType.NoTransaction
-                                                   Select x).DefaultIfEmpty.Max(Function(x) x.OffsettingSequence)
+                                                   Select x.OffsettingSequence).DefaultIfEmpty(0).Max()
 
                     'Ending Balance before collection
                     Dim GetEndingBalanceMF As ARCollection = (From x In GetCollectionList
@@ -4048,7 +4054,6 @@ Public Class PaymentHelper
                         MFArr(RowIndex, 5) = GetEndingBalanceMFV.DueDate
                         MFArr(RowIndex, 6) = GetEndingBalanceMFV.NewDueDate
                         MFArr(RowIndex, 7) = 0
-
                     Else
                         MFArr(RowIndex, 0) = GetEndingBalanceMF.BillingRemarks
                         MFArr(RowIndex, 1) = GetEndingBalanceMF.WESMBillBatchNo
@@ -4063,8 +4068,13 @@ Public Class PaymentHelper
                     End If
 
                     If GetEndingBalanceMFV Is Nothing Then
-                        MFArr(RowIndex, 8) = 0
-                        MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance
+                        If GetNewEndingBalanceMFV Is Nothing Then
+                            MFArr(RowIndex, 8) = 0
+                            MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance
+                        Else
+                            MFArr(RowIndex, 8) = GetNewEndingBalanceMFV.EndingBalance
+                            MFArr(RowIndex, 9) = GetEndingBalanceMF.EndingBalance + GetNewEndingBalanceMFV.EndingBalance
+                        End If
                     ElseIf GetEndingBalanceMF Is Nothing Then
                         MFArr(RowIndex, 8) = GetEndingBalanceMFV.EndingBalance
                         MFArr(RowIndex, 9) = GetEndingBalanceMFV.EndingBalance
@@ -4459,6 +4469,9 @@ Public Class PaymentHelper
                                        Select x).ToList()
 
         For Each Item In RFPPaymentListForNonFit
+            If Item.Participant = "MALVEZ" Then
+                Dim x0 = 0
+            End If
             Dim GetAMParticipantInfo As AMParticipants = (From x In Me.AMParticipants Where x.IDNumber = Item.Participant Select x).FirstOrDefault()
 
             Dim GetPaymentTransToPR As PaymentTransferToPR = (From x In Me.PaymentTransferToPRList
@@ -4889,7 +4902,7 @@ Public Class PaymentHelper
         Dim getWESMBillsSummaryForEnergy As List(Of WESMBillSummary) = Me.WESMBillSummaryList.Where(Function(x) (x.EndingBalance - x.EnergyWithhold) < 0 _
                                                                                                     And x.ChargeType = EnumChargeType.E _
                                                                                                     And x.BalanceType = EnumBalanceType.AR _
-                                                                                                    And x.INVDMCMNo.StartsWith("TS-W") _
+                                                                                                    And x.INVDMCMNo.StartsWith("TS-") _
                                                                                                     And Not x.INVDMCMNo.ToUpper Like "*-ADJ*").ToList()
         For Each MP In DistinctListofMPwithShare
             Dim getOffsetOnDeferredEnergy As Decimal = 0D
@@ -5590,7 +5603,6 @@ Public Class PaymentHelper
                 With UpdateRFPofMP
                     If ItemOfTransToPR.FullyTransferToPR = True Then
                         .Amount = ItemOfTransToPR.TotalAmountForRemittance
-
                         If .Amount < DeferredPayment Then
                             .Particulars = "Set as Deferred Payment"
                             .PaymentType = EnumParticipantPaymentType.SetAsDeferred
@@ -5612,6 +5624,68 @@ Public Class PaymentHelper
                             .PaymentType = EnumParticipantPaymentType.SetAsDeferred
                         ElseIf .Amount = 0 Then
                             Me.RequestForPayment.RFPDetails.RemoveAll(Function(x) x.Participant = ItemOfTransToPR.IDNumber And x.RFPDetailsType = EnumRFPDetailsType.Payment)
+                        ElseIf .Amount > DeferredPayment Then
+                            Dim ParticipantInfo = (From x In Me.AMParticipants Where x.IDNumber = ItemOfTransToPR.IDNumber Select x).FirstOrDefault
+
+                            Dim GetExcessCollection As Decimal = (From x In Me.CollectionMonitoring
+                                                                  Where x.TransType = EnumCollectionMonitoringType.TransferToExcessCollection _
+                                                      And x.IDNumber.IDNumber = ItemOfTransToPR.IDNumber
+                                                                  Select x.Amount).Sum()
+
+                            Dim GetPrevDeferredEnergy As Decimal = (From x In Me.PrevDeferredPaymentList
+                                                                    Where x.IDNumber = ItemOfTransToPR.IDNumber _
+                                                        And x.ChargeType = EnumChargeType.E
+                                                                    Select x.OutstandingBalanceDeferredPayment).Sum
+
+                            Dim GetPrevDeferredVAT As Decimal = (From x In Me.PrevDeferredPaymentList
+                                                                 Where x.IDNumber = ItemOfTransToPR.IDNumber _
+                                                     And x.ChargeType = EnumChargeType.EV
+                                                                 Select x.OutstandingBalanceDeferredPayment).Sum
+
+                            If ItemOfTransToPR.PaymentOnEnergy <> 0 Then
+                                .Particulars &= "Energy; "
+                            End If
+                            Dim GetDefaultInterest = (From x In Me.EnergyAllocationList
+                                                      Where x.IDNumber = .Participant And x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy
+                                                      Select x.AllocationAmount).Sum() +
+                                                     (From x In Me.OffsettingEnergyAllocationList
+                                                      Where x.IDNumber = .Participant And x.PaymentType = EnumPaymentNewType.DefaultInterestOnEnergy
+                                                      Select x.AllocationAmount).Sum() +
+                                                     (From x In Me.MFwithVATAllocationList
+                                                      Where x.IDNumber = .Participant _
+                                                      And (x.PaymentType = EnumPaymentNewType.DefaultInterestOnMF _
+                                                           Or x.PaymentType = EnumPaymentNewType.DefaultInterestOnVatOnMF _
+                                                           Or x.PaymentType = EnumPaymentNewType.WithholdingTaxOnDefaultInterest _
+                                                           Or x.PaymentType = EnumPaymentNewType.WithholdingVatOnDefaultInterest)
+                                                      Select x.AllocationAmount).Sum() +
+                                                     (From x In Me.OffsettingMFwithVATAllocationList
+                                                      Where x.IDNumber = .Participant _
+                                                       And (x.PaymentType = EnumPaymentNewType.DefaultInterestOnMF _
+                                                           Or x.PaymentType = EnumPaymentNewType.DefaultInterestOnVatOnMF _
+                                                           Or x.PaymentType = EnumPaymentNewType.WithholdingTaxOnDefaultInterest _
+                                                           Or x.PaymentType = EnumPaymentNewType.WithholdingVatOnDefaultInterest)
+                                                      Select x.AllocationAmount).Sum()
+
+                            If GetDefaultInterest <> 0 Then
+                                .Particulars &= "Default Interest; "
+                            End If
+
+                            If ItemOfTransToPR.PaymentOnVATonEnergy <> 0 Then
+                                .Particulars &= "VAT; "
+                            End If
+
+                            If ItemOfTransToPR.PaymentOnMFWithVAT > 0 Then
+                                .Particulars &= "Market Fees; "
+                            End If
+
+                            If GetExcessCollection <> 0 Then
+                                .Particulars &= "Excess Collection; "
+                            End If
+
+                            If .Particulars.Length <> 0 Then
+                                .Particulars = Trim(Mid(.Particulars, 1, Len(.Particulars) - 2))
+                            End If
+                            .PaymentType = ParticipantInfo.PaymentType
                         Else
                             .Particulars = DicRFPParticularPR.Item(ItemOfTransToPR.IDNumber)
                             .PaymentType = DicRFPPaymentTypePR.Item(ItemOfTransToPR.IDNumber)
@@ -5786,8 +5860,8 @@ Public Class PaymentHelper
         With ForRFPReport
             .AllocationDate = CDate(Me.PayAllocDate.RemittanceDate.ToShortDateString)
             .ReferenceNo = RFPReferenceNo
-            .toRFP = "CFM - Finance Department"
-            .FromRFP = "AM- Finance Department"
+            .toRFP = "FIN - Corporate Finance Division"
+            .FromRFP = "FIN- Settlement Division"
             .PurposeOfPayment = "Remittance of Energy, VAT and Default Interests"
             .UpdatedBy = AMModule.UserName
             .PreparedBy = AMModule.FullName
@@ -7136,7 +7210,7 @@ Public Class PaymentHelper
 #End Region
 
 #Region "Saving Function"
-    Public Sub SavePaymentProcess(ByVal progress As IProgress(Of ProgressClass), ByVal ct As CancellationToken)
+    Public Sub SavePaymentProcess()
         Try
             Using PymtSaveNew As New PaymentSaveHelper
                 With PymtSaveNew
@@ -7186,7 +7260,7 @@ Public Class PaymentHelper
                     ._WESMTransDetailsSummaryList = Me.WESMTransDetailsSummaryList
                     ._WESMTransDetailsSummaryHistoryList = Me.WESMTransDetailsSummaryHistoryList
                     ._UpdatedWESMBillSummaryWHTAXAdjList = WESMBillSummaryListWithWHTAXAdj
-                    .SaveToDB(progress, ct)
+                    .SaveToDB(progress, cToken)
                 End With
             End Using
         Catch ex As Exception

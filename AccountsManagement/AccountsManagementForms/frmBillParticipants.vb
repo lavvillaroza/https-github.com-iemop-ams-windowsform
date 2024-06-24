@@ -201,12 +201,14 @@ Public Class frmBillParticipants
             End If
         End With
         ProgressThread.Show("Please wait while exporting.")
+        xlApp = New Excel.Application
+        xlWorkBook = xlApp.Workbooks.Add()
+        xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
+
+
         Try
-            xlApp = New Excel.Application
-            xlWorkBook = xlApp.Workbooks.Add()
-            xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet)
             Dim _ParticipantsArrList As Object(,) = New Object(,) {}
-            ReDim _ParticipantsArrList(listOfParticipants.Count + 1, 31)
+            ReDim _ParticipantsArrList(listOfParticipants.Count + 1, 32)
             _ParticipantsArrList(0, 0) = "ID_NUMBER"
             _ParticipantsArrList(0, 1) = "PARTICIPANT_ID"
             _ParticipantsArrList(0, 2) = "FULL_NAME"
@@ -216,29 +218,30 @@ Public Class frmBillParticipants
             _ParticipantsArrList(0, 6) = "GEN/LOAD"
             _ParticipantsArrList(0, 7) = "PARTICIPANT_ADDRESS"
             _ParticipantsArrList(0, 8) = "BILLING_ADDRESS"
-            _ParticipantsArrList(0, 9) = "REGION"
-            _ParticipantsArrList(0, 10) = "MFWHTAX"
-            _ParticipantsArrList(0, 11) = "MFWHVAT"
-            _ParticipantsArrList(0, 12) = "ENERGY_WHTAX"
-            _ParticipantsArrList(0, 13) = "ENERGY_WHVAT"
-            _ParticipantsArrList(0, 14) = "ZERO_RATED_ENERGY"
-            _ParticipantsArrList(0, 15) = "ZERO_RATED_MF"
-            _ParticipantsArrList(0, 16) = "VIRTUAL_ACCOUNT_NO"
-            _ParticipantsArrList(0, 17) = "BANK_TRANS_CODE"
-            _ParticipantsArrList(0, 18) = "BANK_ACCT_NO"
-            _ParticipantsArrList(0, 19) = "BANK"
-            _ParticipantsArrList(0, 20) = "BANK_BRANCH"
-            _ParticipantsArrList(0, 21) = "CHECK_PAY"
-            _ParticipantsArrList(0, 22) = "PAYMENT_TYPE"
-            _ParticipantsArrList(0, 23) = "REP_TITLE"
-            _ParticipantsArrList(0, 24) = "REP_FNAME"
-            _ParticipantsArrList(0, 25) = "REP_MNAME"
-            _ParticipantsArrList(0, 26) = "REP_LNAME"
-            _ParticipantsArrList(0, 27) = "REP_POSITION"
-            _ParticipantsArrList(0, 28) = "REP_CONTACT"
-            _ParticipantsArrList(0, 29) = "REP_EMAIL"
-            _ParticipantsArrList(0, 30) = "STATUS"
-            _ParticipantsArrList(0, 31) = "MEMBERSHIP_TYPE"
+            _ParticipantsArrList(0, 9) = "TIN_ID"
+            _ParticipantsArrList(0, 10) = "REGION"
+            _ParticipantsArrList(0, 11) = "MFWHTAX"
+            _ParticipantsArrList(0, 12) = "MFWHVAT"
+            _ParticipantsArrList(0, 13) = "ENERGY_WHTAX"
+            _ParticipantsArrList(0, 14) = "ENERGY_WHVAT"
+            _ParticipantsArrList(0, 15) = "ZERO_RATED_ENERGY"
+            _ParticipantsArrList(0, 16) = "ZERO_RATED_MF"
+            _ParticipantsArrList(0, 17) = "VIRTUAL_ACCOUNT_NO"
+            _ParticipantsArrList(0, 18) = "BANK_TRANS_CODE"
+            _ParticipantsArrList(0, 19) = "BANK_ACCT_NO"
+            _ParticipantsArrList(0, 20) = "BANK"
+            _ParticipantsArrList(0, 21) = "BANK_BRANCH"
+            _ParticipantsArrList(0, 22) = "CHECK_PAY"
+            _ParticipantsArrList(0, 23) = "PAYMENT_TYPE"
+            _ParticipantsArrList(0, 24) = "REP_TITLE"
+            _ParticipantsArrList(0, 25) = "REP_FNAME"
+            _ParticipantsArrList(0, 26) = "REP_MNAME"
+            _ParticipantsArrList(0, 27) = "REP_LNAME"
+            _ParticipantsArrList(0, 28) = "REP_POSITION"
+            _ParticipantsArrList(0, 29) = "REP_CONTACT"
+            _ParticipantsArrList(0, 30) = "REP_EMAIL"
+            _ParticipantsArrList(0, 31) = "STATUS"
+            _ParticipantsArrList(0, 32) = "MEMBERSHIP_TYPE"
 
             If listOfParticipants.Count() > 0 Then
                 Dim i As Integer = 0
@@ -257,29 +260,30 @@ Public Class frmBillParticipants
                     _ParticipantsArrList(i, 6) = item.GenLoad.ToString()
                     _ParticipantsArrList(i, 7) = item.ParticipantAddress
                     _ParticipantsArrList(i, 8) = item.BillingAddress
-                    _ParticipantsArrList(i, 9) = item.Region
-                    _ParticipantsArrList(i, 10) = item.MarketFeesWHTax
-                    _ParticipantsArrList(i, 11) = item.MarketFeesWHVAT
-                    _ParticipantsArrList(i, 12) = item.EnergyWHTax
-                    _ParticipantsArrList(i, 13) = item.EnergyWHVAT
-                    _ParticipantsArrList(i, 14) = item.ZeroRatedEnergy
-                    _ParticipantsArrList(i, 15) = item.ZeroRatedMarketFees
-                    _ParticipantsArrList(i, 16) = item.VirtualAccountNo
-                    _ParticipantsArrList(i, 17) = item.BankTransactionCode
-                    _ParticipantsArrList(i, 18) = item.BankAccountNo
-                    _ParticipantsArrList(i, 19) = item.Bank
-                    _ParticipantsArrList(i, 20) = item.BankBranch
-                    _ParticipantsArrList(i, 21) = item.CheckPay.ToString()
-                    _ParticipantsArrList(i, 22) = item.PaymentType.ToString()
-                    _ParticipantsArrList(0, 23) = item.Representative.Title
-                    _ParticipantsArrList(0, 24) = item.Representative.FName
-                    _ParticipantsArrList(0, 25) = item.Representative.MName
-                    _ParticipantsArrList(0, 26) = item.Representative.LName
-                    _ParticipantsArrList(0, 27) = item.Representative.Position
-                    _ParticipantsArrList(0, 28) = item.Representative.Contact
-                    _ParticipantsArrList(0, 29) = item.Representative.EmailAddress
-                    _ParticipantsArrList(i, 30) = item.Status.ToString()
-                    _ParticipantsArrList(i, 31) = item.MembershipType.ToString()
+                    _ParticipantsArrList(i, 9) = item.TIN
+                    _ParticipantsArrList(i, 10) = item.Region
+                    _ParticipantsArrList(i, 11) = item.MarketFeesWHTax
+                    _ParticipantsArrList(i, 12) = item.MarketFeesWHVAT
+                    _ParticipantsArrList(i, 13) = item.EnergyWHTax
+                    _ParticipantsArrList(i, 14) = item.EnergyWHVAT
+                    _ParticipantsArrList(i, 15) = item.ZeroRatedEnergy
+                    _ParticipantsArrList(i, 16) = item.ZeroRatedMarketFees
+                    _ParticipantsArrList(i, 17) = item.VirtualAccountNo
+                    _ParticipantsArrList(i, 18) = item.BankTransactionCode
+                    _ParticipantsArrList(i, 19) = item.BankAccountNo
+                    _ParticipantsArrList(i, 20) = item.Bank
+                    _ParticipantsArrList(i, 21) = item.BankBranch
+                    _ParticipantsArrList(i, 22) = item.CheckPay.ToString()
+                    _ParticipantsArrList(i, 23) = item.PaymentType.ToString()
+                    _ParticipantsArrList(0, 24) = item.Representative.Title
+                    _ParticipantsArrList(0, 25) = item.Representative.FName
+                    _ParticipantsArrList(0, 26) = item.Representative.MName
+                    _ParticipantsArrList(0, 27) = item.Representative.LName
+                    _ParticipantsArrList(0, 28) = item.Representative.Position
+                    _ParticipantsArrList(0, 29) = item.Representative.Contact
+                    _ParticipantsArrList(0, 30) = item.Representative.EmailAddress
+                    _ParticipantsArrList(i, 31) = item.Status.ToString()
+                    _ParticipantsArrList(i, 32) = item.MembershipType.ToString()
                 Next
                 RowIndx += 1
                 xlRowRange1 = DirectCast(xlWorkSheet.Cells(RowIndx, 1), Excel.Range)

@@ -21,6 +21,16 @@
         End Set
     End Property
 
+    Private _BuyerSTLID As String
+    Public Property BuyerSTLID() As String
+        Get
+            Return _BuyerSTLID
+        End Get
+        Set(ByVal value As String)
+            _BuyerSTLID = value
+        End Set
+    End Property
+
     Private _SellerTransNo As String
     Public Property SellerTransNo() As String
         Get
@@ -38,6 +48,16 @@
         End Get
         Set(ByVal value As String)
             _SellerBillingID = value
+        End Set
+    End Property
+
+    Private _SellerSTLID As String
+    Public Property SellerSTLID() As String
+        Get
+            Return _SellerSTLID
+        End Get
+        Set(ByVal value As String)
+            _SellerSTLID = value
         End Set
     End Property
 

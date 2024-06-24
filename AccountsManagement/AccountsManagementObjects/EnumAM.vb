@@ -561,6 +561,7 @@ Public Enum EnumAMSModulesFinal
     MonRefundPRWindow = 63
     ChangeWESMBillBP = 64
     SAPWESMBillAggregateMapping = 65
+    MonWTAStaggeredPayments = 66
 End Enum
 
 Public Enum EnumHeaderType
@@ -722,4 +723,16 @@ Public Enum EnumCollectionReportType
     Seller = 1
     Buyer = 2
 End Enum
+
+Public Enum EnumWTAInstallmentTermStatus
+    Unpaid = 0
+    Paid = 1
+End Enum
+
+Public Enum EnumWTAInstallmentStatus
+    Unpaid = 0
+    OnGoing = 1
+    Paid = 2
+End Enum
+
 

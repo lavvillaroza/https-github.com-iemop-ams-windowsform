@@ -128,7 +128,7 @@ Public Class BIRRulingHelper
                                 "AND AC.IS_ALLOCATED = " & EnumIsAllocated.Allocated & " AND AC.IS_POSTED = 1 AND ACA.COLLECTION_TYPE IN (" & vbNewLine &
                                 EnumCollectionType.DefaultInterestOnEnergy & ", " &
                                 EnumCollectionType.Energy & ", " &
-                                EnumCollectionType.VatOnEnergy & ") AND AWS.INV_DM_CM LIKE 'TS-W%' AND AWS.INV_DM_CM NOT LIKE '%-ADJ'"
+                                EnumCollectionType.VatOnEnergy & ") AND AWS.INV_DM_CM LIKE 'TS-%' AND AWS.INV_DM_CM NOT LIKE '%-ADJ'"
 
             report = DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
 
@@ -426,7 +426,7 @@ Public Class BIRRulingHelper
                               & "INNER JOIN AM_PAYMENT_NEW E ON E.PAYMENT_NO = A.PAYMENT_NO " _
                               & "WHERE E.REMITTANCE_DATE  >= " & "TO_DATE('" & CDate(FormatDateTime(ARDateFrom, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
                               & "AND E.REMITTANCE_DATE <= TO_DATE('" & CDate(FormatDateTime(ARDateTo, DateFormat.ShortDate)) & "', 'MM/DD/YYYY') " & vbNewLine _
-                              & "AND B.BALANCE_TYPE = 'AP' AND B.INV_DM_CM LIKE 'TS-W%' AND B.INV_DM_CM NOT LIKE '%-ADJ'"
+                              & "AND B.BALANCE_TYPE = 'AP' AND B.INV_DM_CM LIKE 'TS-%' AND B.INV_DM_CM NOT LIKE '%-ADJ'"
 
             report = Me.DataAccess.ExecuteSelectQueryReturningDataReader(SQL)
             If report.ErrorMessage.Length <> 0 Then
