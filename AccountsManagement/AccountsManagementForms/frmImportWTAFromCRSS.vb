@@ -96,7 +96,10 @@ Public Class frmImportWTAFromCRSS
 
                         Dim itemJV As JournalVoucher = Me.GenerateJournalVoucherForEnergy(getWTACoverSummaryItem.WESMBillList, 0)
                         Dim getCalendarBP As CalendarBillingPeriod = (From x In impWTACRSSHelper._WBillHelper.GetCalendarBP() Where x.BillingPeriod = billingPeriod Select x).FirstOrDefault
-
+                        If getCalendarBP Is Nothing Then
+                            MessageBox.Show("Billing period " & billingPeriod.ToString() & " does not exist in Calendar BP table", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
                         Dim itemGP As WESMBillGPPosted = Me.GenerateGPPosted(getCalendarBP, stlRun, getSelectedDueDate, EnumChargeType.E, itemJV)
 
                         Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)

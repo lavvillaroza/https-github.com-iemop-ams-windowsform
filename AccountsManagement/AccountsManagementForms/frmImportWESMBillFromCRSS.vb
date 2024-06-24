@@ -274,6 +274,11 @@ Public Class frmImportWESMBillFromCRSS
 
                         Dim getBillingPeriod As CalendarBillingPeriod = (From x In impWBCRSSHelper.WBillHelper.GetCalendarBP Where x.BillingPeriod = FileBillingPd Select x).FirstOrDefault
 
+                        If getBillingPeriod Is Nothing Then
+                            MessageBox.Show("Billing period " & FileBillingPd.ToString() & " does not exist in Calendar BP table", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+
                         'Get the WESM Bill in CRSS                        
                         Dim ListWESMInvoice As List(Of WESMInvoice) = (From x In impWBCRSSHelper.newWESMInvoiceList Where x.BillingPeriod = FileBillingPd And x.SettlementRun = FileSettlementRun And x.FileType = FileFileType Select x).ToList()
                         Dim ListSalesAndPurchased As List(Of WESMBillSalesAndPurchased) = (From x In impWBCRSSHelper.newWESMBillSalesPurchaseList Where x.BillingPeriod = FileBillingPd And x.SettlementRun = FileSettlementRun Select x).ToList()

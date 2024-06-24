@@ -170,24 +170,26 @@ Public Class frmWTAInstallmentMgt
     Private Async Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Dim rowCounter As Integer = 0
         Dim listofWTASelected As New List(Of WTAInstallment)
-        For Each row As DataGridViewRow In DGridViewWTA.Rows
-            If CBool(row.Cells("colSelect").Value) = True Then
-                rowCounter += 1
-                Dim transNo As String = row.Cells("colTransactionNo").Value
-                Dim getSelectedWTA = _ListofWTASummaryForInstallment.Where(Function(x) x.INVDMCMNo = transNo).FirstOrDefault
-                If Not getSelectedWTA Is Nothing Then
-                    listofWTASelected.Add(getSelectedWTA)
-                End If
-            End If
-        Next
 
-        If rowCounter = 0 Then
-            MessageBox.Show("No selected row to add!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Exit Sub
-        End If
 
         Try
+            For Each row As DataGridViewRow In DGridViewWTA.Rows
+                If CBool(row.Cells("colSelect").Value) = True Then
+                    rowCounter += 1
+                    Dim transNo As String = row.Cells("colTransactionNo").Value
+                    Dim chargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType), CStr(row.Cells("colChargeType").Value)), EnumChargeType)
 
+                    Dim getSelectedWTA = _ListofWTASummaryForInstallment.Where(Function(x) x.INVDMCMNo = transNo And x.ChargeType = chargeType).FirstOrDefault
+                    If Not getSelectedWTA Is Nothing Then
+                        listofWTASelected.Add(getSelectedWTA)
+                    End If
+                End If
+            Next
+
+            If rowCounter = 0 Then
+                MessageBox.Show("No selected row to add!", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
             Dim progressIndicator As New Progress(Of ProgressClass)(AddressOf UpdateProgress)
             cts = New CancellationTokenSource
             With New frmWTAInstallmentTerms
