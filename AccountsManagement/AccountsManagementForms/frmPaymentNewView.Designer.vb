@@ -957,7 +957,6 @@ Partial Class frmPaymentNewView
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1169, 637)
-        Me.ControlBox = False
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.TableLayoutPanel7)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

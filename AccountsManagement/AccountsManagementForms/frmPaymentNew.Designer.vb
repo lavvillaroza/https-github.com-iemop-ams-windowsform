@@ -1000,13 +1000,11 @@ Partial Class frmPaymentNew
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1169, 670)
-        Me.ControlBox = False
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.Controls.Add(Me.mainTLPanel)
         Me.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmPaymentNew"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Payment Management"

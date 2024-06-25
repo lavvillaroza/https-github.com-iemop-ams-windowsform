@@ -23,18 +23,18 @@ Partial Class frmCollection
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DGridViewCollection = New System.Windows.Forms.DataGridView()
         Me.colID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colORNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -114,20 +114,20 @@ Partial Class frmCollection
         'DGridViewCollection
         '
         Me.DGridViewCollection.AllowUserToAddRows = False
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewCollection.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGridViewCollection.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DGridViewCollection.BackgroundColor = System.Drawing.SystemColors.ButtonShadow
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.DimGray
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGridViewCollection.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DGridViewCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGridViewCollection.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colID, Me.colORNo, Me.colDMCMNo, Me.colCreatedDocumentMain, Me.colCollectionDate, Me.colIDNumber, Me.colParticipantID, Me.colCollected, Me.colPrudentialReplenishment, Me.colHeld, Me.colAmountForAllocation, Me.colType, Me.colAllocationType, Me.colStatus, Me.colAllocate, Me.colIsPosted, Me.colDateAllocated, Me.colDailyBatchCode})
         Me.DGridViewCollection.Location = New System.Drawing.Point(9, 19)
@@ -191,40 +191,40 @@ Partial Class frmCollection
         '
         'colCollected
         '
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle15.Format = "N2"
-        DataGridViewCellStyle15.NullValue = Nothing
-        Me.colCollected.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.colCollected.DefaultCellStyle = DataGridViewCellStyle3
         Me.colCollected.HeaderText = "CollectedAmount"
         Me.colCollected.Name = "colCollected"
         Me.colCollected.ReadOnly = True
         '
         'colPrudentialReplenishment
         '
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle16.Format = "N2"
-        DataGridViewCellStyle16.NullValue = Nothing
-        Me.colPrudentialReplenishment.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.colPrudentialReplenishment.DefaultCellStyle = DataGridViewCellStyle4
         Me.colPrudentialReplenishment.HeaderText = "Replenishment"
         Me.colPrudentialReplenishment.Name = "colPrudentialReplenishment"
         Me.colPrudentialReplenishment.ReadOnly = True
         '
         'colHeld
         '
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle17.Format = "N2"
-        DataGridViewCellStyle17.NullValue = Nothing
-        Me.colHeld.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.colHeld.DefaultCellStyle = DataGridViewCellStyle5
         Me.colHeld.HeaderText = "HeldCollection"
         Me.colHeld.Name = "colHeld"
         Me.colHeld.ReadOnly = True
         '
         'colAmountForAllocation
         '
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle18.Format = "N2"
-        DataGridViewCellStyle18.NullValue = Nothing
-        Me.colAmountForAllocation.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.colAmountForAllocation.DefaultCellStyle = DataGridViewCellStyle6
         Me.colAmountForAllocation.HeaderText = "AmountForApplication"
         Me.colAmountForAllocation.Name = "colAmountForAllocation"
         Me.colAmountForAllocation.ReadOnly = True
@@ -527,8 +527,8 @@ Partial Class frmCollection
         'DGridViewAllocCollections
         '
         Me.DGridViewAllocCollections.AllowUserToAddRows = False
-        DataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGridViewAllocCollections.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGridViewAllocCollections.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
         Me.DGridViewAllocCollections.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -544,8 +544,8 @@ Partial Class frmCollection
         '
         'colCreatedDocument
         '
-        DataGridViewCellStyle20.NullValue = Nothing
-        Me.colCreatedDocument.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.colCreatedDocument.DefaultCellStyle = DataGridViewCellStyle8
         Me.colCreatedDocument.HeaderText = "CreatedDocument"
         Me.colCreatedDocument.Name = "colCreatedDocument"
         Me.colCreatedDocument.Visible = False
@@ -553,8 +553,8 @@ Partial Class frmCollection
         'colCreatedDocumentValue
         '
         Me.colCreatedDocumentValue.ActiveLinkColor = System.Drawing.Color.White
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colCreatedDocumentValue.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colCreatedDocumentValue.DefaultCellStyle = DataGridViewCellStyle9
         Me.colCreatedDocumentValue.HeaderText = "CreatedDocument"
         Me.colCreatedDocumentValue.Name = "colCreatedDocumentValue"
         Me.colCreatedDocumentValue.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -614,8 +614,8 @@ Partial Class frmCollection
         'colInvDMCMValue
         '
         Me.colInvDMCMValue.ActiveLinkColor = System.Drawing.Color.White
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.colInvDMCMValue.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.colInvDMCMValue.DefaultCellStyle = DataGridViewCellStyle10
         Me.colInvDMCMValue.HeaderText = "ReferenceDocument"
         Me.colInvDMCMValue.Name = "colInvDMCMValue"
         Me.colInvDMCMValue.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -625,20 +625,20 @@ Partial Class frmCollection
         '
         'colBeginningBalance
         '
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle23.Format = "N2"
-        DataGridViewCellStyle23.NullValue = Nothing
-        Me.colBeginningBalance.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle11.Format = "N2"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.colBeginningBalance.DefaultCellStyle = DataGridViewCellStyle11
         Me.colBeginningBalance.HeaderText = "OutstandingAmount"
         Me.colBeginningBalance.Name = "colBeginningBalance"
         Me.colBeginningBalance.Width = 120
         '
         'colAmount
         '
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle24.Format = "N2"
-        DataGridViewCellStyle24.NullValue = Nothing
-        Me.colAmount.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.Format = "N2"
+        DataGridViewCellStyle12.NullValue = Nothing
+        Me.colAmount.DefaultCellStyle = DataGridViewCellStyle12
         Me.colAmount.HeaderText = "AppliedAmount"
         Me.colAmount.Name = "colAmount"
         Me.colAmount.Width = 120
@@ -885,7 +885,6 @@ Partial Class frmCollection
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1262, 644)
-        Me.ControlBox = False
         Me.Controls.Add(Me.gpFake)
         Me.Controls.Add(Me.GroupBox9)
         Me.Controls.Add(Me.txtTotalVatEnergy)
@@ -911,6 +910,7 @@ Partial Class frmCollection
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "frmCollection"
+        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Collection Management"
         CType(Me.DGridViewCollection, System.ComponentModel.ISupportInitialize).EndInit()

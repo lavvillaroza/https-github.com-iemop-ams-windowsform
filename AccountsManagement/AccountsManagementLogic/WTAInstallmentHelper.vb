@@ -149,7 +149,7 @@ Public Class WTAInstallmentHelper
 
 #Region "Get the WTA Installment"
     Public Async Function GetWTAInstallmentByWBSNoAsync(ByVal wbsNo As Long) As Task(Of WTAInstallment)
-        Dim ret As New WTAInstallment
+        Dim ret As WTAInstallment
         Dim report As New DataReport
         Try
             Dim SQL As String = "WITH WBS AS (SELECT * FROM AM_WESM_BILL_SUMMARY WHERE WESMBILL_SUMMARY_NO = " & wbsNo & " AND CHARGE_TYPE IN ('E','EV')), " & vbNewLine _
@@ -626,8 +626,8 @@ Public Class WTAInstallmentHelper
                 If getPaidTermCount = getTermCount Then
                     sQL = "UPDATE AM_WTA_INSTALLMENT SET STATUS = " & EnumWTAInstallmentStatus.Paid & " WHERE WTAI_NO = " & item.WTAINO
                     listSQL.Add(sQL)
-                Else
-                    sQL = "UPDATE AM_WTA_INSTALLMENT SET STATUS = " & EnumWTAInstallmentStatus.Paid & " WHERE WTAI_NO = " & item.WTAINO
+                ElseIf getPaidTermCount >= 1 And getPaidTermCount <> getTermCount Then
+                    sQL = "UPDATE AM_WTA_INSTALLMENT SET STATUS = " & EnumWTAInstallmentStatus.OnGoing & " WHERE WTAI_NO = " & item.WTAINO
                     listSQL.Add(sQL)
                 End If
             Next
@@ -692,9 +692,9 @@ Public Class WTAInstallmentHelper
         For i As Integer = 1 To getMaxTerms
             WTAISummaryHeader(0, col + 1) = "Term " & i
             WTAISummaryHeader(1, col + 1) = "Term Amount"
-            WTAISummaryHeader(1, col + 2) = "Pai Amount"
+            WTAISummaryHeader(1, col + 2) = "Paid Amount"
             WTAISummaryHeader(1, col + 3) = "Default Amount"
-            WTAISummaryHeader(1, col + 4) = "Term Outstanding Amount"
+            WTAISummaryHeader(1, col + 4) = "Outstanding Amount"
             col += 4
         Next
 
@@ -716,7 +716,7 @@ Public Class WTAInstallmentHelper
 
 
         Dim FileName As String
-        FileName = FileExistIncrementer(targetPathFolder & "\" & "WTAInstallmentPaymentsSummary_BP" & getBP & getSTLRun & DateTime.Now().ToString("yyyyMMddHHmm") & ".xlsx")
+        FileName = FileExistIncrementer(targetPathFolder & "\" & "WTAStaggeredPaymentsSummary_BP" & getBP & getSTLRun & DateTime.Now().ToString("yyyyMMddHHmm") & ".xlsx")
 
         xlWorkBook.SaveAs(FileName, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, misValue, misValue,
                     Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
@@ -742,7 +742,7 @@ Public Class WTAInstallmentHelper
         Dim WTADSArr As Object(,) = New Object(,) {}
         ReDim WTADSArr(RowCount, totalSizeArr)
 
-        For Each item In listofWTAInstallment
+        For Each item In listofWTAInstallment.OrderBy(Function(x) x.IDNumber.IDNumber).ThenBy(Function(x) x.ChargeType)
             WTADSArr(RowIndex, 0) = item.IDNumber.IDNumber
             WTADSArr(RowIndex, 1) = item.IDNumber.ParticipantID
             WTADSArr(RowIndex, 2) = item.INVDMCMNo

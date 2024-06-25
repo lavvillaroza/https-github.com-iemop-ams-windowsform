@@ -395,11 +395,12 @@ Partial Class frmWHTaxCertificateSTLMgt
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(835, 454)
-        Me.ControlBox = False
         Me.Controls.Add(Me.MainPanel)
         Me.Controls.Add(Me.ctrl_statusStrip)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
         Me.Name = "frmWHTaxCertificateSTLMgt"
+        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Withholding Tax Certificate Management"
         Me.gbMenu2.ResumeLayout(False)

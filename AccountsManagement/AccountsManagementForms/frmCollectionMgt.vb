@@ -98,6 +98,7 @@ Public Class frmCollectionMgt
     Private checkAllBox As Boolean = False
     Private _WTAInstallmentHelper As WTAInstallmentHelper
     Private _listofWTAInstallment As List(Of WTAInstallment)
+    Private _ManualCollectionInput As Boolean
     Private Enum EnumORRemarks
         Energy
         VATonEnergy
@@ -110,6 +111,7 @@ Public Class frmCollectionMgt
 
     Private Sub frmCollectionMgt_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
+
             _WTAInstallmentHelper = New WTAInstallmentHelper
             _listofWTAInstallment = New List(Of WTAInstallment)
             WBillHelper = WESMBillHelper.GetInstance()
@@ -1047,7 +1049,7 @@ Public Class frmCollectionMgt
                 Exit Sub
             End If
 
-            Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType), _
+            Dim ChargeType As EnumChargeType = CType(System.Enum.Parse(GetType(EnumChargeType),
                                                CStr(Me.DGridView.CurrentRow.Cells("colChargeType").Value)), EnumChargeType)
 
             Select Case Me.DGridView.CurrentCell.ColumnIndex
@@ -1077,7 +1079,7 @@ Public Class frmCollectionMgt
                             Dim defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
                             defaultInterest = CDec(.Cells("colDefaultInterest").Value)
 
-                            Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat + _
+                            Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat +
                                                           defaultWithhold + defaultInterest
 
                             .Cells("colTotalPayable").Value = totalPayable
@@ -1126,7 +1128,7 @@ Public Class frmCollectionMgt
                                     Dim defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
                                     Dim defaultInterest = CDec(.Cells("colDefaultInterest").Value)
 
-                                    Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat + _
+                                    Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat +
                                                                   defaultWithhold + defaultInterest
                                     .Cells("colTotalPayable").Value = totalPayable
                                     .Cells("colRemainingBalance").Value = totalPayable
@@ -1137,7 +1139,7 @@ Public Class frmCollectionMgt
                                     Dim defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
                                     Dim defaultInterest = CDec(.Cells("colDefaultInterest").Value)
 
-                                    Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat + _
+                                    Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat +
                                                                   defaultWithhold + defaultInterest
 
                                     .Cells("colTotalPayable").Value = totalPayable
@@ -1174,7 +1176,7 @@ Public Class frmCollectionMgt
                             Dim defaultWithhold = CDec(.Cells("colDefaultWithhold").Value)
                             Dim defaultInterest = CDec(.Cells("colDefaultInterest").Value)
 
-                            Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat + _
+                            Dim totalPayable As Decimal = endingBalance + withholdTax + withholdVat +
                                                           defaultWithhold + defaultInterest
 
                             .Cells("colTotalPayable").Value = totalPayable
@@ -1183,8 +1185,9 @@ Public Class frmCollectionMgt
                     End With
 
                 Case 18 'For Cash Column
-
                     Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+
+                    _ManualCollectionInput = True
 
                     With Me.DGridView.CurrentRow
                         If IsNumeric(.Cells("colCash").Value) Then
@@ -1217,6 +1220,8 @@ Public Class frmCollectionMgt
                 Case 19 'For Check Fully Paid
                     If Me.LoadType = CollectionLoadType.Add And Me.rbManual.Checked = True And ChargeType = EnumChargeType.E Then
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                        _ManualCollectionInput = False
+
 
                         With Me.DGridView.CurrentRow
 
@@ -1268,7 +1273,7 @@ Public Class frmCollectionMgt
 
                     ElseIf Me.LoadType = CollectionLoadType.Edit And Me.rbManual.Checked = True Then
                         Me.DGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
-
+                        _ManualCollectionInput = False
                         With Me.DGridView.CurrentRow
 
                             'Enable/Disable AmoutToPay column
@@ -1826,7 +1831,7 @@ Public Class frmCollectionMgt
 
                             If .x.INVDMCMNo.Contains("TS-") Then
                                 Dim _WTAInstallment As WTAInstallment = _WTAInstallmentHelper.GetWTAInstallmentByWBSNoAsync(.x.WESMBillSummaryNo).Result()
-                                If _WTAInstallment Is Nothing Then
+                                If _WTAInstallment.WTAINO = 0 Then
                                     defaultInterestAmount = Math.Round(BFactory.ComputeDefaultInterest(.x.DueDate, .x.NewDueDate,
                                                                                                    CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
                                                                                                    computedEndingBalance, interestRate), 2)
@@ -1867,7 +1872,7 @@ Public Class frmCollectionMgt
                         'Newly added by LAVV as of 06/19/2024 for installment computation of default interest                        
                         If .x.INVDMCMNo.Contains("TS-") Then
                             Dim _WTAInstallment As WTAInstallment = _WTAInstallmentHelper.GetWTAInstallmentByWBSNoAsync(.x.WESMBillSummaryNo).Result()
-                            If Not _WTAInstallment Is Nothing Then
+                            If _WTAInstallment.WTAINO <> 0 Then
                                 _listofWTAInstallment.Add(_WTAInstallment)
                             End If
                         End If
@@ -2991,6 +2996,60 @@ Public Class frmCollectionMgt
                         listColAllocationCash.Add(itemColAlloc)
                     End If
 
+                    'Added by LAVV as of 06/19/2024                    
+                    Dim getWTAInstallmentByWBSNo As WTAInstallment = _listofWTAInstallment.Where(Function(x) x.WESMBillSummaryNo = wbSummaryNo1).FirstOrDefault
+                    Dim cashPaidAmount As Decimal = cashEnergyVAT
+                    Dim interestRate = Me._dicInterestRate(CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)))
+                    If cashEnergyVAT <> 0 Then
+                        If Not getWTAInstallmentByWBSNo Is Nothing Then
+                            For Each term In getWTAInstallmentByWBSNo.ListofWTAInstallmentTerm.OrderBy(Function(x) x.Term)
+                                Dim computedTermEndingAmount As Decimal = Math.Abs(term.TermAmount - term.PaidAmount)
+                                Dim computeDefault As Decimal = 0D
+                                Dim WTAInstallmentHis As New WTAInstallmentHistory
+
+                                If computedTermEndingAmount = 0 Then
+                                    Continue For
+                                End If
+
+                                If cashPaidAmount = 0 Then
+                                    Exit For
+                                End If
+
+                                If term.TermDueDate = term.TermNewDueDate And newDueDate > term.TermNewDueDate Then
+                                    computeDefault = Math.Round(BFactory.ComputeDefaultInterest(term.TermDueDate, term.TermNewDueDate,
+                                                                                               CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)),
+                                                                                               computedTermEndingAmount, interestRate), 2)
+                                End If
+                                If cashPaidAmount > computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = computedTermEndingAmount
+                                        .DefaultAmount = computeDefault
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= computedTermEndingAmount
+                                ElseIf cashPaidAmount <= computedTermEndingAmount And computedTermEndingAmount <> 0 And cashPaidAmount <> 0 Then
+                                    With WTAInstallmentHis
+                                        .Term = term.Term
+                                        .TermNewDueDate = term.TermNewDueDate
+                                        .PaidAmount = cashPaidAmount
+                                        .DefaultAmount = computeDefault
+                                        .WTAINO = term.WTAINO
+                                        .CollectionDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
+                                        .CollectionNo = itemCollection.CollectionNumber
+                                    End With
+                                    listofWTAInstallmentHis.Add(WTAInstallmentHis)
+                                    cashPaidAmount -= cashPaidAmount
+                                End If
+                            Next
+                            listofWTAInstallment.Add(getWTAInstallmentByWBSNo)
+                        End If
+                    End If
+                    'ÉND
             End Select
         Next
 
@@ -3479,10 +3538,11 @@ Public Class frmCollectionMgt
                 If Not newDueDate > CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate)) Then
                     newDueDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
                 End If
-                Dim ans As DialogResult = MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                If ans = DialogResult.No Then
-                    Exit Sub
+
+                If _ManualCollectionInput = False Then
+                    MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
+
                 Dim totalTermAmount As Decimal = 0D
                 For Each item In getWTAInstallment.ListofWTAInstallmentTerm
                     If newDueDate >= item.TermNewDueDate Then
@@ -3490,6 +3550,8 @@ Public Class frmCollectionMgt
                         If unpaidAmount <> 0 Then
                             If TotalCash >= unpaidAmount Then
                                 totalTermAmount += unpaidAmount
+                            Else
+                                totalTermAmount += (TotalCash - totalTermAmount)
                             End If
                         End If
                     ElseIf item.TermNewDueDate > newDueDate Then
@@ -3592,31 +3654,33 @@ Public Class frmCollectionMgt
                     newDueDate = CDate(FormatDateTime(Me.DTCollection.Value, DateFormat.ShortDate))
                 End If
 
-                Dim ans As DialogResult = MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                If ans = DialogResult.No Then
-                    Exit Sub
+                If _ManualCollectionInput = False Then
+                    MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
-                Dim totalTermAmount As Decimal = 0D
-                For Each item In getWTAInstallment.ListofWTAInstallmentTerm
-                    If newDueDate >= item.TermNewDueDate Then
-                        Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
-                        If unpaidAmount <> 0 Then
-                            If TotalCash >= unpaidAmount Then
-                                totalTermAmount += unpaidAmount
-                            End If
-                        End If
-                    ElseIf item.TermNewDueDate > newDueDate Then
-                        Exit For
-                    End If
-                Next
-                If totalTermAmount <> 0 Then
-                    TotalCash = totalTermAmount
-                    .Cells("colCash").Value = totalTermAmount
-                End If
-            End If
 
-            'Reset the fields
-            .Cells("colCashEnergyAndVAT").Value = 0
+                Dim totalTermAmount As Decimal = 0D
+                    For Each item In getWTAInstallment.ListofWTAInstallmentTerm
+                        If newDueDate >= item.TermNewDueDate Then
+                            Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
+                            If unpaidAmount <> 0 Then
+                                If TotalCash >= unpaidAmount Then
+                                    totalTermAmount += unpaidAmount
+                                Else
+                                    totalTermAmount += (TotalCash - totalTermAmount)
+                                End If
+                            End If
+                        ElseIf item.TermNewDueDate > newDueDate Then
+                            Exit For
+                        End If
+                    Next
+                    If totalTermAmount <> 0 Then
+                        TotalCash = totalTermAmount
+                        .Cells("colCash").Value = totalTermAmount
+                    End If
+                End If
+
+                'Reset the fields
+                .Cells("colCashEnergyAndVAT").Value = 0
             .Cells("colCashDefaultEnergy").Value = 0
             .Cells("colDrawdown").Value = 0
             .Cells("colDrawdownEnergy").Value = 0

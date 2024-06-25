@@ -182,7 +182,6 @@ Public Class frmWTAInstallmentMgtView
             UpdateProgress(newProgress)
             cts = Nothing
             MessageBox.Show(ex.Message, "System Message", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         Catch ex As Exception
             newProgress = New ProgressClass With {.ProgressMsg = "Process has been canceled due to error."}
             UpdateProgress(newProgress)
@@ -190,7 +189,8 @@ Public Class frmWTAInstallmentMgtView
             MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.Timer1.Stop()
-            Me.ctrl_statusStrip.Text = "Ready..."
+            Me.ctrl_statusStrip.Text = "Ready"
+            ctrl_statusStrip.Refresh()
         End Try
     End Sub
 End Class
