@@ -561,7 +561,7 @@ Public Enum EnumAMSModulesFinal
     MonRefundPRWindow = 63
     ChangeWESMBillBP = 64
     SAPWESMBillAggregateMapping = 65
-    MonWTAStaggeredPayments = 66
+    MonWTAStaggeredPayments = 67
 End Enum
 
 Public Enum EnumHeaderType

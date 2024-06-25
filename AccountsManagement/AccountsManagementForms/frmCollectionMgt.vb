@@ -3541,26 +3541,25 @@ Public Class frmCollectionMgt
 
                 If _ManualCollectionInput = False Then
                     MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-
-                Dim totalTermAmount As Decimal = 0D
-                For Each item In getWTAInstallment.ListofWTAInstallmentTerm
-                    If newDueDate >= item.TermNewDueDate Then
-                        Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
-                        If unpaidAmount <> 0 Then
-                            If TotalCash >= unpaidAmount Then
-                                totalTermAmount += unpaidAmount
-                            Else
-                                totalTermAmount += (TotalCash - totalTermAmount)
+                    Dim totalTermAmount As Decimal = 0D
+                    For Each item In getWTAInstallment.ListofWTAInstallmentTerm
+                        If newDueDate >= item.TermNewDueDate Then
+                            Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
+                            If unpaidAmount <> 0 Then
+                                If TotalCash >= unpaidAmount Then
+                                    totalTermAmount += unpaidAmount
+                                Else
+                                    totalTermAmount += (TotalCash - totalTermAmount)
+                                End If
                             End If
+                        ElseIf item.TermNewDueDate > newDueDate Then
+                            Exit For
                         End If
-                    ElseIf item.TermNewDueDate > newDueDate Then
-                        Exit For
+                    Next
+                    If totalTermAmount <> 0 Then
+                        TotalCash = totalTermAmount
+                        .Cells("colCash").Value = totalTermAmount
                     End If
-                Next
-                If totalTermAmount <> 0 Then
-                    TotalCash = totalTermAmount
-                    .Cells("colCash").Value = totalTermAmount
                 End If
             End If
 
@@ -3656,9 +3655,7 @@ Public Class frmCollectionMgt
 
                 If _ManualCollectionInput = False Then
                     MessageBox.Show("The selected transaction (" & invDMCM & ") is subject to staggered/installment payments! Please click ok to continue.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-
-                Dim totalTermAmount As Decimal = 0D
+                    Dim totalTermAmount As Decimal = 0D
                     For Each item In getWTAInstallment.ListofWTAInstallmentTerm
                         If newDueDate >= item.TermNewDueDate Then
                             Dim unpaidAmount As Decimal = item.TermAmount - item.PaidAmount
@@ -3678,9 +3675,10 @@ Public Class frmCollectionMgt
                         .Cells("colCash").Value = totalTermAmount
                     End If
                 End If
+            End If
 
-                'Reset the fields
-                .Cells("colCashEnergyAndVAT").Value = 0
+            'Reset the fields
+            .Cells("colCashEnergyAndVAT").Value = 0
             .Cells("colCashDefaultEnergy").Value = 0
             .Cells("colDrawdown").Value = 0
             .Cells("colDrawdownEnergy").Value = 0
